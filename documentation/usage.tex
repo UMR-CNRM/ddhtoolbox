@@ -1,0 +1,615 @@
+\chapter{Producing DDH files: geometry, user namelist}
+
+\null
+\vspace{1cm}
+
+This chapter presents two aspects of the know-how: first of all what has to be declared in the user namelist to generate budgets and DDH files, and secondly the file structure. 
+ 
+\section{Different kinds of horizontal domains}
+
+To each kind of horizontal domain (global, zonal band, limited area) is associated a logical indicator of activation, two output indicators (files and/or listing), and, for limited area domains, a geometrical identification longitude/latitude of the corners).
+
+Recognized types:  
+\begin{itemize}
+\item The global domain is activated if {\tt LHDGLB} is true,
+\item Zonal bands are activated if {\tt LHDZON} is true,
+\item Limited area domains or isolated points are activated if {\tt LHDDOP} is true. 
+\end{itemize}
+
+\subsection{Global domain}
+ 
+\begin{itemize}
+\item {\tt LHDPRG}, true for printing.
+\item {\tt LHDEFG}, true for producing a file.
+\end{itemize}
+\subsection{Zonal bands }
+The total number of zonal bands is {\tt NDHKD}. In case of file output, a single file will contain all the bands. In case of print, only one band will be printed; this band should be specified ({\tt NDHZRP}). 
+
+To summarize
+\begin{itemize}
+\item {\tt LHDPRZ} true induces the printing of the latitude band number {\tt NDHZPR},
+\item {\tt LHDEFZ} true induces the writing of a file,
+\item {\tt NDHKD} specifies the number of latitude bands.
+\end{itemize}
+ The principle of it is to divide the real sphere into {\tt NDHKD} bands of geographical latitudes of equal surfaces. Each band is identified by its index {\tt jkd} ($1 \leq {\tt jkd} \leq {\tt NDHKD}$).
+
+
+Let the zonal band between geographical latitudes $\ta_{g,jkd}$ and $\ta_{g,jkd+1}$, and notating
+$$ \mu_{jkd} = \sin \ta_{g,jkd}, $$
+\noi the equality of the surfaces leads to create the following suite of the Northern  boundary of the bands: 
+$$ {\tt NDHKD} \times 2\pi a^2 \lp \mu_{jkd} - \mu_{jkd+1}\rp = 4\pi a^2 ,$$
+
+\noi with $\mu_1 = 1$. Therefore
+
+$$ \bay{|c|} \hline \\
+\quad \ds \mu_{jkd} = 1 - \lp jkd -1 \rp \frac 2{\tt NDHKD} \quad \\[3ex]
+\hline \eay $$
+
+\noi The latitude of the zonal band $jkd$ is
+$$ {\bar \mu}_{jkd} = 1 - \lp jkd - \frac 12 \rp \frac 2{\tt NDHKD} $$
+
+\subsection{Limited areas}
+
+Several type of limited domains may be defined
+\begin{itemize}
+\item Type 1: an isolated point defined by its indexes (jlon, jgl),
+\item Type 2: a domain defined by its four corners identified by (geographical longitude, geographical latitude),
+\item Type 3: a domain defined by two opposite corners, identified by (geographical longitude, geographical latitude),
+\item Type 4: an isolated point defined by its geographical position.
+\end{itemize}
+
+Please note that, for the moment and for simplicity sake, affectation computations are based on computation of straight lines in space ($\la$, $\mu$).
+
+The management of either total or partial overlapping between domains calls for the notion of virtual plane. As a matter of fact, to each declared domain is associated a virtual plane. Thus, diagnostics {\tt DDH} will know either
+\begin{itemize}
+\item that possible overlapping should be ignored and that diagnostics should refer to domains as they have been declared. To do so, domains must be located inside separate virtual planes, 
+\item Or that overlapping is a way to modify the geometry of a domain already
+	declared, therefore, diagnostics will refer to modified domains. To do so,
+	domains must be affected to the same virtual plane, furthermore, the order of
+	declaration is important. This will enable to create, in principle, any shapes
+	of domains, from those elementary types.
+\end{itemize}
+
+Let us see a few examples.
+\subsubsection*{Case 1.} 
+
+\begin{figure}[hbtp]
+	\centerline{
+		\includegraphics
+			[angle=-90, 
+			width=6.cm, 
+			keepaspectratio=true,
+			clip=true]
+			{ddh_cas1.ps}
+		}
+	\caption{Case 1}
+	\label{Cas1}
+\end{figure}
+All domains are disjoined (figure \ref{Cas1}). The notion of virtual plane is needless. In practice, put all the domains in the same plane.
+\subsubsection*{Case 2.}
+
+\begin{figure}[hbtp]
+	\centerline{
+		\includegraphics
+			[angle=-90, 
+			width=6.cm, 
+			keepaspectratio=true,
+			clip=true]
+			{ddh_cas2-1.ps}
+		}
+	\caption{Case 2}
+	\label{Cas21}
+\end{figure}
+Domain {\tt 4} overlaps domains {\tt 1}, {\tt 2} and even {\tt 3} (figure \ref{Cas21}). Complete results in each of these domains are required. In practice, allocate domains to distinct planes (figure \ref{Cas22}).
+\begin{figure}[hbtp]
+	\centerline{\hbox{
+	}}
+	\centerline{
+		\includegraphics
+			[angle=-90, 
+			width=6.cm, 
+			keepaspectratio=true,
+			clip=true]
+			{ddh_cas2-2-1.ps}
+		\includegraphics
+			[angle=-90, 
+			width=6.cm, 
+			keepaspectratio=true,
+			clip=true]
+			{ddh_cas2-2-2.ps}
+		}
+	\caption{Case 2}
+	\label{Cas22}
+\end{figure}
+
+\subsubsection*{Case 3.}
+
+\begin{figure}[hbtp]
+	\centerline{
+		\includegraphics
+			[angle=-90, 
+			width=6.cm, 
+			keepaspectratio=true,
+			clip=true]
+			{ddh_cas3.ps}
+		}
+	\caption{Case 3}
+	\label{Cas3}
+\end{figure}
+Domains are embedded to up to three levels and complete results in each of them are required (figure \ref{Cas3}). Allocate domains to distinct planes. 
+\subsubsection*{Case 4.}
+
+\begin{figure}[hbtp]
+	\centerline{
+		\includegraphics
+			[angle=-90, 
+			width=6.cm, 
+			keepaspectratio=true,
+			clip=true]
+			{ddh_cas4-1.ps}
+		}
+	\caption{Case 4}
+	\label{Cas41}
+\end{figure}
+A domain is not a quadrilateral, another has the shape of a ring (figure
+\ref{Cas41}). To get diagnostics in these domains, do the declarations
+in the same virtual plane, according to the numbers of figure \ref{Cas42}.
+\begin{figure}[hbtp]
+	\centerline{
+		\includegraphics
+			[angle=-90, 
+			width=6.cm, 
+			keepaspectratio=true,
+			clip=true]
+			{ddh_cas4-2.ps}
+		}
+	\caption{Case 4}
+	\label{Cas42}
+\end{figure}
+
+Some remarks about declaring domains.
+\smallskip
+First of all, there is no algorithmic limit to the number of overlapping levels. For practical reasons, the limit is given by {\tt PARAMETER JPDXHPU}, which is (quite) easy to modify.
+
+There is no need to execute a formal declaration of a virtual plane (hence its
+name). In practice and from the point of view of users, it is only a coordinate
+of a domain. Allocating a domain to the plane $N$ creates the plane $N$.
+However, memory and time costs can be lessened if affectations are declared to
+successive planes (1, 2, 3, \ldots\ and not 1, 3, 5, \ldots\ which would 
+leave planes 2 and 4 empty).
+
+Case 4 shows how declarations are managed within a same plane. To each
+virtual plane is associated a mask of points distribution. The index of a point
+is the number of the domain in the plane, 0 if the point does not belong to any
+domain. The declaration of a domain of the kind 1 to 4 being read and verified,
+points will be allocated to it, independently of their indexes at that time, 0
+or any other value.
+
+Thus, let us go back to case 4. Quadrilateral 1 is declared as a guess
+for domain 1. Every single points included in this quadrilateral is given index
+1. Then, quadrilateral 2 is declared and its points are given index 2, notably,
+those which previously had value 1. The shape of points \og 1 \fg\ changes and
+takes the shape of the final domain 1. Conversely, to get ring 3, it is
+sufficient to declare its outer outline and to make a hole inside it and then to
+declare its inner outline. {\sl Within any given virtual plane, a point is
+allocated solely to the last declared domain} which contains it.
+
+\ms
+\hbox to \hsize{\hbox to 2cm{\hrulefill} \quad To summarize: \quad \hrulefill}\par Embedded or overlapping domains: allocate each domain to a distinct virtual plane. Require as many virtual planes as it is necessary.
+
+Strange or punched domains: within the same virtual plane, distort and make holes in the successive sketches of the quadrilateral.
+
+The management system can not guess by itself which of the two approaches you
+will use. Therefore, should you not pay any attention to the declarations,
+especially to the virtual coordinate, an error may occur.
+
+\hbox to \hsize{\hrulefill}
+
+\bigskip
+Besides, let the absent-minded reader be reminded that, even if a point seems to
+be relevant for the four domains, diagnostics will be
+made only once. Virtual planes are given up by the software in favour of a
+unique distribution plane where each new possible intersection makes a new
+"internal" computation domain. Thus, case number 1 gives (without the horizontal
+means) four internal domains, case number 2 (always alone) gives seven internal
+domains, and so forth.
+
+\ms Let us now present what has to be declared in order to start the DDH diagnostics.
+
+\section{Declarations. The {\tt NAMDDH} namelist}
+
+As always with ARPEGE, setting up options is done by a namelist.
+For these diagnostics, most items depend on {\tt NAMDDH}. However, the control of output events depends on {\tt NAMCT0} and {\tt NAMCT1}. Some dimensions, presently coded as {\tt PARAMETER} could be managed more flexibly through {\tt NAMDIM}.
+\subsection{Declarations} 
+
+{\tt NAMDDH} regroups the main parameters controlling the diagnostics. Can be found logical indicators, some numerical parameters and also a table to declare possible limited domains.
+\subsubsection{Type of domains}
+\begin{itemize}
+\item {\tt LHDGLB: } global domain (diagnostics are produced if the indicator is true)
+\item {\tt LHDZON: } zonal bands
+\item {\tt LHDDOP: } limited domains and isolated points.
+\end{itemize}
+\subsubsection{Variables to budgetise}
+\begin{itemize}
+\item {\tt LHDHKS: } budget of atmospheric mass, energy, momentum, relative humidity, soil  budget.
+\item {\tt LHDMCI: } budget of kinetic momentum
+\item {\tt LHDENT: } budget of entropy
+\end{itemize}
+\ms
+Should no domain be specified, no diagnostics are produced.
+Should a domain be specified, but no content specified, ARPEGE {\bf is stopped}. The same goes if no output is requested.
+\subsubsection{Output on file or listing}
+\begin{itemize}
+\item {\tt LHDEFG: } write global diagnostics on file,
+\item {\tt LHDEFZ: } write zonal bands diagnostics on file,
+\item{\tt LHDEFD: } write limited domains diagnostics on file,
+\item {\tt LHDPRG: } write global diagnostics on listing,
+\item {\tt LHDPRZ: } write zonal bands (a single band will be written) diagnostics on listing,
+\item {\tt NDHZPR: } index of the latitude band whose budget will be printed (if {\tt LHDPRZ} is true),
+\item {\tt LHDPRD: } write limited domains diagnostics on listing,
+\item {\tt LHDFIL: } the list of articles written in each DDH output file, will be written on listing.
+\end{itemize}
+\subsubsection{Software maintenance, debugging mode}
+\begin{itemize}
+\item {\tt LHDLIST: } printing on listing in verbose mode,
+\item {\tt LHDVRF: } verification mode, activating the budget computation in one point; the output is written on listing.
+\item {\tt NVDHLO: } Index {\tt JLON} of the verification point,
+\item {\tt NVDHGL: } Index {\tt JGL} of the verification point.
+\end{itemize}
+
+\subsubsection{Control results reproductibility}
+\begin{itemize}
+\item {\tt LHDREP:} true if one wishes the results of the diagnostics to be
+reproducible bit to bit from a multitask run to the next one. This option,
+useful for data processing validation, is useless for scientific interpretation.
+Difference in \og non reproducible\fg\ mode ({\tt LHDREP} false) are not
+significant: to this day, no difference whatsoever, up to $10^{-10}$ in
+the relative way, has been noticed! The advantage of the recommended option
+{\tt LHDREP = .FALSE.} is to make substantial savings in the occupation of the
+memory.
+\end{itemize}
+\subsubsection{Number of zonal bands}
+\begin{itemize}
+\item {\tt NDHKD: } Number of zonal bands.
+\end{itemize}
+\subsection{Declaration of limited domains}
+
+The declaration is made by filling in a double entry table {\tt BDEDDH(10,JPDHNOX)}.
+{\tt JPDHNOX} is a {\tt PARAMETER} which gives the maximum number of possible
+limited domains. It goes together with {\tt JPDHXPU}, maximum
+number of virtual planes.
+For each domain, its type, its virtual plane and indications dependant on the type are given. Therefore
+$$ \bay{|rcl|} \hline & & \\
+\quad \hbox{{\tt BDEDDH}(1, domain number)} &=& \hbox{type} \quad \\[3ex]
+\quad \hbox{{\tt BDEDDH}(2, domain number)} &=& \hbox{virtual plane} \quad \\[3ex]
+\hline \eay $$
+
+{\bf For type 1}, point given by its indexes
+$$ \bay{|rcl|} \hline & & \\
+\quad \hbox{{\tt BDEDDH}(3, domain number)} &=& \hbox{rjlon} \quad \\[3ex]
+\quad \hbox{{\tt BDEDDH}(4, domain number)} &=& \hbox{rjgl} \quad \\[3ex]
+\hline \eay $$
+
+{\bf For type 2}, quadrilateral given by its four corners
+$$ \bay{|rcl|} \hline & & \\
+\quad \hbox{{\tt BDEDDH}(3, domain number)} &=& \hbox{Longitude of corner \#1, in degrees, $\la_1$} \quad \\[3ex]
+\quad \hbox{{\tt BDEDDH}(4, domain number)} &=& \hbox{Latitude of corner \#1, in degrees, $\ta_1$} \quad \\[3ex]
+\quad \hbox{({\tt BDEDDH}(5,\, - \,), {\tt BDEDDH}(6,\, - \,)\,)} &=& ( \la_2 , \ta_2 ) \\[3ex]
+\quad \hbox{({\tt BDEDDH}(7,\, - \,), {\tt BDEDDH}(8,\, - \,)\, )} &=& ( \la_3 , \ta_3 ) \quad\\[3ex]
+\quad \hbox{({\tt BDEDDH}(9,\, - \,), {\tt BDEDDH}(10,\, - \,) \,)} &=& ( \la_4 , \ta_4 ) \quad \\[3ex]
+\hline \eay $$
+
+In order to specify a domain, one must comply with the following constraints:
+\begin{figure}[hbtp]
+	\centerline{
+		\includegraphics
+			[angle=-90, 
+			width=6.cm, 
+			keepaspectratio=true,
+			clip=true]
+			{ddh_contraintes.ps}
+		}
+	\caption{Constraints for quadrilateral declarations }
+	%\label{Conv} 
+\end{figure}
+
+\begin{itemize}
+
+\item For a domain which does not intersect the Greenwich meridian 
+$$ -1 \leq \mu_i = \sin \ta_i \leq 1\, , \quad 0 \leq \la_i \leq 360^\circ $$
+
+\noi and
+
+$$ \la_2 > \la_1\, , \quad\mu_3 < \mu_2 \, ,\quad \la_3 > \la_4 \, , \quad \mu_1 > \mu_4 $$
+
+\item For a domain which intersects the Greenwich meridian, the same order in
+the declaration of corners applies, but furthermore, we have 
+
+$$ (\la_1 \leq
+360^\circ \mbox{ ou } \la_4 \leq 360^\circ) \quad \mbox{and} \quad (\quad \la_2 >
+360^\circ \mbox{ ou } \la_3 > 360^\circ) $$
+
+\end{itemize}
+
+{\bf For type 3}, rectangular domain given by two opposite corners
+$$ \bay{|rcl|} \hline & & \\
+\quad \hbox{{\tt BDEDDH}(3, domain number)} &=& \hbox{Longitude of corner \#1, in degrees, $\la_1$} \quad \\[3ex]
+\quad \hbox{{\tt BDEDDH}(4, domain number)} &=& \hbox{Latitude of corner \#1, in degrees, $\ta_1$} \quad \\[3ex]
+\quad \hbox{( {\tt BDEDDH}(5,\, - \,), {\tt BDEDDH}(6,\, - \,)\, )} &=& ( \la_3 , \ta_3 ) \quad \\[3ex]
+\hline \eay $$
+
+This means that, with the same constraints as above, one declares only corners 1 and 3. Implicitly
+$$ \lp \la_2 = \la_3 , \mu_2 = \mu_1 \rp \quad \hbox{et} \quad \lp \la_4 = \la_1 , \mu_4 = \mu_3 \rp $$
+
+{\bf For type 4}, points given by their geographical position
+$$ \bay{|rcl|} \hline & & \\
+\quad \hbox{{\tt BDEDDH}(3, domain number)} &=& \hbox{longitude $\la_g$ in degrees} \quad \\[3ex]
+\quad \hbox{{\tt BDEDDH}(4, domain number)} &=& \hbox{latitude $\ta_g$ in degrees} \quad \\[3ex]
+\hline \eay $$
+
+In that case, diagnostics will be made on the closest grid point, using the spatial Euclidian metric in the ($\la$, $\mu$) space. 
+
+\ms
+{\bf Allocation of points to the domains} 
+
+The point whose geographical coordinate is ($\la_g$, $\mu_g$) is allocated to a type 2 or 3 domain in the following conditions.
+
+\ms
+\noi Domain which does not intersect the Greenwich meridian ( $\la_2 \leq 2\pi$ et $\la_3 \leq 2\pi$)
+$$ \mu_g \leq \frac{\mu_2 - \mu_1}{\la_2 - \la_1} \, \la_g + \frac{\mu_1 \la_2 - \mu_2 \la_1}{\la_2 - \la_1} $$
+
+$$ \la_g \leq \frac{\la_3 - \la_2}{\mu_3 - \mu_2} \, \mu_g + \frac{\mu_3 \la_2 - \mu_2 \la_3}{\mu_3 - 
+\mu_2} $$
+
+$$ \mu_g \geq \frac{\mu_4 - \mu_3}{\la_4 - \la_3} \, \la_g + \frac{\mu_3 \la_4 - \mu_4 \la_3}{\la_4 - 
+\la_3} $$
+
+$$ \la_g \geq \frac{\la_1 - \la_4}{\mu_1 - \mu_4} \, \mu_g + \frac{\mu_1 \la_4 - \mu_4 \la_1}{\mu_1 - 
+\mu_4} $$
+
+\ms
+\noi Domain overlapping $\la=0$
+The same tests must be made on ($\la_g+2\pi$, $\mu_g$) for any point so that $\la_g \leq \max ( \la_3-2\pi , \la_2-2\pi )$.
+
+\ms
+
+\subsection{Default values}
+
+By default, all logical indicators are {\tt FALSE} and dimensions are set to zero. By default, no DDH is done. 
+
+Here is an example of a namelist which activates diagnostics in all types of domains.
+6 zonal bands are requested. 6 limited domains are declared in 3 virtual planes. Domain 2 is intersecting the Greenwich meridian.
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxx \= xxxxxxxxxxxxxxxxxxxxx \= xxxxxxxxxxxxxxxxxxxxx \= xxxxxxxxxxxxxxxxxxxxx \kill 
+
+\tt NAMDDH \\
+\tt LHDGLB = .TRUE., \> \tt LHDZON = .TRUE., \> \tt LHDDOP = .TRUE., \> \tt LHDHKS = .TRUE., \\
+\tt LHDMCI = .FALSE., \> \tt LHDENT = .FALSE., \>\tt LHDPRG = .TRUE., \> \tt LHDPRD = .TRUE., \\
+\tt LHDPRZ = . TRUE. \> \tt NDHZPR = 3, \\
+\tt LHDEFG = .TRUE., \> \tt LHDEFZ = .TRUE., \> \tt LHDEFD = .TRUE., \> \tt LHDLIST = .TRUE., \\
+\tt NDHKD = 6, \> \tt LHDVRF = .TRUE., \> \tt NVDHLO = 5, \> \tt NVDHGL = 29, \\
+\tt BDEDDH(1,1) = 2., \> \tt BDEDDH(2,1) = 1., \> \tt BDEDDH(3,1) = 250., \> \tt BDEDDH(4,1) = 45., \\
+\tt BDEDDH(5,1) = 440., \> \tt BDEDDH(6,1) = 80., \> \tt BDEDDH(7,1) = 360., \> \tt BDEDDH(8,1) = 15., 
+\\
+\tt BDEDDH(9,1) = 215., \> \tt BDEDDH(10,1) = 35., \\
+\tt BDEDDH(1,2) = 2., \> \tt BDEDDH(2,2) = 2., \> \tt BDEDDH(3,2) = 125., \> \tt BDEDDH(4,2) = 20., \\
+\tt BDEDDH(5,2) = 350., \> \tt BDEDDH(6,2) = 75., \> \tt BDEDDH(7,2) = 360., \> \tt BDEDDH(8,2) = -5., 
+\\
+\tt BDEDDH(9,2) = 85., \> \tt BDEDDH(10,2) = -20., \\
+\tt BDEDDH(1,3) = 3., \> \tt BDEDDH(2,3) = 1., \> \tt BDEDDH(3,3) = 30., \> \tt BDEDDH(4,3) = 10., \\
+\tt BDEDDH(5,3) = 245., \> \tt BDEDDH(6,3) = -30., \\
+\tt BDEDDH(1,4) = 3., \> \tt BDEDDH(2,4) = 2., \> \tt BDEDDH(3,4) = 0., \> \tt BDEDDH(4,4) = 90., \\
+\tt BDEDDH(5,4) = 359.9, \> \tt BDEDDH(6,4) = 85., \\
+\tt BDEDDH(1,5) = 1., \> \tt BDEDDH(2,5) = 1., \> \tt BDEDDH(3,5) = 10., \> \tt BDEDDH(4,5) = 1., \\
+\tt BDEDDH(1,6) = 4., \> \tt BDEDDH(2,6) = 2., \> \tt BDEDDH(3,6) = 20., \> \tt BDEDDH(4,6) = -70.,
+
+\end{tabbing}
+
+\section{Output occurrence control}
+
+As for other ARPEGE output, regular output frequency may be given in time step. One may also fill in a table which will enable to make irregular outputs.
+
+\noi The control tables are {\tt NxTS(0:JPNPST)} with {\tt x=DHFG} for file outputs of the global domain, 
+{\tt x=DHFZ} for file outputs of zonal band domains,
+{\tt x=DHFD} for file outputs of limited area domains,
+and {\tt x=DHP} for printed outputs.
+\newline\noindent Time units are {\tt NFRx}. 
+\newline\noindent Tables and units are initialized through {\tt NAMCT0}.
+
+\ms
+Three kinds of outputs are possible
+\begin{enumerate}
+        \item If {\tt NFRx}$=n$ $(n>0)$ and {\tt NxTS(}$0${\tt )=}$0$:
+              output every $n$ time steps.
+        \item If {\tt NFRx}$=n$ $(n>0)$, {\tt NxTS(}$0${\tt )=}$m$ $(m>0)$
+              and {\tt NxTS(}$i${\tt )=}$p_{i}$ $(p_{i}\ge 0$, $i\in\lb 1,\,...\,,\, m\rb)$:
+              output at time steps $n p_{i}$. In this case it will be preferrable to set
+		    {\tt LINC=.FALSE.} in namelist 
+		    {\tt NAMOPH}, in order to force the date units in output file names to be in time steps (rather than in hours).
+        \item If {\tt NFRx}$=n$ $(n>0)$, {\tt NxTS(}$0${\tt )=}$-m$ $(m>0)$
+              and {\tt NxTS(}$i${\tt )=}$-p_{i}$ $(p_{i}\ge 0$, $i\in\lb 1,\,...\,,\, m\rb)$:
+              output at hours $n p_{i}$.
+\end{enumerate}
+
+As a matter of fact, these outputs are only possible at these time steps. They are actually produced if, in addition, {\tt N1x = 1}.
+
+These parameters belong to {\tt MODULE/YOMCT1/}, initialized in {\tt SU1YOM} with the namelist {\tt NAMCT1}. They are set to zero, if either diagnostics {\tt DDH} are not activated or if no file or no listing are requested. This cancels the corresponding output, whatever the content of {\tt NAMCT0} may be.
+
+\section{Identification of domains in the code and in the outputs}
+
+The user-type identification of domains ({\tt BDEDDH}) is transformed in a simpler form, for use by the internal part of the DDH software. Here are indicated the identification conventions which are used internally by the DDH.
+\ms
+To each domain is associated a descriptor of 11 words\label{ARTD}.
+
+\begin{itemize}
+\item Words 1 and 2 are the coordinates of the domain : virtual plane and number in the plane,
+\item Words 3 to 10 are  mostly geographical information type dependant,
+\item Word 11 is the kind of domain.
+\end{itemize}
+
+\bigskip
+\begin{center}
+
+\begin{tabular}{|c|c|p{0.9cm}|c|c|c|p{1cm}|p{1cm}|c|c|p{2.2cm}|}
+\hline
+\multicolumn{11}{|c|}{\sc Domain identifier} \\
+\hline \hline
+1 & 2 & \multicolumn{1}{c|}{3} & 4 & 5 & 6 & \multicolumn{1}{c|}{7} & \multicolumn{1}{c|}{8} & 9 & 10 
+& \multicolumn{1}{c|}{11} \\ \hline \hline
+\parbox{1cm}{Virtual plane} & \parbox{1cm}{\scriptsize number in this plane} & \multicolumn{8}{c|}{Type-dependent information} & Type \\ \hline \hline
+plan & number & \multicolumn{1}{c|}{$\la_g$} & $\mu_g$ & $r_{jlon}$ & $r_{jgl}$ & & & & & Type 1. 
+Point \\ \hline
+plan & number  & \multicolumn{1}{c|}{$\la_g$} & $\mu_g$ & $r_{jlon}$ & $r_{jgl}$ & $\la_g$ \mbox{\tiny 
+user value} & $\mu_g$ \mbox{\tiny user value} & & & Type 4. Point \\ \hline
+plan & number & \multicolumn{1}{c|}{$\la_{\sss 1}$} & $\mu_{\sss 1}$ & $\la_{\sss 2}$ & $\mu_{\sss 
+2}$ & $\la_{\sss 3}$ & $\mu_{\sss 3}$ & $\la_{\sss 4}$ & $\mu_{\sss 4}$ & \mbox{Type~2.} \mbox{Quadrilateral} 
+\\ \hline
+plan & number & \multicolumn{1}{c|}{$\la_1$} & $\mu_{\sss 2}$ & $\la_{\sss 2}$ & $\mu_{\sss 2}{=}\mu_{\sss 
+1}$ & $\la_{\sss 3}{=}\la_{\sss 2}$ & $\mu_{\sss 3}$ & $\la_{\sss 4}{=}\la_{\sss 1}$ & $\mu_{\sss 4}{=} 
+\mu_{\sss 3}$ & \mbox{Type~3.} \mbox{Rectangle} \\ \hline
+0 & 0 & & & & & & & & & Type 5. Globe \\ \hline
+0 & jkd & \multicolumn{1}{c|}{ndhkd} & $\bar \mu_{jkd}$ & & & & & & & Type 6. Zonal band \\ \hline
+\end{tabular}
+
+\end{center}
+
+\bigskip
+
+Non allocated values are initialized to zero. Longitudes are in radian. For points and limited domains, this information is kept in table {\tt FNODDH(11,JPDHNOX)} of the MODULE \verb+/YOM1DDH/+. For the globe and zonal bands, the information is really useful only during the output. 
+
+Moreover, the properties of he domains are the ones declared by the user (except for 4): a way to show that a domain has then been deformed or punched is still lacking. 
+
+\section{Logical structure of output files}
+
+For a given date, files contain a suite of domains. For each of them, a suite of
+profiles and soil variables can be found. Three files can be produced: global,
+zonal, limited area. These files are physically written with the {\tt LFA}
+software (Jean-Marcel Piriou), if LHDLFA is true, and in pseudo-GRIB format, if
+LHDLFA is false.
+\ms
+
+\subsection{File names }
+
+\begin{tabular}{ll}
+ Global & {\tt DHFGLeeee+nnnn} \\
+ Zonal bands & {\tt DHFZOeeee+nnnn} \\
+ Limited area domains & {\tt DHFDLeeee+nnn}
+\end{tabular}
+
+\begin{description}
+	\item{\tt eeee}: the first 4 letters of the name of the experiment,
+	\item{\tt nnnn}: output date in hour or time step, according to the logical indicator 
+		{\tt LINC} from namelist {\tt NAMOPH}.
+\end{description}
+
+\subsection{Articles giving information about dimensions and dates}
+\subsubsection*{Article 1.}
+
+The first physical article \underbar{\tt 'INDICE EXPERIENCE'} contains the name of the experiment.
+\subsubsection*{Article 2.}
+
+Article \underbar{\tt 'DATE'} (11 mots).
+\begin{description}
+        \item{1 .} Year,
+        \item{2 .} Month,
+        \item{3 .} Day,
+        \item{4 .} Hour,
+        \item{5 .} Minute, date of integration start.
+        \item{6 .} 1 if forecast range is in hours, 2 if forecast range is in days, 
+        \item{7 .} Forecast range,
+        \item{8 .} 0,
+        \item{9 .} 10, except maybe at the beginning,
+        \item{10 .} Number of cumulated values,
+        \item{11 .} 0.
+\end{description}
+
+\subsubsection*{Article 3.}
+
+Article \underbar{\tt 'DOCFICHIER'} (17 words).
+
+\begin{description}
+        \item{1.} File type:
+        \begin{description}
+                \item{1} limited area domains,
+                \item{5} global domain,
+                \item{6} zonal bands.
+        \end{description}
+        \item{2.} 0 if {\tt LHDHKS} is false, 1 if true,
+        \item{3.} 0 if {\tt LHDMCI} is false, 1 if true, 
+        \item{4.} 0 if {\tt LHDENT} is false, 1 if true, 
+        \item{5.} {\tt NSTEP}, current time step value, 
+        \item{6.} {\tt NFLEV}, number of levels. Length of variable profiles or variable tendencies. The length of the flux profiles is {\tt NFLEV+1},
+        \item{7.} {\tt NDHCV}, total number of vertical profiles for each domain,
+        \item{8.} {\tt NDHCS}, total number of soil fields,
+        \item{9.} {\tt NDHVV}, number of variable profiles at a given time. The file contains 2 instantaneous variables: the initial one and that of current time step.
+        \item{10.} {\tt NDHFVD}, number of \og dynamical\fg\ fluxes or tendencies in vertical profiles, 
+        \item{11.} {\tt NDHFVP}, number of \og physical\fg\ fluxes or tendencies in vertical profiles,
+        \item{12.} {\tt NDHVS}, number of instantaneous soil variables, 
+        \item{13.} {\tt NDHFSD}, number of soil \og dynamical\fg\ fluxes,
+        \item{14.} {\tt NDHFSP}, number of soil \og physical\fg\ fluxes,
+        \item{15.} number of domains in the file:
+        \begin{description}
+                \item{1} for the globe,
+                \item{\tt NDHKD} for zonal bands,
+                \item{\tt NDHNOM} for limited area domains.
+        \end{description}
+        \item{16.} number of "free" soil variables: these variables are used at ECMWF for diagnostics such as $10\,m$ winds, roughness, etc.
+        \item{17.} number of "free" soil fluxes.
+\end{description}
+\subsubsection*{Article 4.}
+
+Article \underbar{\tt 'ECHEANCE'} forecast range in seconds (1 word).
+
+\subsection{Articles giving information about the type of domains}
+
+For each domain, there is an identification article \underbar{'DOCDnnnn'}, where
+{\tt nnn} is the name of the domain. This article is made of 11 words whose
+content has been described page \pageref{ARTD}.
+
+\subsection{Articles giving information about scientific fields}
+The last part of this documentation will be about the definition of each field in each option as well as the name of this field. Here, we only will indicate how the name of articles are constituted. 
+
+The name of articles takes the form {\tt nnntvvssssssssss}, with
+\begin{description}
+\item{\tt nnn:} number of the domain in the file. {\tt nnn} varies from 1 to {\tt DOCFICHIER(17)}.
+\item{\tt t:} type of field contained in the article:
+
+\begin{description}
+\item{\tt V:} variable profile, length {\tt NFLEV},
+\item{\tt T:} tendency profile,  length {\tt NFLEV},
+\item{\tt F:} flux profile, length {\tt NFLEV+1},
+\item{\tt S:} soil data, length: cf. page \pageref{BSC}.
+\end{description}
+\item{\tt vv:} physical variable written in this file article:
+\begin{description}
+\item{\tt PP:} pressure,
+\item{\tt QV:} specific water vapour content ,
+\item{\tt UU:} zonal momentum,
+\item{\tt VV:} merional momentum,
+\item{\tt KK:} kinetic energy,
+\item{\tt CT:} thermal energy,
+\item{\tt EN:} entropy,
+\item{\tt M1:} angular momentum,
+\item{\tt EP:} potential energy ($\Phi = g \, z$).
+\end{description}
+\end{description}
+
+The next 10 characters (suffix) make the field specific name. However, some general rules do also apply: for variables given as profiles (whose name is therefore {\tt VV}, the instant must be indicated
+
+{\tt ssssssssss = 0} \qquad variable at initial time step,
+
+{\tt ssssssssss = 1} \qquad variable at current time step.
+
+\ms
+
+Some suffixes crop up quite frequently 
+
+{\tt ssssssssss = DIVFLUHOR } \qquad for terms of the kind $\ds \divi{\eta} \lp \chi \vec v \,\DerP 
+p{\eta} \rp$
+
+{\tt ssssssssss = FLUVERTDYN} \qquad for terms $\ds \chi \dot\eta\,\DerP p{\eta}$,
+
+{\tt ssssssssss = FLUDUAPLUI} \qquad for terms $\ds \delta_m \fp{} \chi$.
+
+
+

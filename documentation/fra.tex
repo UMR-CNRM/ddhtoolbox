@@ -1,0 +1,41 @@
+%---------------------------------------------------------------------------
+%
+% Commandes particulières au Français,
+% communes aux deux styles.
+%
+%---------------------------------------------------------------------------
+%
+% Permet de taper \^i pour avoir \^\i 
+%\def\^#1{\if#1i{\accent"5E\i}\else{\accent"5E #1}\fi}%
+%
+% Permet de taper \"i pour avoir \"\i 
+%\def\"#1{\if#1i{\accent"7F\i}\else{\accent"7F #1}\fi}%
+%
+% En-ete X à Y...
+\newcommand{\XaY}[3]{\noindent {\bf #1}\hfill le \jjmmaa.\vspace{0.5cm}\newline
+	à\vspace{0.5cm}\newline {\bf #2}\vspace{1.1cm}\newline
+	\fbox{\hspace{0.5cm} \Large{\bf Objet:} #3 \hspace{0.5cm}}
+	\vspace{1.1cm}\newline}
+%
+% Date dépendant du choix de la langue.
+%
+\newcommand{\aujour}{\number\day\space \ifcase\month\or janvier
+\or février\or mars\or avril\or mai\or juin\or juillet
+\or août\or septembre\or octobre\or novembre\or décembre\fi
+\space\number\year}
+%\newcommand{\aujour}{\today}
+%
+% Sommaire doit pointer sur tableofcontents.
+\newcommand{\sommaire}{\tableofcontents}
+%
+%-----------------------------------------------------------------------
+% Remerciements.
+%-----------------------------------------------------------------------
+%
+\newcommand{\acknowledgement}{\p {\bf Remerciements}}
+%
+%-----------------------------------------------------------------------
+% Titre type AMS.
+%-----------------------------------------------------------------------
+%
+\newcommand{\amstitle}{\maketitle}

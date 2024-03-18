@@ -1,0 +1,196 @@
+\chapter{Budget equations and horizontal mean}
+\null
+\vspace{1cm}
+This chapter is about budget equations and discretization, in space and time. 
+\section{Generic budget equation}
+Let $\chi$ be a variable of the model whose budget is required. The generic form of the $\chi$ budget may be written
+$$ \bay{|c|} \hline \\[-1ex]
+\quad \ds \DerP{}t \lp \chi\,\DerP p{\eta} \rp = \mb - \underbrace{\divi{\eta} \lp \chi\vec v \,\DerP 
+p{\eta} \rp}_{(1)} - \underbrace{\DerP{}{\eta} \lp \chi \dot\eta\,\DerP p{\eta} \rp}_{(2)} + \underbrace{S_d 
+\,\DerP p{\eta}}_{(3)} - \underbrace{g\,\DerP{F_\varphi}{\eta}}_{(4)} - \underbrace{g S_\varphi\,\DerP{G_\varphi}{\eta}}_{(5)} 
+\quad \\[5ex]
+\hline \eay $$
+
+To estimate the budgets, it has been decided to systematically work on the extensive scales $\ds \chi\,\DerP p{\eta}$,  that is to say, $\chi_\ell \delta p_\ell$ for the discrete value in the layer $\ell$. In practice, the application of the vertical discretization leads this equation to 
+$$ \bay{|c|} \hline \\[-2ex]
+\quad \ds \DerP{}t \lp \chi\,\delta p \rp = \mb - \divi{\eta} \lp \chi\vec v \,\delta p \rp - \delta 
+\lp \chi \dot\eta\,\DerP p{\eta} \rp + S_d \delta p - g\,\delta F_\varphi - g S_\varphi\,\delta G_\varphi 
+\quad \\[3ex]
+\hline \eay $$
+
+\noi where every term is indexed by $\ell$, index of the layer of the model for which this equation means something/makes sense/. The operator $\delta \xi_\ell$ is
+$$ \bay{|c|} \hline \\[-3ex] \quad \delta \xi_\ell = \xi_{\tilde\ell} - \xi_{\tilde\ell-1} \quad \\[2ex]  
+\hline \eay $$
+
+where $\xi_{\tilde\ell}$ takes the value of $\xi$ at the interlayer $\tilde \ell$.
+
+\subsection{Term 1. Divergence of horizontal fluxes at the boundaries of the domain}
+
+In order to be computed, this term needs to know the $\chi$ gradient. For the initial conditions this will not always be the case. This term will not be complete, especially every time when $\chi$ depends on the momentum (momentum itself, kinetic energy, angular momentum, etc). Whenever possible, 
+$$ \mb - \chi \lp \delta p \div \vec v + \delta B \vec v\, \grad\pi \rp - \delta p \,\vec v \,\grad 
+\chi $$
+is computed. The first term can always be computed.
+Term 1 must be null in global mean. For a band of latitude, it gives the value of the divergence of the meridian flux $\chi$.
+
+\subsection{Term 2. Divergence of the adiabatic vertical flux}
+
+This term will be treated as a flux: the horizontal mean of the quantity will be kept
+$$ \lp \chi \dot\eta\,\DerP p{\eta} \rp_{\!\tilde\ell} $$
+
+\noi As in the discretization of vertical advection terms,
+$$ \bay{|c|} \hline \\[-1ex]
+\quad \ds \lp \chi \dot\eta\,\DerP p{\eta} \rp_{\!\tilde\ell} = \frac 12 \lp \chi_{\ell} + \chi_{\ell+1} 
+\rp \lp \dot\eta\,\DerP p{\eta} \rp_{\!\tilde\ell} \qquad \mbox{pour} \quad \tilde\ell = 0, \cdots, NFLEV 
+\quad \\[4ex] \hline
+\eay $$
+will be computed.
+
+\noi The vertical speed $\dot\eta\,\partial p /\partial\eta$ is computed by {\tt GPCTY} and modified by the lower boundary conditions.
+\subsection{Term 3. Adiabatic source term}
+Some terms of this kind can be deduced from the dynamical code. For example, the potential and the internal budget express the term called conversion term
+$$ \lc S_d\,\DerP p{\eta}\rd_{c_p T} = \mb - \frac 1g \, \vec v \, \lc \grad \Phi + \frac{RT}p \,\grad 
+p \rc \DerP p{\eta} $$
+
+\noi Some similar terms are to be found in the kinetic energy budget. They, as term 1, are in the \og tendencies\fg\ category, expressed at $\ell$ levels.
+\subsection{Term 4. Physical fluxes divergence term	}
+
+Physical fluxes $\ds F_{\varphi_\ell}$ are horizontally averaged as such. The thermal energy flux due to precipitations is the only tricky one. Formally, the following form is assumed
+$$ F_{\vp_{c_p T}} = L \lp \eta, T \rp F_{\vp_q}^{precip} \lp \eta \rp $$
+
+\noi Some assumptions need to be introduced, like 
+ 
+$$ L \lp T_{\tilde\ell} \rp = L \lp \frac 12\lp T_{\ell} + T_{\ell+1} \rp \rp $$
+
+\noi where $L$ is an "effective" latent heat, or difference in enthalpy due to phase change.
+
+\subsection{Terme 5. Tendency term due to physical parametrizations}
+
+Such terms occur in the energy budgets, e.g. the dissipation term
+$$ \vec v \,\DerP{F_{\vp_{\vec v}}^{tur+conv}}{\eta} $$
+
+\noi or in the entropy budget
+$$ \frac 1T \,\DerP{F_{\vp_T}^{ray}}{\eta} $$.
+
+\noi These terms are computed, using variables at time $t$.
+\bigskip
+Budget terms gather into three categories:
+\begin{itemize}
+\item \underbar{variables}, from the $\ds \DerP{}t \,\chi\delta p$ term,
+\item \underbar{tendencies}, at model levels (such as $\div \lp \chi \delta p \,\vec v \rp$),
+\item \underbar{fluxes}, at the inter-layers ($\delta F_\chi$).
+\end{itemize}
+
+One shows below the discretization processs, on the simplified budget equation 
+$$ \bay{|c|} \hline \\[-1ex]
+\quad \ds \DerP{}t \lp \frac 1g \,\chi\delta p \rp 
+= \,\lp \frac 1g \,\chi\delta p \rp \, {\rm tend }
+- \delta F_\chi \quad \\[4ex] \hline \eay $$
+
+\noi which shows three categories. The goal of {\tt DDH} diagnostics is to give information on the mean budget on an horizontal domain $\cal D$ (surface $S_{\cal D}$): 
+$$ \frac 1{S_{\cal D}} \, \DerP{}t \iint_{\cal D} \frac 1g \,\chi\delta p \,d\sigma = \frac 1{S_{\cal 
+D}} \iint_{\cal D} \,\lp \frac 1g \,\chi\delta p \rp \,  {\rm tend } \, d\sigma - \frac 1{S_{\cal D}} \iint_{\cal 
+D} \delta F_\chi \,d\sigma $$
+
+\smallskip
+Some terms, such as the effect of the horizontal diffusion, cannot be diagnosed by {\tt DDH}: horizontal diffusion is computed in spectral mode, is not converted into grid-point space, and thus unavailable for DDH.
+\section{Horizontal mean}
+Let $\lc \chi\rd_G$ be the global mean. We have
+$$ \lc \chi\rd_G = \frac 1{4\pi a^2} \int_0^{2\pi} \int_{-\frac{\pi}2}^{\frac{\pi}2} \chi \ a^2 \, \cos\ta_g 
+\,d\ta_g \,d\la_g = \frac 1{4\pi} \int_0^{2\pi} \int_{-1}^1 \chi \,d\mu_g \,d\la_g $$
+
+
+For a given truncation, a precise quadrature of this relation reads
+$$ \lc \chi\rd_G = \sum_{k=1}^K \frac 1{J(k)} \sum_{j=1}^{J(k)} \varpi_k \chi_{j,k} \quad \mbox{with} 
+\quad K \geq \frac{3N+1}2 $$
+
+where $N$ is the triangular truncation, $\varpi_k$ is Gauss weight and $J(k)$ the number of points on the circle of latitude $k$.
+
+Thus, $k$ refers to the latitudes of the gaussian grid and $j$ to the longitudes. On the stretched sphere the scale factor is a function of the spherical harmonics:
+$$ \lc \chi\rd_G = \frac 1{S_G} \sum_{k=1}^K \sum_{j=1}^{J(k)} \chi_{j,k} \, \frac{\varpi_k}{J(k) m_{j,k}^2} 
+$$
+
+\noi now with
+
+$$ S_G = \sum_{k=1}^K \sum_{j=1}^{J(k)} \frac{\varpi_k}{J(k) m_{j,k}^2} \neq 1 $$
+
+Therefore, the weight of each point will be assimilated as, for the present case, a non dimensional \og area element\fg\ $\sigma_{j,k}$
+
+$$ \bay{|c|} \hline \\[-3ex]
+\quad \ds \sigma_{j,k} = \frac{\varpi_k}{J(k) m_{j,k}^2} \quad \\[3ex] \hline \eay $$
+
+Surface of domain $\cal D$:
+$$ S_{\cal D} = \sum_{(j,k)\in {\cal D}} \sigma_{j,k} $$
+
+The horizontal mean of parameter $\chi$ on $\cal D$ is written
+$$ \bay{|c|} \hline \\[-1ex]
+\quad \ds \lc \frac 1{S_{\cal D}} \iint_{\cal D} \chi\,d\sigma \rc = \lc \chi \rd_{\cal D} = \frac 1{S_{\cal 
+D}} \sum_{(j,k) \in {\cal D}} \chi_{j,k} \sigma_{j,k} \quad \\[4ex] \hline \eay $$
+
+With this definition, a division of the globe in $D$ domains $\cal D$ is such that 
+$$ \lc \chi \rd_G = \frac 1{S_G}\sum_{d=1}^D \lc \chi \rd_d S_d $$
+
+\ms The user domain $\cal D$  is divided into one or several internal domains ${\cal D}_i$.  For a multitask run on $P$ processors, isolated $P$ terms for every internal domain are computed, which means, 
+$$ \lc \chi \rd_{{\cal D}_i} S_{{\cal D}_i} = \sum_{p=1}^P \Bigl( \sum_{(j,k) \in {\cal D}_i (p)} \chi_{j,k} 
+\sigma_{j,k} \Bigr) $$
+
+XX
+
+\noi where ${\cal D} (p)$ are the points belonging to $\cal D$ treated in the $p$ task.
+
+If the domain is cut in $P$ parts, identical in mono or multi tasks, the mean being a simple sum (products are made in each under task $p$), results become easily reproducible. To summarize, the output mean on the domain $\cal D$ called for the user is 
+$$ \lc \chi\rd_{\cal D} = \frac 1{S_{\cal D}} \sum_{{\cal D}_i \atop {\cup {\cal D}_i = {\cal D}}} \Biggl[ 
+\,\,\sum_{p=1}^P \, \Bigl( \sum_{(j,k) \in {\cal D}_i (p)} \chi_{j,k} \sigma_{j,k} \Bigr) \,\Biggr] $$
+
+\noi Where the two most external $\sum$ signs can very easily switch over.
+\ms The algorithm is thus the following:
+\begin{itemize}
+\item Parallel computations of the necessary quantities $\chi_{j,k}$ on every points, initial computation of $\sigma_{j,k}$ and transit through the physico-dynamical interface.
+\item \og condensation\fg\ of results for a $p$ task in parts of the internal domains it manages. Note that this non vectorisable operation is nevertheless field and level independent: it is therefore along this direction that vectorization will take place.
+\item Synthesis for output needs only (i.\ e.\ from time to time) of partial sums on user's domains. 
+\end{itemize}
+
+\section{Temporal discretization}
+The typical budget equation
+$$ \int_0^{nstep \times \delta t} \DerP{}t \,\frac 1g \, \chi \delta p \,dt =  \int_0^{nstep\times \delta 
+t} \lc \lp \frac 1g \, \chi \delta p \rp \, {\rm tend} - \delta F_\chi \rc dt $$
+
+\noi is integrated by the diagnostics {\tt DDH} as follow
+$$ \bay{|c|} \hline \\[-1ex]
+\quad \ds \lp \frac 1g \, \chi \delta p \rp^{nstep} - \lp \frac 1g \, \chi \delta p \rp^0 = \delta t \sum_{jstep=0}^{nstep-1} 
+\lc \lp \frac 1g \, \chi \delta p \rp \, {\rm tend} - \delta F_\chi \rd^{jstep} \quad \\[4ex] \hline \eay 
+$$
+
+\noi Where $\delta t$ stands for {\tt TSTEP}, the nominal time step, and $nstep$ the number of the current time step. Tendencies and fluxes cumulated in time must be stopped  at the tendencies and at the fluxes of the time step preceding the output moment {\tt NSTEP}. Tendencies which are computed by {\tt CPG} when the grid-point variable is known must not be added before the output of results. This adds an important constraint to the parallel treatment.
+
+In practice, one uses two arrays: one with initial variables and variables cumulated in time up to {\tt NSTEP-1}, and another with values at {\tt NSTEP} and variables cumulated in time up to {\tt NSTEP} (which leads to the variable d'état at {\tt NSTEP+1}).
+ 
+\bigskip
+
+In short, the typical budget equation for a layer $\ell$ and a discretized domain $\cal D$
+$$ \lc \xi \rc_{\cal D} = \frac 1{S_{\cal D}} \,\sum_{(j,k) \in {\cal D}} \xi_{(j,k)} \sigma_{(j,k)} $$
+
+\noi with
+
+$$ S_{\cal D} = \sum_{(j,k) \in {\cal D}} \sigma_{(j,k)} \qquad \sigma_{(j,k)} = \frac{\varpi_k}{J(k) 
+m_{j,k}^2} $$
+
+$$ \bay{|c|} \hline \\[-1ex]
+\quad \ds \lc \frac 1g \, \chi \,\delta p \rd_{\cal D}^\ell \lp t=NSTEP \times \delta t \rp - \lc \frac 
+1g \, \chi \,\delta p \rd_{\cal D}^\ell \lp t=0 \rp = \delta t \sum_{n=0}^{nstep-1} 
+\Bigl[ \lp \frac 1g\, \chi\,\delta p \rp \, {\rm tend}\, 
+\Bigr]_{\cal D}^\ell \lp n \rp + \quad\\[4ex]
+\quad \ds \delta t \Bigl( \sum_{n=0}^{nstep-1} \lc F_\chi\,\rd_{\cal D}^{\tilde\ell-1} \lp n \rp - \sum_{n=0}^{nstep-1} 
+\lc F_\chi\,\rd_{\cal D}^{\tilde\ell} \lp n \rp \Bigr) \quad \\[4ex] \hline \eay $$
+
+\noi and the vertical mean budget
+
+$$ \bay{|c|} \hline \\[-1ex]
+\quad \ds\sum_{\ell=1}^{NFLEV} \lc \frac 1g \, \chi \,\delta p \rd_{\cal D}^\ell \lp t=NSTEP \times \delta 
+t \rp - \sum_{\ell=1}^{NFLEV} \lc \frac 1g \, \chi \,\delta p \rd_{\cal D}^\ell \lp t=0 \rp = \quad \\[4ex]
+\quad \ds \delta t \sum_{\ell=1}^{NFLEV} \sum_{n=0}^{nstep-1} 
+\Bigl[ \lp \frac 1g\, \chi\,\delta p \rp \, {\rm tend}\,
+\Bigr]_{\cal D}^\ell \lp n \rp + \delta t \Bigl( \sum_{n=0}^{nstep-1} \lc F_\chi\,\rd_{\cal D}^0 
+\lp n \rp - \sum_{n=0}^{nstep-1} \lc F_\chi\,\rd_{\cal D}^{NFLEV} \lp n \rp \Bigr) \quad \\[4ex] \hline 
+\eay $$
+
+

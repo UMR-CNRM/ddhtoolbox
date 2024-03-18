@@ -1,0 +1,642 @@
+\chapter{Budget and diagnostics, \arp\ model}
+\null
+\vspace{1cm}
+This chapter presents budget equations which are the first application of DDH. It gives information about the content of output files.
+
+\section{Moist air mass budget}
+\subsection*{Budget equation}
+$$
+\DerP{\re}{t}=
+- \divi{\eta}\lp\re\vec{v}\rp
+- \DerP{}{\eta}\lp\re\dot{\eta}\rp
++ \delta_m \DerP{\fp{}}{\eta}
+$$
+
+\noi where
+\begin{itemize}
+        \item $\re=-\frac{1}{g}\DerP{p}{\eta}$.
+        \item $ \lp \dot \eta \,\DerP p{\eta} \rp_{\eta=0} = 0 \qquad \lp \dot \eta \,\DerP p{\eta} \rp_{\eta=1} = 
+              \delta_m gE $.
+        \item $\fp{} = \fpcl{}+\fpcn{}+\fpsl{}+\fpsn{}$.
+  \item $\delta_m =0$: masse conserved, $\delta_m=1$: variable mass.
+\end{itemize}
+
+\subsection*{File output}
+
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt VPP0 \> $\ds \frac 1g \,\delta p$ (t=0) \\[1ex]
+\tt VPP1 \> $\ds \frac 1g \,\delta p$ (t=NSTEP $\delta t$) \\[1ex]
+\tt TPPDIVFLUHOR \> $\ds -\frac{\delta t}g \,\divi{\eta} \lp \vec v\,\delta p \rp$ \> cumulated\\[1ex]
+\tt FPPFLUVERTDYN \> $\ds \frac{\delta t}g \,\dot\eta\,\DerP p{\eta}$ \> cumulated\\[1ex]
+\tt FPPSUMFPL \> $\ds \delta_m \delta t \fp{}$ \> cumulated
+\end{tabbing}
+
+If $\chi^*$ stands for a quantity modified by the mass exchange and if by $\chi$ the initial quantity, then
+$$ \lp \dot\eta\,\DerP p{\eta} \rp_{\tilde\ell}^* = \lp \dot\eta\,\DerP p{\eta} \rp_{\tilde\ell} + \delta_m 
+g \lc B_{\tilde \ell} \lp \fp{\tilde L} + E \rp - \fp{\tilde\ell} \rd $$
+
+One should have at the lower limit
+$$ F_{q\tilde L}^{tur} = E \lp 1-\delta_m q_v \rp $$
+
+Furthermore
+$$ \lp \frac{\omega}p \rp_{\ell}^* = \lp \frac{\omega}p \rp_{\ell} - \delta_m g \frac 1{\delta p_\ell} 
+\lc \alpha_{\ell} \,\delta \fp{} + \ln \lp \frac{p_{\tilde\ell}}{p_{\tilde\ell-1}} \rp \fp{\tilde\ell-1} 
+\rc $$
+
+$$ \lp \DerP{\pi}t \rp^* = \DerP{\pi}t - \delta_m g \lp E + \fp{\tilde L} \rp $$
+
+\section{Water mass budget}
+\subsection*{Lagrangian equation}
+
+$$
+\re \frac{d \qgen}{dt}=
+T_{\qgen}^{diff-hor}
++ \DerP{F_{\qgen}}{\eta}
+- \delta_m \qgen \DerP{\fp{}}{\eta}
+$$
+
+\subsection*{Budget equation}
+
+$$
+\DerP{(\re \qgen)}{t}=
+- \divi{\eta}\lp\re \qgen \vec{v}\rp
+- \DerP{}{\eta}\lp\re \qgen \dot{\eta}\rp
++ \DerP{F_{\qgen}}{\eta}
+$$
+
+\noi where
+\begin{itemize}
+        \item $\qgen$ $=$ $q_v$, $q_l$ ou $q_n$.
+        \item $\re=-\frac{1}{g}\DerP{p}{\eta}$.
+        \item $F_{q_v}=\fccl{}+\fccn{}+\fcsl{}+\fcsn{}+F_{q_v}^{tur}+F_{q_v}^{tur-conv}$.
+        \item $F_{q_l}=\fpcl{}+\fpsl{}-\fccl{}-\fcsl{}+F_{q_l}^{tur}+F_{q_l}^{tur-conv}$.
+        \item $F_{q_n}=\fpcn{}+\fpsn{}-\fccn{}-\fcsn{}+F_{q_n}^{tur}+F_{q_n}^{tur-conv}$.
+        \item $F_{\qgen}^{tur}$ contains the correction $F_{\qgen}^{q<0}$ of the negative water values created eventually by the dynamics.
+\end{itemize}
+
+\noi The tendency term due to the horizontal diffusion is missing from the budget equation: this diffusion is done in spectral mode, the information is thus not accessible to the DDH grid-point diagnostics.
+
+\subsection*{File output}
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \= yyyyyyyyyyyyyyyy \kill
+\tt FQTPRECICOL \> $\ds \delta t \fpcl{}$ \> cumulated \> \\
+\tt FQTPRECICON \> $\ds \delta t \fpcn{}$ \> cumulated \> \\
+\tt FQTPRECISTL \> $\ds \delta t \fpsl{}$ \> cumulated \> \\
+\tt FQTPRECISTN \> $\ds \delta t \fpsn{}$ \> cumulated \> \\
+\tt FQTCONDECOL \> $\ds \delta t \fccl{}$ \> cumulated \> if {\tt LHDQLN=.TRUE.} \\
+\tt FQTCONDECON \> $\ds \delta t \fccn{}$ \> cumulated \> if {\tt LHDQLN=.TRUE.} \\
+\tt FQTCONDESTL \> $\ds \delta t \fcsl{}$ \> cumulated \> if {\tt LHDQLN=.TRUE.} \\
+\tt FQTCONDESTN \> $\ds \delta t \fcsn{}$ \> cumulated \> if {\tt LHDQLN=.TRUE.} \\
+\tt VQV0 \> $ \ds\frac 1g\,q_v \delta p$ (t=0) \> \\[1ex]
+\tt VQV1 \> $ \ds\frac 1g\,q_v \delta p$ (t=NSTEP) \> \\[1ex]
+\tt TQVDIVFLUHOR \> $\ds - \frac{\delta t}g \,\divi{\eta} \lp q_v \delta p \,\vec v \rp$ \> cumulated \> \\[1ex]
+\tt FQVFLUVERTDYN \> $\ds\frac{\delta t}g \,q_v\dot\eta\,\DerP p{\eta}$ \> cumulated \> \\[1ex]
+\tt FQVTUR \> $\ds\delta t F_{q_v}^{tur}$ \> cumulated \> \\
+\tt FQVTURCONV \> $\ds \delta t F_{q_v}^{tur-conv}$ \> cumulated \> \\
+\tt FQVTURQNEGAT \> $\ds \delta t F_{q_v}^{q<0}$ \> cumulated \> \\
+\tt VQL0 \> $ \ds\frac 1g\,q_l \delta p$ (t=0) \> \> if {\tt LHDQLN=.TRUE.} \\[1ex]
+\tt VQL1 \> $ \ds\frac 1g\,q_l \delta p$ (t=NSTEP) \> \> if {\tt LHDQLN=.TRUE.} \\[1ex]
+\tt TQLDIVFLUHOR \> $\ds - \frac{\delta t}g \,\divi{\eta} \lp q_l \delta p \,\vec v \rp$ \> cumulated \> if {\tt LHDQLN=.TRUE.}\\[1ex]
+\tt FQLFLUVERTDYN \> $\ds\frac{\delta t}g \,q_l\dot\eta\,\DerP p{\eta}$ \> cumulated \> if {\tt LHDQLN=.TRUE.}\\[1ex]
+\tt FQLTUR \> $\ds\delta t F_{q_l}^{tur}$ \> cumulated \> if {\tt LHDQLN=.TRUE.}\\
+\tt FQLTURCONV \> $\ds \delta t F_{q_l}^{tur-conv}$ \> cumulated \> if {\tt LHDQLN=.TRUE.}\\
+\tt FQLTURQNEGAT \> $\ds \delta t F_{q_l}^{q<0}$ \> cumulated \> if {\tt LHDQLN=.TRUE.}\\
+\tt VQN0 \> $ \ds\frac 1g\,q_n \delta p$ (t=0) \> \> if {\tt LHDQLN=.TRUE.}\\[1ex]
+\tt VQN1 \> $ \ds\frac 1g\,q_n \delta p$ (t=NSTEP) \> \> if {\tt LHDQLN=.TRUE.}\\[1ex]
+\tt TQNDIVFLUHOR \> $\ds - \frac{\delta t}g \,\divi{\eta} \lp q_n \delta p \,\vec v \rp$ \> cumulated \> if {\tt LHDQLN=.TRUE.}\\[1ex]
+\tt FQNFLUVERTDYN \> $\ds\frac{\delta t}g \,q_n\dot\eta\,\DerP p{\eta}$ \> cumulated \> if {\tt LHDQLN=.TRUE.}\\[1ex]
+\tt FQNTUR \> $\ds\delta t F_{q_n}^{tur}$ \> cumulated \> if {\tt LHDQLN=.TRUE.}\\
+\tt FQNTURCONV \> $\ds \delta t F_{q_n}^{tur-conv}$ \> cumulated \> if {\tt LHDQLN=.TRUE.}\\
+\tt FQNTURQNEGAT \> $\ds \delta t F_{q_n}^{q<0}$ \> cumulated \> if {\tt LHDQLN=.TRUE.}
+\end{tabbing}
+
+\section{Momentum budget}
+
+\subsection*{Budget equation}
+$$
+        \DerP{}t \lp \frac 1g\,\DerP p{\eta} \,\vec v \rp = 
+        \mb - \frac 1g\,\vec v \, \lc \divi{\eta}\lp\DerP{p}{\eta}\vec v \rp + \DerP{}{\eta}\lp\dot\eta \DerP{p}{\eta}\rp\rc
+        \mb - \frac 1g\,\DerP{p}{\eta}\lp\vec v\cdot\grad\rp\vec v
+        - \frac 1g\,\DerP p{\eta} \,f \vec k \times \vec v 
+$$
+$$
+        \mb - \frac 1g \,\DerP p{\eta} \lp \grad \Phi + RT \,\grad \ln p \rp - \delta_m \DerP{\fp{} 
+        \vec v}{\eta} - \DerP{}{\eta} \lp \vec F_v^{tur} + \vec F_v^{tur-conv} + \vec F_v^{rel}+ \vec F_v^{meso} \rp 
+$$
+
+\noi where $\vec v = \lp u,v \rp$ represents the real wind projected in the local geographic coordinates ($u$ positive towards the East, $v$ positive towards the North) and
+\begin{itemize}
+\item $\vec F_v^{tur}$ is the turbulent flux,
+\item $\vec F_v^{tur-conv}$ is the convective transport,
+\item $\vec F_v^{rel}$ is the momentum flux due to gravity wave drag.
+\end{itemize}
+
+In the model (${u^*}'$, ${v^*}'$) are expressed on the transformed sphere. One must, therefore, go back to the real wind (from transformed sphere to real sphere, then modification by the scale factor) before making a rotation, given by
+$$ \lp \bay{c} \vec e \\[1ex] \vec n \eay \rp = \lp \bay{lr} \cos\alpha & -\sin\alpha \\[1ex] \sin\alpha 
+& \cos\alpha \eay \rp \lp \bay{c} \vec i\,' \\[1ex] \vec j\,' \eay \rp $$
+
+\noi where ($\vec e$, $\vec n$) stands for the local geographical vectors. In \ARP\
+$\cos\alpha$ \quad {\tt GNORDM} \qquad $\sin\alpha$ \quad {\tt GNORDL}.
+Likewise for gradients.
+
+\ms
+Pressure force: the value written on file is 
+$$ \mb - \frac 1g \,\DerP p{\eta} \lc f\vec k \times \vec v + \grad \Phi + RT \,\grad \ln p \rd $$
+
+\subsection*{File output}
+
+All wind components (variables, fluxes, tendencies) are relative to the true geographical sphere.
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt VUU0 \> $\ds \frac 1g \, u\delta p$ (t=0) \\[1ex]
+\tt VVV0 \> $\ds \frac 1g \, v\delta p$ (t=0) \\[1ex]
+\tt VUU1 \> $\ds \frac 1g \, u\delta p$ (t=NSTEP $\delta t$) \\[1ex]
+\tt VVV1 \> $\ds \frac 1g \, v\delta p$ (t=NSTEP $\delta t$) \\[1ex]
+\tt TUUDIVFLUHOR \> $\ds -\frac{\delta t}g \,u \divi{\eta}\lp \delta p \vec v \rp$ \> cumulated \\[1ex]
+\tt TVVDIVFLUHOR \> $\ds -\frac{\delta t}g \,v \divi{\eta}\lp \delta p \vec v \rp$ \> cumulated
+\end{tabbing}
+
+The wind tendency due to advection of wind by itself is missing!
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt TUUFFVGADPSG \> $\ds \delta t \lp \frac fg \,v\delta p - \frac{\delta p}g \lp \DerP{\Phi}{x}  + RT
+\,\DerP{\ln p}{x} \rp \rp$ \> cumulated\\[1ex]
+\tt TVVFFUGADPSG \> $\ds\mb -\delta t \lp \frac fg \,u\delta p + \frac{\delta p}g \lp \DerP{\Phi}{y}  + 
+RT\,\DerP{\ln p}{y} \rp \rp$ \> cumulated\\[1ex]
+\tt FUUFLUVERTDYN \> $\ds \frac{\delta t}g\,u \dot\eta\,\DerP p{\eta}$ \> cumulated\\[1ex]
+\tt FVVFLUVERTDYN \> $\ds \frac{\delta t}g\,v \dot\eta\,\DerP p{\eta}$ \> cumulated\\[1ex]
+\tt FUUFLUDUAPLUI \> $\ds \delta t \delta_m \fp{} u$ \> cumulated\\[1ex]
+\tt FVVFLUDUAPLUI \> $\ds \delta t \delta_m \fp{} v$ \> cumulated\\[1ex]
+\tt FUUTUR \> $\delta t F_u^{tur}$ \> cumulated\\
+\tt FVVTUR \> $\delta t F_v^{tur}$ \> cumulated\\
+\tt FUUTURCONV \> $\delta t F_u^{tur-conv}$ \> cumulated\\
+\tt FVVTURCONV \> $\delta t F_v^{tur-conv}$ \> cumulated\\
+\tt FUUONDEGREL \> $\delta t F_u^{rel}$ \> cumulated\\
+\tt FVVONDEGREL \> $\delta t F_v^{rel}$ \> cumulated\\
+\tt FUUMESO \> $\delta t F_u^{meso}$ \> cumulated\\
+\tt FVVMESO \> $\delta t F_v^{meso}$ \> cumulated
+\end{tabbing}
+
+\section{Kinetic energy budget}
+
+\subsection*{Budget equation}
+
+$$
+\DerP{}t \lp \frac 1g\,k\,\DerP p{\eta} \rp = 
+\mb - \frac 1g\, k \,\divi{\eta}\lp \vec v\,\DerP p{\eta} \rp 
+- \frac 1g \,\DerP{}{\eta} \lp k\dot\eta \,\DerP{p}{\eta} \rp 
+- \frac 1g \,\DerP p{\eta}\,\vec v\cdot\grad k 
+$$
+
+$$ \mb - \frac 1g \,\DerP p{\eta} \,\vec v \lp \grad \Phi + RT\,\grad \ln p \rp - \delta_m \DerP{k\fp{}}{\eta} 
+- \vec v \,\DerP{}{\eta} \lp \vec F_v^{tur} + \vec F_v^{tur-conv} + \vec F_v^{rel}+ \vec F_v^{meso}  \rp $$
+
+The work due to pressure gradient force is precisely known by {\tt LAGGRAD}. However, the advection term cannot be diagnosed at initial time.
+\subsection*{File output}
+
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt VKK0 \> $\ds \frac 1g \, k \delta p$ (t=0) \\[1ex]
+\tt VKK1 \> $\ds \frac 1g \, k \delta p$ (t=NSTEP $\delta t$) \\[1ex]
+\tt TKKDIVFLUHOR \> $\ds -\frac{\delta t}g\, k \,\divi{\eta}\lp \delta p \vec v \rp$ \> cumulated (the advection term is missing!) \\[1ex]
+\tt TKKCONVERSI1 \> $\ds -\frac{\delta t}g \,\delta p \vec v\,\lp \grad \Phi + RT\,\grad \ln p \rp$ \> cumulated\\[1ex]
+\tt FKKFLUVERTDYN \> $\ds \frac{\delta t}g \,k\,\dot\eta\,\DerP p{\eta}$ \> cumulated\\[1ex]
+\tt FKKFLUDUAPLUI \> $\delta t \delta_m k\,\fp{}$ \> cumulated\\
+\tt TKKDISSIPTUR \> $\ds -\delta t \vec v\,\delta \vec F_v^{tur}$ \> cumulated\\
+\tt TKKDISSIPCONV \> $\ds -\delta t \vec v\,\delta \vec F_v^{tur-conv}$ \> cumulated\\
+\tt TKKDISSIPGREL \> $\ds -\delta t \vec v\,\delta \vec F_v^{rel}$ \> cumulated\\
+\tt TKKDISSIPMESO \> $\ds -\delta t \vec v\,\delta \vec F_v^{meso}$ \> cumulated
+\end{tabbing}
+
+\section{Thermal energy budget}
+
+Two types of thermal energy ($c_p T$) equations are used in \ARP: the \ddh\ use the budget type (\ref{Bilh}), the {\tt CPTEND} routine uses the eulerien type in $s$ (\ref{Eulh}). The corresponding lagrangian equation in $T$ is given for information in (\ref{LagT}). 
+
+\subsection*{Lagrangian equation in $T$}
+{\scriptsize
+\begin{displaymath}
+     \re\cp{}\DerD{T}{t}=
+        \re R T \frac{\omega}{p}
+        +\DerP{F_{c_p T}}{\eta}
+        -\lvl\DerP{\fcl{}}{\eta}
+        -\lvn\DerP{\fcn{}}{\eta}
+\end{displaymath}
+\begin{displaymath}
+                         +\fpl{}\DerP{}{\eta}\lb T\lc c_l-\cp{a}(1-\delta_m)\rc\rb
+                         +\fpn{}\DerP{}{\eta}\lb T\lc c_n-\cp{a}(1-\delta_m)\rc\rb
+\end{displaymath}
+\begin{displaymath}
+                         -T\lc
+                         (\cp{v}-\cp{a})\DerP{(F_{q_v}^{tur}+F_{q_v}^{tur-conv})}{\eta}
+                         +(c_l-\cp{a})\DerP{(F_{q_l}^{tur}+F_{q_l}^{tur-conv})}{\eta}
+                         +(c_n-\cp{a})\DerP{(F_{q_n}^{tur}+F_{q_n}^{tur-conv})}{\eta}
+                         \rc
+\end{displaymath}
+\begin{equation}\label{LagT}
+                         +\delta_m\fp{}\DerP{(\Phi+\ec)}{\eta}
+                         -\vec v\cdot\DerP{\vec F_v^{phys}}{\eta}
+\end{equation}
+}
+\subsection*{Eulerian equation in $s=\cp{} T+\Phi+\ec$}
+\begin{displaymath}
+       \re\DerP{s}{t}=-\re\, \lp\vec{v}\cdot\grad\rp s-\re\, \dot{\eta}\DerP{s}{\eta}
+                      +\re R T \frac{\omega}{p}
+\end{displaymath}
+\begin{displaymath}
+  +\DerP{}{\eta}\lb F_{c_p T} + \fcptp{}
+  + \fpl{} T \lc c_l - \cp{a} (1-\delta_m)\rc 
+  + \fpn{} T \lc c_n - \cp{a} (1-\delta_m)\rc
+  -\delta_m\cp{} T \fp{}\rb
+\end{displaymath}
+\begin{equation}\label{Eulh}
+  +\delta_m\fp{}\DerP{s}{\eta}
+\end{equation}
+One assumes $\DerP{\Phi}{t}=0$.
+
+\subsection*{Budget equation}
+
+\begin{displaymath}
+  \DerP{}{t}\lp\re c_p T\rp=
+  - \divi{\eta}\lp\re c_p T \vec{v}\rp
+  - \DerP{}{\eta}\lp\re c_p T \dot{\eta}\rp
+  + \re R T \frac{\omega}{p}
+\end{displaymath}
+\begin{displaymath}
+  +\DerP{}{\eta}\lb F_{c_p T} + \fcptp{}
+  + \fpl{} T \lc c_l - \cp{a} (1-\delta_m)\rc 
+  + \fpn{} T \lc c_n - \cp{a} (1-\delta_m)\rc\rb
+\end{displaymath}
+\begin{equation}\label{Bilh}
+  +\delta_m\fp{}\DerP{(\Phi+\ec)}{\eta}
+  -\vec v\cdot\DerP{\vec F_v^{phys}}{\eta}
+\end{equation}
+
+\noi where
+
+\begin{itemize}
+        \item $\re=-\frac{1}{g}\DerP{p}{\eta}$.
+        \item $F_{c_p T}=F_{c_p T}^{sol}+F_{c_p T}^{ther}+F_{c_p T}^{meso}+F_{s}^{tur}+F_{s}^{tur-conv}$.
+        \item $F_{s}^{tur-conv}$ is the subgrid-scale transport of dry static energy $s=c_p T + \Phi$, due to deep convection.
+        \item $\fcptp{}=\fcptpl{}+\fcptpn{}$.
+        \item $\fcptpl{}=\fcptpcl{}+\fcptpsl{}$.
+        \item $\fcptpn{}=\fcptpcn{}+\fcptpsn{}$.
+        \item $\fcptpcl{}=-\lc\lvl+(c_l-\cp{v})T\rc \fccl{}$.
+        \item $\fcptpcn{}=-\lc\lvn+(c_n-\cp{v})T\rc \fccn{}$.
+        \item $\fcptpsl{}=-\lc\lvl+(c_l-\cp{v})T\rc \fcsl{}$.
+        \item $\fcptpsn{}=-\lc\lvn+(c_n-\cp{v})T\rc \fcsn{}$.
+        \item $F_{c_p T}^{sol}$ et $F_{c_p T}^{ther}$ are the solar and infra-red fluxes. 
+        \item $\vec F_v^{phys}= \vec F_v^{tur}+\vec F_v^{tur-conv}+\vec F_v^{rel}+\vec F_v^{meso}$.
+        \item $\cp{}= \cp{a} q_a +  \cp{v} q_v + c_l q_l + c_n q_n $.
+\end{itemize}
+
+\subsection*{File output}
+
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt VCT0 \> $\ds\frac 1g \,c_pT \delta p$ (t=0) \\[1ex]
+\tt VCT1 \> $\ds\frac 1g \,c_pT \delta p$ (t= NSTEP $\delta t$) \\[1ex]
+\tt TCTDIVFLUHOR \> $\ds\mb-\frac{\delta t}g \,\divi{\eta} \lp c_p T \delta p \,\vec v \,\rp$ \> cumulated\\[1ex]
+\tt TCTCONVERSI2 \> $\ds\frac{\delta t}g\,RT\delta p (\omega/p)$ \> cumulated\\[1ex]
+\tt TCTCONVERSI3 \> $-\delta_m \delta t \fp{} \delta\Phi$ \> cumulated\\[1ex]
+\tt FCTFLUVERTDYN \> $\ds\frac{\delta t}g \,c_p T \dot\eta\,\DerP p{\eta}$ \> cumulated\\[1ex]
+\tt FCTTUR \> $\delta t \,F_s^{tur}$ \> cumulated\\
+\tt FCTTURCONV \> $\delta t \,F_s^{tur-conv}$ \> cumulated\\
+\tt FCTRAYSOL1 \> $\delta t \,F_{c_p T}^{sol}$ \> cumulated\\
+\tt FCTRAYTER1 \> $\delta t \,F_{c_p T}^{ther}$ \> cumulated\\
+\tt FCTMESO \> $\delta t \,F_{c_p T}^{meso}$ \> cumulated\\
+\tt FCTPRECISTL \> $- \delta t \,\fcptpsl{}$ \> cumulated\\
+\tt FCTPRECISTN \> $- \delta t \,\fcptpsn{}$ \> cumulated\\
+\tt FCTPRECICOL \> $- \delta t \,\fcptpcl{}$ \> cumulated\\
+\tt FCTPRECICON \> $- \delta t \,\fcptpcn{}$ \> cumulated\\
+\tt FCTPRECCSCOL \> $- \delta t \,\fpcl{} T \lc c_l - \cp{a} (1-\delta_m)\rc$ \> cumulated\\
+\tt FCTPRECCSCON \> $- \delta t \,\fpcn{} T \lc c_n - \cp{a} (1-\delta_m)\rc$ \> cumulated\\
+\tt FCTPRECCSSTL \> $- \delta t \,\fpsl{} T \lc c_l - \cp{a} (1-\delta_m)\rc$ \> cumulated\\
+\tt FCTPRECCSSTN \> $- \delta t \,\fpsn{} T \lc c_n - \cp{a} (1-\delta_m)\rc$ \> cumulated\\
+\end{tabbing}
+
+\section{Angular momentum budget}
+
+The angular momentum is defined by
+\begin{displaymath} 
+        \vec{M}=\vec{r}\times(\vec{\Omega}\times\vec{r}+\vec{v})
+\end{displaymath}
+where $\vec{r}$ stands for the position vector, $\vec{v}$  the horizontal wind and $\vec{\Omega}$ the Earth pulsation. In Cartesian coordinate, the kinetic moment reads
+\begin{eqnarray*} 
+        \vec{M} & = & M_1 \, \vec{i}\, + \, M_2\, \vec{j}\, + \, M_3 \,\vec{k}\\
+        & = & ( a v \sin \lambda - a ( u + a \Omega \cos\theta ) \sin \theta \cos \lambda ) \, \vec{i}  \\
+        &   & + ( - a v \cos \lambda - a ( u + a \Omega \cos \theta ) \sin \theta \sin \lambda ) \,\vec{j}  \\
+        &   & + a ( u + a \Omega \cos \theta ) \cos \theta \: \vec{k}
+\end{eqnarray*}
+with
+\begin{itemize}
+        \item $(\vec{i},\,\vec{j},\,\vec{k})$:  $\vec{k}$ along the earth rotation axis, $\vec{i}$ et $\vec{j}$ in the equatorial plane. This base does not rotate with the earth: the position of the Greenwich meridian at {\tt 00 UTC} on the day of the beginning of the integration of the model sets $\vec{i}$. $\vec{j}$ is got by an equatorial rotation of $90^\circ$ towards the East of $\vec{i}$, and of $\vec{k}=\vec{i}\times\vec{j}$.
+
+        \item $u$ and $v$ zonal and meridional wind.
+        \item $a$ earth radius.
+        \item $\theta$ and $\lambda$ latitude and longitude.
+\end{itemize}
+\subsection*{Budget equation}
+$$ 
+\DerP{}{t}\lp\re\vec{M}\rp
+=
+\, -\, \vec{M}\lc\divi{\eta}\lp\re\vec{v}_{a}\rp+\DerP{}{\eta}\lp\re\dot{\eta}\rp\rc
+\, -\, \re\lp\vec{v}_{a}\cdot\grad\rp\vec{M}
+\, +\, \delta_m \vec{M}\DerP{F_p}{\eta}
+\, +\, \re\vec{r}\times\vec{\alpha}
+$$
+avec
+\begin{itemize}
+        \item $\re=-\frac{1}{g}\DerP{p}{\eta}$
+        \item $\vec{v}_{a}=\vec{\Omega}\times\vec{r}+\vec{v}$
+        \item $\vec{\alpha}=\vec{\Omega}\times(\vec{\Omega}\times\vec{r})
+              \, -\, \frac{1}{\re}\lc \Phi\grad\re+\frac{1}{g}\DerP{}{\eta}\lp\Phi\grad p\rp\rc
+              \, -\, \grad\Phi
+              \, +\, \frac{1}{\re}\lc\DerP{\vec{F}_{v}}{\eta}+\delta_m F_p \DerP{\vec{v}}{\eta}\rc$
+        \item $\vec{F}_v=\vec{F}_v^{tur}+\vec{F}_v^{tur-conv}+\vec{F}_v^{rel}$
+\end{itemize}
+\subsection*{File output}
+\begin{tabbing}
+        xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+        \tt VA10                \> $\frac{\delta p}{g}\, M_1$ (t=0) \>  \\ [1ex]
+        \tt VA20                \> $\frac{\delta p}{g}\, M_2$ (t=0) \>  \\ [1ex]
+        \tt VA30                \> $\frac{\delta p}{g}\, M_3$ (t=0) \>  \\ [1ex]
+        \tt VA11                \> $\frac{\delta p}{g}\, M_1$ (t=NSTEP $\delta t$) \>  \\ [1ex]
+        \tt VA21                \> $\frac{\delta p}{g}\, M_2$ (t=NSTEP $\delta t$) \>  \\ [1ex]
+        \tt VA31                \> $\frac{\delta p}{g}\, M_3$ (t=NSTEP $\delta t$) \>  \\ [1ex]
+        \tt TA1DIVFLUHOR        \> $-\frac{\delta t}{g}\, M_1 \,\lc \divi{\eta}\lp\vec{v}\delta p\rp +a\Omega\cos\theta\,\delta \! B\, \DerP{\pi}{x}\rc$ \> cumulated\\ [1ex]
+        \tt TA2DIVFLUHOR        \> $-\frac{\delta t}{g}\, M_2 \,\lc \divi{\eta}\lp\vec{v}\delta p\rp +a\Omega\cos\theta\,\delta \! B\, \DerP{\pi}{x}\rc$ \> cumulated\\ [1ex]
+        \tt TA3DIVFLUHOR        \> $-\frac{\delta t}{g}\, M_3 \,\lc \divi{\eta}\lp\vec{v}\delta p\rp +a\Omega\cos\theta\,\delta \! B\, \DerP{\pi}{x}\rc$ \> cumulated\\ [1ex]
+        \tt FA1FLUVERTDYN       \> $\delta t\frac{\delta p}{g} \,M_1 \dot{\eta}$ \> cumulated\\ [1ex]
+        \tt FA2FLUVERTDYN       \> $\delta t\frac{\delta p}{g} \,M_2 \dot{\eta}$ \> cumulated\\ [1ex]
+        \tt FA3FLUVERTDYN       \> $\delta t\frac{\delta p}{g} \,M_3 \dot{\eta}$ \> cumulated\\ [1ex]
+        \tt TA1ADJUST           \> $\frac{\delta t}{g}a\,[-\lp\delta p\DerP{RT}{y}+RT\delta\! B \DerP{\Phi}{y}\rp\sin(\lambda+\Omega t)$ \> \\
+        \tt                     \> $+\lp\delta p\DerP{RT}{x}+RT\delta\! B\DerP{\Phi}{x}\rp\cos(\lambda+\Omega t)\sin\theta]$ \> cumulated\\ [1ex]
+        \tt TA2ADJUST           \> $\frac{\delta t}{g}a\,[-\lp\delta p\DerP{RT}{y}+RT\delta\! B \DerP{\Phi}{y}\rp\cos(\lambda+\Omega t)$ \> \\
+        \tt                     \> $+\lp\delta p\DerP{RT}{x}+RT\delta\! B\DerP{\Phi}{x}\rp\sin(\lambda+\Omega t)\sin\theta]$ \> cumulated\\ [1ex]
+        \tt TA3ADJUST           \> $-\frac{\delta t}{g}a\, \lp\delta p\DerP{RT}{x}+RT\delta\! B\DerP{\Phi}{x}\rp\cos\theta$ \> cumulated\\ [1ex]
+        \tt TA1NONAX            \> $\delta t \frac{\delta p}{g} a^2 \Omega^2 \sin\theta \cos\theta\sin(\lambda+\Omega t)$ \> cumulated\\ [1ex]
+        \tt TA2NONAX            \> $\delta t \frac{\delta p}{g} a^2 \Omega^2 \sin\theta \cos\theta\cos(\lambda+\Omega t)$ \> cumulated\\ [1ex]
+        \tt FA1GRAV             \> $-\frac{\delta p}{g}a\lc\sin\theta\cos(\lambda+\Omega t)\DerP{\Phi}{x}+\sin(\lambda+\Omega t)\DerP{\Phi}{y}\rc$ \> cumulated\\ [1ex]
+        \tt FA2GRAV             \> $-\frac{\delta p}{g}a\lc\sin\theta\sin(\lambda+\Omega t)\DerP{\Phi}{x}+\cos(\lambda+\Omega t)\DerP{\Phi}{y}\rc$ \> cumulated\\ [1ex]
+        \tt FA3GRAV             \> $\frac{\delta p}{g}a \cos\theta\DerP{\Phi}{x}$ \> cumulated\\ [1ex]
+        \tt FA1FLUDUAPLUI       \> $\delta t \, \delta_m \, F_p\,  M_1$ \> cumulated\\ [1ex]
+        \tt FA2FLUDUAPLUI       \> $\delta t \, \delta_m \, F_p\,  M_2$ \> cumulated\\ [1ex]
+        \tt FA3FLUDUAPLUI       \> $\delta t \, \delta_m \, F_p\,  M_3$ \> cumulated\\ [1ex]
+        \tt TA1TUR              \> $\delta t \, a \, \lc F_{v}^{tur}\sin(\lambda+\Omega t)-F_{u}^{tur}\sin\theta\cos(\lambda+\Omega t)\rc$ \> cumulated\\ [1ex]
+        \tt TA2TUR              \> $\delta t \, a \, \lc F_{v}^{tur}\cos(\lambda+\Omega t)-F_{u}^{tur}\sin\theta\sin(\lambda+\Omega t)\rc$ \> cumulated\\ [1ex]
+        \tt TA3TUR              \> $\delta t \, a \, F_{u}^{tur}\cos\theta$ \> cumulated\\ [1ex]
+        \tt TA1TURCONV          \> $\delta t \, a \, \lc F_{v}^{tur-conv}\sin(\lambda+\Omega t)-F_{u}^{tur-conv}\sin\theta\cos(\lambda+\Omega t)\rc$ \> cumulated\\ [1ex]
+        \tt TA2TURCONV          \> $\delta t \, a \, \lc F_{v}^{tur-conv}\cos(\lambda+\Omega t)-F_{u}^{tur-conv}\sin\theta\sin(\lambda+\Omega t)\rc$ \> cumulated\\ [1ex]
+        \tt TA3TURCONV          \> $\delta t \, a \, F_{u}^{tur-conv}\cos\theta$ \> cumulated\\ [1ex]
+        \tt TA1ONDEGREL         \> $\delta t \, a \, \lc F_{v}^{rel}\sin(\lambda+\Omega t)-F_{u}^{rel}\sin\theta\cos(\lambda+\Omega t)\rc$ \> cumulated\\ [1ex]
+        \tt TA2ONDEGREL         \> $\delta t \, a \, \lc F_{v}^{rel}\cos(\lambda+\Omega t)-F_{u}^{rel}\sin\theta\sin(\lambda+\Omega t)\rc$ \> cumulated\\ [1ex]
+        \tt TA3ONDEGREL         \> $\delta t \, a \, F_{u}^{rel}\cos\theta$ \> cumulated\\ [1ex]
+\end{tabbing}
+\subsection*{Listing output}
+When an output on listing is requested,what is printed is the intersection position of $\vec{M}$ with the earth surface, in latitude and in longitude values: 
+\begin{eqnarray*}
+        \cos \theta_0 & = & \frac{M_3}{\sqrt{M^2_1 + M^2_2 + M^2_3}} \\
+        \cos (\lambda_0 + \Omega t) & = & \frac{M_1}{\sqrt{M^2_1 + M^2_2}}
+\end{eqnarray*}
+
+\section{Entropy budget}
+\subsection*{Budget equation}
+$$
+\DerP{}{t}\lp\re s\rp=
+- \divi{\eta}\lp\re s \vec{v}\rp
+- \DerP{}{\eta}\lp\re s \dot{\eta}\rp
++ \DerP{}{\eta}\lc s_l \lp \fpcl{}+\fpsl{} \rp
+               + s_g \lp \fpcn{}+\fpsn{}\rp \rc
+$$
+$$
+- \frac{1}{T}\vec{v}\cdot\DerP{}{\eta} \lp \vec{F}_{v}^{tur}+\vec{F}_{v}^{tur-conv}+\vec{F}_{v}^{rel} \rp
+- (s_v-s_a+c_{pv}-c_{pa})\DerP{}{\eta}(F_{q}^{tur}+F_{q}^{tur-conv})
+$$
+$$
++ \frac{1}{T}(F_{cp T}^{sol}+F_{cp T}^{ther}+F_{cp T}^{tur}+F_{cp T}^{tur-conv})
+- (1-\delta_m)\lc s_a\DerP{\fp{}}{\eta}+\frac{1}{T}c_{pa}\DerP{T}{\eta}\fp{}\rc
++ \delta_m \frac{1}{T} \fp{} \DerP{\Phi}{\eta}
+$$
+where
+\begin{itemize}
+        \item $\re=-\frac{1}{g}\DerP{p}{\eta}$.
+        \item $s=s_a + (s_v-s_a) q_v$.
+        \item $s_a=c_{pa}\ln(\frac{T}{T_0})-R_a\ln(\frac{p_a}{p_0})+s_{a}^{0}$.
+        \item $s_v=c_{pv}\ln(\frac{T}{T_0})-R_v\ln(\frac{p_v}{p_0})+s_{v}^{0}$.
+        \item $s_l=c_{w}\ln(\frac{T}{T_0})+s_{l}^{0}$.
+        \item $s_g=c_{g}\ln(\frac{T}{T_0})+s_{g}^{0}$.
+        \item $s_{a}^{0}=6775 \, J kg^{-1} K^{-1}$.
+        \item $s_{v}^{0}=10320 \, J kg^{-1} K^{-1}$.
+        \item $s_{l}^{0}=3517 \, J kg^{-1} K^{-1}$.
+        \item $s_{g}^{0}=2296 \, J kg^{-1} K^{-1}$.
+\end{itemize}
+The horizontal divergence term is computed as 
+\begin{displaymath} 
+        \divi{\eta}\lp\re s \vec{v}\rp=
+        s\divi{\eta}\lp\re \vec{v}\rp
+        +\re\vec{v}\cdot\grad s
+\end{displaymath}
+where
+\begin{itemize} 
+        \item $\vec{v}\cdot\grad s=
+               (s_v-s_a)\vec{v}\cdot\grad q_v
+               +\vec{v}\cdot\lc c_p\grad\ln T-R\grad\ln p\rc
+               $.
+        \item $\vec{v}\cdot\grad\ln p=\mbox{{\tt RTGR}}\,\vec{v}\cdot\grad\pi$.
+\end{itemize}
+\subsection*{File output}
+
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt VSS0         \> $\frac{1}{g} s \delta p$ (t=0) \\[1ex]
+\tt VSS1         \> $\frac{1}{g} s \delta p$ (t=NSTEP $\Delta t$) \\[1ex]
+\tt TSSDIVFLUHOR \> $-\frac{\delta t}{g}\{s\divi{\eta}\lp\vec{v}\delta p\rp$\\[1ex]
+                 \> $+\delta p[(s_v-s_a)\vec{v}\cdot\grad q_v            $\\[1ex]
+                 \> $+\frac{1}{T}c_p\vec{v}\cdot\grad T                    $\\[1ex]
+                 \> $-R\,\mbox{{\tt ZRTGR}}\,\vec{v}\cdot\grad\pi]\}       $ \> cumulated\\ [1ex]
+\tt TSSPRECICT   \> $\delta t(1-\delta_m)[s_a\delta\fp{}+\cp{a}\fp{}\frac{\delta T}{T}]$ \\[1ex]
+                 \> $-\delta_m \delta t\frac{1}{T}\fp{}\delta\Phi$ \> cumulated\\ [1ex]
+\tt FSSFLUVERTDYN\> $\frac{\delta t}{g}s\dot{\eta}\delta p$ \> cumulated\\ [1ex]
+\tt FSSPRECISS   \> $\delta t[s_l(\fpcl{}+\fpsl{})+s_g(\fpcn{}+\fpsn{})]$ \> cumulated\\ [1ex]
+\tt TSSDISSIPTUR \> $\frac{\delta t}{T}\vec{v}\cdot\delta\vec{F}_{v}^{tur}$ \> cumulated\\ [1ex]
+\tt TSSDISSIPCONV\> $\frac{\delta t}{T}\vec{v}\cdot\delta\vec{F}_{v}^{tur-conv}$ \> cumulated\\ [1ex]
+\tt TSSDISSIPGREL\> $\frac{\delta t}{T}\vec{v}\cdot\delta\vec{F}_{v}^{rel}$ \> cumulated\\ [1ex]
+\tt TSSTURQVTOT  \> $\delta t(s_v-s_a+\cp{v}-\cp{a})(\delta F_{q}^{tur}+\delta F_{q}^{tur-conv})$ \> cumulated\\ [1ex]
+\tt TSSRAY1      \> $-\frac{\delta t}{T}(\delta F_{cp T}^{sol}+F_{cp T}^{ther})$ \> cumulated\\ [1ex]
+\tt TSSTURCTTOT  \> $-\frac{\delta t}{T}(\delta F_{cp T}^{tur}+F_{cp T}^{tur-conv})$ \> cumulated\\ [1ex]
+\end{tabbing}
+
+\section{Potential energy budget}
+
+\subsection*{Budget equation}
+
+$$ \mb - \frac 1g\,\DerP p{\eta} \,\vec v \lp \grad\Phi + RT\,\grad \ln p \rp = \mb - RT \lc \frac{\omega}{gp} 
++ \delta_m \,\frac{\fp{}}p \rc \DerP p{\eta} - \frac 1g \,\divi{\eta} \lp \Phi\,\DerP p{\eta}\,\vec 
+v \rp $$
+
+$$ \mb - \frac 1g\,\DerP{}{\eta} \lc \Phi \lp \DerP pt + \dot\eta\,\DerP p{\eta} + \delta_m g \fp{} 
+\rp \rc $$
+
+\subsection*{File output}
+
+Three of these budget terms have already been mentioned, see \og kinetic energy budget\fg\ et \og thermal energy budget\fg. Is added
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt VEP0 \> $\ds\frac 1g\,\Phi \delta p$ (t=0) \\[1ex]
+\tt VEP1 \> $\ds\frac 1g\,\Phi \delta p$ (t=NSTEP $\delta t$) \\[1ex]
+\tt TEPDIVFLUHOR \> $\ds\mb-\frac{\delta t}g\,\divi{\eta} \lp\Phi \delta p \vec v\,\rp$ \> cumulated\\[1ex]
+\tt FEPCONVERSIFL \> $\ds\mb -\frac{\delta t}g \,\Phi_{\tilde\ell} \sum_{k=1}^\ell \divi{\eta}\lp \delta 
+p \vec v\,\rp$ \> cumulated
+\end{tabbing}
+
+\section{Surface budgets}
+\label{BSC}
+
+The DDH tool does not produce a closed soil budget, rather some surface fluxes or variables multiplied by land/sea mask {\tt PITM} 
+(1 on land, 0 at sea). The surface occupied by these points in each domain will also be computed. This operation makes it possible, to bring back the variable mean and the mean of fluxes to the sole surface of the continents. 
+
+\subsection*{Budget equation}
+\begin{itemize}
+      \item Surface temperature:
+            $$ \DerP{c_{ms} T_s}{t}=  
+               \delta_{terre}\lb{F_{cp T}}_{\tilde{L}}^{sol}+{F_{cp T}}_{\tilde{L}}^{ther} 
+               +L_v(T_s)E_l+L_n(T_s)E_n+F_{csa}-F_{csp}-L_{fonte} F_{fonte}\rb
+            $$
+            where $c_{ms}$ is the surfacic calorific capacity of the surface layer. A constant value is used here: $1/\mbox{\tt HSOL}$.
+      \item Deep temperature:
+            $$ \DerP{c_{mp} T_p}{t}= \delta_{terre}F_{csp} $$
+            where $c_{mp}$ is the surfacic calorific capacity of the deep layer. A constant value is used here: $\mbox{\tt RTINER}/\mbox{\tt HSOL}$.
+      \item Surface water content:
+            $$ \DerP{w_s}{t}=\delta_{terre}\lb \fpcl{}+\fpsl{}+E_l-F_{perco}+F_{fonte}-F_{ruiss}\rb$$
+      \item Deep water content:
+            $$ \DerP{w_p}{t}=\delta_{terre}\lb F_{perco}-F_{ruisp}\rb$$
+      \item Surface snow content:
+            $$ \DerP{w_n}{t}=\delta_{neige}\delta_{terre}\lb \fpcn{}+\fpsn{}+E_n-F_{fonte}\rb$$
+\end{itemize}
+\subsection*{File output}
+The fields are written on 3 file articles:
+\begin{itemize}
+        \item Variables at $t=0$: article \verb*+Sxx_0+
+
+        \begin{tabular}{ll}
+        $\ds \frac{1}{S_{\cal D}}\sum_{(j,k)\in {\cal D}} \mbox{{\tt PITM}}\,\sigma_{j,k}$ & Land fraction  \\
+        $c_{ms}T_s$ & Surface layer: energy \\
+        $c_{mp}T_p$ & Deep layer: energy \\
+        $w_s$ & Surface layer: water content (surfacic mass) \\
+        $w_n$ & Surface layer: snow content (surfacic mass) \\
+        $w_p$ & Deep layer: water content (surfacic mass)
+        \end{tabular}
+
+        \item Variables at $t=NSTEP\times\delta t$: article \verb*+Sxx_1+
+
+        The same articles as above.
+
+      \item Flux cumulated from 0 to NSTEP: articles {\tt G01, ..., G17}
+
+        \begin{tabular}{lll}
+          G01 & ${F_{cp T}}_{\tilde{L}}^{sol}$ & Solar radiation \\
+          G02 & ${F_{cp T}}_{\tilde{L}}^{ther}$ & Infra-red radiation\\
+          G03 & $L_v(T_s)E_l$ & Latent heat (water) \\
+          G04 & $L_n(T_s)E_n$ & Latent heat (snow) \\
+          G05 & $F_{csa}$ & Sensible heat at surface \\
+          G06 & $F_{csp}$ & Sensible heat between surface and deep layer \\
+          G07 & $L_{fonte} F_{fonte}$ & Surface flux due to melting Flux de chaleur en surface lié à la fonte de neige \\
+          G08 & $\fpsl{}$ & Precipitation: resolved, rain \\
+          G09 & $\fpsn{}$ & Precipitation: resolved, snow \\
+          G10 & $\fpcl{}$ & Precipitation: subgrid-scale, rain \\
+          G11 & $\fpcn{}$ & Precipitation: subgrid-scale, snow \\
+          G12 & $E_l$ & Surface evaporation (water) \\
+          G13 & $E_n$ & Surface evaporation (snow) \\
+          G14 & $F_{perco}$ & Percolation from surface to deep \\
+          G15 & $F_{fonte}$ & Snow melting \\
+          G16 & $F_{ruiss}$ & Surface run-off \\
+          G17 & $F_{ruisp}$ & Deep run-off 
+        \end{tabular}
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Instantaneous diagnostics }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Relative humidity}
+
+
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt VHR0 \> $\frac{1}{g}H_r \delta p$ (t=0) \\[1ex]
+\tt VHR1 \> $\frac{1}{g}H_r \delta p$ (t=NSTEP $\delta t$) \\[1ex]
+\\[1ex]
+\end{tabbing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Cloudiness}
+
+
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt VNT0 \> $\frac{1}{g}n_t \delta p$ (t=0) \\[1ex]
+\tt VNT1 \> $\frac{1}{g}n_t \delta p$ (t=NSTEP $\delta t$) \\[1ex]
+\\[1ex]
+\end{tabbing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vertical velocity}
+
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt VOM0 \> $\frac{1}{g}\omega \delta p$ (t=0) \\[1ex]
+\tt VOM1 \> $\frac{1}{g}\omega \delta p$ (t=NSTEP $\delta t$) \\[1ex]
+\\[1ex]
+\end{tabbing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Passive variables}
+
+The passive variables are diagnosed if {\tt LHDHKS} is true and if {\tt NFPASS} (number of passive variables in the model) is higher or equal to 1.
+
+ 
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt Vxx0 \> $\frac{1}{g} v_{xx} \delta p$ (t=0) \\[1ex]
+\tt Vxx1 \> $\frac{1}{g} v_{xx} \delta p$ (t=NSTEP $\delta t$) \\[1ex]
+\\[1ex]
+\end{tabbing}
+where $xx$ is between $1$ and {\tt NFPASS}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Free style variables}
+
+
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt SVGFS01 \>  $2 \, m$ temperature \\[1ex]
+\tt SVGFS02 \>  specific water vapour at $2 \, m$ temperature \\[1ex]
+\tt SVGFS03 \>  $u$ at $2 \, m$ level \\[1ex]
+\tt SVGFS04 \>  $v$ at $2 \, m$ level \\[1ex]
+\tt SVGFS05 \>  $g \, z$ orography \\[1ex]
+\tt SVGFS06 \>  $g \, z_0$ , where $z_0$ is the dynamical roughness \\[1ex]
+\tt SVGFS07 \>  $g \, z_0$ , where $z_0$ is the thermal roughness \\[1ex]
+\tt SVGFS08 \>  albedo \\[1ex]
+\tt SVGFS09 \>  boundary layer height \\[1ex]
+\\[1ex]
+\end{tabbing}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Free style fluxes}
+
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt SFGFS01 \>  downward solar radiation \\[1ex]
+\tt SFGFS02 \>  downward thermal radiation \\[1ex]
+\\[1ex]
+\end{tabbing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Cumulated mass}
+
+To make possible future conversion of tendencies and fluxes (extensive) in intensive values, the following value is diagnosed:
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
+\tt PPP \> $\frac{1}{g}\delta t \delta p$ \> cumulated\\[1ex]
+\end{tabbing}
+

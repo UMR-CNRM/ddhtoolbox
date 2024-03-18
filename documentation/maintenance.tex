@@ -1,0 +1,655 @@
+\chapter{Software maintenance}
+\null
+\vspace{1cm}
+
+In this chapter, one will find a short description of DDH routines, and the
+organization of arrays. In a very practical manner, is described the necessary
+operations when adding a supplementary field.
+
+
+\section{Main arrays and their organization}
+
+The main arrays are in two modules:
+\begin{itemize}
+\item {\tt YOMTDDH} \qquad for arrays receiving variables and cumulated tendencies and fluxes.
+
+\item {\tt YOMMDDH} \qquad pour the other arrays, except logical variables which are in {\tt YOMLDDH}.
+\end{itemize}
+
+\subsection{Arrays describing domains}
+
+The distribution of grid-point points in the user's domains is inside
+\qquad {\tt NDDHLA(NDLON,NDGL)} \quad for zonal bands,
+\qquad {\tt NDDHPU(NDLON,NDGL,NDHNPU)} \quad for limited domains and isolated points.
+\begin{itemize}
+\item {\tt NDHNPU: } number of planes used by the user.
+\item {\tt NDDHI(NDLON,NDGL)} \qquad for the domain distribution, 
+\item {\tt HDSF (NDLON,NDGL)} \qquad for the weights $\sigma_{j,k}$ of each grid-point.
+\end{itemize}
+
+For each ($jlon$, $jgl$) point of the Gauss grid, within {\tt NDDHI}, one will find the index of the external domain. It varies between 1 and {\tt NDHIDH}.
+\begin{itemize}
+\item {\sl Global domain:} \quad {\tt NDHIDH = 1} every points belong to domain 1.
+\item {\sl Zonal bands:} \quad {\tt NDHIDH = NDHKD}
+\item {\sl Limited areas:} {\tt NDHIDH} depends very much on declaration details and is very unpredictable. 
+\end{itemize}
+The following tables allow to reconstitute the user's domains using internal domains.
+\begin{itemize}
+\item {\tt NLRDDH(NDHDDX,NDHKD):} integers contained in NLRDDH, from {\tt NLRDDH(1,JKD)} to {\tt NLRDDH(NLXDDH(JKD),JKD)}, are the internal domains whose reunion makes the latitude band {\tt JKD},
+\item {\tt HDSFLA(NDHKD):} weight of each latitude band.
+\item {\tt NURDDH(NDHDDX,0:NDHBPX,NDHNPU):} integers from {\tt NURDDH(1,JDOM,JMASK)} to {\tt NURDDH(NUXDDH(JDOM,JMASK),JDOM,JMASK)} are the domains whose reunion makes  the user domain {\tt (JMASK,JDOM)}. {\tt JMASK} is the index of the virtual plane, {\tt 1 $\leq$ JMASK $\leq$ NDHNPU}, and {\tt JDOM} is the index of the domain within the plane: {\tt 0 $\leq$ JDOM $\leq$ \underbar{\tt NDHBPU(JMASK)}}. Points not assigned by users belong to the domain 0.
+\item {\tt HDSFDU(0:NDHBPX,NDHNPU):} Weight of each user's domain.
+\end{itemize}
+
+The weight of the global domain is {\tt HDSFGL}, from {\tt MODULE/YOMIDDH/}.
+\subsection{Data arrays}
+
+Pointers contained within {\tt MODULE/DDHDIM/}and   {\tt /DDHPON/} from {\tt YOMMDDH} identify the content of these tables. 
+These tables are
+\noi {\tt HDCV0(0:NFLEV,NDHCV,NDHIDH,NDHTSK)} alias {\tt HDCVB0(NDHCV*(NFLEV+1),NDHIDH,NDHTSK)}: arrays at time 0 and tendencies/fluxes cumulated from 0 to {\tt NSTEP-1}.
+
+\noi {\tt HDCV1(0:NFLEV,NDHCV,NDHIDH,NDHTSK)} alias {\tt HDCVB1(NDHCV*(NFLEV+1),NDHIDH,NDHTSK)}: variables 
+at time {\tt NSTEP} and tendencies/fluxes cumulated from 0 to {\tt NSTEP}.
+
+\noi {\tt HDCS0(NDHCS,NDHIDH,NDHTSK)}: soil variables at time 0 and cumulated fluxes from 0 to {\tt NSTEP-1}.
+
+\noi {\tt HDCS1(NDHCS,NDHIDH,NDHTSK)}: soil variables at time {\tt NSTEP} and cumulated fluxes from 0 to {\tt NSTEP}.
+
+\begin{itemize}
+\item {\tt NDHIDH:} number of internal domains.
+\item {\tt NDHTSK:} number of tasks.
+\item {\tt NDHCV:} total number of vertical profiles.
+\item {\tt NDHCS:} total number of surface fields.
+\end{itemize}
+
+All vertical profiles are defined on {\tt NFLEV+1} words. Generally {\tt HDCV(0,field ,domain ,task)=0}. 
+\ms
+Before describing these arrays, a few words on {\sl logical pointers}\label{poil}. They are of two kinds
+\begin{itemize}
+\item Permanent pointers who, for each scientific options, show le number of fields of each categories. For the moment, the options are {\tt LHDHKS}, {\tt LHDMCI} and {\tt LHDENT}. Categories are composed of variables, tendencies/dynamical fluxes, tendencies/physical fluxes (i.e. for the moment there is no distinction between tendency and flux).
+\item situation pointers which depend on chosen options for a given experiment.
+\end{itemize}
+Permanent pointers are initialized in {\tt SUNDDH}. Every counted field corresponds to specific computation {\tt FORTRAN} code lines in{\tt CPDYDDH} and {\tt CPPHDDH}, and to writing lines or other editions in {\tt PPEDDH} and {\tt PPFIDH}. A corresponding commentary is in the general nomenclature of {\tt Y0MTDDH}.
+\ms
+Situation pointers are also initialized in {\tt SUNDDH} from permanent pointers and from logical options given by {\tt NAMDDH}. They control global lengths in {\tt CPG}, {\tt POSDDH} and {\tt PPSYDH} where fields are undifferentiated.
+  
+\ms
+Permanent pointers are 
+\begin{itemize}
+\item {\tt NDHVHK:} number of variables under {\tt LHDHKS} 
+\item {\tt NDHFHKD:} number of fluxes/tendencies under {\tt LHDHKS}
+\item {\tt NDHFHKP:} number of fluxes/tendencies under {\tt LHDHKS} 
+\item {\tt NDHTHK = NDHVHK+NDHFHKD+NDHFHKP}
+\end{itemize}
+
+In the same way, for the option {\tt LHDMCI}
+\begin{itemize}
+\item {\tt NDHVMC}
+\item {\tt NDHFMCD}
+\item {\tt NDHFMCP}
+\item {\tt NDHTMC}
+\end{itemize}
+
+For the option {\tt LHDENT}
+\begin{itemize}
+\item {\tt NDHVEN}
+\item {\tt NDHFEND}
+\item {\tt NDHFENP}
+\end{itemize}
+
+Soil (under {\tt LHDHKS})
+\begin{itemize}
+\item {\tt NDHVS}
+\item {\tt NDHFSD}
+\item {\tt NDHFSP}
+\end{itemize}
+
+\noi (The total number is {\tt NDHCS}).
+
+\ms
+Vertical profiles are splitted into categories
+\newline \centerline{\tt NDHFxxD = NDHAxxD + NDHBxxD}
+\newline \centerline{\tt NDHFxxP = NDHAxxP + NDHBxxP}
+
+where (A) stands for tendencies and (B) for dynamical fluxes. 
+
+Situation pointers are
+\begin{itemize}
+\item {\tt NDHVV:} number of variables in vertical profiles
+\item {\tt NDHFVD:} number of fluxes/dynamical tendencies {\tt = NDHAVD+NDHBVD}
+\item {\tt NDHFVP:} number of fluxes/physical tendencies {\tt = NDHAVP+NDHBVP}
+\end{itemize}
+\ms
+The organisation is as follow
+\begin{center}
+\begin{tabular}{|r|l|l|l|}
+\hline
+Champs & \multicolumn{3}{c|}{each field has {\tt NFLEV+1} levels} \\
+\hline \hline
+\tt 1 & & \multicolumn{2}{c|}{} \\
+\cline{1-1}
+\tt \dots & & \multicolumn{2}{c|}{} \\
+\cline{1-1}
+\tt \dots & instantaneous values & \multicolumn{2}{c|}{variables} \\
+\cline{1-1}
+\tt \dots & & \multicolumn{2}{c|}{} \\
+\cline{1-1}
+\tt NDHVV & & \multicolumn{2}{c|}{} \\
+\hline
+%
+\tt NDHVV+1 & & & \\
+\cline{1-1}
+\tt \dots & & \tt NDHAVD & dynamical tendencies \\
+\cline{1-1}
+\tt \dots & & & \\
+\cline{1-1} \cline{3-4}
+\tt \dots &  & & \\
+\cline{1-1}
+\tt \dots & & \tt NDHBVD & dynamical fluxes\\
+\cline{1-1}
+\tt NDHVV+NDHFVD & cumulated values & & \\
+\cline{1-1} \cline{3-4}
+%
+\tt NDHVV+NDHFVD+1 & & & \\
+\cline{1-1}
+\tt \dots & & \tt NDHAVP & physical fluxes \\
+\cline{1-1}
+\tt \dots & & & \\
+\cline{1-1} \cline{3-4}
+\tt \dots &  & & \\
+\cline{1-1}
+\tt \dots & & \tt NDHBVP & physical tendencies \\
+\cline{1-1}
+\tt NDHCV & & & \\
+\hline
+\end{tabular}
+
+\end{center}
+
+For every categories (variables, dynamical tendency, dynamical flux, etc) one may find fields linked to {\tt LHDHKS} (eventually) then those of {\tt LHDMCI} (eventually) then those of {\tt LHDENT} (eventually).
+Soil arrays work on the same principle.
+Fields from 1 to {\tt NDHVV+NDHFVD} are computed in{\tt CPDYDDH}. Fields from {\tt NDHVV+NDHFVD+1} to {\tt NDHCV} are computed in {\tt CPPHDDH}.
+\subsection{Main local arrays}
+Arrays used as liaison between computations in each grid point and partial means in the one side and the overall table, the link between partial means and output on the other side, go into this category.
+\subsubsection{Arrays for computations at each grid point}
+{\tt ZDHCV(KPROMA,0:NFLEV,NDHCVSU)} alias {\tt PDHCV(KPROMA,NDHCVSU*(NFLEV+1))} fields in vertical profiles in {\tt CPG}. Alias used in {\tt CPCUDDH}
+
+\noi {\tt ZDHCS(KPROMA,NDHCSSU)} soil fields.
+
+\begin{itemize}
+\item {\tt KPROMA:} maximun number of points in the horizontal, by grid point task,
+\item {\tt NDHCVSU = max(1,NDHCV)}
+\item {\tt NDHCSSU = max(1,NDHCS)}
+\end{itemize}
+
+{\tt ----SU} lengths ensure that d'\ARP\ is properly working even if {\tt NDHCV=0} or {\tt NDHCS=0} (case(s) where {\tt DDH} diagnostics are not activated).
+
+\subsubsection{Arrays for synthesis over a user domain}
+{\tt ZDHCV(0:NFLEV,NDHCVSU+NDHVV)} alias {\tt PDHCV((NDHCVSU+NDHVV)*(NFLEV+1))} fields in vertical profiles. Alias used in {\tt PPSYDH}.
+
+\noi {\tt ZDHCS(NDHCSSU+NDHVS)} soil fields.
+
+In this table, only one domain is present at a given time. It is organized as follow
+
+\begin{center}
+
+\begin{tabular}{|l|l|}
+\hline
+Field & \\
+\hline \hline
+\tt 1 & \\ \cline{1-1}
+\tt \ldots & variables at $t$ \\ \cline{1-1}
+\tt NDHVV & \\ \hline
+\tt NDHVV+1 & tendencies then fluxes \\ \cline{1-1}
+\tt \ldots & dynamical, cumulated \\ \cline{1-1}
+\tt NDHVV+NDHFVD & from {\tt 0} to {\tt NSTEP-1} \\ \hline
+\tt NDHVV+NDHFVD+1 & fluxes, then tendencies \\ \cline{1-1}
+\tt \ldots & dynamical, cumulated  \\ \cline{1-1}
+\tt NDHCV & from {\tt 0} to {\tt NSTEP-1} \\ \hline
+\tt NDHCV+1 & \\ \cline{1-1}
+\tt \ldots & variables at $t${\tt =NSTEP*TSTEP} \\ \cline{1-1}
+\tt NDHCV+NDHVV & \\ \hline
+\end{tabular}
+
+\ms
+ZDHCV array structure.
+\end{center}
+
+\section{Organization of the main functions}
+An inventory of the main {\tt DDH} sub programmes and their calling tree is presented here. The following conventions are assumed:
+\begin{itemize}
+      \item (---) name of the sub programme between parenthesis: sub programme whose main function is not to compute diagnostics; generally speaking, sub programme\ARP\ already existing.
+      \item \fbox{m} Multitask sub programme.
+      \item \fbox{tci} specific {\tt DDH} sub programme in which all fields are undifferentiated
+      \item \fbox{cci} specific {\tt DDH} sub programme in which every field is specified.
+\end{itemize}
+\noindent{\tt (SU0YOMA)}, 0 level initialisations calling
+\begin{itemize}
+      \item {\tt (SULUN)}, initialisation of numbers of file logical units.
+      \item {\tt (SUCT0)}, initialisation of parameters of output frequencies.
+      \item {\tt SUNDDH}, initialisation of permanent logical as well as other default values.
+            Read {\tt NAMDDH}.
+            Deduce dimensions (except {\tt NDHIDH} and {\tt NDHTSK}) and logicals. 
+      \item {\tt (SUALLO)}, allocate global arrays. 
+\end{itemize}
+\noindent{\tt (SU0YOMB)}, initialisations from 0 level, calls
+\begin{itemize}
+      \item {\tt (SULEG)}, computation of Gauss weight $\omega(k)$.
+      \item {\tt (SUGEM1)}, geographical coordinates computation: $(\lambda_{q},\mu_{q})$ in each point.
+\item {\tt SUMDDH}, verification and set up of domain declarations (from {\tt BDEDDH} to {\tt FNODDH}). Distribution of users domains in internal domains, computation of the number of internal domains {\tt NDHIDH}. Computation of weights of interest for horizontal means ({\tt HDSF}, {\tt HDSFGL},    {\tt HDSFLA}, etc...). Print of computed masks values, by calling {\tt PRIMDDH}.
+      \item {\tt (SUOPH)}, generic name of DDH files ({\tt CFNDDH} from MODULE {\tt /YOMOPC/}).
+      \item {\tt (SUSC2)}, computation of the number of logical tasks: {\tt NDHTSK = NSLBR - NDGSA + 1}.
+      \item {\tt SUALTDH}, allocate global arrays (MODULE {\tt /YOMTDDH/}).
+      Initialise these to $0$.
+\end{itemize}
+\noindent{\tt (CNT1)}, level 1 of the model, calls {\tt SU1YOM}, initialization of output overcontrol: {\tt N1DHP} and  {\tt N1DHF} (MODULE {\tt /YOMCT1/}).
+\newline\noindent{\tt (CNT4)}, management of the temporal loop, calls {\tt (MONIO)}, determination of output time steps ({\tt IDHFTS}, {\tt IDHPTS}).
+\newline\noindent{\tt (STEPO)}, control of the integration at the lowest level, calls
+\begin{itemize}
+	\item {\tt (SCAN2H)}, initialization of the input-output scheme, calls {\tt ZERODDH}, transfer of fluxes/tendencies cumulated in time from {\tt HDCVB1} to {\tt HDCVB0} and zeroing of the part of {\tt HDCS1} and {\tt HDCVB1} tables which will receive the cumulated in the horizontal of variables at the current time.
+        \item {\tt (SCAN2M)} \fbox{m}, multi task interface of grid point computations, calls {\tt CPG} \fbox{m}, grid point computation:
+            \begin{itemize}
+                  \item Declaration of local arrays {\tt IDDHI} and {\tt ZDHSF} (resp. for the domains distribution and for the points weight).
+                  \item Declaration of {\tt ZDHCV} et {\tt ZDHCS} (fields resp. for 3D and 2D cumulated).
+                  \item Interface from {\tt NDDHI} and {\tt HDSF} to {\tt IDDHI} and {\tt ZDHSF}.
+                  \item Call to {\tt CPDYDDH} \fbox{m} \fbox{cci}, computation in every points of diagnosed atmospheric variables ($\delta p, q\delta p, C_{p}T\delta p$, etc...), of tendencies and of adiabatic fluxes, and possible call to {\tt CPVRDH} (if the verification option is activated).
+                  \item Call to {\tt CPPHDDH} \fbox{m} \fbox{cci}, computation in every points of fluxes and of tendencies du to physical parametrizations, soil computation, and possible call to {\tt CPVRDH} (if the verification option is activated). 
+                  \item Call to {\tt CPCUDDH} \fbox{m} \fbox{tci}, partial horizontal mean of variables, stored in {\tt HDCVB1} and {\tt HDCVB0} if {\tt NSTEP=0}, if {\tt NSTEP} different from {\tt NSTOP} temporal integration and partial horizontal mean of fluxes/tendencies in {\tt HDCVB1}.
+            \end{itemize}
+        \item {\tt POSDDH}, output management, converts computation of internal domains  into users domains, and gives the results on a file or listing.
+            \begin{itemize}
+                  \item {\tt PPVFDH}, edition of verifications on a point. 
+                  \item {\tt PPSYDH} \fbox{tci}, final horizontal means for a user domain, edition of arrays {\tt ZDHCV} and {\tt ZDHCS}, multiplication of variables by par $1/(g S_{D})$ and of cumulated fields by $(\delta t/S_{D})$.
+                  \item {\tt PPEDDH} \fbox{cci}, vertical mean budget edition.
+                  \item {\tt PPFIDH} \fbox{cci}, writing on file of results of
+                  diagnostics for each domain: articles of documentation and fields.
+           \end{itemize}
+\item {\tt CPCUVDH}, cumulated in time either for a flux or a tendency in case of verification.
+\end{itemize}
+\newpage
+
+\section{How to add new fields to budgets}
+This section describes the operations to implement in order to incorporate one or more new fields in the budgets. The sub programmes such as \fbox{tci} will work as long as the dimensions are updated.
+
+Each new field enters into an option ({\tt LHDHKS}, {\tt LHDMCI}, {\tt LHDENT}), and is a variable, a flux or a tendency. In the last two instances, the field may be either of diabatic origin or coming frm physical parametrization. Lastly, it can be a soil field. To identify these properties determines the permanent pointers which must be modified, followed by the sub programmes on which to intervene as well as the location of these sub programmes. 
+\begin{description}
+	\item{1. } update of permanent pointer(s). In {\tt SUNDDH}, increment the
+	permanent pointer which corresponds to the option and to the category of the
+	new field(s) (see page \pageref{poil}).
+	\item{2. } Instruction update.
+	Add the field description in {\tt YOMTDDH}.
+	 \item{3.} Compute and store the field in {\tt PDHCV} or {\tt PDHCS} in the
+	 sub programme {\tt CPDYDDH} or {\tt CPPHDDH}.
+	\item{4. } Add the field(s) to the output file (PPFIDH).
+	\item{5.} Add the field(s) to the printed budget, in PPEDDH.
+\end{description}
+
+\section{New dataflow for DDH}
+
+\subsection{Introduction}
+A new coding approach has been proposed in 2009 for extracting diagnostics
+from the Arome/MesoNH physical parametrisations. It can be used in other parts of
+the IFS/ARPEGE software. Physical quantities are recorded into a flexible data structure in the parametrisations, and readable by
+higher level routines. The data structure (a linked list of ad hoc Fortran 90 types) is automatically 
+allocated and indexed as needed by low-level routines, so that physicists can freely choose 
+which quantities they want to record, and how they want to process them. This technical approach 
+greatly simplifies software clarity and maintenance. 
+
+Main applications are (1) to provide an
+easy access to various Arome/MesoNH physical quantities at the level of the physics calling 
+interface and (2) to replace existing DDH in Arpege/Aladin/Alaro if satisfying results are
+obtained after intensive testing.
+
+
+\subsection{Achievements-Future developments}
+The software is developped progressively and is expected to replace the existing DDH dataflow 
+in the different models after a period of testing. User's feedbacks will be very important to 
+trace potential weaknesses of the present code.
+Here is the timetable of foreseen code evolutions:
+\begin{itemize}
+\item cy35t1: new dataflow available in Arome only for 3D fields. For Arpege/Aladin/Alaro, old DDH structures are kept.
+\item cy35t2: new dataflow can be used in all models (LFLEXDIA=.TRUE.) but by default old dataflow is used only in Arpege/Aladin/Alaro.
+2D fields are available in the new dataflow. 
+\item 2009: intensive testing period whith expected improvements in the code. Renewing of DDH operators for horizontal averaging may be necessary.
+\item 2010: complete switch to new dataflow ? (Would affect IFS code also...)
+\end{itemize}
+
+
+
+\subsection{General basics of the new dataflow}
+This section describes the content of file xrd/module/ddh\_mix.F90 which contains all the functionalities of the new dataflow.
+It can be thought as an externalized functionality of the code. 
+New dataflow features are present in the code under the LFLEXDIA switch.
+
+\subsubsection*{Description}
+The dataflow consists in self allocatable structures similar to GFL but more flexible. This section describes how they are defined, the possible architecture of the code being discussed in section~\ref{archindf}.
+Each extracted quantity (variable, flux, tendencies...) will be characterized through a Fortran 90 structure type (named here DDHFLEX) which defines several attributes corresponding to this quantity.
+
+The structure type named DDHFLEX is given here:
+\begin{verbatim}
+
+TYPE DDHFLEX
+  CHARACTER(LEN=11)::CNAME !name of field 
+  CHARACTER(LEN=1)::CFLUX !'F' if flux 'V' if variable 'T' if tendency
+  CHARACTER(LEN=3)::CMOD  ! 'ARP','ARO': name of model
+  LOGICAL:: LKDDH !TRUE if to be stored into DDH
+  ! rfield has to be a pointer because allocatable not allowed in structure type
+  REAL(KIND=JPRB),DIMENSION(:,:),POINTER:: RFIELD  ! value of retrieved field
+  INTEGER(KIND=JPIM):: NFIELDIND! position of flux in ddh array 
+END TYPE DDHFLEX
+
+\end{verbatim}
+
+Following attributes are used:
+\begin{itemize}
+ \item CNAME is the name of the field as it will appear in the output file. CNAME has to respect the following conventions:
+\begin{itemize}
+ \item First letter has to be either 'F' for a flux, 'V' for a variable or 'T' for a tendency.
+ \item Second and third letter describes the conservation equation to which the budget applies (see DDH documentation for details):
+CT (temperature), QV (water vapour), ...
+\end{itemize}
+
+ \item CFLUX is a sting that informs about the nature of the quantity stored in the structure:
+\begin{itemize}
+\item CFLUX='F' for a flux
+\item CFLUX='T' for a tendency
+\item CFLUX='V' for a variable
+\end{itemize}
+\item CMOD gives information on the model's name
+\begin{itemize}
+\item CMOD='ARO' for AROME
+\item CMOD='ARP' for ARPEGE, ALADIN and ALARO (by default but if you wish other labels can be introduced)
+\end{itemize}
+\item LKDDH is a flag set to .TRUE. if the field has to be processed by DDH operators and to .FALSE. otherwise.
+ \item RFIELD is a pointer corresponding to the value of the field (it will be explained later why it has to be a pointer)
+\item NFIELDIND is an integer that gives the number of the processed field within the list of all fields.
+\end{itemize}
+
+
+These attributes are important because they document the structure content itself (important for debugging purposes) and they determine which operations the extracted field will undergo at the place where it is recorded, before being stored (for instance conversion from potential temperature to temperature...)
+
+The various extracted fields are gathered into an allocatable array of structure of type DDH, called here RDDH\_DESCR and whose last dimension corresponds to the total number of extracted fields:
+
+\begin{verbatim}
+TYPE(DDHFLEX),ALLOCATABLE,DIMENSION(:):: RDDH_DESCR
+\end{verbatim}
+
+The attribute {\em allocatable} being forbidden inside a type structure, the field is not directly stored inside RDDH\_DESCR but defined through a pointer
+to a large array called RDDH\_FIELD:
+
+
+\begin{verbatim}
+REAL,DIMENSION(:,:,:),ALLOCATABLE,TARGET::RDDH_FIELD ! target of RFIELD 
+! first two dims are the same as PFIELD, the third being the number of stored fields
+\end{verbatim}
+
+
+
+\subsubsection*{Extracting a field from the physics }
+For adding a field into the diagnostics, you only need to call subroutine ADD\_FIELD\_3D and that's all ! 
+The first argument of ADD\_FIELD\_3D will be the field to store and the others will correspond to the associated attributes (for instance "call ADD\_FIELD\-3D(field\_to\_store,'name\_of\_field','F','CT'....)")
+
+Arguments of ADD\_FIELD\_3D(PMAT,CDNAME,CDFLUX,CDMOD,LDINST,LDDH) are the following:
+
+\begin{itemize}
+ \item PMAT: the array to be stored. It has to be with levels in the same order than in Arpege part of the code.
+If you are in a .mnh subroutine  just use subroutine INVERT\_VLEV.MNH before calling  ADD\_FIELD\_3D
+in order to have levels ordered as in Arpege.
+\item  CDNAME: name of field. It is constructed the following way:
+\begin{itemize}
+\item CDNAME(1): 'F' if flux ,'T' if tendency,'V' if variable
+\item CDNAME(1:2): type of variable ('CT','QI','QV','QR',...)
+ \item CDNAME(3:): name of process
+\end{itemize}
+\item CDFLUX: 'F' if flux ,'T' if tendency,'V' if variable
+\item CDMOD: 'ARO' if AROME, 'ARP' otherwise (but you may add some other label if you wish)
+\item LDINST:'TRUE' if instaneous field 
+\item LDDH:'TRUE' if field is stored to be in DDH
+\end{itemize}
+
+
+
+\textbf{When using add\_field\_3D it is extremely important to have the right attributes in the right order.
+So be careful ! Have a look at xrd/module/ddh\_mix.F90 if any doubt.}
+
+Here are some examples:
+
+\begin{verbatim}
+CALL ADD_FIELD_3D(ZTMPAF,'VQI','V','ARP',.TRUE.,.TRUE.)
+
+CALL ADD_FIELD_3D(ZTMPAF(:,:),CLNAME,'T','ARP',.TRUE.,.TRUE.)
+
+CALL ADD_FIELD_3D(PFRSO(:,:,1),'FCTRAYSO','F','ARP',.TRUE.,.TRUE.)
+\end{verbatim}
+
+ADD\_FIELD performs the following tasks:
+
+\begin{itemize}
+\item when in the code a specific field is supplied as argument for the first time in the execution, the last dimension of arrays DDH\_FIELD and DDH\_DESCR
+is incremented in order to add space for the new field to store. The code determines if a field is encountered for the first time by testing
+the field's name. This reallocation of arrays may slow the code and fragment memory during the first time step, but it avoids going through complicated setups. One could also preallocate the arrays according to a first guess of the dimensions, as chosen by the user.
+\item  at every time step the  field is stored in RDDH\_FIELD through the pointer RFIELD
+\item at every time step, some transformations are done on the field according to its nature (and documented by its attributes), for instance conversion from $\theta$ to T... These operations also depend on the physics used (Meso-NH, Arpege...). Here it will be possible for users to add parts corresponding to specific needs, and to document them through attributes.
+\end{itemize}
+
+
+
+
+
+
+\subsection{Activating and modifying the new dataflow}
+
+
+\subsubsection{Using DDH products included in documentation}
+The DDH documentation helds as a reference for the formulation of the budget equations and for
+the list of terms present by default in the DDH files. If you just need these products, just set the DDH
+namelist according to your need and you just have to plot the ddh files using the ddhtoolbox.
+In Arome, new dataflow is activated by default. For Arpege, Aladin and Alaro you have to set LFLEXDIA=.TRUE.
+in namelist in order to use the new dataflow. Otherwise old dataflow is used. We recommand to use the
+new dataflow since old dataflow is kept for the moment only for compatibility with ECMWF and 
+validation purposes.
+
+\subsubsection{Adding terms to the already existing DDH products}
+
+You just have to call ADD\_FIELD\_3D (Make sure that you have imported this function by adding in your file USE DDH\_MIX,ONLY :ADD\_FIELD\_3D)
+If you want to add a term to an existing budget equation, just use the same name for the variable ('CT','QR'...) than in the rest of the code.
+Otherwise you are free to introduce a new name.
+If you are in a .mnh subroutine, you have to proceed in two steps:
+\begin{itemize}
+ \item First you have to transform your array on NLEV+2 levels to an array on NLEV levels in reverse order (to go from the ``MNH'' word to ``Arpege'' word).
+There is a subroutine dedicated to this transformation INVERT\_VLEV.MNH 
+\item  Then use ADD\_FIELD\_3D on the transformed array.
+\end{itemize}
+
+
+
+
+
+\subsubsection{Using the dataflow for extracting terms from the physics but not for DDH}
+
+It is possible by just setting LDDH to .FALSE. when calling ADD\_FIELD\_3D to use
+the flexible dataflow for retrieving fields out from the physics and use them elsewhere.
+Once the field is stored using ADD\_FIELD\_3D, you just have to go through the flexible structure once
+to have the index MYINDEX of your field that you can use later on by accessing RDDH\_FIELD(:,:,MYINDEX): 
+
+\begin{verbatim}
+DO II=1,NTOTFIELD
+  IF (RDDH_DESCR(II)\%CNAME=='MYNAME') THEN
+   MYINDEX=RDDH_DESCR(II)\%NFIELDINF
+  ENDIF
+ENDDO
+
+% your field is stored in RDDH\_FIELD(:,:,MYINDEX)
+\end{verbatim}
+
+For the time being the previous lines of code are not in the common cycles, if you feel that there should be 
+just send an email to the DDH team.
+
+\subsubsection{Miscellaneous}
+
+If the budget package in Méso-NH is maintained (BUDGET routine) 
+there is nothing to do in the DDH part of the code, except in the following situations:
+\begin{itemize}
+ \item \textbf{New species are added in Arome.}  
+
+\begin{itemize}
+\item
+In this case, a label for it first has to be introduced. \\
+If this is an hydrometeor you have to add an entry to CLVARNAME in APL\_AROME (it corresponds to the names of hydrometeors
+ordered the same way than in PTENDR) and report it coherently in MODDB\_INTBUDGET. Increase also by one dimension of 
+TAB\_VARMULT array. \textbf{Beware to use the same ordering of variable than in Méso-NH calls to budget !!!}
+If this is not an hydrometeor, it may not be present in the Méso-NH budgets and thus we recommend to use combination of INVERT\_VLEV  and ADD\_FIELD\_3D.
+
+\item The transformation applied to this field has to be defined. \\
+In ARO\_SUINTBUDGET, increase by one the last dimension of TAB\_VARMULT and have it pointing on the
+TCON2 (equal to PQDM) since it is an hydrometeor.
+
+\item In APL\_AROME, check that loops on last dimension on PTENDR include this new hydrometer.
+
+\item In CPDYDDH just use ADD\_FIELD\_3D to add the value of the variable corresponding to your new hydrometeor.
+
+\end{itemize}
+
+
+\item \textbf{Order of subroutines is changed in APL\_AROME.}
+In this case make sure that ARO\_STARTBU and ARO\_SUNINTBUDGET are called at the right place.
+
+\end{itemize}
+
+
+\subsection{Architecture of the code}
+\label{archindf}
+
+Subroutine ADD\_FIELD\_3D and associated modules are in xrd/module/ddh\_mix.F90.
+This subroutine contains all elements for using the new dataflow.
+
+However the use of the new dataflow in the part of the Arome code originating
+form Méso-NH required some interfacing described in the following subsection.
+
+\subsubsection{Calling tree}
+
+Example: correction of negative QL values by the AROME physics.
+\begin{itemize}
+	\item The correction is done in aro\_rain\_ice.mnh (in mpa/micro/externals).
+	\item To activate the DDH budget of the QL tendency, due to this correction,
+		aro\_rain\_ice.mnh calls BUDGET:
+		{\small \begin{verbatim}
+		IF (LBUDGET_RC) CALL BUDGET (PRS(:,:,:,2) * PRHODJ(:,:,:), 7,'NEGA_BU_RRC')
+		\end{verbatim}}
+	\item The routine BUDGET (in mpa/micro/internals) used for AROME runs differs from that used for MNH runs.
+		The AROME BUDGET routine converts the MNH name 'NEGA\_BU\_RRC'
+		into the DDH name 'TQLNEGA', and then calls ADD\_FIELD:
+		{\small \begin{verbatim}
+		IF (CLPROC/='INIF') CALL ADD_FIELD_3D(ZVARS,CLDDH,'T','AROME',LINST,LDDH)
+		\end{verbatim}}
+	\item ADD\_FIELD\_3D (in xrd/module/ddh\_mix.F90) allocates the relevant arrays
+		if not already allocated, and then writes the real data of the tendency
+		into the RDDH\_FIELD array from module ddh\_mix.
+\end{itemize}
+
+\subsubsection{Organization of the data flow}
+
+The DDH diagnostic facility performs some domain averaging and budget
+computation after the diagnostic extraction. These operations are performed at
+each timestep, after the physics computations, so that the raw recorded fields
+are accessible as NPROMA packets at the level of APLPAR/APL\_AROME, where they
+may be used for other purposes.
+
+For the DDH domain averaging, the Arpege  subroutine cpcuddh.F90 (see DDH
+documentation for more details) is used and averaged fields are then written
+into file in ppfidh.F90 (which will be simplified since now with the
+self-documented structure, a loop on all elements in DDH\_DESCR can generate the
+names of the fields to be written into the DDH file). The subroutine cpcuddh.F90
+uses arrays (hdcvbx stored in module yomtddh) whose size is computed in setups
+(the total number of fluxes/tendencies depend on the options used for physics).
+Since these setups are no longer used with the new data flow, these arrays are
+allocated with an estimated size (larger than expected value) for the time being
+but we are thinking at a way to have them reallocated or initialized elsewhere
+in the code after a dummy call to the code that only computes the total size of
+DDH arrays (like the call to stepo from cnt4.F90 if CFU/XFU diagnostics are
+switched on).
+
+Figure~\ref{df2} summarizes the new data flow (which is the same for Arpege and
+Arome) within a time step.
+
+
+
+\begin{figure}[hbtp]
+	\centerline{
+		\includegraphics
+			[angle=0., 
+			width=10.cm, 
+			keepaspectratio=true,
+			clip=true]
+			{df3.eps}
+		}
+	\caption{Organization of the data flow within a time step. Subroutine
+		ADD\_FIELD stores the field and the associated description into
+		DDH\_DESCR after possible transformations (bold arrows). Averaging on
+		the domains is performed as in Arpege in cpcuddh.F90, the output being
+		written into file in ppfidh.F90 using the description of the fields
+		stored as attribute in DDH\_DESCR. \label{df2}}
+	%\label{Conv} 
+\end{figure}
+
+
+\subsubsection{Application to DDH in Arome}
+The new dataflow is used in Arome since cy35t1 for DDH diagnostics.
+Méso-NH code already uses its own diagnostics through the sophisticated budgets and advantage is taken form
+the work already performed there in order to avoid duplication of effort.
+MNH's budgets are called through the call of the subroutine budget after each process. This subroutine is able to perform
+operations on the stored quantity. 
+In order to keep the maximum level of compatibility between MNH and Arome code, it was chosen to keep the calls to budget unchanged in the Méso-NH code
+and to write a new budget subroutine that would be called in Arome instead of the budget from MASDEV.
+This subroutine, located in /mpa/micro/externals, supresses first and last level of MNH fields and reverses
+the order of the vertical levels.
+
+
+
+In Arome there are two different ways to have terms in the DDH products. The first is to use ADD\_FIELD\_3D after a call
+INVERT\_VLEV as shown previously. The second possibility is to use the budgets from Méso-NH as in the first version of the DDH code in Arome.
+We have used a combination of the two methodes in order to take advantage of the validation performed by the Méso-NH team of the budget packages.
+\begin{itemize}
+\item
+Variables are stored in cpdyddh.F90 using ADD\_FIELD\_3D since the part of the code is common with Arpege/Aladin/Alaro.
+\item Within APL\_AROME, adjustment and radiation are retrieved using ADD\_FIELD\_3D and other processes through budgets from Méso-NH.
+\end{itemize}
+
+Interfacing with Méso-NH budgets works the following way:
+\begin{itemize}
+ \item ARO\_SUINTBUDGET stores quantities (Exner function...) necessary to transform tendencies from Méso-NH
+(in $\theta$,r variables) to tendencies in (T,q) variables into the module MODDB\_INTBUDGET 
+ \item ARO\_STARTBU stores initial values of tendencies for each variable
+ \item Within Méso-NH, subroutine ``BUDGET'' is called. The BUDGET subroutine from Méso-NH is replaced by a new subroutine
+(/mpa/micro/internals/budget.mnh) called the same way with the same arguments that transforms tendencies of Méso-NH variables ($\theta$...)  to tendencies on the desired variables ($c_p$T...) and skips the Méso-NH processing.
+\end{itemize}
+
+
+ \subsection{Remaining issues specific to the new dataflow}
+
+Some issues are still to be dealt with in the new dataflow:
+\begin{itemize}
+\item Performances. If faster in Arome than the old code, there is still room for improvement in terms of computational performances.
+\item OpenMP. The code has to be tested and optimized for OpenMP parallelization. For the time being, validation has only been done on the NEC platform from Météo-France. 
+\item Elarging the flexibility of the code to the DDH operators for domain averaging. Some arrays like PDDHCV\_TOT still have to be initalized at the beginning of the time step and thus we don't fully benefit from the flexibility of the new dataflow. Thinking about how to deal with that without affecting the part of he code used by ECMWF is ongoing.
+\end{itemize}
+
+
+
+\subsection{Conclusion}
+
+This new version of the dataflow offers not only more facilities to add new
+quantities in the diagnostics but also more flexibility in terms of possible
+uses of these diagnostics. For developers, since the new code is considerably
+smaller and readable than the current one in Arome, it will be easier to debug
+and maintain when physics evolve in the future. We also expect an increase in
+the code's performance for Arome's DDH since the Meso-NH budgets part of the
+code (with a lot of unused (in Arome) options slowing the code) will be skipped.
+
+An another important aspect is that this tool, after being successfully
+implemented in Arome can now be used in Arpege/Aladin/Aladin. Before going on
+with further work to upgrade this prototype version towards a beta version,
+discussion between the different possible users of this type of diagnostics is
+needed in order to raise possible new issues and needs regarding what different
+users would like these structures to offer.
+

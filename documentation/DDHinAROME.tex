@@ -1,0 +1,588 @@
+\subsection{Microphysical process}
+In AROME physical parameterizations from MesoNH are used. The greatest difference compared to parameterizations used in ALADIN, in respect of number and nature of fluxes and tendencies, appears in microphysics.  Microphysical processes in AROME with corresponding tendencies/fluxes are given in table \ref{MiFlux}. Each column belongs to one microphysical species; tendencies/fluxes written in it change it's species amount. In the last column are tendencies/fluxes that change thermal energy due to microphysical processes. On output from MesoNH subroutines only tendencies are available but later they are changed to fluxes if LBUFLUX is .TRUE.. 
+
+\begin{table}[!hbtp]
+\label{tmpf}
+  \begin{tabular}{|p{4 cm}||p{0.9 cm}|p{0.8 cm}|p{0.7 cm}|p{0.7 cm}|p{0.7 cm}|p{0.9 cm}|p{1.1 cm}|}
+
+\hline
+Microphysical process           &vapour&cloud water&rain&cloud ice&snow& graupel&thermal energy\\
+\hline
+\hline						
+water vapour adjustment	        &&$F_{q_l}^{cdepi}$&&$F_{q_i}^{cdepi}$&&&$F_{cp T}^{cdepi}$\\
+\hline
+heterogeneous nucleation        &$F_{q_v}^{henu}$&&&$F_{q_i}^{henu}$&&&$F_{cp T}^{henuv}$\\
+\hline
+homogeneous nucleation	        &&$F_{q_l}^{hon}$&&$F_{q_i}^{hon}$&&&$F_{cp T}^{honl}$\\
+\hline
+spontaneous freezing	        &&&$F_{q_r}^{sfrz}$&&&$F_{q_g}^{sfr}$&$F_{cp T}^{sfr}$\\
+\hline
+deposition on snow	        &$F_{q_v}^{deps}$&&&&$F_{q_s}^{dep}$&&$F_{cp T}^{deps}$\\
+\hline
+collection of ice on snow       &&&&$F_{q_i}^{agg}$&$F_{q_s}^{agg}$&&\\
+\hline
+auto-conversion of ice to snow	&&&&$F_{q_i}^{autoi}$&$F_{q_s}^{autoi}$&&\\
+\hline
+deposition on graupel	        &$F_{q_v}^{depg}$&&&&&$F_{q_g}^{dep}$&$F_{cp T}^{depg}$\\
+\hline
+auto-conversion of cloud water  &&$F_{q_l}^{autor}$&$F_{q_r}^{autor}$&&&&\\
+\hline
+accretion	 	 	&&$F_{q_l}^{accr}$&$F_{q_r}^{accr}$&&&&\\
+\hline
+rain evaporation	 	&$F_{q_v}^{reva}$&&$F_{q_r}^{reva}$&&&&$F_{cp T}^{reva}$\\
+\hline
+riming by cloud droplets	&&$F_{q_l}^{rim}$&&&$F_{q_s}^{rim}$&$F_{q_g}^{rim}$&$F_{cp T}^{rim}$\\
+\hline
+collection of raindrops	 	&&&$F_{q_r}^{accs}$&&$F_{q_s}^{accs}$&$F_{q_g}^{accs}$&$F_{cp T}^{accs}$\\
+\hline
+melting of aggregates	 	&&&&&$F_{q_s}^{cmel}$&$F_{q_g}^{cmel}$&\\
+\hline
+contact freezing	 	&&&$F_{q_r}^{cfrz}$&$F_{q_i}^{cfrz}$&&$F_{q_g}^{cfrz}$&$F_{cp T}^{cfrz}$\\
+\hline
+wet growth &&$F_{q_l}^{wetg}$&$F_{q_r}^{wetg}$&$F_{q_i}^{wetg}$&$F_{q_s}^{wetg}$&$F_{q_g}^{wetg}$&$F_{cp T}^{wetg}$\\
+\hline
+dry growth &&$F_{q_l}^{dryg}$&$F_{q_r}^{dryg}$&$F_{q_i}^{dryg}$&$F_{q_s}^{dryg}$&$F_{q_g}^{dryg}$&$F_{cp T}^{dryg}$\\
+\hline
+melting of graupel	 	&&&$F_{q_r}^{mltg}$&&&$F_{q_g}^{mltg}$&$F_{cp T}^{mltg}$\\
+\hline
+melting of cloud ice	        &&$F_{q_l}^{mlti}$&&$F_{q_i}^{mlti}$&&&$F_{cp T}^{mlti}$\\
+\hline
+Bergeron-Findeisen effect	&&$F_{q_l}^{berfi}$&&$F_{q_i}^{berfi}$&&&$F_{cp T}^{berfi}$\\
+\hline
+
+  \end{tabular}
+       \caption{Microphysical fluxes.}
+      \label{MiFlux}
+\end{table}
+
+\subsection{Balance equations}
+In this section are given fluxes from physical parameterizations in AROME by conservation equations where they appear. Fluxes are presented by names in DDH files and symbols. Physical process is described by superscript in symbolic name of flux. Superscript starting with tur means turbulence, neg stays for correction of negative values, conv is for convection parameterization and ray is for radiation. The meaning of other superscripts can be found in table \ref{tmpf}. In subscripts are symbols of prognostic variables.
+  \subsubsection{Momentum}
+
+  \begin{tabular}{r l l}
+
+       FUUTUR       &$F_{u}^{tur}$      &vertical turbulence flux of u velocity component\\
+       FVVTUR       &$F_{v}^{tu\endr}$  &vertical turbulence flux of v velocity component\\
+       FVWTUR       &$F_{w}^{tur}$      &vertical turbulence flux of u velocity component\\
+
+  \end{tabular}
+
+  \subsubsection{Turbulence kinetic energy}
+  \begin{tabular}{r l}
+
+       FTETURB      &$F_{tke}^{tur}$   &turbulent flux of turbulent kinetic energy\\
+       FTEDYPRO     &$F_{tke}^{tur-prod-dyn}$ &dynamic production of turbulent kinetic energy\\
+       FTETERMPRO   &$F_{tke}^{tur-prod-term}$ &thermic production of turbulent kinetic energy \\
+       FTEDISS      &$F_{tke}^{tur-diss}$ &dissipation of turbulent kinetic energy\\
+  \end{tabular}
+
+  \subsubsection{Thermal energy}
+  \begin{tabular}{r l}
+
+       FCTNEGC1     &$F_{cp T}^{negc1}$ &correction of negativ specific ratios after advection\\
+       FCTCDEPI     &$F_{cp T}^{cdepi}$ &adjustment of water vapour, cloud water and cloud ice\\
+       FCTVCONV     &$F_{cp T}^{conv}$ &convection flux of thermal energy\\
+       FCTVTURB     &$F_{cp T}^{tur}$ &vertical turbulent flux of thermal energy\\
+       FCTDISSTUR   &$F_{cp T}^{tur-diss}$  &dissipation of turbulent kinetic energy\\         
+       FCTNEGC      &$F_{cp T}^{negc}$ &correction of negativ specific ratios after turbulence\\
+       FCTHENUI     &$F_{cp T}^{henuv}$ &heterogeneous nucleation of ice\\       
+       FCTHON       &$F_{cp T}^{honl}$ &homogeneous nucleation of ice\\
+       FCTSFR       &$F_{cp T}^{sfr}$ &spontaneous freezing\\     
+       FCTDEPS      &$F_{cp T}^{deps}$ &deposition on snow\\      
+       FCTDEPG      &$F_{cp T}^{depg}$ &deposition on graupel\\      
+       FCTREVA      &$F_{cp T}^{reva}$ &rain evaporation\\
+       FCTRIM       &$F_{cp T}^{rim}$  &riming by cloud droplets\\     
+       FCTACCS      &$F_{cp T}^{accs}$  &collection of raindrops and snow on graupel\\\\      
+       FCTCFRZ      &$F_{cp T}^{cfrz}$ &contact freezing of rain\\      
+       FCTWETG      &$F_{cp T}^{wetg}$ &wet growth of graupel\\      
+       FCTDRYG      &$F_{cp T}^{dryg}$ &dry growth of graupel\\
+       FCTMLTG      &$F_{cp T}^{mltg}$ &melting of graupel\\
+       FCTMLTI      &$F_{cp T}^{mlti}$ &melting of cloud ice\\
+       FCTBERFI     &$F_{cp T}^{berfi}$ &Bergeron-Findeisen effect\\
+       FCTRAYSOL1   &$F_{cp T}^{raysol1}$ &solar radiation\\
+       FCTRAYTER1   &$F_{cp T}^{rayter1}$ &earth radiation\\
+  \end{tabular}
+
+  \subsubsection{Water vapour}
+  \begin{tabular}{r l}
+
+       FQVNEGC1     &$F_{q_v}^{negc1}$ &correction of negativ specific ratios after advection\\
+       FQVDEPI      &$F_{q_v}^{depi}$ &adjustment of water vapour, cloud water and cloud ice\\
+       FQVVCONV     &$F_{q_v}^{conv}$ &convection flux of water vapour\\
+       FQVVTURB     &$F_{q_v}^{tur}$  &vertical turbulent flux of water vapour\\
+       FQVNEGC      &$F_{q_v}^{negc}$ &correction of negativ specific ratios after turbulence\\
+       FQVHENUI     &$F_{q_v}^{henu}$ &heterogeneous nucleation of ice\\
+       FQVDEPS      &$F_{q_v}^{deps}$ &deposition on snow\\
+       FQVDEPG      &$F_{q_v}^{depg}$ &deposition on groupel\\
+       FQVREVA      &$F_{q_v}^{reva}$ &rain evaporation\\
+  \end{tabular}
+
+  \subsubsection{Cloud water}
+  \begin{tabular}{r l}
+
+       FQLNEGC1     &$F_{q_l}^{negc1}$ &correction of negativ specific ratios after advection\\
+       FQLCDEPI     &$F_{q_l}^{cdepi}$ &adjustment of water vapour, cloud water and cloud ice\\
+       FQLVCONV     &$F_{q_l}^{conv}$&convection flux of cloud water\\
+       FQLVTURB     &$F_{q_l}^{tur}$  & vertical turbulent flux of cloud water\\
+       FQLNEGC      &$F_{q_l}^{negc}$ &correction of negativ specific ratios after turbulence\\
+       FQLHON       &$F_{q_l}^{hon}$ &homogeneous nucleation of ice\\
+       FQLAUTO      &$F_{q_l}^{autor}$ &auto-conversion of cloud water\\
+       FQLACCR      &$F_{q_l}^{accr}$ &accretion of cloud wter on rain\\
+       FQLRIMS      &$F_{q_l}^{rim}$ &riming by cloud droplets\\
+       FQLWETG      &$F_{q_l}^{wetg}$ &wet growth of graupel\\
+       FQLDRYG      &$F_{q_l}^{dryg}$ &dry growth of graupel\\
+       FQLMLTI      &$F_{q_l}^{mlti}$ &melting of cloud ice\\
+       FQLBERFI     &$F_{q_l}^{berfi}$ &Bergeron-Findeisen effect\\
+
+  \end{tabular}
+
+  \subsubsection{Rain}
+  \begin{tabular}{rll}
+
+       FQRNEGC      &$F_{q_r}^{negc}$ &correction of negativ specific ratios after advection\\
+       FQRSEDI      &$F_{rp}$ &sedimentation\\
+       FQRSFR       &$F_{q_r}^{sfrz}$ &spontaneous freezing of rain\\
+       FQRAUTO      &$F_{q_r}^{autor}$ &auto-conversion of cloud water\\
+       FQRACCL      &$F_{q_r}^{accr}$ &accretion of cloud wter on rain\\
+       FQRREVA      &$F_{q_r}^{reva}$ &rain evaporation\\
+       FQRACCS      &$F_{q_r}^{accs}$ &collection of raindrops on graupel\\
+       FQRCFRZ      &$F_{q_r}^{cfrz}$ &contact freezing of rain\\
+       FQRWETG      &$F_{q_r}^{wetg}$ &wet growth of graupel\\
+       FQRDRYG      &$F_{q_r}^{dryg}$ &dry growth of graupel\\
+       FQRMLTG      &$F_{q_r}^{mltg}$ &melting of graupel\\
+  \end{tabular}
+
+  \subsubsection{Cloud ice}
+  \begin{tabular}{rll}
+
+       FQINEGC1     &$F_{q_i}^{negc1}$ &correction of negativ specific ratios after advection\\
+       FQICDEPI     &$F_{q_i}^{cdepi}$ adjustment of water vapour, cloud water and cloud ice\\
+       FQICONV      &$F_{q_i}^{conv}$ &convection flux of cloud ice\\
+       FQITURB      &$F_{q_i}^{tur}$  &vertical turbulent flux of cloud ice\\
+       FQINEGC      &$F_{q_i}^{negc}$ &correction of negativ specific ratios after turbulence\\
+       FQISEDI      &$F_{ip}$ &sedimentation\\
+       FQIHENU      &$F_{q_i}^{henu}$ &heterogeneous nucleation of ice\\
+       FQIHON       &$F_{q_i}^{hon}$ &homogeneous nucleation of ice\\
+       FQIAGGS      &$F_{q_i}^{agg}$ &collection of ice on snow\\
+       FQIAUTS      &$F_{q_i}^{autoi}$ &auto-conversion of ice to snow\\
+       FQICFRZ      &$F_{q_i}^{cfrz}$ &contact freezing of rain\\
+       FQIWETG      &$F_{q_i}^{wetg}$ &wet growth of graupel\\
+       FQIDRYG      &$F_{q_i}^{dryg}$ &dry growth of graupel\\
+       FQIMLT       &$F_{q_i}^{mlti}$ &melting of cloud ice\\
+       FQIBERFI     &$F_{q_i}^{berfi}$ &Bergeron-Findeisen effect\\
+
+  \end{tabular}
+
+  \subsubsection{Snow}
+  \begin{tabular}{rll}
+       FQSNEGC      &$F_{q_s}^{negc}$ &correction of negativ specific ratios after advection\\
+       FQSSEDI      &$F_{sp}$ &sedimentation\\
+       FQSDEPS      &$F_{q_s}^{dep}$ &deposition on snow\\
+       FQSAGGS      &$F_{q_s}^{agg}$ &collection of ice on snow\\
+       FQSAUTS      &$F_{q_s}^{autoi}$  &auto-conversion of ice to snow\\
+       FQSRIM       &$F_{q_s}^{rim}$ &riming by cloud droplets\\
+       FQSACC       &$F_{q_s}^{accs}$ &collection of raindrops and snow on graupel\\
+       FQSCMEL      &$F_{q_s}^{cmel}$ &melting of aggregates\\
+       FQSWETG      &$F_{q_s}^{wetg}$ &wet growth of graupel\\
+       FQSDRYG      &$F_{q_s}^{dryg}$ &dry growth of graupel\\
+  \end{tabular}
+
+  \subsubsection{Graupel}
+  \begin{tabular}{rll}
+       FQGNEGC      &$F_{q_g}^{negc}$ &correction of negativ specific ratios after advection\\
+       FQGSEDI      &$F_{gp}$ &sedimentation\\
+       FQGSFR       &$F_{q_g}^{sfr}$ &spontaneous freezing \\
+       FQGDEPG      &$F_{q_g}^{dep}$  &deposition on gropel\\
+       FQGRIM       &$F_{q_g}^{rim}$ &riming by cloud droplets\\
+       FQGACC       &$F_{q_g}^{accs}$  &collection of raindrops and snow on graupel\\\\
+       FQGCMEL      &$F_{q_g}^{cmel}$ &melting of aggregates\\
+       FQGCFRZ      &$F_{q_g}^{cfrz}$ &contact freezing of rain\\
+       FQGWETG      &$F_{q_g}^{wetg}$ &wet growth of graupel\\
+       FQGDRYG      &$F_{q_g}^{dryg}$ &dry growth of graupel\\
+       FQGMLT       &$F_{q_g}^{mltg}$ &melting of graupel\\
+
+  \end{tabular}
+
+\subsection{Common Dynamics-Physics Interface CDPI}
+
+  \begin{tabular}{rll}
+      FQVPL1       & $P_l'$ &Pseudo flux due to condensation\\
+      FQVPI1       & $P_i'$ &Pseudo flux due to sublimation\\
+      FQLPL2       & $P_l''$ & Pseudo flux due to evaporation of rain\\
+      FQIPI2       & $P_i''$ &Pseudo flux due to conversion of cloud ice to snow and graopel\\
+      FQRPL3       & $P_l'''$&Pseudo flux due to evapotarion of rain\\
+      FQSPI3       & $P_i'''$&Pseudo flux due to deposition on snow and groupel\\
+      FQGPG3       & $P_g'''$&Pseudo flux due to deposition on snow and groupel\\
+      FQRPR0       & $P_r$ &Flux of falling rain drops\\
+      FQIPI0       & $P_i$ &Flux of falling cloud ice\\
+      FQSPS0       & $P_s$ &Flux of falling snow\\
+      FQGPG0       & $P_g$ &Flux of falling groupel\\
+  \end{tabular}
+
+\subsection{New module YOMPHFT}
+\label{yomphft}
+Procedure of adding a new term in DDH in ARPEGE/ALADIN is already described. Mainly, for each new term one line of program code must be added in {\tt CPDYDDH} or {\tt CPDYDDH} and two lines in {\tt PPFIDH}. In AROME a lot of new fluxes/tendencies are introduced, and many old ones are not used. Adding new lines for each new term would make a code quite unreadable. For this reason and to avoid caring fluxes/tendencies through subroutines a new module YOMPHFT is introduced. 
+
+In this module a data type, TYPE\_APFT, is defined to carry a description of data.
+
+\begin{verbatim}
+TYPE TYPE_APFT
+  CHARACTER(LEN=1)  :: CFT
+  CHARACTER(LEN=2)  :: CVAR
+  CHARACTER(LEN=10) :: CNAME
+END TYPE TYPE_APFT
+\end{verbatim}
+
+The most important in module YOMPHFT are two arrays declared as:
+\begin{verbatim}
+TYPE(TYPE_APFT), ALLOCATABLE :: YAPFT(:)    !descriptions of fluxes & tendencies
+REAL(KIND=JPRB), ALLOCATABLE :: APFT(:,:,:) ! array with fluxes & tendencies
+\end{verbatim}
+
+Dimensions of APFT are:
+\begin{itemize}
+\item {1. dimension: } horizontal extend, \par
+\item {2. dimension: } vertical extend, \par
+\item {3. dimension: } NAPHFT (described later). \par
+\end{itemize}
+
+A dimension of YAPFT is NAPHFT; description in YAPFT must be at the same index value as the third index of corresponding flux/tendency in APFT.
+
+In APFT data at each point are sorted so that for each variable it's value at start time and output time and terms appearing in conservation equation for one variable stay one after another. The order in which variables enter array APFT is given in \ref{aroinipft}.
+Number of variables is given with:
+\begin{verbatim}
+INTEGER(KIND=JPIM) :: NPROGVAR 
+\end{verbatim}
+
+Terms that belong to each conservation equation can be find in APFT by virtue of two arrays, defined as follows:
+\begin{verbatim}
+INTEGER(KIND=JPIM), ALLOCATABLE :: MJJ1(:) !first index in APFT for variable 'i'
+INTEGER(KIND=JPIM), ALLOCATABLE :: MJJ2(:) !last index in APFT for variable 'i'
+\end{verbatim}
+
+Numbers of fluxes/tendencies in APFT and YAPFT may differ, because APFT can be used for saving CDPI fluxes when DDH is not active, and are given with:
+\begin{verbatim}
+INTEGER(KIND=JPIM) :: NAPHFT  !number of fluxes/tendencies in APFT
+INTEGER(KIND=JPIM) :: NDDHFT  !number of fluxes/tendencies in YAPFT
+\end{verbatim}
+
+Physical fluxes can be put in the form needed for Common Dynamics-Physics Interface (CDPI). Number of CDPI fluxes and their positions in APFT (third index) are defined with following integers:
+
+\begin{verbatim}
+INTEGER(KIND=JPIM)  :: NCDPIPHFT ! number of fluxes/tendencies in CDPI,
+INTEGER(KIND=JPIM)  :: NQVQL1    ! positions of Pl'
+INTEGER(KIND=JPIM)  :: NQVQI1    ! positions of Pi'
+INTEGER(KIND=JPIM)  :: NQLQR2    ! positions of Pl''
+INTEGER(KIND=JPIM)  :: NQIQS2    ! positions of Pi''
+INTEGER(KIND=JPIM)  :: NQRQV3    ! positions of Pl'''
+INTEGER(KIND=JPIM)  :: NQSQV3    ! positions of Pi'''
+INTEGER(KIND=JPIM)  :: NQGQV3    ! positions of Pg'''
+INTEGER(KIND=JPIM)  :: NQR0      ! positions of Pr - flux of rain
+INTEGER(KIND=JPIM)  :: NQI0      ! positions of Pi - flux of cloud ice
+INTEGER(KIND=JPIM)  :: NQS0      ! positions of Ps - flux of snow
+INTEGER(KIND=JPIM)  :: NQG0      ! positions of Pg - flux of graupel
+\end{verbatim}
+
+Each physical parameterizations can be deactivated that changes number of physical fluxes. Position of fluxes in APFT is than changed and for some fluxes position in APFT array must be known for programming reasons. Position of these fluxes are given by following integers:
+
+\begin{itemize}
+\item{for positions of momentum turbulent fluxes}
+\begin{verbatim}
+INTEGER(KIND=JPIM)  :: NUUTURFT ! third index in APFT for U turb. flux
+INTEGER(KIND=JPIM)  :: NVVTURFT ! third index in APFT for V turb. flux
+\end{verbatim}
+
+\item{for positions of convective fluxes}
+\begin{verbatim}
+INTEGER(KIND=JPIM)  :: NQLCONV ! third index in APFT for convective rain 
+INTEGER(KIND=JPIM)  :: NQNCONV ! third index in APFT for convective snow
+\end{verbatim}
+\end{itemize}
+
+\subsection{Data flow}
+Due to usage of module YOMPHFT data flow for DDH data in AROME is simplified compared to ARPEGE/ALADIN. Physical fluxes and tendencies are saved in array APFT within subroutine APL\_AORME and used in subroutine CPPHDDH. This is shown on Fig. \ref{DatFlw}.
+  \begin{figure}[!hbtp]
+        \centerline{
+        \includegraphics
+	[angle=0, 
+	width=8.cm, 
+	keepaspectratio=true,
+	clip=true]
+	{ALADIN16ws_ddh_2.epsi}
+	}
+       \caption{Data flow for DDH in ARPEGE/ALADIN.}
+      \label{DatFlw}
+   \end{figure}
+
+\subsection{Setup}
+To take in to account for all changes done in AROME to implement DDH some changes in setup subroutines where needed.
+
+\subsubsection{Subroutine SU0YOMA}
+In SU0PHY new control variables LPHCDPI and NPHY are initialized.\\
+In SUNDDH following some other new control variables are assigned values (see \ref{sunddh}).
+
+\subsubsection{Subroutine SU0YOMB}
+In SUPHMNH called in SUPHY control variable LAROBU\_ENABLE is initialized. Subroutines ARO\_SUBUDGET and AROINI\_BUDGET are called to initialize budget arrays and saving physical tendencies in budget arrays within NMH subroutines. Also, ARO\_INIAPFT is called to do a part of initializations needed for DDH in AROME (see \ref{aroinipft}).
+
+
+\subsection{Entering physical fluxes and tendencies in DDH} 
+The most of physical parameterizations in AROME are calculated in MesoNH subroutines. The general layout, in AROME, of implementation of MesoNH subroutine and getting tendencies out of it is given on Fig. \ref{Budg}. Each MesoNH subroutine is called from an interface subroutine which itself is called in APL\_AORME. Within MesoNH subroutine a subroutine BUDGET is called to save physical tendencies in so called budget arrays. These arrays can't be reached from APL\_AORME but to reach them an interface subroutine, called AROEND\_BUDGET, is called at the end of APL\_AORME. It puts physical fluxes or tendencies in array APFT, which is passed to it as an actual argument.
+  \begin{figure}[!hbtp]
+        \centerline{
+        \includegraphics
+	[angle=0, 
+	width=8.cm, 
+	keepaspectratio=true,
+	clip=true]
+	{ALADIN16ws_ddh_3.epsi}
+	}
+       \caption{Getting physical tendencies from MesoMN subroutine and saving in APFT.}
+      \label{Budg}
+   \end{figure}
+
+
+\subsection{Modified subroutines}
+
+ \subsubsection{Subroutine APL\_AROME}
+
+%Ovo treba ocistiti u programu
+%Parameterization of radiation in AROME is the same as in ARPEGE/ALADIN and radiation fluxes are transported to DDH subroutines in the same way as for parameterizations in APLPAR. To enable this two arguments are added, these are: PFRTH and PFRSO.
+%
+Before any calculations of physical parameterizations in APL\_AROME, subroutine ARO\_STARTBU is called to prepare budget arrays for saving tendencies (in MNH tendency is calculated for each physical process).
+
+To put two radiation fluxes in APFT this to lines are added at the end of radiation parameterizations: % In cycle 31 PFRTH and PFRSO are used instead ZFRSO and ZFRTH
+    \begin{verbatim}
+        APFT(JLON,JLEV,MJJ2(4)-1)= ZFRSO(JLON,JLEV,1)
+        APFT(JLON,JLEV,MJJ2(4))  = ZFRTH(JLON,JLEV,1) 
+    \end{verbatim}
+
+Convection parameterization fluxes are not saved in budget arrays within MNH subroutines but this is done in subroutine ARO_CONVBU added at the end of convection calculations.
+        ARO\_CONVBU(ZRHODJM,ZRS,ZTHS)
+
+At the end of all physical parameterizations calculations fluxes/tendencies are saved in the array APFT by call to subroutine AROEND\_BUDGET.
+
+  \subsubsection{Subroutine AROEND\_BUDGET}
+AROEND\_BUDGET is an interface subroutine between ARPAGE/ALADIN code and MNH code. It's purpose is to save physical fluxes/tendencies in array APFT. MNH subroutines save them in budget arrays as tendencies. If LDFLUX is .TRUE., fluxes are calculated from tendencies and saved in APFT, else, tendencies are saved. If (LDAROCDPI.OR.LDHDCDPI) is .TRUE., CDPI fluxes and pseudo-fluxes are calculated and saved in APFT.
+
+  \subsubsection{Subroutine CPDYDDH}
+Dynamical fluxes and tendencies were not changed for AROME only new variables are added. Difference in number and nature of variables in ARPEGE/ALADIN and AROME is treated by SLECT CASE statement like following:
+
+ \begin{verbatim}
+  SELECT CASE (NPHY)
+    CASE(JPHYARO)
+      DO JLEV = 1, KFLEV
+        DO JROF=KSTART,KPROF
+         - variables for AROME are saved in PDHCV
+        ENDDO
+      ENDDO
+    CASE DEFAULT
+      DO JLEV = 1, KFLEV
+        DO JROF=KSTART,KPROF
+          IF(LHDQLN) THEN
+         - variables for ARPEGE/ALADIN are saved in PDHCV
+        ENDDO
+      ENDDO
+  END SELECT
+    \end{verbatim}
+
+
+  \subsubsection{Subroutine CPG\_DIA}
+A call of subroutine ARO\_CPPHDDH (see \ref{aro_cpph}) is added. It is called in case that AROME physics is used. A new argument PGPAR is added to get surface temperature and humidity (see \ref{lcpg}) for AROME. 
+
+  \subsubsection{Subroutine CPG}
+  \label{lcpg}
+       ZGPAR is added in call of CPG\_DIA
+
+  \subsubsection{SU0PHY}
+Tree new variables used for control are assigned values these are LPHCDPI, NPHY and LBUFLUX.
+
+  \subsubsection{Subroutine SUPHMNH}
+This subroutine is used in AROME for setup of MNH physical package. For DDH some changes were needed in it. First, LAROBU\_ENABLE is assigned as:
+    \begin{verbatim}
+       LAROBU_ENABLE=LAROBU_ENABLE.OR.(LSDDH.AND..NOT.LONLYVAR).OR.LPHCDPI
+    \end{verbatim}
+Than budget arrays are prepared for usage, if LAROBU\_ENABLE is .TRUE..
+    \begin{verbatim}
+       CALL ARO_SUBUDGET(ILON,ILEV,ZTSTEP)
+       CALL AROINI_BUDGET(LAROBU_ENABLE,CLUOUT,KULOUT,ZTSTEP,ISV,IRR, &
+                          & CLRAD,CLDCONV,CLTURB,CLTURBDIM, CLCLOUD)
+    \end{verbatim}
+Finally variables and arrays needed for DDH in AROME (mainly those form module YOMPHFT) are initialized.
+    \begin{verbatim}
+       CALL ARO_INIAPFT(LAROBU_ENABLE)    
+    \end{verbatim}
+
+  \subsubsection{Subroutine SUNDDH}
+  \label{sunddh}
+This subroutine must be changed when new terms are entered in DDH. Namelist NAMDDH is read in this subroutine so we are obliged to give default values to tree new variables. 
+    \begin{verbatim}
+    LONLYVAR = .TRUE.
+    LHDORIGP = .TRUE.
+    LHDCDPI = .FALSE.
+    \end{verbatim}
+
+Other variables that must be changed are:
+    \begin{verbatim}
+    NHDQLNVA  ! total number of variables for water
+    NHDQLNTD  ! number of dynamical tendencies for water when LHDHKS is .TRUE. 
+    NHDQLNFD  ! number of dynamical fluxes for water when LHDHKS is .TRUE.
+    NHDQLNFP  ! number of physical fluxes for water when LHDHKS is .TRUE.
+    NHDQLNTP  ! number of physical tendencies for water when LHDHKS is .TRUE.
+    NDHVHK    ! total number of variables when LHDHKS is .TRUE.
+    NDHAHKD   ! total number of dynamical tendencies when LHDHKS is .TRUE.
+    NDHBHKD   ! total number of dynamical fluxes when LHDHKS is .TRUE.  
+    NDHAHKP   ! total number of physical fluxes when LHDHKS is .TRUE.
+    NDHBHKP   ! total number of physical tendencies when LHDHKS is .TRUE.
+    \end{verbatim}
+This is done in SELECT CASE sentences like this one:
+    \begin{verbatim}
+  SELECT CASE (NPHY)
+  CASE(JPHYARO)
+  - assignments for AROME 
+  CASE DEFAULT
+  - assignments for ARPEGE/ALADIN
+  END SELECT
+    \end{verbatim}
+
+Additionally, NHDQLNFP is changed if LHDCDPI is .TRUE..
+
+
+
+  \subsubsection{Subroutine PPFIDH }
+New variables are added in the way described in \ref{AAnewtrem} but within a SELECT CASE statement like this:
+    \begin{verbatim}
+  SELECT CASE (NPHY)
+  CASE(JPHYARO)
+  - AROME variables
+  CASE DEFAULT
+  - ARPEGE/ALADIN variables
+  END SELECT
+    \end{verbatim}
+
+Physical fluxes are saved in file in the following way:
+
+    \begin{verbatim}
+  SELECT CASE (NPHY)
+  CASE(JPHYARO)
+    IF(.NOT.LONLYVAR) THEN
+      DO JI= 1, NDDHFT
+        WRITE (CLNOMA,5000) KNUM,YAPFT(JI)%CFT,YAPFT(JI)%CVAR,YAPFT(JI)%CNAME
+        CALL WRIFDH (ICOREP,NPODDH,CLNOMA,PDDHCV(0,IDHCV+JI),NFLEVG+1)
+      ENDDO
+    ENDIF
+  CASE DEFAULT
+  - ARPEGE/ALADIN fluxes
+  END SELECT
+    \end{verbatim}
+The advantage of DO loop is that for AROME this subroutine donesn't have to bee changed when new terms are introduced in equations.
+
+  \subsection{Modified modules}
+
+\subsubsection{Module YOMARPHY}
+In ARPEGE/ALADIN is supposed that the outputs of physical parameterizations are fluxes, in MNH these are always tendencies. To give a choice of either fluxes or tendencies a new switch is introduced.
+See for details in \ref{namarphy}.
+    \begin{verbatim}
+  LOGICAL :: LBUFLUX
+  !    LBUFLUX  : If TRUE fluxes are calculated in AROEND_BUDGET,
+  !               if FALSE, tendencies remain 
+    \end{verbatim}
+
+\subsubsection{Module YOMLDDH}
+Three switches are added to control the content of output file. LONLYVAR gives a possibility to save either only variables or variables and all other terms. Other two are connected to possibility of having microphysical fluxes/tendencies in form needed for CDPI (see \ref{namphy}). It is possible to save microphysical fluxes/tendencies as they are calculated in physical package, as in CDPI or both (see \ref{NamDDHnew}).
+
+    \begin{verbatim}
+  LOGICAL :: LONLYVAR ! if .TRUE. only variables are saved 
+  LOGICAL :: LHDORIGP ! if .TRUE. original fluxes from microphysical parameterizations 
+                      ! are saved
+  LOGICAL :: LHDCDPI  ! if .TRUE. CDPI fluxes are saved
+    \end{verbatim}
+
+\subsubsection{Module YOMMNH}
+In this module one logical variable, three arrays and one parameter are added for control of saving in data budget arrays and retrieving them.
+    \begin{verbatim}
+  LOGICAL :: LAROBU_ENABLE ! when it is .TURE. tendencies are saved in budget arrays 
+\end{verbatim} (see \ref{namparar})
+    \begin{verbatim}
+  ! for budgets and DDH, number of processes in budget arrays 
+  INTEGER(KIND=JPIM),ALLOCATABLE ::  NBUPROC(:)
+  INTEGER(KIND=JPIM),ALLOCATABLE ::  NJBUDG1(:)
+  INTEGER(KIND=JPIM),ALLOCATABLE ::  NJBUDG2(:)
+  ! number of budgets used in AROME, without passive scalars
+  INTEGER(KIND=JPIM), PARAMETER ::  JPAROBUD = 12
+    \end{verbatim}
+
+\subsubsection{Module YOMPHY}
+Two new control variables and tree parameters are added in YOMPHY. LPHCDPI controls calculation of CDPI fluxes/tendencies (but not output, see \label{NamDDHnew}). In various parts of the code there was a need to branch because of possibility to use several physical packages. The best way to do it is by SLECT CASE statement. For this reason a new variable
+NPHY is introduced. It is a code of physical package used in the model and it can take values defined with tree new parameters each for one physical package of those used in ARPEGE/ALADIN/AROME. When new package is introduced in the model, a new parameter must be defined. 
+    \begin{verbatim}
+  LOGICAL :: LPHCDPI
+  INTEGER(KIND=JPIM)  :: NPHY  
+  ! Values that NPHY can obtain: 
+  INTEGER(KIND=JPIM), PARAMETER  ::   JPHYEC =   1  ! for ECMWF physics
+  INTEGER(KIND=JPIM), PARAMETER  ::   JPHYMF =   2  ! for MF physics
+  INTEGER(KIND=JPIM), PARAMETER  ::  JPHYARO =   3  ! for AROME physics
+    \end{verbatim}
+\subsection{New subroutines}
+
+  \subsubsection{Subroutine ARO\_CPPHDDH}
+  \label{aro_cpph}
+ARO\_CPPHDDH is used in AROME instead of CPPHDDH used in ARPEGE/ALADIN. It has the same purpose as CPPHDDH, to calculate and save physical fluxes and tendencies in PDHCV. For the time being only fluxes are saved, and this is done in DO loop:
+    \begin{verbatim}
+  DO JPHFT= 1, NDDHFT
+    DO JLEV = 0, KFLEV
+      DO JROF=KSTART,KPROF
+        PDHCV(JROF,JLEV,JPHFT+IDHCV) = APFT(JROF,JLEV,JPHFT)
+      ENDDO
+    ENDDO 
+  ENDDO
+    \end{verbatim}
+
+  \subsubsection{Subroutine ADDFT}
+This subroutine adds a description of a new term in array YAPFT. It is used in ARO\_INIPFT.
+
+  \subsubsection{Subroutine ARO\_INIPFT}
+  \label{aroinipft}
+In this subroutine memory is allocated for all allocatable arrays from module YOMAPFT (\ref{yomphft}) and values are assigned to all variables and arrays from YOMAPFT. Descriptions in YAPFT are sorted by variable. The order of variables is following:
+\begin{enumerate}
+\item{U: } x-component of horizontal velocity
+\item{V: } y-component of horizontal velocity
+\item{W: } vertical velocity
+\item{EP:} turbulence kinetic energy
+\item{$\theta$: } potential temperature
+\item{$q_v$:} specific ratio of water vapour
+\item{$q_l$:} specific ratio of cloud water 
+\item{$q_i$:} specific ratio of cloud ice
+\item{$q_r$:} specific ratio of rain
+\item{$q_s$:} specific ratio of snow
+\item{$q_g$:} specific ratio of graupel
+\end{enumerate}
+
+Physical fluxes/tendencies for one variable are in the same order as in budget arrays that means in the order of execution of processes. Process in MesoNH means anything between: physical process, parameterisation, dynamical terms and all other terms in equations even some mathematical procedures like filtering. 
+
+Following main tasks are done in ARO\_INIPFT:
+\begin{description}
+\item{1. }   Calculating a number of fluxes/tendencies and allocations
+
+\item{2. }   Descriptions of fluxes/tendencies are saved in array YAPFT. At the same time first and last index in YAPFT for each variable are saved in arrays MJJ1 and MJJ2.
+
+\item{3. }   Matching APFT with budget arrays; the first and the last index in budget arrays are saved in NJBUDG1 and NJBUDG2. 
+\end{description}
+
+If common interface is used positions of CPDI fluxes are determined.
+
+
+
+\subsection{Adding a new term in DDH for AROME}
+If we want to add a new variable, dynamical flux or tendency and physical tendency (as it is defined in DDH) the procedure is the same as in ARPEGE/ALADIN (\ref {AAnewtrem}). The procedure for physical fluxes is changed because there are much more changes in them when physical package is changed than in other categories. Intention is to do changes only in ARO\_INIPFT but but some changes must be still done in SUNDDH. The procedure is following:
+\begin{description}
+\item{A. }Adding a variable, dynamical flux or tendency or physical tendency: the same procedure as in \ref {AAnewtrem}
+
+\item{B. }Adding a physical flux
+\begin{description}
+\item{1. } Do changes in subroutine SUNDDH (see \ref{sunddh}),
+\item{2. } Add a new term in subroutine ARO\_INIPFT. First NAPHFT and NDDHFT must be changed. Than, description of the new term must be put at the right place in YAPFT (see \ref{aroinipft}). Besides, changes in NBUPROC, NJBUDG1 and NJBUDG2 may be needed.
+
+\end{description}
+
+\end{description}
+

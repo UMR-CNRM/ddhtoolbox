@@ -1,0 +1,84 @@
+\documentclass[10pt,french]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage[round]{natbib}
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{babel}
+\usepackage[colorlinks]{hyperref}
+
+\addto\extrasfrench{%
+   \providecommand{\og}{\leavevmode\flqq~}
+   \providecommand{\fg}{\ifdim\lastskip>\z@\unskip\fi~\frqq}
+}
+\usepackage{tikz}
+\setlength{\unitlength}{1cm} % indique que 1 référencé dans une distance à Tikz se traduira par 1cm sur le papier.
+%
+%-----------------------------------------------------------------------
+% Vecteurs ne touchant pas les lettres.
+%-----------------------------------------------------------------------
+%
+\usepackage{amsmath}
+\renewcommand*{\overrightarrow}[1]{\vbox{\halign{##\cr
+  \tiny\rightarrowfill\cr\noalign{\nointerlineskip\vskip1pt}
+  $#1\mskip2mu$\cr}}}
+%
+%-----------------------------------------------------------------------
+% Commandes perso.
+%-----------------------------------------------------------------------
+%
+\input{eng.tex}
+\input{com.tex}
+\begin{document}
+%
+%-----------------------------------------------------------------------
+% Title
+%-----------------------------------------------------------------------
+%
+\thispagestyle{empty}
+{$$\begin{array}{|c|} \hline \\[1ex]
+	\\[1ex]
+	\hbox{\bf\Huge Diagnostics in Horizontal Domains (DDH)} \\[2ex]
+	\hbox{\bf\Large Variables and budget equations, in horizontal mean} \\[1ex]
+	\hbox{\bf\Large \arp, \ala\ and \arome\ models} \\[2ex]
+	\hbox{\bf\Large Guide for users and developpers} \\[1ex]
+	\\[1ex]
+	\hbox{\Large \today} \\[1ex]
+	\\[1ex]
+   \hline
+\end{array}$$}
+%
+%-----------------------------------------------------------------------
+% Figure-logo.
+%-----------------------------------------------------------------------
+%
+\vspace{0.4cm}
+\centerline{\includegraphics [width=13.0cm, angle=0., keepaspectratio=true, clip=true] {budget.svg.eps} }
+\centerline{\includegraphics [width=13.0cm, angle=0., keepaspectratio=true, clip=true] {images/DHFDLFCST+0016.meteopole.tephigram.svg.eps} }
+%
+\renewcommand{\arraystretch}{1.6}
+\newcommand{\qgen}{q_\psi}
+\newcommand{\dl}{\Delta l}
+\newcommand{\dn}{\Delta n}
+\newcommand{\ddh}{{\tt DDH}}
+\newcommand{\lvl}{L_{v>l}(T)}
+\newcommand{\lvn}{L_{v>n}(T)}
+\newcommand{\ec}{\frac{u^2+v^2}{2}}
+%
+%\newpage
+\sommaire
+
+\input{main_principles.tex}
+\input{usage.tex}
+\input{horizontal_mean.tex}
+\input{budgets_arpege.tex}
+\input{budgets_arome.tex}
+\input{ddhtoolbox.tex}
+\input{maintenance.tex}
+\input{history.tex}
+%
+\end{document}

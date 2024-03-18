@@ -1,0 +1,165 @@
+\chapter{Budgets and diagnostics, \arome\ model}
+
+\section{Balance equations}
+
+\subsection{Momentum}
+
+  \begin{tabular}{r l l}
+
+       FUUTUR       &$F_{u}^{tur}$      &vertical turbulence flux of u velocity component\\
+       FVVTUR       &$F_{v}^{tur}$  &vertical turbulence flux of v velocity component\\
+       FVWTUR       &$F_{w}^{tur}$      &vertical turbulence flux of u velocity component\\
+
+  \end{tabular}
+
+  \subsection{Turbulence kinetic energy}
+  \begin{tabular}{rll}
+
+       FTETURB      &$F_{tke}^{tur}$   &turbulent flux of turbulent kinetic energy\\
+       FTEDYPRO     &$F_{tke}^{tur-prod-dyn}$ &dynamic production of turbulent kinetic energy\\
+       FTETERMPRO   &$F_{tke}^{tur-prod-term}$ &thermic production of turbulent kinetic energy \\
+       FTEDISS      &$F_{tke}^{tur-diss}$ &dissipation of turbulent kinetic energy\\
+  \end{tabular}
+
+  \subsection{Thermal energy}
+  \begin{tabular}{rll}
+
+       FCTNEGC1     &$F_{c_p T}^{negc1}$ &correction of negative specific ratios after advection\\
+       FCTCDEPI     &$F_{c_p T}^{cdepi}$ &adjustment of water vapour, cloud water and cloud ice\\
+       FCTVCONV     &$F_{c_p T}^{conv}$ &convection flux of thermal energy\\
+       FCTVTURB     &$F_{cp T}^{tur}$ &vertical turbulent flux of thermal energy\\
+       FCTDISSTUR   &$F_{cp T}^{tur-diss}$  &dissipation of turbulent kinetic energy\\         
+       FCTNEGC      &$F_{cp T}^{negc}$ &correction of negative specific ratios after turbulence\\
+       FCTHENUI     &$F_{cp T}^{henuv}$ &heterogeneous nucleation of ice\\       
+       FCTHON       &$F_{cp T}^{honl}$ &homogeneous nucleation of ice\\
+       FCTSFR       &$F_{cp T}^{sfr}$ &spontaneous freezing\\     
+       FCTDEPS      &$F_{cp T}^{deps}$ &deposition on snow\\      
+       FCTDEPG      &$F_{cp T}^{depg}$ &deposition on graupel\\      
+       FCTREVA      &$F_{cp T}^{reva}$ &rain evaporation\\
+       FCTRIM       &$F_{cp T}^{rim}$  &riming by cloud droplets\\     
+       FCTACCS      &$F_{cp T}^{accs}$  &collection of raindrops and snow on graupel\\\\      
+       FCTCFRZ      &$F_{cp T}^{cfrz}$ &contact freezing of rain\\      
+       FCTWETG      &$F_{cp T}^{wetg}$ &wet growth of graupel\\      
+       FCTDRYG      &$F_{cp T}^{dryg}$ &dry growth of graupel\\
+       FCTMLTG      &$F_{cp T}^{mltg}$ &melting of graupel\\
+       FCTMLTI      &$F_{cp T}^{mlti}$ &melting of cloud ice\\
+       FCTBERFI     &$F_{cp T}^{berfi}$ &Bergeron-Findeisen effect\\
+       FCTRAYSOL1   &$F_{cp T}^{raysol1}$ &solar radiation\\
+       FCTRAYTER1   &$F_{cp T}^{rayter1}$ &earth radiation\\
+  \end{tabular}
+
+  \subsection{Water vapour}
+  \begin{tabular}{rll}
+
+       FQVNEGC1     &$F_{q_v}^{negc1}$ &correction of negative specific ratios after advection\\
+       FQVDEPI      &$F_{q_v}^{depi}$ &adjustment of water vapour, cloud water and cloud ice\\
+       FQVVCONV     &$F_{q_v}^{conv}$ &convection flux of water vapour\\
+       FQVVTURB     &$F_{q_v}^{tur}$  &vertical turbulent flux of water vapour\\
+       FQVNEGC      &$F_{q_v}^{negc}$ &correction of negative specific ratios after turbulence\\
+       FQVHENUI     &$F_{q_v}^{henu}$ &heterogeneous nucleation of ice\\
+       FQVDEPS      &$F_{q_v}^{deps}$ &deposition on snow\\
+       FQVDEPG      &$F_{q_v}^{depg}$ &deposition on groupel\\
+       FQVREVA      &$F_{q_v}^{reva}$ &rain evaporation\\
+  \end{tabular}
+
+  \subsection{Cloud water}
+  \begin{tabular}{rll}
+
+       FQLNEGC1     &$F_{q_l}^{negc1}$ &correction of negative specific ratios after advection\\
+       FQLCDEPI     &$F_{q_l}^{cdepi}$ &adjustment of water vapour, cloud water and cloud ice\\
+       FQLVCONV     &$F_{q_l}^{conv}$&convection flux of cloud water\\
+       FQLVTURB     &$F_{q_l}^{tur}$  & vertical turbulent flux of cloud water\\
+       FQLNEGC      &$F_{q_l}^{negc}$ &correction of negative specific ratios after turbulence\\
+       FQLHON       &$F_{q_l}^{hon}$ &homogeneous nucleation of ice\\
+       FQLAUTO      &$F_{q_l}^{autor}$ &auto-conversion of cloud water\\
+       FQLACCR      &$F_{q_l}^{accr}$ &accretion of cloud wter on rain\\
+       FQLRIMS      &$F_{q_l}^{rim}$ &riming by cloud droplets\\
+       FQLWETG      &$F_{q_l}^{wetg}$ &wet growth of graupel\\
+       FQLDRYG      &$F_{q_l}^{dryg}$ &dry growth of graupel\\
+       FQLMLTI      &$F_{q_l}^{mlti}$ &melting of cloud ice\\
+       FQLBERFI     &$F_{q_l}^{berfi}$ &Bergeron-Findeisen effect\\
+
+  \end{tabular}
+
+  \subsection{Rain}
+  \begin{tabular}{rll}
+
+       FQRNEGC      &$F_{q_r}^{negc}$ &correction of negative specific ratios after advection\\
+       FQRSEDI      &$F_{rp}$ &sedimentation\\
+       FQRSFR       &$F_{q_r}^{sfrz}$ &spontaneous freezing of rain\\
+       FQRAUTO      &$F_{q_r}^{autor}$ &auto-conversion of cloud water\\
+       FQRACCL      &$F_{q_r}^{accr}$ &accretion of cloud wter on rain\\
+       FQRREVA      &$F_{q_r}^{reva}$ &rain evaporation\\
+       FQRACCS      &$F_{q_r}^{accs}$ &collection of raindrops on graupel\\
+       FQRCFRZ      &$F_{q_r}^{cfrz}$ &contact freezing of rain\\
+       FQRWETG      &$F_{q_r}^{wetg}$ &wet growth of graupel\\
+       FQRDRYG      &$F_{q_r}^{dryg}$ &dry growth of graupel\\
+       FQRMLTG      &$F_{q_r}^{mltg}$ &melting of graupel\\
+  \end{tabular}
+
+  \subsection{Cloud ice}
+  \begin{tabular}{rll}
+
+       FQINEGC1     &$F_{q_i}^{negc1}$ &correction of negative specific ratios after advection\\
+       FQICDEPI     &$F_{q_i}^{cdepi}$ &adjustment of water vapour, cloud water and cloud ice\\
+       FQICONV      &$F_{q_i}^{conv}$ &convection flux of cloud ice\\
+       FQITURB      &$F_{q_i}^{tur}$  &vertical turbulent flux of cloud ice\\
+       FQINEGC      &$F_{q_i}^{negc}$ &correction of negative specific ratios after turbulence\\
+       FQISEDI      &$F_{ip}$ &sedimentation\\
+       FQIHENU      &$F_{q_i}^{henu}$ &heterogeneous nucleation of ice\\
+       FQIHON       &$F_{q_i}^{hon}$ &homogeneous nucleation of ice\\
+       FQIAGGS      &$F_{q_i}^{agg}$ &collection of ice on snow\\
+       FQIAUTS      &$F_{q_i}^{autoi}$ &auto-conversion of ice to snow\\
+       FQICFRZ      &$F_{q_i}^{cfrz}$ &contact freezing of rain\\
+       FQIWETG      &$F_{q_i}^{wetg}$ &wet growth of graupel\\
+       FQIDRYG      &$F_{q_i}^{dryg}$ &dry growth of graupel\\
+       FQIMLT       &$F_{q_i}^{mlti}$ &melting of cloud ice\\
+       FQIBERFI     &$F_{q_i}^{berfi}$ &Bergeron-Findeisen effect\\
+
+  \end{tabular}
+
+  \subsection{Snow}
+  \begin{tabular}{rll}
+       FQSNEGC      &$F_{q_s}^{negc}$ &correction of negative specific ratios after advection\\
+       FQSSEDI      &$F_{sp}$ &sedimentation\\
+       FQSDEPS      &$F_{q_s}^{dep}$ &deposition on snow\\
+       FQSAGGS      &$F_{q_s}^{agg}$ &collection of ice on snow\\
+       FQSAUTS      &$F_{q_s}^{autoi}$  &auto-conversion of ice to snow\\
+       FQSRIM       &$F_{q_s}^{rim}$ &riming by cloud droplets\\
+       FQSACC       &$F_{q_s}^{accs}$ &collection of raindrops and snow on graupel\\
+       FQSCMEL      &$F_{q_s}^{cmel}$ &melting of aggregates\\
+       FQSWETG      &$F_{q_s}^{wetg}$ &wet growth of graupel\\
+       FQSDRYG      &$F_{q_s}^{dryg}$ &dry growth of graupel\\
+  \end{tabular}
+
+  \subsection{Graupel}
+  \begin{tabular}{rll}
+       FQGNEGC      &$F_{q_g}^{negc}$ &correction of negative specific ratios after advection\\
+       FQGSEDI      &$F_{gp}$ &sedimentation\\
+       FQGSFR       &$F_{q_g}^{sfr}$ &spontaneous freezing \\
+       FQGDEPG      &$F_{q_g}^{dep}$  &deposition on gropel\\
+       FQGRIM       &$F_{q_g}^{rim}$ &riming by cloud droplets\\
+       FQGACC       &$F_{q_g}^{accs}$  &collection of raindrops and snow on graupel\\\\
+       FQGCMEL      &$F_{q_g}^{cmel}$ &melting of aggregates\\
+       FQGCFRZ      &$F_{q_g}^{cfrz}$ &contact freezing of rain\\
+       FQGWETG      &$F_{q_g}^{wetg}$ &wet growth of graupel\\
+       FQGDRYG      &$F_{q_g}^{dryg}$ &dry growth of graupel\\
+       FQGMLT       &$F_{q_g}^{mltg}$ &melting of graupel\\
+
+  \end{tabular}
+
+\section{Common Dynamics-Physics Interface CDPI}
+  \begin{tabular}{rll}
+      FQVPL1       & $P_l'$ &Pseudo flux due to condensation\\
+      FQVPI1       & $P_i'$ &Pseudo flux due to sublimation\\
+      FQLPL2       & $P_l''$ & Pseudo flux due to evaporation of rain\\
+      FQIPI2       & $P_i''$ &Pseudo flux due to conversion of cloud ice to snow and graopel\\
+      FQRPL3       & $P_l'''$&Pseudo flux due to evapotarion of rain\\
+      FQSPI3       & $P_i'''$&Pseudo flux due to deposition on snow and groupel\\
+      FQGPG3       & $P_g'''$&Pseudo flux due to deposition on snow and groupel\\
+      FQRPR0       & $P_r$ &Flux of falling rain drops\\
+      FQIPI0       & $P_i$ &Flux of falling cloud ice\\
+      FQSPS0       & $P_s$ &Flux of falling snow\\
+      FQGPG0       & $P_g$ &Flux of falling groupel\\
+  \end{tabular}
+

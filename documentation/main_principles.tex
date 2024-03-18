@@ -1,0 +1,102 @@
+\chapter{Main principles}
+
+\null
+\vspace{1cm}
+ 
+This paper presents the diagnostics on horizontal domains (DDH) developed initally for
+the variable mesh of \ARP (global stretched model), and now also available for
+\ALA\ (Limited Area Model) and \ARO\ (Cloud Systems Resolving Model).
+
+The main objective of the DDH tool is to provide, on user defined domains, the budget
+of prognostic variables of these models (momentum, temperature, water vapour,
+etc). The DDH tool is used by searchers and model developpers to understand the
+model's dynamical and physical interactions, thus contributing to the
+parameterization development process. The DDH are also
+used for other purposes, like getting mean model drifts with respect to analyses,
+or to extract model vertical profiles at given locations.
+
+These diagnostics are made, on the one side, of logical functions which enable
+to manage several user defined horizontal domains depicting parts or the whole
+of the domain of integration, while reducing the number of scientific
+computations. On the other hand, they include the production of budget equations
+of the prognostic variables for domains such as zonal bands, rectangular areas, single
+vertical model columns, or the whole globe.
+
+Each model point is described within the DDH sofware by its geographical
+position, a scale factor, the orientation of the geographical North vector, a
+mean value of each variable as well as some horizontal derivatives.
+
+Each point is independent and can belong to different user-defined domains; any
+mean on several points makes a domain. The gathering of all points makes the
+global domain. A zonal mean is made on a grouping of points between two given
+latitudes, etc.
+
+DDH therefore makes a double representation of domains: a first one, external,
+which operates groupings meaningful for users; that is a zonal band, or points
+within a given geographical area. The other one, internal, consists in the
+grouping of any other points, not even necessarily connex ones.
+
+Information within a given domain is also categorized by DDH: for some
+parameters, an instantaneous value is required, for others, only a mean value in
+time is required. This implies the use of operators of horizontal means and of
+simple and linear mean values in time, commutative as often as possible.
+
+\section{User-defined horizontal domains}
+
+\begin{itemize}
+	\item whole globe,
+	\item zonal bands of equal surfaces,
+	\item limited domains, defined by either two or four corners, overlapping or not,
+	\item isolated points, either inside or outside the above mentioned.
+\end{itemize}
+
+In practice, for the DDH software, limited domains and isolated points are the same kind.
+\section {User-defined outputs} 
+\begin {itemize}
+	\item a print on standard output of budgets on any given domain, in vertical mean.
+	\item the production of a file such as {\tt LFA} which includes vertical profiles
+	of mean horizontal parameters, eventually cumulated in time, on this
+	ensemble of domains.
+	Thus, the following files can be produced: 
+	\begin{itemize}
+		\item a file for the whole model domain,
+		\item a file containing zonal bands,
+		\item a file of limited domains and of isolated points,
+	\end{itemize}
+\end{itemize}
+
+\section{Scientific content of diagnostics}
+\begin{itemize}
+	\item Budgets of mass / energy: balance of air and water masses, potential
+	and internal energies, kinetic energy, momentum budget, entropy budget,
+	can be activated from independent logical indicators.
+	\item For surface, the DDH tool provides surface fluxes,
+		but not soil budgets, as these soil budgets are given
+		by the SURFEX software itself.
+\end{itemize}
+
+\section{Output frequency} 
+
+For DDH diagnostics, two independent control chains are available. One for
+printing, the other one for producing files. They enable to choose a time unit
+(time step or prediction time) and to generate output either at regular
+intervals or at specific irregular prediction times.
+
+\section{Internal representation of domains}
+The main principle of DDH is to allocate \underbar{each model point} to \underbar{one and only one internal domain}, and this even if this point belongs to several {\em user} domains. With this principle, scientific computations are made only once, thus saving computation time. Therefore, two ways to split the integration domain are used:
+\begin{itemize}
+	\item \underbar{the external (or user-defined) splitting}: a given point can be at the same time, within the global domain, within a zonal band, and within one or more limited domains. Of course, final file or listing outputs are presented in this user-defined geometry, but one should try to make the least possible computations. 
+	\item \underbar{the internal splitting}, meaning the partition (in the sense of
+		the ensemble theory) of the integration domain. Therefore, to each point is
+		associated a single internal domain. The associated mask is set in the
+		same way as the geographical positions' one, land/sea indicator, etc. To each
+		user's domain corresponds a single set of internal domains. This set entirely
+		defines the external domain.
+\end{itemize}
+\section{Horizontal mean operator}
+
+It must be such that the average of the mean values of each sub ensemble gives
+the global mean value on the sphere (or on the entire model domain, in the case
+of a limited area model). Each point is given a weight which represents its
+geographical surface (but without dimension). 
+

@@ -1,0 +1,1120 @@
+% My choice: :
+%-----------------
+%\documentclass[a4paper,handout]{beamer}
+%\documentclass[a4paper,presentation]{beamer}
+\documentclass[aspectratio=169]{beamer}
+%----------------------
+%
+%
+%
+%
+%
+%
+%----------------------
+% Yves Bouteloup :
+%----------------------
+%\documentclass[8pt,a4paper,presentation]{beamer}
+%--------------------
+% ENS templates:
+%--------------------
+%\documentclass{beamer}
+%----------------------
+%\documentclass[10pt,a4paper,presentation]{beamer}
+%\documentclass[t,handout]{beamer}
+%----------------------
+
+
+%------------------------------
+% pour windows (Font ecso0800 not found) :
+%------------------------------
+\usepackage{lmodern}
+
+%-----------------------------
+% The Frankfurt theme: (with )
+%-----------------------------
+\usetheme{Frankfurt}
+
+%-----------------------
+% Usefull packages:
+%-----------------------
+\usepackage{pgf}
+\usepackage{bm}
+%%\usepackage[french]{babel}
+%%\usepackage[english,frenchb]{babel}
+\usepackage[french,english]{babel} % prendre celui là ?
+
+% Pour avoir la date et les titres en français :
+%\usepackage[francais,english]{babel}
+%\usepackage[latin1]{inputenc}
+%\usepackage[T1]{fontenc}
+
+%------------------------------
+% pour avoir les equations :
+%------------------------------
+%\usepackage{sansmathaccent}
+%\pdfmapfile{+sansmathaccent.map}
+
+%----------------------------
+% from ENS templates:
+%----------------------------
+\usepackage{pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
+\usepackage{amsmath,amssymb}
+%\usepackage[latin1]{inputenc}
+\usepackage{colortbl} % ???
+\usepackage{lipsum}
+%----------------------------
+% from Karim Yessad:
+%----------------------------
+%\usepackage[latin1]{inputenc}
+%\usepackage[cyr]{aeguill}
+%\usepackage[francais]{babel}
+
+%----------------------------
+% from Yves bouteloup:
+%----------------------------
+\usepackage[utf8]{inputenc} % !!! Important pour les accents français (Météo) !!!
+\usepackage[T1]{fontenc} % !!! Important pour les accents français (Météo) !!!
+%\usepackage{times} % pas certain...
+\usepackage{amsfonts,amsbsy}
+%\usepackage{euscript} % ??
+%\usepackage{ulem} % ??
+\usepackage{caption} % ??
+%
+\usepackage{tikz}
+\usepackage{color,graphicx,subfigure}
+\usepackage{epstopdf}
+\usepackage{array}
+\usepackage{verbatim}
+%\usepackage[all]{xy}  % x-y pic (pour faire des dessins !)
+\setbeamertemplate{sections/subsections in toc}[circle]
+% Pour pouvoir superposer des choses (en particulier des légendes ...
+\usepackage[absolute,showboxes,overlay]{textpos}  % déclaration du package
+\textblockorigin{0pt}{0pt} % origine des positions (coin gauche) attention, axe y vers le bas
+%\TPshowboxestrue          % affiche le contour des textblock
+\TPshowboxesfalse          % n'affiche pas le contour des textblock
+
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+%\newcommand{\lp}{\left(}
+%\newcommand{\rp}{\right)}
+%\newcommand{\lc}{\left[}
+%\newcommand{\rc}{\right]}
+%\newcommand{\la}{\left \{ }
+%\newcommand{\ra}{\right \} }
+\newcommand{\dr}{\partial}
+\newcommand{\gray}[1]{\textcolor{gray}{#1}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\mynode}[4]{\draw(#1,#2) node[right] (#3) {\phantom{AAAA}} node[right] {#4}}
+% http://latexcolor.com/
+\definecolor{mydarkred}{rgb}{0.5, 0.0, 0.0}
+\definecolor{mydarkgreen}{rgb}{0.0, 0.5, 0.0}
+\definecolor{mydarkblue}{rgb}{0.0, 0.0, 0.5}
+\newcommand{\green}[1]{\textcolor{mydarkgreen}{#1}}
+
+%-------------------
+% from mf2016:
+%-------------------
+\definecolor{airmassmf1}{rgb}{1.000,0.941,0.686}
+\definecolor{airmassmf2}{rgb}{0.768,0.756,0.690}
+\definecolor{airmassmf3}{rgb}{0.568,0.607,0.682}
+\definecolor{airmassmf4}{rgb}{0.384,0.482,0.655}
+\definecolor{airmassmf5}{rgb}{0.227,0.388,0.623}
+\definecolor{airmassmf6}{rgb}{0.086,0.313,0.588}
+\definecolor{mftabname1}{rgb}{0.117,0.294,0.603}
+\definecolor{mftabname2}{rgb}{0.941,0.208,0.184}
+\definecolor{mftabedge1}{rgb}{0.768,0.800,0.906}
+\definecolor{blockbg1}{rgb}{0.900,0.9,0.9}
+\definecolor{mfblue}{rgb}{0.000,0.5607,0.7411}
+%-------------------
+% from mf2016:
+%-------------------
+%\setbeamercolor*{section in head/foot}{parent=palette tertiary}
+%\setbeamercolor*{subsection in head/foot}{parent=palette primary}
+%-------------------
+% from mf2016:
+%-------------------
+% pour les pieds de page :
+%\setbeamerfont{author in head/foot}{family=\sffamily}
+%\setbeamerfont{title in head/foot}{family=\sffamily,series=\bfseries,size={\fontsize{6}{7}}}
+%\setbeamerfont{date in head/foot}{family=\sffamily}
+%\setbeamerfont{frame in head/foot}{family=\sffamily,series=\bfseries,size={\fontsize{6}{7}}}
+%\setbeamerfont{section in head/foot}{size=\tiny,series=\normalfont}
+%\setbeamerfont{subsection in head/foot}{family=\sffamily,size={\fontsize{1}{1}}}
+%-------------------
+% from mf2016: (style de couleur des item )
+%-------------------
+\setbeamercolor{itemize item}{fg=red} 
+% ------------------------------------------------------------------------
+% from mf2016: (Couleurs speciales)
+% ------------------------------------------------------------------------
+\definecolor{beamer@blendedblue}{rgb}{0.000,0.439,0.753}
+\definecolor{mfgrey}{rgb}{0.250,0.250,0.250}
+\definecolor{mfwhite}{rgb}{1.000,1.000,1.000}
+\definecolor{mfblack}{rgb}{0.000,0.000,0.000}
+\definecolor{mftitleblue}{rgb}{0.000,0.5607,0.7411}
+\definecolor{mflogoblue}{rgb}{0.1215,0.3333,0.5843}
+% Couleurs
+%\setbeamercolor{frametitle}{fg=beamer@blendedblue}
+%\setbeamercolor{alerted text}{fg=red}
+%\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!80!black}
+%\setbeamercolor{block title alerted}{use=alerted text,fg=white,bg=alerted text.fg!80!black}
+%\setbeamercolor{block body}{bg=mftabedge1}
+\setbeamercolor{block body}{bg=blockbg1}
+\setbeamercolor{block title example}{use=example text,fg=white,bg=example text.fg!80!black}
+\setbeamercolor{block title}{fg=white,bg=mflogoblue}
+\setbeamercolor{block title alerted}{use=alerted text,fg=white,bg=alerted text.fg!80!black}
+\setbeamercolor{whitetext}{fg=white,bg=beamer@blendedblue!80!black}
+\setbeamercolor{alerted text}{fg=red}
+\setbeamercolor{frametitle}{fg=mfblue!70!mfblue, bg=white}
+%\setbeamercolor{frametitle}{fg=mftitleblue}
+\setbeamercolor{framesubtitle}{fg=mftitleblue}
+%\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!80!black}
+%\setbeamercolor{block title alerted}{use=alerted text,fg=white,bg=alerted text.fg!80!black}
+%\setbeamercolor{block title example}{use=example text,fg=white,bg=example text.fg!80!black}
+%\setbeamercolor{whitetext}{fg=white,bg=beamer@blendedblue!80!black}
+
+% ------------------------------------------------------------------------
+% from mf2016: (Couleurs page de titre)
+% ------------------------------------------------------------------------
+%\setbeamercolor{title}{fg=mfblack}
+%\setbeamercolor{subtitle}{fg=mfblack}
+%\setbeamercolor{author}{fg=mftitleblue}
+%\setbeamercolor{institute}{fg=mftitleblue}
+%\setbeamercolor{date}{fg=mftitleblue}
+% ------------------------------------------------------------------------
+% from mf2016: (Polices d'ecriture)
+% ------------------------------------------------------------------------
+\setbeamerfont{frametitle}{family=\sffamily,series=\bfseries,size={\fontsize{13}{15}}}
+\setbeamerfont{framesubtitle}{size=\normalsize}
+\setbeamerfont{subsection in toc}{size=\small}
+\setbeamerfont{subsubsection in toc}{size=\small}
+% Polices d'ecriture page de titre
+\setbeamerfont{title}{     family=\sffamily,series=\bfseries,size={\fontsize{13}{15}},parent=structure}
+\setbeamerfont{subtitle}{  family=\sffamily,series=\bfseries,size=\normalsize,parent=title}
+\setbeamerfont{author}{    family=\sffamily,series=\bfseries,size={\fontsize{10}{12}}}
+\setbeamerfont{institute}{ family=\sffamily,series=\bfseries,size={\fontsize{10}{12}}}
+\setbeamerfont{date}{      family=\sffamily,series=\bfseries,size={\fontsize{10}{12}}}
+
+% ------------------------------------------------------------------------
+% from mf2016:  (Blocs arrondis)
+% ------------------------------------------------------------------------
+%  \setbeamertemplate{blocks}[rounded][shadow=true,bg=yellow]
+\newcommand{\bb}[1]{\begin{beamerboxesrounded}[shadow=true]{#1}}
+\newcommand{\eb}{\end{beamerboxesrounded}}
+
+% -----------------------
+% from Y. Bouteloup:
+% -----------------------
+%\setbeamertemplate{sections/subsections in toc}[circle]
+%
+% Pour pouvoir superposer des choses (en particulier des légendes ...
+%\usepackage[absolute,showboxes,overlay]{textpos}     % déclaration du package
+%\textblockorigin{0pt}{0pt}                           %origine des positions (coin gauche) attention, axe y vers le bas !!
+%\TPshowboxestrue                                  % affiche le contour des textblock
+%\TPshowboxesfalse                                % n'affiche pas le contour des textblock
+
+
+% ------------------------------------------------------------------------
+%  from mf2016: Enlever la barre de navigation
+% ------------------------------------------------------------------------
+\setbeamertemplate{navigation symbols}{} 
+
+% ------------------------------------------------------------------------
+%  from mf2016: Affichage du titre
+% ------------------------------------------------------------------------
+%\setbeamertemplate{frametitle}
+%  { %
+%  \vskip0.1cm
+%  \begin{beamercolorbox}[wd=\paperwidth,ht=1.1cm,leftskip=1.3cm]{frametitle}
+%    \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle
+%    %\vskip0.5em
+%    \flushright \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}{\itshape %\insertframesubtitle\hskip0.4cm}
+%  \end{beamercolorbox}
+%  \vskip0.1cm
+%}
+% \centering \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}{\itshape \insertframesubtitle\hskip0.4cm}
+% \flushright \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}{\itshape \insertframesubtitle\hskip0.4cm}
+
+% ------------------------------------------------------------------------
+% from mf2016:  Reglage des listes et enumerations
+% ------------------------------------------------------------------------
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamertemplate{items}[default]
+\setbeamertemplate{itemize item}[square]
+\setbeamertemplate{itemize subitem}[circle]
+\setbeamertemplate{itemize subsubitem}[triangle]
+\setbeamercolor{itemize item}{fg=mftitleblue}
+\setbeamercolor{itemize subitem}{fg=mfblack}
+\setbeamercolor{itemize subsubitem}{fg=mfblack}
+
+%-------------------
+% from test04:       Navigation bar
+%-------------------
+\makeatletter
+\def\insertnavigation#1{%
+\vbox{{%
+\usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
+\beamer@xpos=0\relax%
+\beamer@ypos=1\relax%
+\hbox to #1{\hskip.3cm\setbox\beamer@sectionbox=\hbox{\kern1sp}%
+  \ht\beamer@sectionbox=1.875ex%
+  \dp\beamer@sectionbox=0.75ex%
+    \hskip.3cm%
+    \global\beamer@section@min@dim\z@
+    \dohead%
+    \beamer@section@set@min@width
+  \box\beamer@sectionbox\hfill\hskip.3cm}%
+}}}
+
+%-------------------
+% from test04:       Navigation bar / headline
+%-------------------
+%
+\setbeamercolor{upper separation line head}{bg=mfblue!70!mfblue}
+%
+\setbeamertemplate{headline}
+{%
+\pgfuseshading{beamer@barshade}%
+\ifbeamer@sb@subsection%
+\vskip-9.75ex%
+\else%
+\vskip-7ex%
+\fi%
+\begin{beamercolorbox}[ignorebg,ht=2.25ex,dp=3.75ex]{section in head/foot}
+\insertnavigation{\paperwidth}
+\end{beamercolorbox}%
+\ifbeamer@sb@subsection%
+\begin{beamercolorbox}[ignorebg,ht=2.125ex,dp=1.125ex,%
+  leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
+  \usebeamerfont{subsection in head/foot}\insertsubsectionhead
+\end{beamercolorbox}%
+\fi%
+\begin{beamercolorbox}[colsep=1.5pt,ht=.75ex]{upper separation line head}
+\end{beamercolorbox}
+}%
+\makeatother
+
+
+%-----------------------------------
+% from Ecrad (Y. Bouteloup):
+%-----------------------------------
+%\pgfdeclareimage[height=90mm,width=120mm]{garde}{cover_mf2016+cnrs+leffe}
+%\pgfdeclareimage[height=96mm,width=128mm]{template}{diapo_type_mf2016+cnrs+leffe}
+
+%-------------------
+% from test04:
+%-------------------
+\setbeamercolor{section in head/foot}{fg=mflogoblue, bg=white}
+%\setbeamercolor{section in head/foot}{fg=black, bg=white}
+%
+%\setbeamercolor{frametitle}{fg=red!70!black, bg=white}
+%\setbeamercolor{upper separation line head}{bg=red!70!black}
+%\setbeamercolor{section in head/foot}{fg=mfblue, bg=white}
+
+\makeatletter
+%------------------------------------------------------------------------------------
+% from mf2016:  Pied de page (avec page et short-title, mais sans date)
+%------------------------------------------------------------------------------------
+%\defbeamertemplate*{footline}{Frankfurt theme}
+
+%\setbeamertemplate{footline}
+%{
+%  \leavevmode%
+%  \hbox{%
+%  \begin{beamercolorbox}[wd=.20\paperwidth,ht=.3cm,dp=.3cm,left,leftskip=0.45cm]{frame in head/foot}%
+%  %===== HERE ====================================================
+%%    \usebeamerfont{section in head/foot} \usebeamercolor[mflogoblue]{section in head/foot} Page \insertframenumber / \inserttotalframenumber
+%    \usebeamerfont{section in head/foot} \usebeamercolor[mflogoblue]{section in head/foot} Page \insertframenumber
+%  %===== HERE ====================================================
+%  \end{beamercolorbox}%
+%  \begin{beamercolorbox}[wd=.60\paperwidth,ht=.3cm,dp=.15cm,center]{frame in head/foot}%
+%  %===== HERE ====================================================
+%    \usebeamerfont{section in head/foot} \usebeamercolor[mflogoblue]{section in head/foot} 
+%    2-column model of conv. drafts accounting for the pert. pressure term
+%  %===== HERE =====================================================
+%  \end{beamercolorbox}%
+%  }%
+%  \vskip0pt%
+%}
+
+
+%===========================================
+
+%-----------------------------------
+% Pour les titre / sous-titre / date / afiliations / ... 
+%-----------------------------------
+%===== HERE ====== HERE ========
+\title{
+{\bf DDH: Diagnostics en Domaines Horizontaux} \\
+\vspace{2mm}
+{\bf Bilans dans ARPEGE et AROME }
+}
+%===== HERE ====== HERE ========
+%\subtitle{{\it Réunion PROC/Phys (5 décembre 2017)}}
+\author{
+Fabrice Voitus et Jean-Marcel Piriou \\
+\vspace{4mm}
+{\it Météo-France / CNRM / GMAP} \\
+\vspace{8mm}
+{\it SISTEMD GMAP, Toulouse, 17 septembre 2019}
+}
+%===== HERE ====== HERE ========
+%\institute{M\'et\'eo-France et CNRS-UMR3589 / Toulouse / France}
+%\date{14 octobre 2017}
+%\date{\today}
+%\date{Réunion PROC/Phys (11 décembre 2017)}
+\date{ }
+%===== HERE ====== HERE ========
+
+% \author[Hemaspaandra, Mukherji, Tantau]{%
+%   Lane~Hemaspaandra\inst{1} \and Proshanto~Mukherji\inst{1} \and  Till~Tantau\inst{2}}
+%  \institute[Universities of Rochester and Berlin]{
+%    \inst{1}%
+%    Department of Computer Science\\
+%   University of Rochester
+%    \and
+%    \inst{2}%
+%    Fakultät für Elektrotechnik und Informatik\\
+%   Technical University of Berlin}
+
+%============================================================================
+\begin{document}
+
+
+%============================================================================
+\newcommand{\logos}[0]{
+\begin{textblock*}{3cm}(13.4cm,8.0cm) 
+\includegraphics[width=0.6cm]{logo_couleur_cnrm3_LR.jpg}
+\hspace{0mm} 
+\includegraphics[width=0.6cm]{LOGO_MTO1_bleu_new_BR.jpeg}
+\hspace{0mm} 
+\includegraphics[width=0.6cm]{logoCNRS_UMR3589_BR.jpeg}  
+\end{textblock*}
+}
+%============================================================================
+
+%----------------------------------------------
+% Ajustement du comptage des cadres
+%----------------------------------------------
+\addtocounter{framenumber}{-1} % La page de garde est la page zéro
+
+%===============================================================
+
+%=============
+ \begin{frame}[plain]
+%=============
+  \titlepage
+%=============
+\begin{textblock*}{6cm}(11.0cm,7.3cm)
+\includegraphics[width=1.2cm]{logo_couleur_cnrm3.jpg}
+\hspace{2mm}
+\includegraphics[width=1.2cm]{LOGO_MTO1_bleu_new.jpeg}
+\hspace{2mm}
+\includegraphics[width=1.2cm]{logoCNRS_UMR3589.jpeg}
+\end{textblock*}
+\end{frame}
+
+\include{com} % commandes mathématiques raccourcies, exemple: \DerP pour une dérivée partielle.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+%============================================================================
+\subsection{Sommaire}
+%============================================================================
+\begin{frame}
+%\frametitle{\vspace{0.5cm} \hspace{3.5cm} {\LARGE Sommaire} }
+\frametitle{\vspace{0.5cm} \centerline{{\LARGE Sommaire}} }
+
+\begin{textblock*}{13.5cm}(1.5cm,2.0cm)
+\begin{columns}
+\column{13.5cm}
+\begin{block}<-1>{}
+\begin{itemize}
+% \Huge \huge \ LARGE \Large \large
+% \normalsize \small \footnotesize \scriptsize \tiny
+\item Motivation: pourquoi se servir des DDH ? Exemples d'usage.
+\item Comment {\bf produire} des fichiers de DDH avec ARPEGE et AROME ? 
+\item Développement des DDH flexibles.
+\item Comment {\bf utiliser} les fichiers de DDH ? La ddhtoolbox.
+\item Où trouver la documentation ? Qui contacter ?
+\item Conclusions
+%\item <3-> 
+\end{itemize}
+\end{block}
+\end{columns}
+\end{textblock*}
+
+\logos
+
+\end{frame}
+
+%---------------------------------
+% ajouter sur la slide suivante :
+%---------------------------------
+\addtocounter{framenumber}{-1}
+
+%============================================================================
+\subsection{Pourquoi les DDH ?}
+\begin{frame}
+\frametitle{\vspace{0.2cm} \centerline{\LARGE Pourquoi les DDH ?} }
+
+\vspace{-1.0cm}
+\begin{exampleblock}{\normalsize{Objectifs :}}
+\begin{itemize}
+ \item Etablir les équations de bilan des variables pronostiques du modèle sur un domaine défini, 
+ afin d'améliorer la compréhension des interactions dynamiques et physiques du modèle. 
+ $\Rightarrow$ contribuer au raffinement des parametrisations physiques.
+ \item Fournir la valeur de champs diagnostiques (nébulosité, pression, etc).
+\end{itemize}
+\end{exampleblock}
+
+
+\begin{block}{\normalsize{En sortie:}}
+\begin{itemize}
+ \item \textbf{Bilans} : masse (PP), vapeur d'eau (QV), énergie cinétique (KK), moment cinétique (A1,A2,A3), entropie (SS), énergie potentielle (EP), énergie thermique (CT), variables de surface, ... .
+ \item \textbf{Domaines} : l'ensemble du domaine modèle, bandes zonales, domaines limités, et point de grille isolés. 
+\end{itemize}
+\end{block}
+\end{frame}
+
+%============================================================================
+
+\subsection{Equation de bilan}
+\begin{frame}
+\frametitle{\normalsize Forme générale des équations de bilan}
+\vspace{-0.25cm}
+\begin{block}{\small Equation budget en coordonnée $\eta$ pour une variable $X$ :}
+%  
+\small
+\begin{align*}
+\frac{1}{g}\frac{\dr}{\dr t}\lp \frac{\dr \pi}{\dr\eta}X \rp & = 
+\frac{1}{g}\frac{\dr \pi}{\dr\eta}\sum_{\mathpzc{D}} \mathcal{T}_{\mathpzc{D}} 
+- \sum_{\varphi} \frac{\dr \mathcal{F}_{\varphi}}{\dr\eta}
++ \mathcal{E}
+\end{align*}
+%
+\begin{itemize}
+\item $\mathcal{T}_{\mathpzc{D}}$ : Tendances dynamiques sur les niveaux pleins du modèle, 
+e.g advection horizontal et vertical, gradient de pression,  $\ldots$.
+%
+\item $\mathcal{F}_{\varphi}$ : Flux physiques verticaux calculés aux interfaces du modèle, 
+e.g [rayonnement, convection, turbulence, precipitation, $\ldots$], issue des parametrizations.
+%
+\item $\mathcal{E}$ : Résidu numérique, non expliqué par la physique ou la dynamique, e.g diffusion horizontale, correction semi-implicite, ...]  
+\end{itemize}
+%
+\end{block}
+\end{frame}
+%============================================================================
+%============================================================================
+
+\subsection{Equation d'énergie thermique}
+\begin{frame}
+\frametitle{{\normalsize Un petit exemple :} }
+%\frametitle{\vspace{0.2cm} \centerline{\LARGE Pourquoi les DDH ?} }
+
+\begin{block}{Bilan d'énergie thermique $c_p T$}
+\footnotesize
+\begin{align}
+  \DerP{}{t}\lp\re c_p T\rp &=
+  - \divi{\eta}\lp\re c_p T \vec{v}\rp
+  - \DerP{}{\eta}\lp\re c_p T \dot{\eta}\rp
+  + \re R T \frac{\omega}{p}\nonumber \\
+  &  +\DerP{}{\eta}\lb F_{c_p T} + \fcptp{}
+  + \fpl{} T \lc c_l - \cp{a} (1-\delta_m)\rc 
+  + \fpn{} T \lc c_n - \cp{a} (1-\delta_m)\rc\rb\nonumber\\
+  & 
+  +\delta_m\fp{}\DerP{(\Phi+\frac{u^2+v^2}{2})}{\eta}
+  -\vec v\cdot\DerP{\vec F_v^{\varphi}}{\eta}\label{Bilh}
+\end{align}
+\vspace*{0.5cm}\\
+avec $r_{\eta}=-(1/g)\dr_{\eta}\pi$
+\end{block}
+
+
+\logos
+
+\end{frame}
+
+%============================================================================
+\subsection{Bilan ARPEGE}
+\begin{frame}
+%\frametitle{\vspace{0.2cm} \hspace{3.5cm} {\LARGE Equations de bilan} }
+\frametitle{\vspace{0.2cm} \centerline{\LARGE Equations de bilan} }
+
+\begin{textblock*}{11.cm}(0.5cm,1.9cm)
+\includegraphics<1->[width=11.cm]{zddhb_CT_ARPE_graph_doc_svg_HR.png}
+\end{textblock*}
+
+\begin{textblock*}{12.5cm}(1mm,1.3cm)
+\begin{columns}
+\column{11.5cm}
+\begin{block}<-1>{}
+\begin{center}
+Bilan de température ARPEGE en moyenne horiz. globale
+\end{center}
+\end{block}
+\end{columns}
+\end{textblock*}
+
+\logos
+
+\end{frame}
+
+%============================================================================
+\subsection{Bilan AROME}
+\begin{frame}
+\frametitle{\vspace{0.2cm} \hspace{3.5cm} {\LARGE Equations de bilan } }
+
+\begin{textblock*}{12.cm}(0.5cm,2.7cm)
+\includegraphics<1->[width=12.cm]{yann.png}
+\end{textblock*}
+
+\begin{textblock*}{12.5cm}(1mm,1.3cm)
+\begin{columns}
+\column{11.5cm}
+\begin{block}<-1>{}
+\begin{center}
+Bilan de température AROME sur la vallée de Chamonix. \\ Source Yann Seity.
+\end{center}
+\end{block}
+\end{columns}
+\end{textblock*}
+
+\logos
+
+\end{frame}
+
+%============================================================================
+\subsection{Circulations méridiennes}
+\begin{frame}
+%\frametitle{\vspace{0.2cm} \hspace{3.5cm} {\LARGE Circulations méridiennes} }
+\frametitle{\vspace{0.2cm} \centerline{\LARGE Circulations méridiennes} }
+
+\begin{textblock*}{2.7182818449cm}(-0.8cm,1.8cm)
+\includegraphics<1->[width=18.cm]{DHFZOFCST+0072_xyuvc_1_doc_svg_HR.png}
+\end{textblock*}
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Production des DDH}
+
+
+%============================================================================
+\subsection{Planche d'annonce}
+\begin{frame}
+%\frametitle{\vspace{0.2cm} \hspace{3.5cm} {\LARGE Circulations méridiennes} }
+\frametitle{\vspace{0.2cm} \centerline{\LARGE Production des DDH} }
+
+\begin{textblock*}{2.7182818449cm}(0.8cm,1.8cm)
+\includegraphics<1->[width=9.cm]{production.jpg}
+\end{textblock*}
+
+\begin{textblock*}{2.7182818449cm}(11cm,4.cm)
+\includegraphics<1->[width=5.cm]{horloge-indus-a-rouages-effet-rouille-d125-500-13-29-138240_1.jpg}
+\end{textblock*}
+
+\begin{textblock*}{2.7182818449cm}(10.6cm,1.8cm)
+\includegraphics<1->[width=5.5cm]{BullSequanaX-key-visual-538-303.jpg}
+\end{textblock*}
+
+\begin{textblock*}{2.7182818449cm}(1.cm,6cm)
+\includegraphics<1->[width=1.1cm]{facile.png}
+\end{textblock*}
+
+
+\end{frame}
+
+
+%============================================================================
+\subsection{Histoire}
+\begin{frame}
+\frametitle{\normalsize Un peu d'Histoire }
+\vspace{-.3cm}
+\begin{block}{\normalsize{Développements des DDH dans nos modèles}}
+\begin{enumerate}
+ \onslide<1-2>\item 1991 : DDH initiés par Alain Joly pour ARPEGE $\Rightarrow$ 
+ Stockage des champs DDH dans un tableau dédié PDHCV, 
+ passé en argument et de dimension fixée au préalable (en dur)  
+ $\Rightarrow$ \textbf{\textit{\green{thread-safe}}} mais \textbf{\textit{\red{non-flexible}}}.\\
+ %
+ \onslide<2-2>\item 2009 : DDH flexibles introduits par Olivier Rivière pour AROME  
+ $\Rightarrow$ flexibilité via allocations dynamiques manuelles  
+ d'un tableau de stockage global RDDH\_FIELD, passé par module \textbf{ddh\_mix} 
+ $\Rightarrow$ \textbf{\textit{\green{flexible}}} mais \textbf{\textit{\red{non thread-safe}}}.\\
+\end{enumerate}
+\end{block}
+\logos
+\end{frame}
+%============================================================================
+\subsection{Ancien flux de données}
+\begin{frame}
+\frametitle{\small{\textbf{Ancien flux de données des DDH flexibles}}}
+\vspace*{-0.5cm}
+%
+\begin{figure}[htbp]
+	\centering
+	\scriptsize
+	\begin{tikzpicture}[x=6.5mm,y=-3mm,>=latex]
+		\mynode{0}{0}{stepo}{stepo};
+		\mynode{1}{1}{scan2m}{scan2m};
+		\mynode{2}{2}{scan2h}{scan2h};
+		\mynode{3}{3}{gp_model}{gp\_model};
+		\mynode{4}{4}{cpg_drv}{cpg\_drv};
+		\mynode{5}{5}{cpg}{cpg};
+		\mynode{6}{6}{cpg_gp}{cpg\_gp};
+		\draw(7,7) node[right] (cp_forcing) {cp\_forcing};
+		\draw(10,7) node[right] (add_field_3d_1) {add\_field};
+		\mynode{6}{8}{mf_phys}{mf\_phys};
+		\draw(7,9) node[right] (aplpar) {aplpar};
+		\draw(10,9) node[right] (add_field_3d_2) {add\_field};
+		\draw(7,10) node[right] (cptend_new) {cptend\_new};
+		\draw(10,10) node[right] (add_field_3d_3) {add\_field};
+		\draw(7,11) node[right] (apl_arome)  {apl\_arome};
+		\draw(10,11) node[right] (add_field_3d_4) {add\_field};
+		\draw(7,12) node[right] (cputqy_arome) {cputqy\_arome};
+		\draw(10,12) node[right] (add_field_3d_5) {add\_field};
+		\mynode{6}{13}{cpg_dia}{cpg\_dia};
+		\draw(7,14) node[right] (cpdyddh) {cpdyddh};
+		\draw(10,14) node[right] (add_field_3d_6) {add\_field};	
+		\draw(7,15) node[right] (cpcuddh1) {cpcuddh};
+		\mynode{4}{16}{cpglag}{cpglag};
+		\mynode{5}{17}{cpdyddhlag}{cpdyddhlag};
+		\draw(6,18) node[right] (add_field_3d_7) {add\_field};
+		\draw(6,19) node[right] (cpcuddh2) {cpcuddh};
+		\mynode{1}{20}{posddh}{posddh};
+		\mynode{2}{21}{ppsydh}{ppsydh};
+		\mynode{2}{22}{ppfidh}{ppfidh};
+		%
+		\draw (stepo) |- (scan2m) |- (scan2h) |- (gp_model) |- (cpg_drv) |- (cpg);
+		\draw (cpg) |- (cpg_gp) |- (cp_forcing) -- (add_field_3d_1);
+		\draw (cpg) |- (mf_phys) |- (aplpar) -- (add_field_3d_2);
+		\draw (mf_phys) |- (cptend_new) -- (add_field_3d_3);
+		\draw (mf_phys) |- (apl_arome) -- (add_field_3d_4);
+		\draw (mf_phys) |- (cputqy_arome) -- (add_field_3d_5);
+		\draw (cpg) |- (cpg_dia) |- (cpdyddh) -- (add_field_3d_6);
+		\draw (cpg_dia) |- (cpcuddh1);
+		\draw (gp_model) |- (cpglag) |- (cpdyddhlag) |- (add_field_3d_7);
+		\draw (cpdyddhlag) |- (cpcuddh2);
+		\draw (stepo) |- (posddh) |- (ppfidh);
+		\draw (posddh) |- (ppsydh);
+		%		
+		\draw[brown,line width=1pt] (4.5,4.5) rectangle (13,15.5);
+		\draw[brown] (12,4.5) node[above left] {\bfseries OpenMP loop 1};
+		\draw[brown,line width=1pt] (4.5,16.5) rectangle (13,19.5);
+		\draw[brown] (12,19.5) node[below left] {\bfseries OpenMP loop 2};
+		%
+		\draw[blue] (15,10.5) node [right] (RDDH_FIELD1) {\bfseries RDDH\_FIELD};
+		\draw[blue,->] (add_field_3d_1) -- (RDDH_FIELD1);
+		\draw[blue,->] (add_field_3d_2) -- (RDDH_FIELD1);
+		\draw[blue,->] (add_field_3d_3) -- (RDDH_FIELD1);
+		\draw[blue,->] (add_field_3d_4) -- (RDDH_FIELD1);
+		\draw[blue,->] (add_field_3d_5) -- (RDDH_FIELD1);
+		\draw[blue,->] (add_field_3d_6) -- (RDDH_FIELD1);
+		\draw[blue,->] (RDDH_FIELD1) -- +(0,3.5) -- (cpcuddh1);
+		%
+		\draw[blue] (15,18) node [right] (RDDH_FIELD2) {\bfseries RDDH\_FIELD};
+		\draw[blue,->] (add_field_3d_7) -- (RDDH_FIELD2);
+		\draw[blue,->] (RDDH_FIELD2)-- (cpcuddh2);		
+		%
+		\draw[green] (15,15) node[right] (HDCVB1) {\bfseries HDCVB*(:,:,ITHREAD)};
+		\draw[green,->] (cpcuddh1) -- (HDCVB1);
+		\draw[green] (15,19) node[right] (HDCVB2) {\bfseries HDCVB*(:,:,ITHREAD)};
+		\draw[green,->] (cpcuddh2) -- (HDCVB2);
+		\draw[green,->] (HDCVB1) -- (HDCVB2);
+		\draw[green,->] (HDCVB2) -- +(0,2) -- (ppsydh);		
+		%
+		\draw[dashed] (14,0) -- (14,22);
+		\draw (15,0) node[above right] {\bfseries GLOBAL VARIABLES};
+	\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+%============================================================================
+\subsection{Histoire suite}
+\begin{frame}
+\frametitle{\normalsize Un peu d'Histoire }
+\vspace{-.3cm}
+\begin{block}{\normalsize{Développements des DDH dans nos modèles}}
+\begin{enumerate}
+ \onslide<1-2>\item 1991 : DDH initiés par Alain Joly pour ARPEGE $\Rightarrow$ 
+ Stockage des champs DDH dans un tableau dédié PDHCV, 
+ passé en argument et de dimension fixée au préalable (en dur);  
+ $\Rightarrow$ \textbf{\textit{\green{thread-safe}}} mais \textbf{\textit{\red{non-flexible}}}.\\
+ %
+ \onslide<1-2>\item 2009 : DDH flexibles introduits par Olivier Rivière pour AROME : 
+ $\Rightarrow$ flexibilité via allocations dynamiques manuelles  
+ d'un tableau de stockage global RDDH\_FIELD, passé par module \textbf{ddh\_mix} 
+ $\Rightarrow$ \textbf{\textit{\green{flexible}}} mais \textbf{\textit{\red{non thread-safe}}}.\\
+ % 
+ \onslide<2-2>\item 2019 : DDH flexibles OpenMP à partir du cycle 46t1 $\Rightarrow$ allocations dynamiques automatiques 
+ d'un pointeur de stockage, attribut d'une superstructure YDDH passée en argument dans chaque routine concernée $\Rightarrow$ \textbf{\textit{\green{flexible}}} et \textbf{\textit{\green{thread-safe}}}.
+\end{enumerate}
+\end{block}
+\logos
+\end{frame}
+%============================================================================
+\subsection{Nouveau flux de données}
+\begin{frame}
+\frametitle{\small{\textbf{Nouveau flux de données des DDH flexibles}}}
+\vspace*{-0.7cm}
+\begin{figure}[htbp]
+	\centering
+	\scriptsize
+	\begin{tikzpicture}[x=7.mm,y=-2.6mm,>=latex]
+		\mynode{0}{0}{stepo}{stepo};
+		\mynode{1}{1}{scan2m}{scan2m};
+		\mynode{2}{2}{scan2h}{scan2h};
+		\mynode{3}{3}{gp_model}{gp\_model};
+		\mynode{4}{4}{cpg_drv}{cpg\_drv(\blue{yddh})};
+		\mynode{5}{5}{cpg}{cpg(\blue{yddh})};
+		\mynode{6}{6}{setddh1}{\red{setddh}};
+		\mynode{6}{7}{cpg_gp}{cpg\_gp(\blue{yddh})};
+		\draw(7,8) node[right] (cp_forcing) {cp\_forcing};
+		\draw(10,8) node[right] (add_field_1) {\red{new\_add\_field}};
+		\mynode{6}{9}{mf_phys}{mf\_phys(\blue{yddh})};
+		\draw(7,10) node[right] (aplpar) {aplpar};
+		\draw(10,10) node[right] (add_field_2) {\red{new\_add\_field}};
+		\draw(7,11) node[right] (cptend_new) {cptend\_new};
+		\draw(10,11) node[right] (add_field_3) {\red{new\_add\_field}};
+		\draw(7,12) node[right] (apl_arome)  {apl\_arome};
+		\draw(10,12) node[right] (add_field_4) {\red{new\_add\_field}};
+		\draw(7,13) node[right] (cputqy_arome) {cputqy\_arome};
+		\draw(10,13) node[right] (add_field_5) {\red{new\_add\_field}};
+		\mynode{6}{14}{cpg_dia}{cpg\_dia(\blue{yddh})};
+		\draw(7,15) node[right] (cpdyddh) {cpdyddh};
+		\draw(10,15) node[right] (add_field_6) {\red{new\_add\_field}};	
+		\draw(7,16) node[right] (cpcuddh1) {cpcuddh};
+		\mynode{6}{17}{cleanddh1}{\red{cleanddh}};
+		\mynode{4}{18}{storeddh1}{\red{storeddh}};
+		\mynode{4}{19}{cpglag}{cpglag(\blue{yddh})};
+		\mynode{5}{20}{cpdyddhlag}{cpdyddhlag(\blue{yddh})};
+		\draw(6,21) node[right] (setddh2) {\red{setddh}};
+		\draw(6,22) node[right] (add_field_7) {\red{new\_add\_field}};
+		\draw(6,23) node[right] (cpcuddh2) {cpcuddh};
+		\draw(6,24) node[right] (cleanddh2) {\red{cleanddh}};
+		\mynode{4}{25}{storeddh2}{\red{storeddh}};
+		\mynode{1}{26}{posddh}{posddh};
+		\mynode{2}{27}{ppsydh}{ppsydh};
+		\mynode{2}{28}{ppfidh}{ppfidh};
+		%
+		\draw (stepo) |- (scan2m) |- (scan2h) |- (gp_model) |- (cpg_drv) |- (cpg);
+		\draw (cpg) |- (setddh1);
+		\draw (cpg) |- (cpg_gp) |- (cp_forcing) -- (add_field_1);
+		\draw (cpg) |- (mf_phys) |- (aplpar) -- (add_field_2);
+		\draw (mf_phys) |- (cptend_new) -- (add_field_3);
+		\draw (mf_phys) |- (apl_arome) -- (add_field_4);
+		\draw (mf_phys) |- (cputqy_arome) -- (add_field_5);
+		\draw (cpg) |- (cpg_dia) |- (cpdyddh) -- (add_field_6);
+		\draw (cpg_dia) |- (cpcuddh1);
+		\draw (cpg) |- (cleanddh1);
+		\draw (gp_model) |- (storeddh1);
+		\draw (gp_model) |- (cpglag) |- (cpdyddhlag) |- (setddh2);
+		\draw (cpdyddhlag) |- (add_field_7);
+		\draw (cpdyddhlag) |- (cpcuddh2);
+		\draw (cpdyddhlag) |- (cleanddh2);
+		\draw (gp_model) |- (storeddh2);
+		\draw (stepo) |- (posddh) |- (ppfidh);
+		\draw (posddh) |- (ppsydh);
+		%		
+		\draw[brown,line width=1pt] (4.5,4.5) rectangle (13.5,17.5);
+		\draw[brown] (12,4.75) node[above left] {\bfseries OpenMP loop 1};
+		\draw[brown,line width=1pt] (4.5,19.5) rectangle (12,24.5);
+		\draw[brown] (12,24.6) node[below left] {\bfseries OpenMP loop 2};
+		%		
+		%
+		\draw[green] (15,15) node[right] (HDCVB1) {\bfseries HDCVB*(:,:,ITHREAD)};
+		\draw[green,->] (cpcuddh1) -- (HDCVB1);
+		\draw[green] (15,19) node[right] (HDCVB2) {\bfseries HDCVB*(:,:,ITHREAD)};
+		\draw[green,->] (cpcuddh2) -- (HDCVB2);
+		\draw[green,->] (HDCVB1) -- (HDCVB2);
+		\draw[green,->] (HDCVB2) -- +(0,2) -- (ppsydh);		
+		%
+		\draw[dashed] (14,0) -- (14,22);
+		\draw (15,0) node[above right] {\bfseries GLOBAL VARIABLES};
+	\end{tikzpicture}
+\end{figure}
+\end{frame}
+%
+%============================================================================
+
+\subsection{Récupération des tendances}
+
+\begin{frame}[fragile]
+\frametitle{\normalsize Récupération des tendances, flux et variables dans les DDH}
+\vspace{-0.25cm}
+\begin{alertblock}{} 
+\footnotesize
+\begin{itemize}
+\item L'appel à NEW\_ADD\_FIELD\_3D ou NEW\_ADD\_FIELD\_2D via le module \textbf{ddh\_mix} 
+n'importe où sous \textbf{cpg} ou \textbf{cpglag} permet de stocker au choix 
+une variable, une tendance, ou un flux sous la forme d'un profil vertical 
+dans les fichiers DDH.  
+\end{itemize}
+\end{alertblock}
+
+\begin{exampleblock}{} 
+\begin{footnotesize}
+\begin{itemize}
+\item Stockage de la variable X :
+\begin{verbatim}
+     ZX_VAR(:,:) = (PDELP(:,:)/RG)*PX(:,:)  
+     CALL NEW_ADD_FIELD_3D(YMDDH,ZX_VAR,'VX_VAR',YDDH,CDTYPE='V')
+\end{verbatim}
+\item Stockage de Tendance pour le bilan DDH de X :
+\begin{verbatim}
+     ZXTEND(:,:) = (PDELP(:,:)/RG)*PXTEND(:,:)
+     CALL NEW_ADD_FIELD_3D(YMDDH,ZXTEND,'TX_TEND',YDDH,CDTYPE='T')
+\end{verbatim}
+ \item Stockage de Flux pour le bilan DDH de X :
+\begin{verbatim}
+     CALL NEW_ADD_FIELD_3D(YMDDH,ZXFLUX,'FX_FLUX',YDDH,CDTYPE='F')
+\end{verbatim}
+\end{itemize}
+\end{footnotesize}
+
+\end{exampleblock}
+
+\end{frame}
+%============================================================================
+
+
+%============================================================================
+\subsection{Capuccino}
+
+\begin{frame}[fragile]
+\frametitle{{\normalsize Un exemple :} }
+\vspace*{-0.25cm}
+\begin{exampleblock}{}
+\begin{tiny}
+ \begin{verbatim} 
+  SUBROUTINE DIAG_CAPUCCINO(KIDIA,KFDIA,KLEV,PINGREDIENTS,PDOSAGE,YDLDDH,YDMDDH,YDDDH)
+  
+  USE DDH_MIX, ONLY  : TYP_DDH,NEW_ADD_FIELD_3D
+  USE YOMMDDH, ONLY  : TMDDH
+  USE YOMLDDH, ONLY  : TLDDH     
+  ....
+  TYPE(TLDDH)       ,INTENT(IN)    :: YDLDDH ! ddh useful logicals
+  TYPE(TMDDH)       ,INTENT(INOUT) :: YDMDDH ! ddh useful metadata 
+  TYPE(TYP_DDH)     ,INTENT(INOUT) :: YDDDH  ! ddh superstructure  
+  ....
+  DO JLEV=1,KLEV
+     DO JLON = KIDIA,KFDIA      
+        ZCOFFEE(JLON,JLEV)      = .... 
+        ZMILK(JLON,JLEV)        = ....
+        ZCHOCOLATE(JLON,JLEV)   = ....
+     ENDDO
+  ENDDO   
+  ....
+  IF (YDLDDH%LFLEXDIA).AND.(YDLDDH%LDDH_OMP) THEN
+     CALL NEW_ADD_FIELD_3D(YDMDDH,ZCOFFEE,'FCO_COFFEE',YDDDH)
+     CALL NEW_ADD_FIELD_3D(YDMDDH,ZMILK,'CO_MILK',YDDDH,CDTYPE='F')
+     CALL NEW_ADD_FIELD_3D(YDMDDH,ZCHOCOLATE,'FCO_CHOCO',YDDDH)
+  ENDIF
+  ....
+  END  SUBROUTINE DIAG_CAPUCCINO
+  \end{verbatim}  
+  \end{tiny}
+\end{exampleblock}
+\end{frame}
+
+%============================================================================
+\subsection{Namelist utilisateur}
+
+\begin{frame}[fragile]
+\frametitle{{\normalsize Namelist utilisateur: un exemple} }
+\vspace*{-0.4cm}
+\begin{exampleblock}{}
+\begin{footnotesize}
+\begin{verbatim} 
+ &NAMDDH                                                                                            
+  BDEDDH(1,1)=4., ! domaine : un seul point de grille.
+  BDEDDH(2,1)=1., ! plan virtuel.
+  BDEDDH(3,1)=1.374, ! longitude du point.
+  BDEDDH(4,1)=43.575, ! latitude du point.
+
+  BDEDDH(1,2)=3., ! domaine : rectangle en lat-lon.
+  BDEDDH(2,2)=1., ! plan virtuel.
+  BDEDDH(3,2)=0.0, ! coin 1: longitude.
+  BDEDDH(4,2)=45.0, ! coin 1: latitude.
+  BDEDDH(5,2)=0.1, ! coin 2: longitude.
+  BDEDDH(6,2)=44.8, ! coin 2: latitude.
+
+  LHDDOP=.TRUE., ! activation domaines limités.
+  LHDEFD=.TRUE., ! activation sortie fichiers domaines limités.
+  LHDHKS=.TRUE., ! activation champs standard.
+  LFLEXDIA=.TRUE., ! activation des DDH flexibles.
+  LDDH_OMP=.TRUE., ! activation des DDH thread-safe.
+ /
+\end{verbatim}  
+\end{footnotesize}
+\end{exampleblock}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Utilisation des DDH}
+
+%============================================================================
+\subsection{Planche d'annonce}
+\begin{frame}
+%\frametitle{\vspace{0.2cm} \hspace{3.5cm} {\LARGE Circulations méridiennes} }
+\frametitle{\vspace{0.2cm} \centerline{\LARGE Utilisation des DDH} }
+
+\begin{textblock*}{2.7182818449cm}(0.8cm,1.8cm)
+\includegraphics<1->[width=12.cm]{enfants.png}
+\end{textblock*}
+
+\logos
+
+\end{frame}
+%============================================================================
+\subsection{ddhtoolbox}
+%============================================================================
+\begin{frame}
+%\frametitle{\vspace{0.5cm} \hspace{3.5cm} {\LARGE Sommaire} }
+\frametitle{\vspace{0.3cm} \centerline{{\LARGE ddhtoolbox}} }
+
+\begin{textblock*}{11.cm}(1cm,1.5cm)
+\includegraphics<1->[width=11.cm]{synoptic.png}
+\end{textblock*}
+
+\logos
+
+\end{frame}
+
+
+%============================================================================
+\subsection{Emagramme}
+%============================================================================
+\begin{frame}
+%\frametitle{\vspace{0.5cm} \hspace{3.5cm} {\LARGE Sommaire} }
+\frametitle{\vspace{0.3cm} \centerline{{\LARGE Tracés type émagramme}} }
+
+\begin{textblock*}{2.7182818449cm}(0.3cm,2.5cm)
+\includegraphics<1->[width=8.cm]{theta_toulouse.png}
+\includegraphics<1->[width=8.cm]{theta_tropiques.png}
+\end{textblock*}
+
+
+\begin{textblock*}{13.5cm}(1.5cm,1.5cm)
+\begin{columns}
+\column{13.5cm}
+\begin{block}<2->{}
+\begin{itemize}
+% \Huge \huge \ LARGE \Large \large
+% \normalsize \small \footnotesize \scriptsize \tiny
+\item get hendrix:/home/m/mxpt/mxpt001/vortex/arpege/4dvarfr/OPER/2019/09/17 \\
+/T0000P/forecast/ddh.arpege-zonal.tl1798-c22.ddhpack.tgz 
+\item tar tvf
+\item ddhr -ddd DHFZOFCST+0072 \textbf{\green{renseignements en clair sur chaque domaine}}
+\item ddht -cEXTRAIT\_DOMAIN -E13-18 -1DHFZOFCST+0018 -sDHFZOFCST+0018.Tropiques.lfa \textbf{\green{extraction de domaines}}
+\item ddhmh DHFZOFCST+0018.Tropiques.lfa \textbf{\green{moyenne horizontale}}
+\item ddh2scm DHFZOFCST+0018.Tropiques.lfa.mh \textbf{\green{conversion en fichier type modèle 1D}}
+\item ms DHFZOFCST+0018.Tropiques.lfa.mh.Dom001.Var\_fin.scm \textbf{\green{model sounding}}
+%\item <3-> 
+\end{itemize}
+\end{block}
+\end{columns}
+\end{textblock*}
+
+
+
+\end{frame}
+
+
+%============================================================================
+\subsection{Bilan de T d'une après-midi à Toulouse}
+%============================================================================
+\begin{frame}
+%\frametitle{\vspace{0.5cm} \hspace{3.5cm} {\LARGE Sommaire} }
+\frametitle{\vspace{0.3cm} \centerline{{\LARGE Bilan de température d'une après-midi à Toulouse}} }
+
+\begin{textblock*}{2.7182818449cm}(1.3cm,1.7cm)
+\includegraphics<1->[width=11.cm]{bil_CT_Toulouse.png}
+\end{textblock*}
+
+
+\begin{textblock*}{13.5cm}(1.5cm,1.5cm)
+\begin{columns}
+\column{13.5cm}
+\begin{block}<2->{}
+\begin{itemize}
+% \Huge \huge \ LARGE \Large \large
+% \normalsize \small \footnotesize \scriptsize \tiny
+\item get hendrix:/home/m/mxpt/mxpt001/vortex/arpege/4dvarfr/OPER/2019/09/17 \\
+/T0000P/forecast/ddh.arpege-dlimited.tl1798-c22.ddhpack.tgz
+\item tar tvf
+\item fddh="DHFDLFCST+0018.lfa"
+\item ddhr -ddd \$fddh \textbf{\green{renseignements en clair sur chaque domaine}}
+\item ddht -cEXTRAIT\_DOMAIN -E10 -1\$fddh -s\$fddh.10.lfa \textbf{\green{extraction du domaine Toulouse}}
+\item ddht -cDIFFE\_EC2\_EC1 -2DHFDLFCST+0018.lfa.10.lfa -1DHFDLFCST+0012.lfa.10.lfa -sDHFDLFCST+18-12.lfa.10.lfa \textbf{\green{différence entre 12h et 18h}}
+\item ddhb -v oper/CT -i DHFDLFCST+18-12.lfa.10.lfa \textbf{\green{bilan de température entre 12h et 18h}}
+%\item <3-> 
+\end{itemize}
+\end{block}
+\end{columns}
+\end{textblock*}
+
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Documentation des DDH}
+
+%============================================================================
+\subsection{Documentation des DDH}
+\begin{frame}
+\frametitle{\vspace{0.2cm} \centerline{\LARGE Documentation des DDH} }
+
+\vspace{-1.0cm}
+\begin{exampleblock}{} 
+\begin{itemize}
+\item {\bf Documentation complète}: namelists, équations, production, ddhtoolbox; sur GmapDoc : http://www.umr-cnrm.fr/gmapdoc/IMG/pdf/ddh.pdf
+\item {\bf Présent exposé} : sur Intranet : http://intra.cnrm.meteo.fr/gmap-proc/perso/jean-marcel.piriou/cours\_memos\_docs/ddh\_presentation\_introductive.pdf
+\end{itemize}
+\end{exampleblock}
+
+\begin{block}<2->{\normalsize{Hotline de niveau exceptionnel :) }}
+\begin{itemize}
+ \item {\bf Fabrice Voitus (5-85 77)} pour la production de fichiers de DDH dans AROME et ARPEGE.
+ \item {\bf Jean-Marcel Piriou (5-84 62)} pour la ddhtoolbox et l'utilisation des DDH sur PC. 
+\end{itemize}
+\end{block}
+
+\logos 
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion}
+
+
+%============================================================================
+\subsection{Conclusion}
+\begin{frame}
+\frametitle{\vspace{0.2cm} \centerline{\LARGE Conclusion} }
+
+\vspace{-1.0cm}
+\begin{exampleblock}{\normalsize{Objectifs :}}
+\begin{itemize}
+ \item Etablir les équations de bilan des variables pronostiques du modèle sur un domaine défini, 
+ afin d'améliorer la compréhension des interactions dynamiques et physiques du modèle. 
+ $\Rightarrow$ contribuer au raffinement des parametrisations physiques.
+ \item Fournir la valeur de champs diagnostiques (nébulosité, pression, etc).
+\end{itemize}
+\end{exampleblock}
+
+\begin{block}{\normalsize{Moyens:}}
+\begin{itemize}
+ \item \textbf{Bilans} : masse (PP), vapeur d'eau (QV), énergie cinétique (KK), moment cinétique (A1,A2,A3), entropie (SS), énergie potentielle (EP), énergie thermique (CT), variables de surface, ... .
+ \item \textbf{Domaines} : l'ensemble du domaine modèle, bandes zonales, domaines limités, et point de grille isolés. 
+ \item \textbf{Codage à la volée} de diagnostics nouveaux via NEW\_ADD\_FIELD\_2D et NEW\_ADD\_FIELD\_3D.
+\end{itemize}
+\end{block}
+\end{frame}
+
+%============================================================================
+\end{document}

@@ -1,0 +1,741 @@
+\chapter{Using DDH files: the ddhtoolbox}
+
+\section{Purpose}
+
+\p ARPEGE, ALADIN and AROME models produce DDH files. The ddhtoolbox makes operations relevant to use these DDH files for scientifical development and research: produce ready-to-plot profiles of variables, tendencies and fluxes (ddhi), cumulate DDH files, differenciate DDH files, make horizontal and vertical means (ddht), get the budget of prognostic variables (ddhb), etc.
+
+\section{Install the software}
+
+\p Questions: Mailto: Jean-Marcel.Piriou@meteo.fr
+
+\p Untar the ddhtoolbox.tar file.
+
+\p cd ddhtoolbox/tools
+
+\p The install process uses the "uname -a" command to recognize the architecture of the  current  machine.  So first type "uname -a" on the command line. Then check whether  this  is an already known type in the scripts install, lfa/install, and .dd2gr/src/install.  If  yes, and if the compiler option fits your needs, no change needs to be done.  Else  case,  you  will  have  to  add an item in the "if [ "\$os\_name" ] else fi" statement, or change the FC value, to set your compiler options.
+
+\begin{enumerate}
+  \item Put the local directory in your PATH:
+    export PATH=.:\$PATH
+  \item Run install process: 
+
+    install clean
+
+    install
+\end{enumerate}
+
+\section{Environment variables}
+
+\begin{enumerate}
+  \item Put the 3 directories in your PATH:
+    \begin{enumerate}
+      \item {\bf DDH tools:} ddhtoolbox/tools
+      \item {\bf LFA tools:} ddhtoolbox/tools/lfa
+      \item {\bf Plot tool:} ddhtoolbox/tools/.dd2gr/src
+    \end{enumerate}
+  \item DDH tools (ddhi, ddhb) use the following environment variables, to be put in your ".profile" or ".bash\_profile" files:
+
+    export DDHTOOLBOX= the absolute PATH of the above ddhtoolbox directory
+
+    export DDHI\_LIST=\$DDHTOOLBOX/ddh\_budget\_lists/conversion\_list
+
+    export DDHB\_BPS=\$DDHTOOLBOX/ddh\_budget\_lists
+
+    export DDH\_PLOT=dd2gr
+
+
+    \item \label{ddhplot} If the environment variable DDH\_PLOT is set, some ddhtoolbox utilities call a script of your own, which makes the plot, starting from the information given by the autodocumentation file (suffix ".doc").
+\end{enumerate}
+
+\p {\bf Graphics:} all ddhtoolbox tools (ddhi, ddhr, ddhb, etc) produce ready-to-plot ASCII files. The user may then use his own graphic tool to plot these ".doc" and ".dta" files: if the environment variable DDH\_PLOT is set, some ddhtoolbox tools call a script which makes the plot (creates a PNG file), starting from the information given by the autodocumentation file (suffix ".doc").
+
+\p Example: the graphics may be done by dd2gr (this tool is available in the present ddhtoolbox) and visualisation by eog (or firefox), setting the environment variables in ".profile" or ".bash\_profile" files: "export DDH\_PLOT=dd2gr ; export VISU\_G=eog". The graphics can also be done by dd2met (written by Yves Bouteloup, based on METVIEW) setting "export DDH\_PLOT=dd2met", or by any plot tool of your own.
+
+\p To visualize the PNG graphics, the default tool is eog. This can be changed in editing the ddhtoolbox/tools/visu script : using the hostname function, one may choose different visualisation tools, depending on the machine (HPC, local PC, etc).
+
+\section{Synoptic view of ddhtoolbox utilities}
+%
+%-----------------------------------------------------------------------
+% Figure-logo.
+%-----------------------------------------------------------------------
+%
+
+%\vspace{2.0cm}
+\centerline{\includegraphics
+  [height=15.0cm, 
+  angle=0.,
+  keepaspectratio=true,
+  clip=true]
+  {synoptic_view/synoptic.eps}
+  }
+
+\p ARPEGE, ALADIN or AROME models produce DDH files. Each file contains n domains, m levels, and for each
+domain-level all
+variables, fluxes and tendencies relevant to get a budget. The actions that can be performed
+on DDH files are described in the following sections.
+\subsection{ddhr: get autodocumentation}
+
+\p Get some DDH file autodocumentation on standard output: base, prediction range, etc.
+
+\p Typing "ddhr" with no argument gives a documentation about the usage.
+
+\p See section \refp{stebs} for examples of use.
+    
+\subsection{ddht: transform}
+
+\p Operates transforms on DDH files: make the difference between a reference and an experiment, cumulate several DDH files, extract one or more domain(s) from a DDH file, extract one or more level(s), make an horizontal mean on all domains, make a vertical mean on all levels, etc. ddht generates in output a DDH file. 
+
+\p Typing "ddht" with no argument gives a documentation about the usage.
+
+\p See section \refp{stebs} for examples of use.
+
+\subsubsection{Difference experiment minus reference}
+
+{\begin{verbatim}
+=> ddht -cDIFFE_EXP_REFE -2FEXP -1FREF -sDIFF
+\end{verbatim}}
+\noi makes the difference between DDH file FEXP and FREF, the result is DIFF file. The DIFF file is a DDH file. The prediction range of FEXP and FREF have to be equal. If they differ more than 0.001\%, ddht aborts.
+
+\p The script ddh- makes the same operation, with a shorter command line:
+{\begin{verbatim}
+=> ddh- FEXP FREF DIFF
+\end{verbatim}}
+\noi The ddh- script calls "ddht -cDIFFE\_EXP\_REFE".
+
+\p It may be useful, in some situations, to make the difference between 2 files having different prediction ranges: for example, to compare the mean infra-red cooling from a 24h prediction with a 6h prediction, to study spin-up effects. The script ddh- makes such a difference: if the 2 prediction ranges are different, ddh- modifies the prediction range from one file, modifies all fluxes and tendencies accordingly (done through the ddhmech script), and then makes the "ddht -cDIFFE\_EXP\_REFE" difference.
+
+\p See section \refp{stebs} for examples of use.
+
+\subsection{ddhi: interpretation}
+
+\p ddhi makes an interpretation of the raw data from a DDH file, in order to get
+ready to plot data, with intensive units (K/day, g/kg, etc).
+
+\p Typing "ddhi" with no argument gives a documentation about the usage.
+
+\p Example: starting from a DDH file "DHFDLFCST+0024.domaine4", one needs to get an ASCII file containing
+the profile of water vapour $q_v$ and temperature $T$.
+    \noi Create an ASCII file containing the list of articles:
+{\tiny \begin{verbatim}
+lxgmap2:/home/piriou/ftn/ddh/ddhtoolbox/ddh_files/arome/cy35t1_arome_france_c744 => cat mylist 
+VQV1
+VCT1
+\end{verbatim}}
+\noi then type "ddhi DHFDLFCST+0024.domaine4 -lmylist":
+{\tiny \begin{verbatim}
+lxgmap2:/home/piriou/ftn/ddh/ddhtoolbox/ddh_files/arome/cy35t1_arome_france_c744 => ddhi DHFDLFCST+0024.domaine4 -lmylist
+default list file:
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/conversion_list
+----------------------
+---DDHI-CHAMPS--------
+----------------------
+Fichier d'entree: DHFDLFCST+0024.domaine4
+calling lisc
+lisc:/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/conversion_list
+lisc: read           413  fields.
+----------------------
+---DDHI-COORDONNEES---
+----------------------
+DHFDLFCST+0024.domaine4.tmp.VCT1.dta
+DHFDLFCST+0024.domaine4.tmp.VCT1.doc
+DHFDLFCST+0024.domaine4.tmp.VQV1.dta
+DHFDLFCST+0024.domaine4.tmp.VQV1.doc
+\end{verbatim}}
+
+\p ddhi reads the DDH file, reads the VCT1 and VQV1 articles, converts the units of these data:
+for example the VCT1 article is $c_p \, T \, \frac{\delta p}{g}$, ddhi converts it into $T$, and thus divides 
+by $c_p$ and by the $\frac{\delta p}{g}$ field. The conversion uses a conversion list file (whose name is given to 
+ddhi by the DDHI\_LIST environment variable), which
+tells ddhi how to convert each DDH article. 
+
+
+\p ddhi produces in output ASCII files:
+\begin{itemize}
+  \item a ".doc" file per field, containing autodocumentation (title, unit, base, prediction range, etc)
+  \item a ".dta" file per field, containing the data in columns.
+\end{itemize}
+
+\p To know the complete list of variables, tendencies and fluxes that can be tranformed into ASCII data
+by ddhi, type "lfaminm FDDH", where FDDH is the name of the DDH file.
+This gives the list of all articles. The variables are article names beginning with "V",
+the tendencies are article names beginning with "T", the fluxes are article names beginning with "F".
+These article names can be put the "mylist" file as described above.
+If one of these articles is not present in the conversion list file DDHI\_LIST, ddhi will not know
+how to convert it. In this case, simply edit the DDHI\_LIST file, and add a line describing how
+this article has to be converted.
+
+\p See section \refp{stebs} for examples of use.
+
+\subsection{ddhb: budgets of prognostic variables}
+
+\p ddhb is a tool to make the budget of pronostic variables, starting from a DDH file.
+Typing "ddhb" with no argument gives a documentation about the ddhb use.
+
+\p This DDH file should contain only one domain. If it is not the case, use ddht to extract a single
+domain from your multi-domain DDH file.
+
+\p See section \refp{stebs} for examples of use.
+
+\subsubsection{Get a first budget plot}
+
+\p Example of ddhb use: 
+
+\p "ddhb -v QV -i DHFDLALAD+0036".
+
+\p In this example, one asks for the budget of the prognostic 
+variable is QV (water vapour), from the file DHFDLALAD+0036.
+What ddhb basically does, as one types -v QV, is to read in the DDH file the list of articles
+containing fluxes or tendencies of QV: all articles "FQV*" and "TQV*" 
+of the DDH file are used to build the QV budget.
+
+\p The ddhb script then writes ASCII ready to plot files; two kinds of files are produced:
+\begin{enumerate}
+  \item {\bf Data} files (suffix: dta): in ASCII colums.
+  \item {\bf Autodocumentation} files (suffix: doc): title, unit, date of the prediction run, etc.
+\end{enumerate}
+
+\p See section \refp{stebs} for examples of use.
+
+\subsubsection{More advanced use to get budget plots}
+
+\p The user may also create his own directive files. For example, to change the legends 
+of the budgets (and translate
+them to French, German, etc), or to customize the scientifical budgets (change the list
+of file articles to be used for a given physical process). In this case, two methods:
+
+\begin{enumerate}
+  \item {\bf Create your own directive file, "from scratch":} "ddh2fbl FDDH DIR" will read the FDDH file, and
+    produce the directive files on the \$DDHB\_BPS/DIR directory. The acronym "FBL" stands for Field Budget List.
+    Then, one simply needs to type 
+
+    \p "ddhb -v DIR/VAR -i FDDH" to get the budget of the variable VAR. If one
+    wants to modify the legends of the curves, one edits the  \$DDHB\_BPS/DIR/VAR.fbl
+    file, and then reruns ddhb.
+
+    \p How does ddh2fbl work? It reads inside the DDH file all article names, lists
+    the articles of the type V??0 (examples: ??=CT, QV, etc). For each of these
+    variables, lists all F??* and T??* articles. And writes the directive file
+    containing this list. The resulting list is thus consistent with the DDH file.
+    ddh2fbl makes the assumption that all budget items are articles beginning with
+    F or T. This rule, presently true in ARPEGE - ALADIN - AROME, should thus be respected
+    in the future to guarantee a proper work of ddh2fbl.
+  \item {\bf Modify existing reference directive files:}
+
+    \p find \$DDHB\_BPS -name "*.fbl" -print
+
+    \p to see the complete list of physics or budget packages
+    available for use in ddhb, and which variables.
+    Copy a directory containing directive files under your own name, and then modify it.
+    Example:
+    {\tiny \begin{verbatim}
+lxgmap2: => find $DDHB_BPS -name "*.fbl" -print
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arome_cy35t1/QG.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arome_cy35t1/QR.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arome_cy35t1/QL.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arome_cy35t1/QI.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arome_cy35t1/QS.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arome_cy35t1/CT.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arome_cy35t1/QV.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arome_cy35t1/TE.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arpege/KK.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arpege/QT_old.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arpege/QT.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arpege/CT_simplified.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arpege/QV_2006-06_and_previous.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arpege/QV_simplified.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arpege/CT.fbl
+/home/piriou/ftn/ddh/ddhtoolbox/ddh_budget_lists/arpege/QV.fbl
+lxgmap2: => cp -r $DDHB_BPS/arpege/ $DDHB_BPS/myown_arpege
+lxgmap2: => vi $DDHB_BPS/myown_arpege/CT.fbl
+lxgmap2: => ddhb -v myown_arpege/CT -i DHFDLALAD+0036
+    \end{verbatim}}
+\end{enumerate}
+
+\section{Using the ddhtoolbox, step by step} \label{stebs}
+\subsection{Vertical profile of variables, tendencies or fluxes}
+
+{\small \begin{verbatim} 
+cd ddhtoolbox/demonstration/arome_hovmoller
+cd ddhpack_dlimited
+\end{verbatim}}
+\noi In this directory, the DDH files are DHFDLFCST+???? , from 1h prediction range to 36h. Each  DDH file contains several domains. These domains were specified in the NAMDDH namelist from the ARPEGE - ALADIN - AROME which produced these DDH files.
+
+\noi To get the autodocumentation of a DDH file:
+{\small \begin{verbatim} 
+ddhr DHFDLFCST+0032
+\end{verbatim}}
+\noi This indicates prediction time, number of time steps, date of analysis of this prediction, number of levels of the model, and the number of domains inside this DDH file.
+
+\noi "ddhr" with no argument gives a synopsis of this tool.
+
+{\small \begin{verbatim} 
+ddhr -ddd DHFDLFCST+0032
+\end{verbatim}}
+\noi gives more detail about each domain inside this DDH file: latitude and longitude of single points, corners for rectangular domains, etc.
+
+\noi If one is interested in the 11rd domain, for example, let us first extract this domain from the DDH file:
+{\small \begin{verbatim} 
+ddht -cEXTRAIT_DOMAIN -1DHFDLFCST+0032 -E11 -sDHFDLFCST+0032.mydomain
+\end{verbatim}}
+
+\noi Creates the output file DHFDLFCST+0032.mydomain. This file contains only one domain, the 11rd domain from DHFDLFCST+0032. 
+
+\noi "ddht" with no argument gives a synopsis of this tool.
+
+\noi To check the content of this new file:
+{\small \begin{verbatim} 
+ddhr DHFDLFCST+0032.mydomain
+\end{verbatim}}
+\noi Indicates 
+{\small \begin{verbatim} 
+ ------------------------------------------------------
+ DDH file DHFDLFCST+0032.mydomain
+ Run G6ZJ, base 2023-10-06 00:00, cum. time range    32.00 h.
+ LIMITED AREA DOMAINS   2304 time steps,    90 levels,      1 domains.
+\end{verbatim}}
+\noi This DDH file contains a single domain. To get more information about this domain, type as previously "ddhr -ddd":
+{\small \begin{verbatim} 
+ddhr -ddd DHFDLFCST+0032.mydomain
+\end{verbatim}}
+\noi Indicates this domain is a point, longitude=   0.3835, latitude=  43.1225.
+
+\noi Which fields are in this single domain DDH file, and thus can be plotted? To get a list:
+{\small \begin{verbatim} 
+lfaminm DHFDLFCST+0032.mydomain
+\end{verbatim}}
+\noi Prompts the list of all articles of this file. Such a list can be got because the DDH files are autodocumented binary files, written in the LFA format. To get more information about the LFA format, see the documentation \newline
+ddhtoolbox/tools/lfa/documentation/lfa\_english.pdf.
+
+\p The list, output from lfaminm above, contains many articles names, like:
+{\small \begin{verbatim} 
+l=      90, min=  0.3547E+07 max=  0.6419E+08 mea=  0.2940E+08 rms=  0.3108E+08|R4| VCT1
+l=      90, min=  0.3531E+07 max=  0.6474E+08 mea=  0.2944E+08 rms=  0.3113E+08|R4| VCT0
+l=      90, min=  0.1032     max=   78.36     mea=   27.97     rms=   34.10    |R4| VHR1
+l=      90, min=  0.1135     max=   146.5     mea=   45.38     rms=   62.15    |R4| VHR0
+l=      91, min=  0.1439E+08 max=  0.2007E+08 mea=  0.1685E+08 rms=  0.1693E+08|R4| FCTRAYSO
+l=      91, min= -0.3201E+08 max= -0.9774E+07 mea= -0.2092E+08 rms=  0.2211E+08|R4| FCTRAYTH
+l=      90, min= -0.2081     max=   0.000     mea= -0.3209E-02 rms=  0.2353E-01|R4| TCTIMLT
+l=      90, min=   0.000     max=  0.5823E-06 mea=  0.8982E-08 rms=  0.6584E-07|R4| TQLIMLT
+l=      90, min= -0.5823E-06 max=   0.000     mea= -0.8982E-08 rms=  0.6584E-07|R4| TQIIMLT
+\end{verbatim}}
+\noi Article names beginning with "V" are variables, the second and third characters are the variable itself (CT for $C_p T$, QV for water vapour, UU for zonal wind, VV for meridional wind, KK for kinetic energy, etc). "T" are cumulated tendencies, "F" cumulated fluxes. For example above, FCTRAYSO is the cumulated flux of solar radiation, FCTRAYTH the cumulated thermal radiation flux, VCT0 is initial temperature (CT = $C_p T$), VCT1 final temperature, VHR0 initial relative humidity, VHR1 final relative humidity, etc.
+
+\p To get these articles in ready to plot ASCII files, first write a list of desired articles in an ASCII file:
+{\small \begin{verbatim} 
+vim listv
+\end{verbatim}}
+\noi In listv file one writes for example the lines:
+{\small \begin{verbatim} 
+VCT1
+VCT0
+VHR1
+FCTRAYSO
+\end{verbatim}}
+
+\noi The ddhi tool is used to read these articles and convert the data into a ready to plot information:
+{\small \begin{verbatim} 
+ddhi -llistv DHFDLFCST+0032.mydomain
+\end{verbatim}}
+\noi This writes out the following files:
+{\small \begin{verbatim} 
+ DHFDLFCST+0032.mydomain.tmp.VCT0.dta
+ DHFDLFCST+0032.mydomain.tmp.VCT0.doc
+ DHFDLFCST+0032.mydomain.tmp.VCT1.dta
+ DHFDLFCST+0032.mydomain.tmp.VCT1.doc
+ DHFDLFCST+0032.mydomain.tmp.VHR1.dta
+ DHFDLFCST+0032.mydomain.tmp.VHR1.doc
+ DHFDLFCST+0032.mydomain.tmp.FCTRAYSO.dta
+ DHFDLFCST+0032.mydomain.tmp.FCTRAYSO.doc
+\end{verbatim}}
+\noi 2 files per field: the ".doc" file is an autodocumentation, to be read by your graphic tool: title, unit, date, name of the field, etc.
+\noi The ".dta" is an ASCII file with colums. The last column is the field, the firsts columns are the coordinates.
+
+\p To plot this filed with the graphic tool dd2png:
+{\small \begin{verbatim} 
+dd2png DHFDLFCST+0032.mydomain.tmp.VCT1.doc DHFDLFCST+0032.mydomain.tmp.VCT1.png
+\end{verbatim}}
+\noi dd2png reads the ".doc" file and plots a PNG graphic in the file name given by the second argument. This plots the vertical profile of final temperature (at 32h prediction time), of this 11rd domain. An example of the resulting plotted profile of temperature is given in figure \refp{plott}.
+
+%
+%-----------------------------------------------------------------------
+% Figure.
+%-----------------------------------------------------------------------
+%
+\begin{figure}[hbtp]
+  \centerline{\includegraphics[angle=0, keepaspectratio=true, clip=true, width=17cm] {images/DHFDLFCST+0032.mydomain.tmp.VCT1.doc.svg.eps}}
+  \caption{Vertical profile of temperature at 32h prediction time.}
+  \label{plott}
+\end{figure}
+
+\p ddhi converts the data from the DDH file into ready to plot data. For example, temperature is written the in the file as $c_p T \delta p / g$. ddhi divides by $c_p$, normalizes by the field $\delta p / g$ (which is in the VPP0 file article). All these actions can be parameterized, they are written in the file given by the unix environment variable DDHI\_LIST. Example, in your .bash\_profile you may have 
+{\small \begin{verbatim} 
+export DDHTOOLBOX=/home/piriou/ftn/ddh/ddhtoolbox
+export DDHI_LIST=$DDHTOOLBOX/ddh_budget_lists/conversion_list
+export DDHB_BPS=$DDHTOOLBOX/ddh_budget_lists
+\end{verbatim}}
+
+
+\p If one gets a warning message "DDHI/WARNING: this article is not in the above conversion list lisc", this means that the article written in the list entered as "-l" to ddhi is missing from the conversion\_list.
+
+\p To add it (or customize or translate names), one can edit this conversion\_list :
+{\small \begin{verbatim} 
+vim $DDHI_LIST
+\end{verbatim}}
+
+\p For example, the line for VCT1 (final temperature) is 
+{\tiny \begin{verbatim} 
+VII1VCT1         VCT1                      TEMPERATURE : FINAL VALUE                                   K              0.0009953132115872  0
+\end{verbatim}}
+\noi The constant 0.0009953132115872 is $1 / c_p$. The clear name if the field can be customized (translation, for example). The 4 first characters indicate the conversions to be done on the field before writing it as an ASCII column ready to plot:
+\begin{enumerate}
+  \item The 1st character is not used by ddhi.
+  \item The 2nd character indicates if operations are to be done on 2 fields: I (none), S (c1+c2), D (c2-c1), F ((c2-c1) / prediction range), etc.
+  \item The 3rd character is vertical processing, can be I (none), C (vertical processing: cumulate), T (vertical processing: differenciate jlev - (jlev-1)). 
+  \item The 4th character is normalization, can be I (no normalization), 0 (normalization by initial pressure), 1 (normalization by final pressure), P (normalization by time cumulated pressure), M (normalization by time cumulated pressure divided by prediction range), etc.
+\end{enumerate}
+\subsection{Plotting tephigrams from DDH files}
+
+\p For physical interpretation, tephigrams are useful plots. To get a tephigram from any domain from a DDH file, follow this example:
+
+{\small \begin{verbatim} 
+cd ddhtoolbox/demonstration/arome_tephigram
+\end{verbatim}}
+
+\p In this directory the shell script uses ddht to extract from a DDH file the point closest to Toulouse, given by its longitude and latitude:
+
+{\small \begin{verbatim} 
+ddht -cEXTRAIT_DOMAIN -1$fddh -s$fddh.meteopole.lfa -E+001.374_+43.575_Toulouse-Meteopole
+\end{verbatim}}
+\noi The argument -E specifies the longitude and latitude. This argument could be given as 
+{\small \begin{verbatim} 
+-E+001.374_+43.575
+\end{verbatim}}
+\noi this leads to the same result as giving
+{\small \begin{verbatim} 
+-E+001.374_+43.575_Toulouse-Meteopole
+\end{verbatim}}
+\noi All what is written after the third "\_" is like a comment, it is ignored by ddht, this comment is useful simply to make the reading of scripts more friendly, with a clear indication of the location of given (longitude, latitude) coordinates.
+
+\p The script then converts the DDH file into a MUSC single column file type, using ddh2scm. This file can be read then by the tool ms (for Model Sounding), which computes vertical profiles of $\theta$, $\theta_W$, iso-$\theta'_{w}$, etc. The tool ms also creates an autodocumentation text file (suffixed ".doc"), ready to be used by any plot tool.
+
+\p To make the plot, the script calls dd2gr, this reads the ".doc" file, makes the plot in SVG, and then converts this SVG into PNG:
+{\small \begin{verbatim} 
+#
+#-----------------------------------------------
+# Plot.
+#---------------
+dd2gr $fddh.meteopole.lfa.Dom001.Var_fin.scm.ms.tmp.theta.doc $fddh.meteopole.tephigram.svg
+convert $fddh.meteopole.tephigram.svg $fddh.meteopole.tephigram.png
+\end{verbatim}}
+
+\p The PNG file can now be visualized, shown in figure \refp{tephigramplot}.
+
+%
+%-----------------------------------------------------------------------
+% Figure.
+%-----------------------------------------------------------------------
+%
+\begin{figure}[hbtp]
+  \centerline{\includegraphics[angle=0, keepaspectratio=true, clip=true, width=20.cm] {images/DHFDLFCST+0016.meteopole.tephigram.svg.eps}}
+  \caption{Tephigram plot of a DDH domain, plotted starting from any DDH file or domain, and then using ddht to extract, ddh2scm to convert into a SCM MUSC file, ms to create the tephigram sounding, dd2gr to plot the tephigram.}
+  \label{tephigramplot}
+\end{figure}
+
+\subsection{Fluxes, with / without conversion to tendencies}
+{\small \begin{verbatim} 
+cd ddhtoolbox/demonstration/arpege_budget/ddhpack_dlimited
+\end{verbatim}}
+
+\noi DDH files are available from 1h to 78h prediction range. Lets study the turbulence flux of enthalpy, whose article in the DDH file is FCTTUR. The whole list of articles can be got for example with
+
+{\small \begin{verbatim} 
+lfaminm DHFDLFCST+0017
+\end{verbatim}}
+
+\p Each DDH file contains the fluxes and tendencies cumulated from step 0 to current time of integration. For example, DHFDLFCST+0012 contains 12h integration fluxes and tendencies, DHFDLFCST+0077 contains 77h.
+
+\p The script "ddh\_decumulifie" decumulates:
+
+{\small \begin{verbatim} 
+ddh_decumulifie DHFDLFCST+????
+\end{verbatim}}
+\noi will loop over all DDH files of the current directory, and make the difference between each file and the previous. This results in creating the DHFDLFCST+????.instantane files.
+
+\p One can check the results using ddhr:
+{\small \begin{verbatim} 
+ddhr DHFDLFCST+0016
+\end{verbatim}}
+\noi indicates a 16h prediction time.
+{\small \begin{verbatim} 
+ddhr DHFDLFCST+0017
+\end{verbatim}}
+\noi indicates a 17h prediction time.
+{\small \begin{verbatim} 
+ddhr DHFDLFCST+DHFDLFCST+0017.instantane
+\end{verbatim}}
+\noi indicates a 1h prediction time, relevant for the 16h to 17h prediction period.
+
+\p We now extract from this file the point closest to Toulouse:
+{\tiny \begin{verbatim} 
+ddht -cEXTRAIT_DOMAIN -1DHFDLFCST+0017.instantane -sDHFDLFCST+0017.instantane.meteopole.lfa -E+001.374_+43.575
+\end{verbatim}}
+
+\p To get the profile of turbulence, one writes with an editor a list file (lets call it listv) with this article:
+{\small \begin{verbatim} 
+cat listv
+FCTTUR
+\end{verbatim}}
+
+\noi To get data in ASCII colums from this turbulent process, we use ddhi:
+{\small \begin{verbatim} 
+ddhi -llistv -1VZ DHFDLFCST+0017.instantane.meteopole.lfa
+\end{verbatim}}
+\noi The -1VZ arguments asks for Vertical Z coordinate as 1st ASCII column in the output file (other options: VP (pressure), VN (levels), by default: pressure). This creates the following files:
+{\small \begin{verbatim} 
+ DHFDLFCST+0017.instantane.meteopole.lfa.tmp.FCTTUR.dta
+ DHFDLFCST+0017.instantane.meteopole.lfa.tmp.FCTTUR.doc
+\end{verbatim}}
+\noi To get a plot:
+{\tiny \begin{verbatim} 
+dd2png DHFDLFCST+0017.instantane.meteopole.lfa.tmp.FCTTUR.doc DHFDLFCST+0017.instantane.meteopole.lfa.tmp.FCTTUR.png
+\end{verbatim}}
+\noi The PNG file contains the plot of the vertical profile of T tendency (K/day) due to turbulence, as by default ddhi converts fluxes into tendencies.
+
+\noi To get raw fluxes, use the option -cNON (no conversion):
+{\small \begin{verbatim} 
+ddhi -llistv -1VZ -cNON DHFDLFCST+0017.instantane.meteopole.lfa
+\end{verbatim}}
+\noi The flux is not converted into tendency.
+\noi The plot
+{\tiny \begin{verbatim} 
+dd2png DHFDLFCST+0017.instantane.meteopole.lfa.tmp.FCTTUR.doc DHFDLFCST+0017.instantane.meteopole.lfa.tmp.FCTTUR.png
+\end{verbatim}}
+\noi now shows a turbulence flux, in J/m2.
+
+\p As we are interested to zoom in the PBL, ddhi can avoid producing the data over 1~km:
+{\small \begin{verbatim} 
+ddhi -llistv -1VZ -cNON DHFDLFCST+0017.instantane.meteopole.lfa -ymax1.
+\end{verbatim}}
+\noi Redo the plot:
+{\tiny \begin{verbatim} 
+dd2png DHFDLFCST+0017.instantane.meteopole.lfa.tmp.FCTTUR.doc DHFDLFCST+0017.instantane.meteopole.lfa.tmp.FCTTUR.png
+\end{verbatim}}
+\noi now shows a turbulence flux, in J/m2, below 1~km height. This plot is shown in figure \refp{flutbc}.
+
+%
+%-----------------------------------------------------------------------
+% Figure.
+%-----------------------------------------------------------------------
+%
+\begin{figure}[hbtp]
+  \centerline{\includegraphics[angle=0, keepaspectratio=true, clip=true, width=17cm] {images/DHFDLFCST+0017.instantane.meteopole.lfa.FCTTUR.doc.svg.eps}}
+  \caption{Vertical profile of turbulence heat flux, over Toulouse, between 16h and 17h prediction times, in $J \cdot m^{-2}$.}
+  \label{flutbc}
+\end{figure}
+
+\p Exercise: PBL height may be defined as the level at which the turbulence flux value is 10\% of that at surface. Using output files from ddhi and scripts of your own, plot the temporal evolution of PBL height from 1 to 78h. An example of resulting plot of this time evolution of PBL height is show in figure \refp{pblheight}.
+
+%
+%-----------------------------------------------------------------------
+% Figure.
+%-----------------------------------------------------------------------
+%
+\begin{figure}[hbtp]
+	\centerline{
+		\includegraphics
+			[width=12.cm, 
+			keepaspectratio=true,
+			clip=true]
+			{images/pbl_height_final_final.eps}
+		}
+	\caption{Example of PBL height evolution, based on the "10\% of surface turbulence flux", and the above mentioned DDH files (source Panu Maalampi, Oct 2023).}
+	\label{pblheight}
+\end{figure}
+
+\p Compare, for some prediction ranges, this PBL height to that seen on a tephigram. A tephigram can be created at any prediction range :
+{\small \begin{verbatim} 
+ddh2scm DHFDLFCST+0017.instantane.meteopole.lfa
+\end{verbatim}}
+\noi converts the DDH file into a single-column MUSC-type file. The file created is
+{\small \begin{verbatim} 
+DHFDLFCST+0017.instantane.meteopole.lfa.Dom001.Var_fin.scm
+\end{verbatim}}
+\noi To compute a tephigram from this vertical profile:
+{\small \begin{verbatim} 
+ms DHFDLFCST+0017.instantane.meteopole.lfa.Dom001.Var_fin.scm
+\end{verbatim}}
+\noi ms stands for "model sounding". The following files have been created:
+{\small \begin{verbatim} 
+DHFDLFCST+0017.instantane.meteopole.lfa.Dom001.Var_fin.scm.ms.tmp.theta.doc
+\end{verbatim}}
+\noi and several ASCII dta files ".dta". To plot the sounding:
+{\tiny \begin{verbatim} 
+dd2png DHFDLFCST+0017.instantane.meteopole.lfa.Dom001.Var_fin.scm.ms.tmp.theta.doc DHFDLFCST+0017.instantane.meteopole.lfa.Dom001.Var_fin.scm.ms.tmp.theta.png
+\end{verbatim}}
+
+%
+%-----------------------------------------------------------------------
+% Figure.
+%-----------------------------------------------------------------------
+%
+\begin{figure}[hbtp]
+  \centerline{\includegraphics[angle=0, keepaspectratio=true, clip=true, width=17cm] {images/DHFDLFCST+0017.instantane.meteopole.lfa.Dom001.Var_fin.scm.ms.theta.doc.svg.eps}}
+  \caption{Tephigram over Toulouse at 17 UTC.}
+  \label{tephigram17}
+\end{figure}
+\noi This plot in shown in figure \refp{tephigram17}. The PBL height can be seen on this tephigram. So, are the PBL heights from "10\% of turbulence flux" consistent to those seen from such tephigrams?
+
+\subsection{Plotting ARPEGE/AROME budgets : example of studying infra-red / turbulence interaction}
+
+\p This section produces temperature budgets at different time and space scales, to study the interaction between infra-red and turbulence processes.
+
+\p The ARPEGE operational model produces zonal DDH files. Any DDH file contains one or several domains. A zonal DDH file is a file containing as many domains as zonal bands.
+
+{\small \begin{verbatim} 
+cd ddhtoolbox/demonstration/arpege_interaction_rad_vs_turbulence/data_ddh_monthly
+\end{verbatim}}
+\noi The DDH files in this directory are dhfzoprod+0072.r00.lfa.*.lfa. The zonal files were produced every day in ARPEGE operational predictions, and then cumulated in time to get monthy mean zonal DDH files. How to cumulate DDH files will be presented later in this documentation.
+
+{\small \begin{verbatim} 
+ddhr dhfzoprod+0072.r00.lfa.20160201.lfa
+\end{verbatim}}
+\noi gives autodocumentation information about a given DDH file. We get the output:
+{\small \begin{verbatim} 
+ddhr dhfzoprod+0072.r00.lfa.20160201.lfa
+ ------------------------------------------------------
+ DDH file dhfzoprod+0072.r00.lfa.20160201.lfa
+ Run arpege_europe_oper, base 2016-02-01 00:00, cum. time range    87.00 days, time range for var.    3.00 days
+ ZONAL DOMAINS  20880 time steps,   105 levels,     30 domains.
+\end{verbatim}}
+\noi This zonal DDH file contains 30 zonal bands (30 domains). Its cumulated time range is 87 days, as it was cumulated from 29 predictions (29 days in February 2016) at 3 days prediction range. The model producing these zonal DDH file has 105 levels.
+
+\p In this example-section, we are interested in studying the evolution, among years of ARPEGE predictions, of the interaction between infra-red radiation and turbulence. To get a budget of a DDH file, we need first o have a DDH file containing a single domain. Here we will make this study in global mean. To produce a global mean from a zonal DDH file, we use the ddht tool, which reads a DDH file with $n$ domains, and generates another DDH file, containing a single domain, the mean one:
+
+{\small \begin{verbatim} 
+ddht -cMOY_HORIZ -1dhfzoprod+0072.r00.lfa.20160201.lfa -sdhfzoprod+0072.r00.lfa.20160201.lfa.mh
+\end{verbatim}}
+\noi -cMOY\_HORIZ means "horizontal mean", -1 is the input file, -s the output file. To check we now have a single domain in this output file:
+{\small \begin{verbatim} 
+ddhr dhfzoprod+0072.r00.lfa.20160201.lfa.mh
+\end{verbatim}}
+\noi now gives
+{\small \begin{verbatim} 
+ddhr dhfzoprod+0072.r00.lfa.20160201.lfa.mh
+ ------------------------------------------------------
+ DDH file dhfzoprod+0072.r00.lfa.20160201.lfa.mh
+ Run arpege_europe_oper, base 2016-02-01 00:00, cum. time range    87.00 days, time range for var.    3.00 days
+ GLOBAL DOMAIN  20880 time steps,   105 levels,      1 domains.
+\end{verbatim}}
+\noi It contains a single horizontal domain, the whole Earth.
+
+\p To make a temperature budget the command is
+{\tiny \begin{verbatim} 
+ddhb -v oper/CT -i dhfzoprod+0072.r00.lfa.20160201.lfa.mh -o dhfzoprod+0072.r00.lfa.20160201.lfa.mh.svg
+\end{verbatim}}
+\noi The argument -v oper/CT means we want to make the budget of CT (temperature, $c_p T$), using the budget list directives written in file ddhtoolbox/ddh\_budget\_lists/oper/CT.fbl. These budget directives are text files, that can be modified, to change the langage (create files in English, French, etc), the units, or update to new code cycles (new ways of dealing physical parameterizations).
+
+\p In output, ddhb writes a graphic file (-o option). This SVG file can be converted into PNG one for example using convert:
+{\small \begin{verbatim} 
+convert dhfzoprod+0072.r00.lfa.20160201.lfa.mh.svg dhfzoprod+0072.r00.lfa.20160201.lfa.mh.png
+\end{verbatim}}
+
+\p Exercise: redo such a budget for all February files avaible. How does the interaction between infra-red T tendency and turbulence T tendency evolve among the years? What may be the explanation for infra-red T tendency becoming positive in the recent period of time?
+
+\p To look at this at much smaller scale and smaller time range, such a budget can be done in an AROME prediction:
+
+{\small \begin{verbatim} 
+cd ddhtoolbox/demonstration/arome_budget/ddhpack_dlimited
+\end{verbatim}}
+\noi The DDH files here are DHFDLFCST+???? . To get the budget for example between 12h and 13h prediction time, lets make the difference in time between the file at 13h and that at 12h:
+{\small \begin{verbatim} 
+ddht -cDIFFE_EC2_EC1 -2DHFDLFCST+0013 -1DHFDLFCST+0012 -sDHFDLFCST+0012-0013
+\end{verbatim}}
+\noi -cDIFFE\_EC2\_EC1 indicates a difference between 2 DDH files from the same prediction, at different prediction times. -1 and -2 arguments are the input files, -s is the output file receiving the difference.
+{\small \begin{verbatim} 
+ddhr DHFDLFCST+0012-0013 
+\end{verbatim}}
+\noi Indicates
+{\small \begin{verbatim} 
+ ------------------------------------------------------
+ DDH file DHFDLFCST+0012-0013
+ Run G6ZJ, base 2023-10-06 12:00, cum. time range     1.00 h.
+ LIMITED AREA DOMAINS     72 time steps,    90 levels,     39 domains.
+\end{verbatim}}
+\noi The prediction is now 1h: from 12h to 13h. This file contains 39 domains. Lets extract the domain closest to Toulouse:
+{\tiny \begin{verbatim} 
+ddht -cEXTRAIT_DOMAIN -E+001.374_+43.575_Toulouse-Meteopole -1DHFDLFCST+0012-0013 -sDHFDLFCST+0012-0013.meteopole.lfa
+\end{verbatim}}
+
+\noi Lets plot the temperature budget between 12h and 13h.
+{\small \begin{verbatim} 
+ddhb -v AROME_G6ZJ_fbl/CT -i DHFDLFCST+0012-0013.meteopole.lfa -o DHFDLFCST+0012-0013.meteopole.svg
+convert DHFDLFCST+0012-0013.meteopole.svg DHFDLFCST+0012-0013.meteopole.png
+\end{verbatim}}
+\noi Looking at this picture -see figure \refp{budg_toulouse}-, showing a temperature budget over Toulouse during a 1h time period, we see the infra-red tendency close to surface having much larger values, compensated by a large negative value from turbulence. This means that a large part of CLS heating by infra-red radiation is now explicitly done by the radiation scheme. In this case, why does turbulence still parameterize net sensible heating at surface through the difference (Ts - Tn), which in principle mimics net infra-red radiation?
+
+\begin{figure}[hbtp]
+	\centerline{
+		\includegraphics
+			[width=12.cm, 
+			keepaspectratio=true,
+			clip=true]
+			{images/DHFDLFCST+0012-0013.meteopole.eps}
+		}
+	\caption{Temperature budget predicted by AROME G6ZJ over Toulouse, between 12 and 13 UTC, 6 October 2023.}
+	\label{budg_toulouse}
+\end{figure}
+
+\subsection{Plotting ARPEGE/AROME budgets : customizing the budget names and categories}
+{\small \begin{verbatim} 
+cd ddhtoolbox/demonstration/customize_budgets 
+\end{verbatim}}
+
+\p The script in this directory computes the DDH file relevant for the evolution between 9 and 10h prediction times, using ddht -cDIFFE\_EC2\_EC1. Then it extracts from this resulting 1h prediction time DDH file the point closest to Toulouse, using ddht -cEXTRAIT\_DOMAIN.
+
+\p Using this DDH file containing a single domain over Toulouse, it makes the temperature (CT) budget with the ddhb tool, using first a standard budget directive file (in the AROME\_G6ZJ\_fbl directory). This gives the plot left hand side (LHS) of the figure \refp{budg_custom}.
+
+\p On the plot right hand side (RHS) of the figure \refp{budg_custom}, the customized title "Rad Solar + Thermal" refers to a field that is the sum of the 2 ones "FCTRAYSO and FCTRAYTER" on the left. Samely, the title "Turb vert + horiz" refers to the sum of the 2 ones "TCTVTUR + TCTHTUR".
+
+\p How can such customized budget be generated? To get the budget shown on the RHS, the script uses another budget directive file, customized, available in the AROME\_customized\_fbl directory.
+
+\p Comparing (with a text editor) the AROME\_G6ZJ\_fbl/CT.fbl and AROME\_customized\_fbl/CT.fbl files, one can see the syntax of such directive files, and how to modify them to get customized  budgets.
+
+\begin{figure}[hbtp]
+	\centerline{
+		\includegraphics
+			[width=9.cm, keepaspectratio=true, clip=true]
+			{images/DHFDLFCST+0009-0010.meteopole.standard.svg.eps}
+		\includegraphics
+			[width=9.cm, keepaspectratio=true, clip=true]
+			{images/DHFDLFCST+0009-0010.meteopole.custom.svg.eps}
+		}
+	\caption{Temperature budget predicted by AROME G6ZJ over Toulouse, between 0 and 10 UTC, 6 October 2023. Source Panu Maalampi, October 2023.}
+	\label{budg_custom}
+\end{figure}
+
+%\subsection{Making the link between DDH file articles and the 3D model code}
+
+\subsection{Hovmöller diagrams of the difference between an experiment and a reference}
+
+\p To compare an experiment versus a reference, like validating a new version of 3D code, or to check the impact of modification in physics or dynamics, Hovmöller diagrams of differences are useful to check whether differences appear from first time step (difference in analysis), or gradually (differences in physics / dynamics), or are larger in the firsts time steps (spin-up due to imbalance between analysis and model equations).
+
+{\small \begin{verbatim} 
+cd ddhtoolbox/demonstration/compare_2_predictions_hovmoller
+\end{verbatim}}
+\noi In this directory the script uses ddht (extract a domain over Toulouse), ddht (to interpolate a vertical grid on another, as the 2 DDH files were produced by models with a different number of levels, before computing the difference), ddhi (to produce vertical profiles ready to plot) and dd2gr to make the plot. The results can be seen on figures \refp{timhed} (graphic tool dd2gr) and \refp{timhem} (graphic tool mathplotlib).
+
+\begin{figure}[hbtp]
+	\centerline{
+		\includegraphics [width=16.cm, keepaspectratio=true, clip=true] {images/evol.doc.svg.eps}
+		}
+	\caption{Difference in temperature between an AROME (G6ZJ) prediction and an ARPEGE (OPER) one, over Toulouse, in time-height coordinates (Hovmöller diagram). Plotted with the dd2gr tool (Jean-Marcel Piriou).}
+	\label{timhed}
+\end{figure}
+
+\begin{figure}[hbtp]
+	\centerline{
+		\includegraphics [width=16.cm, keepaspectratio=true, clip=true] {images/hov_tdiff_final.eps}
+		}
+	\caption{Difference in temperature between an AROME (G6ZJ) prediction and an ARPEGE (OPER) one, over Toulouse, in time-height coordinates (Hovmöller diagram). Plotted with the mathplotlib tool (Panu Maalampi).}
+	\label{timhem}
+\end{figure}
