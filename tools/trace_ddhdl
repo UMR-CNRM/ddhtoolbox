@@ -1,0 +1,37 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2018-01, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+#set -evx
+#
+#-------------------------------------------------
+# .
+#-------------------------------------------------
+#
+for f in DHFDLARPE+0018.lfa
+do
+  for dom in 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 29 20 21 22 23 24 25
+  do
+    ddht -cEXTRAIT_DOMAIN -1$f -E$dom -s$f.dom$dom.tmp.lfa
+    ddh2scm $f.dom$dom.tmp.lfa
+    ms $f.dom$dom.tmp.lfa.Dom001.Var_fin.scm
+    v $f.dom$dom.tmp.lfa.Dom001.Var_fin.scm.ms.tmp.theta.doc
+  done
+done

@@ -1,0 +1,72 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   1999-11, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+niv="27 28 29 30 31"
+var="PCVGQ PTT0 PUT0 PQT0"
+if [ $# -eq 0 ]
+then
+	#
+	# Mauvais nombre d'arguments.
+	#
+	echo " "
+	echo "Tracé de l'évolution temporelle des variables $var aux niveaux $niv."
+	echo " "
+	echo "Utilisation: "$proc" F1 [F2 ... Fn]"
+	echo "où les Fi sont les profils de sortie du M1D."
+	echo " "
+	exit
+fi
+#
+#-----------------------------------------------
+# Exécution.
+#-----------------------------------------------
+#
+for varb in $var
+do
+	lfac $1 $varb > $pref.exist
+	if test -s $pref.exist
+	then
+		for nivb in $niv
+		do
+			fs=tmp.$proc.$varb.niv$nivb
+			rm -f $fs
+			for f in $*
+			do
+				mevol -n$nivb $varb -o$pref.var $f
+				valeur=`cat $pref.var`
+				temps=`lfac $f RSTATI`
+				echo $temps" "$valeur >> $fs
+			done
+		done
+	fi
+done
+#
+#-----------------------------------------------
+# Epilogue.
+#-----------------------------------------------
+#
+ls -l tmp.$proc*
+#
+#-----------------------------------------------
+# Nettoyage.
+#-----------------------------------------------
+#
+rm -f $pref*

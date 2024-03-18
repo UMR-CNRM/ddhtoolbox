@@ -1,0 +1,96 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Install or update LFA software.
+# --------------------------------------------------------------
+# Subject:
+# Method:
+# Externals:
+# Author:   98-03, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# In input:
+# In output:
+# --------------------------------------------------------------
+proc=$(basename $0) # present procedure name.
+#
+#-----------------------------------------------
+# Define help.
+#-----------------------------------------------
+#
+function usage
+{
+	echo " "
+	echo "Install or update LFA software."
+	echo " "
+	echo "Usage: "$proc
+	echo " "
+	echo "The machine type is recognized by using the 'uname' UNIX command."
+	echo " "
+	exit
+}
+#
+#-----------------------------------------------
+# Get command line arguments.
+#-----------------------------------------------
+#
+if [ "$1" = "-h" ]
+then
+	usage ; exit
+elif [ $# -eq 1 ]
+then
+	if [ "$1" = "clean" ] ; then
+		make clean 
+		exit
+	else
+		usage ; exit
+	fi
+fi
+#
+#-----------------------------------------------
+# Recognize machine type.
+#-----------------------------------------------
+#
+machine=`uname -a` ; set $machine ; os_name=$1
+echo "The current machine is a "$os_name
+if [ "$os_name" = "Linux" ] ; then
+	#
+	#-----------------------------------------------
+	# Linux : pgf90 flags.
+	#-----------------------------------------------
+	#
+	#export FC="pgf90 -Mpreprocess -Mextend -pc 64 -Kieee -byteswapio"
+	#export FC="pgf90 -Mpreprocess -Mextend -r8 -i4 -Kieee -byteswapio info=inform"
+	#export FC="pgf90 -Mpreprocess -Mextend -Kieee -byteswapio info=inform -tp x64"
+	#
+	#-----------------------------------------------
+	# Linux : gfortran flags.
+	#-----------------------------------------------
+	#
+	#export FC="gfortran -fconvert=swap -ffree-line-length-none"
+	export FC="gfortran -fconvert=swap -ffree-line-length-none -g -ffpe-trap=invalid,zero,overflow,underflow -fbacktrace -fbounds-check"
+elif [ "$os_name" = "DEC" ] ; then
+	#
+	#-----------------------------------------------
+	# DEC flags.
+	#-----------------------------------------------
+	#
+	#export FC="f90 -i8 -r8 -convert big_endian -extend_source -O0 -g -ladebug" # debug mode.
+	export FC="f90 -i8 -r8 -convert big_endian -extend_source " # normal mode.
+else
+	echo "ERROR: operating system unrecognized!..."
+	echo "Edit the two scripts 'install' and 'lfa/install'."
+	exit
+fi
+export BIBC="ar r"
+#
+#-----------------------------------------------
+# Make a LFA library.
+#-----------------------------------------------
+#
+make liblfa.a
+#
+#-----------------------------------------------
+# Compile LFA UNIX line executables.
+#-----------------------------------------------
+#
+make exe

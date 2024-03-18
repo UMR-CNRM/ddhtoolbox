@@ -1,0 +1,40 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Global mean of a DDH file.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   97-01, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # present procedure name.
+pref=`tempo`/$proc.$RANDOM # prefix for temporary files.
+dirloc=`pwd` # path for local directory.
+if [ $# -eq 1 ]
+then
+  fe=$1
+  fs=$1.mg
+elif [ $# -eq 2 ]
+then
+  fe=$1
+  fs=$2
+else
+  echo " "
+  echo "Global mean of a DDH file."
+  echo " "
+  echo "Usage: "$proc" DDH_IN [DDH_OUT]"
+  echo " "
+  echo "If DDH_OUT is omitted, the default value is \$DDH_IN.mg."
+  echo " "
+  exit
+fi
+ddht -cMOY_HORIZ -1$fe -s$pref
+ddht -cMOY_VERTIC -1$pref -s$fs
+rm $pref
+echo "Resulting file: "$fs

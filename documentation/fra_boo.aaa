@@ -1,0 +1,23 @@
+%---------------------------------------------------------------------------
+%
+% Fichier appelant les déclarations utiles au style book en Français.
+%
+%---------------------------------------------------------------------------
+\documentclass[11pt,a4paper,twoside,frenchb,dvips]{book}
+%
+%-----------------------------------------------
+% Paquets de sources LATEX.
+%-----------------------------------------------
+%
+\input{paquets.tex}
+%
+%-----------------------------------------------
+% Définitions JMP.
+%-----------------------------------------------
+%
+\input{boo.tex}
+\input{com.tex}
+\input{fra.tex}
+%
+% En tapant \appendix on veut l'annexe à la française.
+\renewcommand{\appendix}{\annexe}

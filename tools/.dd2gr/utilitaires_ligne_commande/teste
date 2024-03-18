@@ -1,0 +1,30 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2022-04-28, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+set -evx
+#
+#-------------------------------------------------
+# .
+#-------------------------------------------------
+#
+2cl -3 3 -i1 -z
+2cl -2 2
+2cl -2 2 -i0.2
+2cl -2 2 -i0.2 -z # Yves.
+cl cl2met.F90 c.cl c.doc
+COMPIL imgrvb.F90
+imgrvb
+v palette_classes.png 

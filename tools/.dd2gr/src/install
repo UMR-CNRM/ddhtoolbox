@@ -1,0 +1,104 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2008-11, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+dirloc=`pwd` # chemin du répertoire local.
+pref=$dirloc/.$proc.tmp.$RANDOM # préfixe des fichiers temporaires.
+dirtmp=$pref.dir # nom de répertoire temporaire.
+#
+#-----------------------------------------------
+# Clean.
+#-----------------------------------------------
+#
+if [ "$1" = "clean" ] ; then
+	set -x
+	rm -f *.o *.mod dd2gr
+	exit
+fi
+#
+#-----------------------------------------------
+# Install LFA software (LFA software operates I/O unformatted files).
+#-----------------------------------------------
+#
+if test -s ../../lfa/lfa.o
+then
+  dirlfa="../../lfa"
+elif test -s $HOME/ftn/lfa/lfa.o
+then
+  dirlfa="$HOME/ftn/lfa"
+else
+  echo " "
+  echo "$proc/ERROR: no LFA object available !..."
+  echo " "
+  exit 1
+fi
+cp $dirlfa/*.mod $dirlfa/lfa.o .
+#
+#-----------------------------------------------
+# Choix du compilateur.
+#-----------------------------------------------
+#
+#export FC="pgf90 -Mpreprocess -Mextend -Kieee -byteswapio info=inform -tp px -r8 -i4"
+export FC="gfortran -fconvert=swap -fdefault-real-8 -ffree-line-length-none -g -ffpe-trap=invalid,zero,overflow,underflow -fbacktrace -fbounds-check"
+#export FC="gfortran -fconvert=swap -fdefault-real-8 -ffree-line-length-none"
+#
+#-------------------------------------------------
+# Compilation des sources en commençant par les modules.
+#-------------------------------------------------
+#
+for f in img_parametres.F90 img_yom.F90 *.F90
+do
+	base=`basename $f .F90`
+	#
+	#-----------------------------------------------
+	# On va compiler le source si le ".o" n'existe pas
+	# ou est plus ancien que le source.
+	#-----------------------------------------------
+	#
+	if test -s $base.o
+	then
+		if test $base.o -ot $base.F90
+		then
+			#
+			#-----------------------------------------------
+			# Le ".o" est plus ancien.
+			#-----------------------------------------------
+			#
+			compile="oui"
+      rm $base.o
+		else
+			compile="non"
+		fi
+	else
+		#
+		#-----------------------------------------------
+		# Le ".o" n'existe pas.
+		#-----------------------------------------------
+		#
+		compile="oui"
+	fi
+	if [ "$compile" = "oui" ] ; then
+		exe="$FC -c $f"
+		echo $exe
+		$exe
+	fi
+done
+#
+#-----------------------------------------------
+# Création de l'exécutable dd2gr.
+#-----------------------------------------------
+#
+exe="$FC lfa.o dd2gr.o ote_et_commercial.o xyv_irreg.o xyv_reg.o courbes.o xyuvc_irreg.o extrapole_concentrique.o couleur_relle.o extrapole_y_puis_x.o minmaxsecur.o extdyn.o io.o img*.o svg*.o dates_r8i4.o cl_nettoie_blancs.o lega.o tralps.o interpole.o poif.o xyct.o extrapole_un.o zerolin.o cotation.o cote_jours.o hayashi_shallow_water.o indice_palette.o lit_directives.o permute.o repere_donnees_reg.o texl.o plusse.o ote_zeros_non_sign.o -o dd2gr"
+echo " " ; echo $exe ; $exe
+cp dd2gr ../demo
+rm dd2gr.o

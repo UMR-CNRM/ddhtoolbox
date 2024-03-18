@@ -1,0 +1,27 @@
+\frametitle{{\normalsize Namelist utilisateur: un exemple} }
+\vspace*{-0.4cm}
+\begin{exampleblock}{}
+\begin{footnotesize}
+\begin{verbatim}
+ &NAMDDH
+  BDEDDH(1,1)=4., ! domaine : un seul point de grille.
+  BDEDDH(2,1)=1., ! plan virtuel.
+  BDEDDH(3,1)=1.374, ! longitude du point.
+  BDEDDH(4,1)=43.575, ! latitude du point.
+
+  BDEDDH(1,2)=3., ! domaine : rectangle en lat-lon.
+  BDEDDH(2,2)=1., ! plan virtuel.
+  BDEDDH(3,2)=0.0, ! coin 1: longitude.
+  BDEDDH(4,2)=45.0, ! coin 1: latitude.
+  BDEDDH(5,2)=0.1, ! coin 2: longitude.
+  BDEDDH(6,2)=44.8, ! coin 2: latitude.
+
+  LHDDOP=.TRUE., ! activation domaines limités.
+  LHDEFD=.TRUE., ! activation sortie fichiers domaines limités.
+  LHDHKS=.TRUE., ! activation champs standard.
+  LFLEXDIA=.TRUE., ! activation des DDH flexibles.
+  LDDH_OMP=.TRUE., ! activation des DDH thread-safe.
+ /
+\end{verbatim}
+\end{footnotesize}
+\end{exampleblock}

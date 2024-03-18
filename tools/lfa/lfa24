@@ -1,0 +1,55 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Edition d'un fichier LFA.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   97-11, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+if [ $# -eq 0 ]
+then
+	#
+	# Nombre d'arguments non attendu.
+	#
+	cllang=`cllangu`
+	if [ "$cllang" = "FRA" ] ; then
+		echo " "
+		echo "Conversion d'un(plusieurs) fichier(s) LFA en leur clone 4 octets."
+		echo "Le but est ici de pouvoir réduire la place occupée par les fichiers."
+		echo " "
+		echo "Utilisation: lfa24 F1 [F2 ... Fn]"
+		echo " "
+		echo "Les fichiers sont en entrée/sortie."
+		echo " "
+		exit
+	else
+		echo " "
+		echo "Convert one(or more) LFA file(s) into 4 bytes LFA file(s)."
+		echo "This is useful to reduce file space."
+		echo " "
+		echo "Usage: lfa24 F1 [F2 ... Fn]"
+		echo " "
+		echo "Files are in input/output."
+		echo " "
+		exit
+	fi
+fi
+#
+#-----------------------------------------------
+# On transforme tous les LFA.
+#-----------------------------------------------
+#
+for i in $*
+do
+	lfa2lfa $i $pref
+	mv $pref $i
+done

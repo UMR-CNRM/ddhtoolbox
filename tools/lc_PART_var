@@ -1,0 +1,69 @@
+PPP           # PRESSION    : CUMUL TEMPOREL                                Pa
+VCT0          # TEMPERATURE : DIAGNOSTIC INITIAL                            K
+VCT1          # TEMPERATURE : DIAGNOSTIC FINAL                              K
+VEP0          # Z           : DIAGNOSTIC INITIAL                            m
+VEP1          # Z           : DIAGNOSTIC FINAL                              m
+VHR0          # HUM RELATIVE: DIAGNOSTIC INITIAL                            sans
+VHR1          # HUM RELATIVE: DIAGNOSTIC FINAL                              sans
+VKK0          # ENERGIE CIN : DIAGNOSTIC INITIAL                            J/kg
+VKK1          # ENERGIE CIN : DIAGNOSTIC FINAL                              J/kg
+VNT0          # NEBULOSITE  : DIAGNOSTIC INITIAL                            sans
+VNT1          # NEBULOSITE  : DIAGNOSTIC FINAL                              sans
+VOM0          # OMEGA       : DIAGNOSTIC INITIAL                            Pa/s
+VOM1          # OMEGA       : DIAGNOSTIC FINAL                              Pa/s
+VPP0          # PRESSION    : DIAGNOSTIC INITIAL                            Pa
+VPP1          # PRESSION    : DIAGNOSTIC FINAL                              Pa
+VQG0          # QG : QTE SPECIFIQUE D EAU SOUS FORME AGGREGATS, INITIAL     g/kg
+VQG1          # QG : QTE SPECIFIQUE D EAU SOUS FORME AGGREGATS, FINAL       g/kg
+VQL0          # EAU LIQUIDE : DIAGNOSTIC INITIAL                            g/kg
+VQL1          # EAU LIQUIDE : DIAGNOSTIC FINAL                              g/kg
+VQN0          # EAU NEIGE   : DIAGNOSTIC INITIAL                            g/kg
+VQN1          # EAU NEIGE   : DIAGNOSTIC FINAL                              g/kg
+VQR0          # QR : QTE SPECIFIQUE D EAU SOUS FORME PLUIE, INITIAL         g/kg
+VQR1          # QR : QTE SPECIFIQUE D EAU SOUS FORME PLUIE, FINAL           g/kg
+VQS0          # QG : QTE SPECIFIQUE D EAU SOUS FORME NEIGE, INITIAL         g/kg
+VQS1          # QG : QTE SPECIFIQUE D EAU SOUS FORME NEIGE, FINAL           g/kg
+VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            g/kg
+VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              g/kg
+VTE0          # TKE : INITIAL VALUE                                         J/kg
+VTE1          # TKE : FINAL VALUE                                           J/kg
+VUU0          # VENT ZONAL  : DIAGNOSTIC INITIAL                            m/s
+VUU1          # VENT ZONAL  : DIAGNOSTIC FINAL                              m/s
+VVV0          # VENT MERID  : DIAGNOSTIC INITIAL                            m/s
+VVV1          # VENT MERID  : DIAGNOSTIC FINAL                              m/s
+V010          # V. PASS. 01 : DIAGNOSTIC INITIAL                            SI
+V011          # V. PASS. 01 : DIAGNOSTIC FINAL                              SI
+V020          # V. PASS. 02 : DIAGNOSTIC INITIAL                            SI
+V021          # V. PASS. 02 : DIAGNOSTIC FINAL                              SI
+V030          # V. PASS. 03 : DIAGNOSTIC INITIAL                            SI
+V031          # V. PASS. 03 : DIAGNOSTIC FINAL                              SI
+V040          # V. PASS. 04 : DIAGNOSTIC INITIAL                            SI
+V041          # V. PASS. 04 : DIAGNOSTIC FINAL                              SI
+V050          # V. PASS. 05 : DIAGNOSTIC INITIAL                            SI
+V051          # V. PASS. 05 : DIAGNOSTIC FINAL                              SI
+V060          # V. PASS. 06 : DIAGNOSTIC INITIAL                            SI
+V061          # V. PASS. 06 : DIAGNOSTIC FINAL                              SI
+V070          # V. PASS. 07 : DIAGNOSTIC INITIAL                            SI
+V071          # V. PASS. 07 : DIAGNOSTIC FINAL                              SI
+V080          # V. PASS. 08 : DIAGNOSTIC INITIAL                            SI
+V081          # V. PASS. 08 : DIAGNOSTIC FINAL                              SI
+VA10          # MOM ANG A1  : DIAGNOSTIC INITIAL                            m**2/s
+VA11          # MOM ANG A1  : DIAGNOSTIC FINAL                              m**2/s
+VA20          # MOM ANG A2  : DIAGNOSTIC INITIAL                            m**2/s
+VA21          # MOM ANG A2  : DIAGNOSTIC FINAL                              m**2/s
+VA30          # MOM ANG A3  : DIAGNOSTIC INITIAL                            m**2/s
+VA31          # MOM ANG A3  : DIAGNOSTIC FINAL                              m**2/s
+VQC0          # EAU CONDENS : DIAGNOSTIC INITIAL                            g/kg
+VQC1          # EAU CONDENS : DIAGNOSTIC FINAL                              g/kg
+VQL0CV        # EAU LIQUIDE INITIALE : CUMUL VERTICAL                       g/m2
+VQL1CV        # EAU LIQUIDE FINALE : CUMUL VERTICAL                         g/m2
+VQN0CV        # EAU NEIGE INITIALE : CUMUL VERTICAL                         g/m2
+VQN1CV        # EAU NEIGE FINALE : CUMUL VERTICAL                           g/m2
+VQT0          # EAU TOTALE  : DIAGNOSTIC INITIAL                            g/kg
+VQT1          # EAU TOTALE  : DIAGNOSTIC FINAL                              g/kg
+VTH0          # THETA       : DIAGNOSTIC INITIAL                            K
+VTH1          # THETA       : DIAGNOSTIC FINAL                              K
+VQV0CV        # EAU VAPEUR INITIALE : CUMUL VERTICAL                        g/m2
+VQV1CV        # EAU VAPEUR FINALE : CUMUL VERTICAL                          g/m2
+VSS0          # ENTROPIE    : DIAGNOSTIC INITIAL                            J/kg/K
+VSS1          # ENTROPIE    : DIAGNOSTIC FINAL                              J/kg/K

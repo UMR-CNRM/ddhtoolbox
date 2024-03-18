@@ -1,0 +1,74 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Compile ddhtoolbox.
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2000-01, J.M. Piriou.
+# Modifications:
+#		2007-08-31, J.M. Piriou: suppress compilation of converter ddh-lfi2lfa.
+#		2007-08-31, J.M. Piriou: compile LFA within the ddhtoolbox.
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+dirloc=`pwd`
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+set -evx
+if [ "$1" = "clean" ] ; then
+	make clean
+	cd $dirloc/lfa ; install clean
+  cd $dirloc/.dd2gr/src ; install clean
+	exit
+fi
+#
+#-----------------------------------------------
+# Choix du compilateur et de la bibliothèque FA.
+#-----------------------------------------------
+#
+uname=`uname -a` ; set $uname ; os_name=$1 ; network_name=$2
+if [ "$os_name" = "Linux" ] ; then
+	#
+	#-----------------------------------------------
+	# Linux / compilateur PGF.
+	#-----------------------------------------------
+	#
+	#export FC="pgf90 -C -g -gopt -Mpreprocess -Mextend -Kieee -byteswapio info=inform -tp x64"
+	#export FC="pgf90 -Mpreprocess -Mextend -Kieee -byteswapio info=inform -tp x64"
+	#
+	#-----------------------------------------------
+	# Linux : gfortran flags.
+	#-----------------------------------------------
+	#
+	export FC="gfortran -fconvert=swap -fdefault-real-8 -ffree-line-length-none -g -ffpe-trap=invalid,zero,overflow,underflow -fbacktrace -fbacktrace -fbounds-check "
+else
+	echo "$proc/ERREUR: machine $os_name non reconnue!..."
+	exit 1
+fi
+#
+#-----------------------------------------------
+# Install LFA software (LFA software operates I/O on DDH files).
+#-----------------------------------------------
+#
+cd lfa
+./install
+cd ..
+#
+#-----------------------------------------------
+# Install ddhtoolbox.
+#-----------------------------------------------
+#
+make all
+#
+#-----------------------------------------------
+# Install plot tool dd2gr.
+#-----------------------------------------------
+#
+cd .dd2gr/src
+./install

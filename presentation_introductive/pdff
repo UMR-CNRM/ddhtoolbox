@@ -1,0 +1,5 @@
+rm -f ddh_presentation_introductive.synctex.gz ddh_synctex.gz
+ote_doubles_points
+pdflatex ddh_presentation_introductive.tex
+pdflatex ddh_presentation_introductive.tex
+firefox ddh_presentation_introductive.pdf

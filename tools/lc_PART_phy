@@ -1,0 +1,91 @@
+FCTAGGS       # TEMPERATURE : COLLECTION OF RAIN DROPS (AGGS)               K/day
+FCTBERFI      # TEMPERATURE : BERGERON-FINDEISEN EFFECT (BERFI)             K/day
+FCTCFRZ       # TEMPERATURE : CONTACT FREEZING (CFRZ)                       K/day
+FCTDEPG       # TEMPERATURE : DEPOSITION ON GRAUPEL (DEPG)                  K/day
+FCTDEPI       # TEMPERATURE : VW ADJUSTMENT (DEPI)                          K/day
+FCTDEPS       # TEMPERATURE : DEPOSITION ON SNOW (DEPS)                     K/day
+FCTDISSTUR    # TEMPERATURE : TURBULENCE (DISSTUR)                          K/day
+FCTDRYG       # TEMPERATURE : DRY GROWTH (DRYG)                             K/day
+FCTHENUI      # TEMPERATURE : HETEROG. NUCLEATION (HENUI)                   K/day
+FCTHON        # TEMPERATURE : HOMOG. NUCLEATION (HON)                       K/day
+FCTMESO       # TEMPERATURE : RAPPEL DANS LA MESOSPHERE                     K/day
+FCTMLT        # TEMPERATURE : MELTING OF GRAUPEL (MLT)                      K/day
+FCTMLTI       # TEMPERATURE : MELTING OF CLOUD ICE (MLTI)                   K/day
+FCTNEGC       # TEMPERATURE : NEGC                                          K/day
+FCTNEGC1      # TEMPERATURE : NEGC1                                         K/day
+FCTPRECCSCOL  # TEMPERATURE : CH. SENS. DUE AUX PREC. CONV. LIQ.            K/day
+FCTPRECCSCON  # TEMPERATURE : CH. SENS. DUE AUX PREC. CONV. NEI.            K/day
+FCTPRECCSSTL  # TEMPERATURE : CH. SENS. DUE AUX PREC. STRA. LIQ.            K/day
+FCTPRECCSSTN  # TEMPERATURE : CH. SENS. DUE AUX PREC. STRA. NEI.            K/day
+FCTPRECICOL   # TEMPERATURE : PRECIP CONVECTIVES LIQUIDES                   K/day
+FCTPRECICON   # TEMPERATURE : PRECIP CONVECTIVES NEIGEUSES                  K/day
+FCTPRECISTL   # TEMPERATURE : PRECIP STRATIFORMES LIQUIDES                  K/day
+FCTPRECISTN   # TEMPERATURE : PRECIP STRATIFORMES NEIGEUSES                 K/day
+FCTRAYSOL1    # TEMPERATURE : RAYONNEMENT SOLAIRE                           K/day
+FCTRAYTER1    # TEMPERATURE : RAYONNEMENT THERMIQUE                         K/day
+FCTREVA       # TEMPERATURE : RAIN EVAPORATION (REVA)                       K/day
+FCTRIM        # TEMPERATURE : RIMING BY CLOUD DROPLETS (RIM)                K/day
+FCTSFR        # TEMPERATURE : SPONTANEOUS FREEZING (SFR)                    K/day
+FCTTUR        # TEMPERATURE : DIFFUSION VERTICALE                           K/day
+FCTTURCONV    # TEMPERATURE : PROCESSUS CONVECTIFS TURBULENTS               K/day
+FCTVTURB      # TEMPERATURE : TURBULENCE (VTURB)                            K/day
+FCTWETG       # TEMPERATURE : WET GROWTH (WETG)                             K/day
+FKKFLUDUAPLUI # ENERGIE CIN : VARIATION DE MASSE DUE AUX PRECIPITATIONS     J/kg/day
+FPPSUMFPL     # PRESSION    : VARIATION DE MASSE DUE AUX PRECIPITATIONS     Pa/day
+FQLTUR        # EAU LIQUIDE : DIFFUSION VERTICALE                           g/kg/day
+FQLTURCONV    # EAU LIQUIDE : PROCESSUS CONVECTIFS TURBULENTS               g/kg/day
+FQNTUR        # EAU NEIGE   : DIFFUSION VERTICALE                           g/kg/day
+FQNTURCONV    # EAU NEIGE   : PROCESSUS CONVECTIFS TURBULENTS               g/kg/day
+FQTCONDECOL   # EAU         : CONDENSATION CONVECTIVE LIQUIDE               g/kg/day
+FQTCONDECON   # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              g/kg/day
+FQTCONDESTL   # EAU         : CONDENSATION STRATIFORME LIQUIDE              g/kg/day
+FQTCONDESTN   # EAU         : CONDENSATION STRATIFORME NEIGEUSE             g/kg/day
+FQTPRECICOL   # EAU         : PRECIP CONV LIQUIDES                          g/kg/day
+FQTPRECICON   # EAU         : PRECIP CONV NEIGEUSES                         g/kg/day
+FQTPRECISTL   # EAU         : PRECIP STRA LIQUIDES                          g/kg/day
+FQTPRECISTN   # EAU         : PRECIP STRA NEIGEUSES                         g/kg/day
+FQVTUR        # EAU VAPEUR  : DIFFUSION VERTICALE                           g/kg/day
+FQVTURCONV    # EAU VAPEUR  : PROCESSUS CONVECTIFS TURBULENTS               g/kg/day
+FTEDISS       # TKE : DISSIPATION (DISS)                                    J/kg/day
+FTEDYPRO      # TKE : DYNAMICAL PRODUCTION (DYPRO)                          J/kg/day
+FTETERMPRO    # TKE : THERMAL PRODUCTION (TERMPRO)                          J/kg/day
+FTETURB       # TKE : TURBULENCE (TURB)                                     J/kg/day
+FUUFLUDUAPLUI # VENT ZONAL  : VARIATION DE MASSE DUE AUX PRECIPITATIONS     m/s/day
+FUUMESO       # VENT ZONAL  : DRAG MESOSPHERIQUE                            m/s/day
+FUUONDEGREL   # VENT ZONAL  : ONDES DE RELIEF                               m/s/day
+FUUTUR        # VENT ZONAL  : DIFFUSION VERTICALE                           m/s/day
+FUUTURCONV    # VENT ZONAL  : PROCESSUS CONVECTIFS TURBULENTS               m/s/day
+FVVFLUDUAPLUI # VENT MERID  : VARIATION DE MASSE DUE AUX PRECIPITATIONS     m/s/day
+FVVMESO       # VENT MERID  : DRAG MESOSPHERIQUE                            m/s/day
+FVVONDEGREL   # VENT MERID  : ONDES DE RELIEF                               m/s/day
+FVVTUR        # VENT MERID  : DIFFUSION VERTICALE                           m/s/day
+FVVTURCONV    # VENT MERID  : PROCESSUS CONVECTIFS TURBULENTS               m/s/day
+TCTCONVERSI3  # TEMPERATURE : CONVERSION EN POT PRECIP > EN INTERNE         K/day
+TKKDISSIPCONV # ENERGIE CIN : DISSIPATION CONVECTIVE                        J/kg/day
+TKKDISSIPGREL # ENERGIE CIN : DISSIPATION DUE AUX ONDES DE RELIEF           J/kg/day
+TKKDISSIPMESO # ENERGIE CIN : DISSIPATION MESOSPHERIQUE                     J/kg/day
+TKKDISSIPTUR  # ENERGIE CIN : DISSIPATION TURBULENTE                        J/kg/day
+FA1FLUDUAPLUI # MOM ANG A1  : PRECIPITATIONS                                m**2/s/day
+FA1GRAV       # MOM ANG A1  : FORCE DUE AU RELIEF                           m**2/s/day
+FA1ONDEGREL   # MOM ANG A1  : ONDES DE RELIEF                               m**2/s/day
+FA1TUR        # MOM ANG A1  : DIFFUSION VERTICALE                           m**2/s/day
+FA1TURCONV    # MOM ANG A1  : PROCESSUS CONVECTIFS TURBULENTS               m**2/s/day
+FA2FLUDUAPLUI # MOM ANG A2  : PRECIPITATIONS                                m**2/s/day
+FA2GRAV       # MOM ANG A2  : FORCE DUE AU RELIEF                           m**2/s/day
+FA2ONDEGREL   # MOM ANG A2  : ONDES DE RELIEF                               m**2/s/day
+FA2TUR        # MOM ANG A2  : DIFFUSION VERTICALE                           m**2/s/day
+FA2TURCONV    # MOM ANG A2  : PROCESSUS CONVECTIFS TURBULENTS               m**2/s/day
+FA3FLUDUAPLUI # MOM ANG A3  : PRECIPITATIONS                                m**2/s/day
+FA3GRAV       # MOM ANG A3  : FORCE DUE AU RELIEF                           m**2/s/day
+FA3ONDEGREL   # MOM ANG A3  : ONDES DE RELIEF                               m**2/s/day
+FA3TUR        # MOM ANG A3  : DIFFUSION VERTICALE                           m**2/s/day
+FA3TURCONV    # MOM ANG A3  : PROCESSUS CONVECTIFS TURBULENTS               m**2/s/day
+FQVDIFC       # WATER VAPOUR: CONVECTIVE TRANSPORT                          g/kg/day
+TSSDISSIPCONV # ENTROPIE    : DISSIPATION TURBULENTE CONVECTIVE             J/kg/K/day
+TSSDISSIPGREL # ENTROPIE    : DISSIPATION TURBULENTE ONDES DE RELIEF        J/kg/K/day
+TSSDISSIPTUR  # ENTROPIE    : DISSIPATION TURBULENTE SECHE                  J/kg/K/day
+TSSPRECICT    # ENTROPIE    : EFFET PRECIPITATIONS SUR ENTHALPIE            J/kg/K/day
+FSSPRECISS    # ENTROPIE    : EFFET PRECIPITATIONS SUR ENTROPIE             J/kg/K/day
+TSSRAY1       # ENTROPIE    : RAYONNEMENT                                   J/kg/K/day
+TSSTURCTTOT   # ENTROPIE    : TURBULENCE TOTALE D ENTHALPIE                 J/kg/K/day
+TSSTURQVTOT   # ENTROPIE    : TURBULENCE TOTALE D HUMIDITE                  J/kg/K/day

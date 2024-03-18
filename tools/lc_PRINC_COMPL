@@ -1,0 +1,63 @@
+TA1COMPLEMENT # MOM ANG A1  : TERME COMPLEMENT                              m**2/s/day
+VA1F          # MOM ANG A1  : TENDANCE MOYENNE                              m**2/s/day
+VA1M          # MOM ANG A1  : TENDANCE MOYENNE                              m**2/s/day
+TA1PRINCIPAL  # MOM ANG A1  : TERME PRINCIPAL                               m**2/s/day
+TA2COMPLEMENT # MOM ANG A2  : TERME COMPLEMENT                              m**2/s/day
+VA2F          # MOM ANG A2  : TENDANCE MOYENNE                              m**2/s/day
+VA2M          # MOM ANG A2  : TENDANCE MOYENNE                              m**2/s/day
+TA2PRINCIPAL  # MOM ANG A2  : TERME PRINCIPAL                               m**2/s/day
+TA3COMPLEMENT # MOM ANG A3  : TERME COMPLEMENT                              m**2/s/day
+VA3F          # MOM ANG A3  : TENDANCE MOYENNE                              m**2/s/day
+VA3M          # MOM ANG A3  : TENDANCE MOYENNE                              m**2/s/day
+TA3PRINCIPAL  # MOM ANG A3  : TERME PRINCIPAL                               m**2/s/day
+TCTCOMPLEMENT # TEMPERATURE : TERME COMPLEMENT                              K/day
+VCTF          # TEMPERATURE : TENDANCE MOYENNE                              K/day
+VCTM          # TEMPERATURE : TENDANCE MOYENNE                              K/day
+TCTPRINCIPAL  # TEMPERATURE : TERME PRINCIPAL                               K/day
+TEPCOMPLEMENT # Z           : TERME COMPLEMENT                              m/day
+VEPF          # Z           : TENDANCE MOYENNE                              m/day
+VEPM          # Z           : TENDANCE MOYENNE                              m/day
+TEPPRINCIPAL  # Z           : TERME PRINCIPAL                               m/day
+VHRF          # HUM RELATIVE: TENDANCE MOYENNE                              /day
+VHRM          # HUM RELATIVE: TENDANCE MOYENNE                              /day
+TKKCOMPLEMENT # ENERGIE CIN : TERME COMPLEMENT                              J/kg/day
+VKKF          # ENERGIE CIN : TENDANCE MOYENNE                              J/kg/day
+VKKM          # ENERGIE CIN : TENDANCE MOYENNE                              J/kg/day
+TKKPRINCIPAL  # ENERGIE CIN : TERME PRINCIPAL                               J/kg/day
+VNTM          # NEBULOSITE  : TENDANCE MOYENNE                              /day
+VOMF          # OMEGA       : TENDANCE MOYENNE                              Pa/s/day
+VOMM          # OMEGA       : TENDANCE MOYENNE                              Pa/s/day
+TPPCOMPLEMENT # PRESSION    : TERME COMPLEMENT                              Pa/day
+VPPF          # PRESSION    : TENDANCE MOYENNE                              Pa/day
+VPPM          # PRESSION    : TENDANCE MOYENNE                              Pa/day
+TPPPRINCIPAL  # PRESSION    : TERME PRINCIPAL                               Pa/day
+TQCCOMPLEMENT # EAU CONDENS : TERME COMPLEMENT                              g/kg/day
+VQCF          # EAU CONDENS : TENDANCE MOYENNE                              g/kg/day
+VQCM          # EAU CONDENS : TENDANCE MOYENNE                              g/kg/day
+TQCPRINCIPAL  # EAU CONDENS : TERME PRINCIPAL                               g/kg/day
+TQLCOMPLEMENT # EAU CONDENS : TERME COMPLEMENT                              g/kg/day
+VQLF          # EAU CONDENS : TENDANCE MOYENNE                              g/kg/day
+VQLM          # EAU CONDENS : TENDANCE MOYENNE                              g/kg/day
+TQLPRINCIPAL  # EAU CONDENS : TERME PRINCIPAL                               g/kg/day
+TQTCOMPLEMENT # EAU TOTALE  : TERME COMPLEMENT                              g/kg/day
+VQTF          # EAU TOTALE  : TENDANCE MOYENNE                              g/kg/day
+VQTM          # EAU TOTALE  : TENDANCE MOYENNE                              g/kg/day
+TQTPRINCIPAL  # EAU TOTALE  : TERME PRINCIPAL                               g/kg/day
+VTHM          # THETA       : TENDANCE MOYENNE                              K/day
+TQVCOMPLEMENT # EAU VAPEUR  : TERME COMPLEMENT                              g/kg/day
+VQVF          # EAU VAPEUR  : TENDANCE MOYENNE                              g/kg/day
+VQVM          # EAU VAPEUR  : TENDANCE MOYENNE                              g/kg/day
+TQVPRINCIPAL  # EAU VAPEUR  : TERME PRINCIPAL                               g/kg/day
+TSSCOMPLEMENT # ENTROPIE    : TERME COMPLEMENT                              J/kg/K/day
+VSSF          # ENTROPIE    : TENDANCE MOYENNE                              J/kg/K/day
+VSSM          # ENTROPIE    : TENDANCE MOYENNE                              J/kg/K/day
+TSSPRINCIPAL  # ENTROPIE    : TERME PRINCIPAL                               J/kg/K/day
+TUUCOMPLEMENT # VENT ZONAL  : TERME COMPLEMENT                              m/s/day
+VUUF          # VENT ZONAL  : TENDANCE MOYENNE                              m/s/day
+VUUM          # VENT ZONAL  : TENDANCE MOYENNE                              m/s/day
+TUUPRINCIPAL  # VENT ZONAL  : TERME PRINCIPAL                               m/s/day
+TVVCOMPLEMENT # VENT MERID  : TERME COMPLEMENT                              m/s/day
+VVVF          # VENT MERID  : TENDANCE MOYENNE                              m/s/day
+VVVM          # VENT MERID  : TENDANCE MOYENNE                              m/s/day
+TVVPRINCIPAL  # VENT MERID  : TERME PRINCIPAL                               m/s/day
+VTEM          # TKE : MEAN TENDENCY                                         J/kg/day

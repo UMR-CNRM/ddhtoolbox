@@ -1,0 +1,73 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Modification de l'indice expérience d'un fichier de DDH.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   97-02, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+if [ $# -lt 2 ]
+then
+	#
+	# Mauvais nombre d'arguments.
+	#
+	echo " "
+	echo "Modification de l'indice expérience d'un fichier de DDH."
+	echo " "
+	echo "Utilisation: ddhindexp indexp F1 [ ... Fn]"
+	echo " "
+	echo "	indexp indice expérience à forcer."
+	echo "	F1 [ ... Fn] fichiers ddh en entrée/sortie."
+	echo "Exemple: ddhindexp test_conv DHFres.lfa"
+	echo " "
+	exit
+fi
+indexp=$1 ; shift
+set -evx
+for f1 in $*
+do
+	#
+	# Création d'un fichier lfa contenant le nouvel indice.
+	# fournie par l'utilisateur.
+	#
+	if test -s $indexp
+	then
+		#
+		# La valeur de l'indice expérience que fournit
+		# l'utilisateur est aussi le nom d'un fichier;
+		# or en ce cas lfacre lit le fichier et non le nom!...
+		# On renomme donc ce fichier le temps
+		# de l'appel à lfacre.
+		#
+		mv $indexp $pref.tempo
+		lfacre $pref.ind 'INDICE EXPERIENCE' C $indexp
+		mv $pref.tempo $indexp
+	else
+		#
+		# La valeur de l'indice expérience que fournit
+		# l'utilisateur n'est pas le nom d'un fichier. RAS!...
+		#
+		lfacre $pref.ind 'INDICE EXPERIENCE' C $indexp
+	fi
+	#
+	# Réunion des deux fichiers lfa.
+	#
+	lfareu $f1 $pref.ind $pref.res
+	fres=$f1
+  chmod 644 $fres
+	mv $pref.res $fres
+done
+#
+# Nettoyage.
+#
+rm -f $pref.ind

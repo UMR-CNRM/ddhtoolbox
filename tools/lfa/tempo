@@ -1,0 +1,32 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Fourniture du nom d'un répertoire de fichiers temporaires.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   97-05, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+#
+#-----------------------------------------------
+# On crée un nom de répertoire temporaire.
+#-----------------------------------------------
+#
+#tmp=/tmp/`logname`
+tmp=$HOME/tmp
+#
+#-----------------------------------------------
+# On crée le répertoire s'il n'existe pas.
+#-----------------------------------------------
+#
+if test ! -d $tmp
+then
+	mkdir $tmp
+fi
+echo $tmp

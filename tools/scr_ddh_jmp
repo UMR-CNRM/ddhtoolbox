@@ -1,0 +1,21 @@
+#!/bin/bash
+
+REF=oper
+MOD=HAA
+MOD=pseudo-oper
+
+echo VCTM > lc
+
+#ddht -cINTERPOL -1dhfzo.${REF}.p96.mh -2dhfzo.${MOD}.p96.mh -sdhfzo.${REF}.p96.mh.new
+#exit
+
+ddht -cINTERPOL -1dhfzo.${REF}.p96 -2dhfzo.${MOD}.p96 -sdhfzo.${REF}.p96.new
+
+ddh- dhfzo.${MOD}.p96 dhfzo.${REF}.p96.new dhfzo.${MOD}-${REF}.p96
+
+for f in dhfzo.${REF}.p96 dhfzo.${REF}.p96.new dhfzo.${MOD}.p96 dhfzo.${MOD}-${REF}.p96
+do
+  ddhmh $f
+  ddhi -llc $f.mh
+done
+

@@ -1,0 +1,61 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet: Mise à jour du logiciel dd2gr depuis un TAR situé sur Lustre.
+# Methode:
+# Externes:
+# Auteur:   2015-06, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+set -evx
+#
+#-------------------------------------------------
+# Nom du TAR source.
+#-------------------------------------------------
+#
+fsce=/cnrm/proc/piriou/dd2gr.tar
+if test -s $fsce
+then
+  #
+  #-------------------------------------------------
+  # Si un répertoire old existe on le supprime.
+  #-------------------------------------------------
+  #
+  cd $HOME
+  rm -rf .dd2gr_old
+  #
+  #-------------------------------------------------
+  # Si un répertoire .dd2gr existe, on le renomme en old.
+  #-------------------------------------------------
+  #
+  if test -d .dd2gr
+  then
+    mv .dd2gr .dd2gr_old
+  fi
+  #
+  #-------------------------------------------------
+  # Détarage du fichier TAR.
+  #-------------------------------------------------
+  #
+  tar xvf $fsce
+  cd .dd2gr/src
+  #
+  #-------------------------------------------------
+  # Compilation.
+  #-------------------------------------------------
+  #
+  ./install clean
+  ./install
+else
+  echo " "
+  echo "$proc/ERREUR: fichier $fsce inexistant !..."
+  echo " "
+  exit
+fi

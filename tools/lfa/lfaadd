@@ -1,0 +1,67 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Edition d'un fichier LFA.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:    2008-02, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+if [ $# -ne 4 ]
+then
+	#
+	# Nombre d'arguments non attendu.
+	#
+	cllang=`cllangu`
+	if [ "$cllang" = "FRA" ] ; then
+		echo " "
+		echo "Ajout d'un article dans un fichier LFA."
+		echo " "
+		echo "Utilisation: lfaadd FIC NOM TYPE valeur"
+		echo "	FIC est en entrée/sortie."
+		echo "	NOM de l'article."
+		echo "	TYPE d'article: réel (R), caractère (C), entier (I), etc."
+		echo "	valeur: contenu de cet article."
+		echo " "
+		echo "Exemple:"
+		echo "	lfaadd LFA INDICE_EXPERIENCE C 'c685'"
+		echo ""
+		exit
+	else
+		echo " "
+		echo "Add one article in a LFA file."
+		echo " "
+		echo "Usage: lfaadd FILE NAME TYPE value "
+		echo "	FILE is in input/output."
+		echo "	NAME of the article."
+		echo "	TYPE of the article: real (R), character (C), integer (I), etc."
+		echo "	value: article content."
+		echo " "
+		exit
+	fi
+fi
+#
+#-----------------------------------------------
+# On crée un fichier contenant l'article nouveau.
+#-----------------------------------------------
+#
+fs=$1 ; shift
+ftmp1=.$proc.1.$RANDOM
+lfacre $ftmp1 $*
+#
+#-----------------------------------------------
+# On le réunit avec celui de sortie.
+#-----------------------------------------------
+#
+ftmp2=.$proc.2.$RANDOM
+lfareu $ftmp1 $fs $ftmp2
+rm $ftmp1
+mv $ftmp2 $fs

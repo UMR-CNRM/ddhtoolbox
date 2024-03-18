@@ -1,0 +1,28 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2019-07-08, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+set -evx
+#
+#-------------------------------------------------
+# .
+#-------------------------------------------------
+#
+texmaker ddh_presentation_introductive.tex &

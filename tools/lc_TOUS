@@ -1,0 +1,323 @@
+FCTAGGS       # TEMPERATURE : COLLECTION OF RAIN DROPS (AGGS)               K/day
+FCTBERFI      # TEMPERATURE : BERGERON-FINDEISEN EFFECT (BERFI)             K/day
+FCTCFRZ       # TEMPERATURE : CONTACT FREEZING (CFRZ)                       K/day
+FCTDEPG       # TEMPERATURE : DEPOSITION ON GRAUPEL (DEPG)                  K/day
+FCTDEPI       # TEMPERATURE : VW ADJUSTMENT (DEPI)                          K/day
+FCTDEPS       # TEMPERATURE : DEPOSITION ON SNOW (DEPS)                     K/day
+FCTDISSTUR    # TEMPERATURE : TURBULENCE (DISSTUR)                          K/day
+FCTDRYG       # TEMPERATURE : DRY GROWTH (DRYG)                             K/day
+FCTFLUVERTDYN # TEMPERATURE : FLUX VERTICAL DYNAMIQUE                       K/day
+FCTHENUI      # TEMPERATURE : HETEROG. NUCLEATION (HENUI)                   K/day
+FCTHON        # TEMPERATURE : HOMOG. NUCLEATION (HON)                       K/day
+FCTMESO       # TEMPERATURE : RAPPEL DANS LA MESOSPHERE                     K/day
+FCTMLT        # TEMPERATURE : MELTING OF GRAUPEL (MLT)                      K/day
+FCTMLTI       # TEMPERATURE : MELTING OF CLOUD ICE (MLTI)                   K/day
+FCTNEGC       # TEMPERATURE : NEGC                                          K/day
+FCTNEGC1      # TEMPERATURE : NEGC1                                         K/day
+FCTPRECCSCOL  # TEMPERATURE : CH. SENS. DUE AUX PREC. CONV. LIQ.            K/day
+FCTPRECCSCON  # TEMPERATURE : CH. SENS. DUE AUX PREC. CONV. NEI.            K/day
+FCTPRECCSSTL  # TEMPERATURE : CH. SENS. DUE AUX PREC. STRA. LIQ.            K/day
+FCTPRECCSSTN  # TEMPERATURE : CH. SENS. DUE AUX PREC. STRA. NEI.            K/day
+FCTPRECICOL   # TEMPERATURE : PRECIP CONVECTIVES LIQUIDES                   K/day
+FCTPRECICON   # TEMPERATURE : PRECIP CONVECTIVES NEIGEUSES                  K/day
+FCTPRECISTL   # TEMPERATURE : PRECIP STRATIFORMES LIQUIDES                  K/day
+FCTPRECISTN   # TEMPERATURE : PRECIP STRATIFORMES NEIGEUSES                 K/day
+FCTRAYSOL1    # TEMPERATURE : RAYONNEMENT SOLAIRE                           K/day
+FCTRAYTER1    # TEMPERATURE : RAYONNEMENT THERMIQUE                         K/day
+FCTREVA       # TEMPERATURE : RAIN EVAPORATION (REVA)                       K/day
+FCTRIM        # TEMPERATURE : RIMING BY CLOUD DROPLETS (RIM)                K/day
+FCTSFR        # TEMPERATURE : SPONTANEOUS FREEZING (SFR)                    K/day
+FCTTUR        # TEMPERATURE : DIFFUSION VERTICALE                           K/day
+FCTTURCONV    # TEMPERATURE : PROCESSUS CONVECTIFS TURBULENTS               K/day
+FCTVTURB      # TEMPERATURE : TURBULENCE (VTURB)                            K/day
+FCTWETG       # TEMPERATURE : WET GROWTH (WETG)                             K/day
+FKKFLUDUAPLUI # ENERGIE CIN : VARIATION DE MASSE DUE AUX PRECIPITATIONS     J/kg/day
+FKKFLUVERTDYN # ENERGIE CIN : FLUX VERTICAL DYNAMIQUE                       J/kg/day
+FPPFLUVERTDYN # PRESSION    : FLUX VERTICAL DYNAMIQUE                       Pa/day
+FPPSUMFPL     # PRESSION    : VARIATION DE MASSE DUE AUX PRECIPITATIONS     Pa/day
+FQLFLUVERTDYN # EAU LIQUIDE : FLUX VERTICAL DYNAMIQUE                       g/kg/day
+FQLTUR        # EAU LIQUIDE : DIFFUSION VERTICALE                           g/kg/day
+FQLTURCONV    # EAU LIQUIDE : PROCESSUS CONVECTIFS TURBULENTS               g/kg/day
+FQLTURQNEGAT  # EAU LIQUIDE : CORRECTION DES HUMIDITES NEGATIVES            g/kg/day
+FQNFLUVERTDYN # EAU NEIGE   : FLUX VERTICAL DYNAMIQUE                       g/kg/day
+FQNTUR        # EAU NEIGE   : DIFFUSION VERTICALE                           g/kg/day
+FQNTURCONV    # EAU NEIGE   : PROCESSUS CONVECTIFS TURBULENTS               g/kg/day
+FQNTURQNEGAT  # EAU NEIGE   : CORRECTION DES HUMIDITES NEGATIVES            g/kg/day
+FQTCONDECOL   # EAU         : CONDENSATION CONVECTIVE LIQUIDE               g/kg/day
+FQTCONDECON   # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              g/kg/day
+FQTCONDESTL   # EAU         : CONDENSATION STRATIFORME LIQUIDE              g/kg/day
+FQTCONDESTN   # EAU         : CONDENSATION STRATIFORME NEIGEUSE             g/kg/day
+FQTPRECICOL   # EAU         : PRECIP CONV LIQUIDES                          g/kg/day
+FQTPRECICON   # EAU         : PRECIP CONV NEIGEUSES                         g/kg/day
+FQTPRECISTL   # EAU         : PRECIP STRA LIQUIDES                          g/kg/day
+FQTPRECISTN   # EAU         : PRECIP STRA NEIGEUSES                         g/kg/day
+FQVFLUVERTDYN # EAU VAPEUR  : FLUX VERTICAL DYNAMIQUE                       g/kg/day
+FQVTUR        # EAU VAPEUR  : DIFFUSION VERTICALE                           g/kg/day
+FQVTURCONV    # EAU VAPEUR  : PROCESSUS CONVECTIFS TURBULENTS               g/kg/day
+FQVTURQNEGAT  # EAU VAPEUR  : CORRECTION DES HUMIDITES NEGATIVES            g/kg/day
+FTEDISS       # TKE : DISSIPATION (DISS)                                    J/kg/day
+FTEDYPRO      # TKE : DYNAMICAL PRODUCTION (DYPRO)                          J/kg/day
+FTETERMPRO    # TKE : THERMAL PRODUCTION (TERMPRO)                          J/kg/day
+FTETURB       # TKE : TURBULENCE (TURB)                                     J/kg/day
+FUUFLUDUAPLUI # VENT ZONAL  : VARIATION DE MASSE DUE AUX PRECIPITATIONS     m/s/day
+FUUFLUVERTDYN # VENT ZONAL  : FLUX VERTICAL DYNAMIQUE                       m/s/day
+FUUMESO       # VENT ZONAL  : DRAG MESOSPHERIQUE                            m/s/day
+FUUONDEGREL   # VENT ZONAL  : ONDES DE RELIEF                               m/s/day
+FUUTUR        # VENT ZONAL  : DIFFUSION VERTICALE                           m/s/day
+FUUTURCONV    # VENT ZONAL  : PROCESSUS CONVECTIFS TURBULENTS               m/s/day
+FVVFLUDUAPLUI # VENT MERID  : VARIATION DE MASSE DUE AUX PRECIPITATIONS     m/s/day
+FVVFLUVERTDYN # VENT MERID  : FLUX VERTICAL DYNAMIQUE                       m/s/day
+FVVMESO       # VENT MERID  : DRAG MESOSPHERIQUE                            m/s/day
+FVVONDEGREL   # VENT MERID  : ONDES DE RELIEF                               m/s/day
+FVVTUR        # VENT MERID  : DIFFUSION VERTICALE                           m/s/day
+FVVTURCONV    # VENT MERID  : PROCESSUS CONVECTIFS TURBULENTS               m/s/day
+PPP           # PRESSION    : CUMUL TEMPOREL                                Pa
+TA1DELTAP     # MOM ANG A1  : TENDANCE DE PRESSION                          m**2/s/day
+TA2DELTAP     # MOM ANG A2  : TENDANCE DE PRESSION                          m**2/s/day
+TA3DELTAP     # MOM ANG A3  : TENDANCE DE PRESSION                          m**2/s/day
+TCTCONVERSI2  # TEMPERATURE : CONVERSION ADIABATIQUE EN POTENT > EN INTERNE K/day
+TCTCONVERSI3  # TEMPERATURE : CONVERSION EN POT PRECIP > EN INTERNE         K/day
+TCTDELTAP     # TEMPERATURE : TENDANCE DE PRESSION                          K/day
+TCTDIVFLUHOR  # TEMPERATURE : DIVERGENCE DES FLUX HORIZONTAUX               K/day
+TEPDELTAP     # Z           : TENDANCE DE PRESSION                          m/day
+TEPDIVFLUHOR  # Z           : DIVERGENCE DES FLUX HORIZONTAUX               m/day
+TKKCONVERSI1  # ENERGIE CIN : CONVERSION POTENTIEL+PRESSION > EN CIN        J/kg/day
+TKKDELTAP     # ENERGIE CIN : TENDANCE DE PRESSION                          J/kg/day
+TKKDISSIPCONV # ENERGIE CIN : DISSIPATION CONVECTIVE                        J/kg/day
+TKKDISSIPGREL # ENERGIE CIN : DISSIPATION DUE AUX ONDES DE RELIEF           J/kg/day
+TKKDISSIPMESO # ENERGIE CIN : DISSIPATION MESOSPHERIQUE                     J/kg/day
+TKKDISSIPTUR  # ENERGIE CIN : DISSIPATION TURBULENTE                        J/kg/day
+TKKDIVFLUHOR  # ENERGIE CIN : DIVERGENCE DES FLUX HORIZONTAUX               J/kg/day
+TPPDIVFLUHOR  # PRESSION    : DIVERGENCE DES FLUX HORIZONTAUX               Pa/day
+TQLDIVFLUHOR  # EAU LIQUIDE : DIVERGENCE DES FLUX HORIZONTAUX               g/kg/day
+TQNDIVFLUHOR  # EAU NEIGE   : DIVERGENCE DES FLUX HORIZONTAUX               g/kg/day
+TQVDELTAP     # EAU VAPEUR  : TENDANCE DE PRESSION                          g/kg/day
+TQVDIVFLUHOR  # EAU VAPEUR  : DIVERGENCE DES FLUX HORIZONTAUX               g/kg/day
+TSSDELTAP     # ENTROPIE    : TENDANCE DE PRESSION                          J/kg/K/day
+TUUDELTAP     # VENT ZONAL  : TENDANCE DE PRESSION                          m/s/day
+TUUDIVFLUHOR  # VENT ZONAL  : DIVERGENCE DES FLUX HORIZONTAUX               m/s/day
+TUUFFVGADPSG  # VENT ZONAL  : CORIOLIS + GRAVITE + GRAD PRESSION            m/s/day
+TVVDELTAP     # VENT MERID  : TENDANCE DE PRESSION                          m/s/day
+TVVDIVFLUHOR  # VENT MERID  : DIVERGENCE DES FLUX HORIZONTAUX               m/s/day
+TVVFFUGADPSG  # VENT MERID  : CORIOLIS + GRAVITE + GRAD PRESSION            m/s/day
+VCT0          # TEMPERATURE : DIAGNOSTIC INITIAL                            K
+VCT1          # TEMPERATURE : DIAGNOSTIC FINAL                              K
+VEP0          # Z           : DIAGNOSTIC INITIAL                            m
+VEP1          # Z           : DIAGNOSTIC FINAL                              m
+VHR0          # HUM RELATIVE: DIAGNOSTIC INITIAL                            sans
+VHR1          # HUM RELATIVE: DIAGNOSTIC FINAL                              sans
+VKK0          # ENERGIE CIN : DIAGNOSTIC INITIAL                            J/kg
+VKK1          # ENERGIE CIN : DIAGNOSTIC FINAL                              J/kg
+VNT0          # NEBULOSITE  : DIAGNOSTIC INITIAL                            sans
+VNT1          # NEBULOSITE  : DIAGNOSTIC FINAL                              sans
+VOM0          # OMEGA       : DIAGNOSTIC INITIAL                            Pa/s
+VOM1          # OMEGA       : DIAGNOSTIC FINAL                              Pa/s
+VPP0          # PRESSION    : DIAGNOSTIC INITIAL                            Pa
+VPP1          # PRESSION    : DIAGNOSTIC FINAL                              Pa
+VQG0          # QG : QTE SPECIFIQUE D EAU SOUS FORME AGGREGATS, INITIAL     g/kg
+VQG1          # QG : QTE SPECIFIQUE D EAU SOUS FORME AGGREGATS, FINAL       g/kg
+VQL0          # EAU LIQUIDE : DIAGNOSTIC INITIAL                            g/kg
+VQL1          # EAU LIQUIDE : DIAGNOSTIC FINAL                              g/kg
+VQN0          # EAU NEIGE   : DIAGNOSTIC INITIAL                            g/kg
+VQN1          # EAU NEIGE   : DIAGNOSTIC FINAL                              g/kg
+VQR0          # QR : QTE SPECIFIQUE D EAU SOUS FORME PLUIE, INITIAL         g/kg
+VQR1          # QR : QTE SPECIFIQUE D EAU SOUS FORME PLUIE, FINAL           g/kg
+VQS0          # QG : QTE SPECIFIQUE D EAU SOUS FORME NEIGE, INITIAL         g/kg
+VQS1          # QG : QTE SPECIFIQUE D EAU SOUS FORME NEIGE, FINAL           g/kg
+VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            g/kg
+VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              g/kg
+VTE0          # TKE : INITIAL VALUE                                         J/kg
+VTE1          # TKE : FINAL VALUE                                           J/kg
+VUU0          # VENT ZONAL  : DIAGNOSTIC INITIAL                            m/s
+VUU1          # VENT ZONAL  : DIAGNOSTIC FINAL                              m/s
+VVV0          # VENT MERID  : DIAGNOSTIC INITIAL                            m/s
+VVV1          # VENT MERID  : DIAGNOSTIC FINAL                              m/s
+SVGFS         #
+SFGFS         #
+V010          # V. PASS. 01 : DIAGNOSTIC INITIAL                            SI
+V011          # V. PASS. 01 : DIAGNOSTIC FINAL                              SI
+V020          # V. PASS. 02 : DIAGNOSTIC INITIAL                            SI
+V021          # V. PASS. 02 : DIAGNOSTIC FINAL                              SI
+V030          # V. PASS. 03 : DIAGNOSTIC INITIAL                            SI
+V031          # V. PASS. 03 : DIAGNOSTIC FINAL                              SI
+V040          # V. PASS. 04 : DIAGNOSTIC INITIAL                            SI
+V041          # V. PASS. 04 : DIAGNOSTIC FINAL                              SI
+V050          # V. PASS. 05 : DIAGNOSTIC INITIAL                            SI
+V051          # V. PASS. 05 : DIAGNOSTIC FINAL                              SI
+V060          # V. PASS. 06 : DIAGNOSTIC INITIAL                            SI
+V061          # V. PASS. 06 : DIAGNOSTIC FINAL                              SI
+V070          # V. PASS. 07 : DIAGNOSTIC INITIAL                            SI
+V071          # V. PASS. 07 : DIAGNOSTIC FINAL                              SI
+V080          # V. PASS. 08 : DIAGNOSTIC INITIAL                            SI
+V081          # V. PASS. 08 : DIAGNOSTIC FINAL                              SI
+VA10          # MOM ANG A1  : DIAGNOSTIC INITIAL                            m**2/s
+VA11          # MOM ANG A1  : DIAGNOSTIC FINAL                              m**2/s
+TA1ADJUST     # MOM ANG A1  : FORCE D AJUSTEMENT                            m**2/s/day
+TA1COMPLEMENT # MOM ANG A1  : TERME COMPLEMENT                              m**2/s/day
+VA1D          # MOM ANG A1  : FINAL - INITAL                                m**2/s
+TA1DIVFLUHOR  # MOM ANG A1  : DIVERGENCE DES FLUX HORIZONTAUX               m**2/s/day
+VA1F          # MOM ANG A1  : TENDANCE MOYENNE                              m**2/s/day
+FA1FLUDUAPLUI # MOM ANG A1  : PRECIPITATIONS                                m**2/s/day
+FA1FLUVERTDYN # MOM ANG A1  : FLUX VERTICAL DYNAMIQUE                       m**2/s/day
+FA1GRAV       # MOM ANG A1  : FORCE DUE AU RELIEF                           m**2/s/day
+VA1M          # MOM ANG A1  : TENDANCE MOYENNE                              m**2/s/day
+TA1NONAX      # MOM ANG A1  : MOMENTS NON AXIAUX                            m**2/s/day
+FA1ONDEGREL   # MOM ANG A1  : ONDES DE RELIEF                               m**2/s/day
+TA1PRINCIPAL  # MOM ANG A1  : TERME PRINCIPAL                               m**2/s/day
+FA1TUR        # MOM ANG A1  : DIFFUSION VERTICALE                           m**2/s/day
+FA1TURCONV    # MOM ANG A1  : PROCESSUS CONVECTIFS TURBULENTS               m**2/s/day
+VA20          # MOM ANG A2  : DIAGNOSTIC INITIAL                            m**2/s
+VA21          # MOM ANG A2  : DIAGNOSTIC FINAL                              m**2/s
+TA2ADJUST     # MOM ANG A2  : FORCE D AJUSTEMENT                            m**2/s/day
+TA2COMPLEMENT # MOM ANG A2  : TERME COMPLEMENT                              m**2/s/day
+VA2D          # MOM ANG A2  : FINAL - INITAL                                m**2/s
+TA2DIVFLUHOR  # MOM ANG A2  : DIVERGENCE DES FLUX HORIZONTAUX               m**2/s/day
+VA2F          # MOM ANG A2  : TENDANCE MOYENNE                              m**2/s/day
+FA2FLUDUAPLUI # MOM ANG A2  : PRECIPITATIONS                                m**2/s/day
+FA2FLUVERTDYN # MOM ANG A2  : FLUX VERTICAL DYNAMIQUE                       m**2/s/day
+FA2GRAV       # MOM ANG A2  : FORCE DUE AU RELIEF                           m**2/s/day
+VA2M          # MOM ANG A2  : TENDANCE MOYENNE                              m**2/s/day
+TA2NONAX      # MOM ANG A2  : MOMENTS NON AXIAUX                            m**2/s/day
+FA2ONDEGREL   # MOM ANG A2  : ONDES DE RELIEF                               m**2/s/day
+TA2PRINCIPAL  # MOM ANG A2  : TERME PRINCIPAL                               m**2/s/day
+FA2TUR        # MOM ANG A2  : DIFFUSION VERTICALE                           m**2/s/day
+FA2TURCONV    # MOM ANG A2  : PROCESSUS CONVECTIFS TURBULENTS               m**2/s/day
+VA30          # MOM ANG A3  : DIAGNOSTIC INITIAL                            m**2/s
+VA31          # MOM ANG A3  : DIAGNOSTIC FINAL                              m**2/s
+TA3ADJUST     # MOM ANG A3  : FORCE D AJUSTEMENT                            m**2/s/day
+TA3COMPLEMENT # MOM ANG A3  : TERME COMPLEMENT                              m**2/s/day
+VA3D          # MOM ANG A3  : FINAL - INITAL                                m**2/s
+TA3DIVFLUHOR  # MOM ANG A3  : DIVERGENCE DES FLUX HORIZONTAUX               m**2/s/day
+VA3F          # MOM ANG A3  : TENDANCE MOYENNE                              m**2/s/day
+FA3FLUDUAPLUI # MOM ANG A3  : PRECIPITATIONS                                m**2/s/day
+FA3FLUVERTDYN # MOM ANG A3  : FLUX VERTICAL DYNAMIQUE                       m**2/s/day
+FA3GRAV       # MOM ANG A3  : FORCE DUE AU RELIEF                           m**2/s/day
+VA3M          # MOM ANG A3  : TENDANCE MOYENNE                              m**2/s/day
+FA3ONDEGREL   # MOM ANG A3  : ONDES DE RELIEF                               m**2/s/day
+TA3PRINCIPAL  # MOM ANG A3  : TERME PRINCIPAL                               m**2/s/day
+FA3TUR        # MOM ANG A3  : DIFFUSION VERTICALE                           m**2/s/day
+FA3TURCONV    # MOM ANG A3  : PROCESSUS CONVECTIFS TURBULENTS               m**2/s/day
+TCTCOMPLEMENT # TEMPERATURE : TERME COMPLEMENT                              K/day
+VCTD          # TEMPERATURE : FINAL - INITAL                                K
+TCTEVAPPCO    # TEMPERATURE : EVAPORATION CONVECTIVE                        K/day
+TCTEVAPPCOL   # TEMPERATURE : EVAPORATION CONVECTIVE LIQUIDE                K/day
+TCTEVAPPCON   # TEMPERATURE : EVAPORATION CONVECTIVE NEIGEUSE               K/day
+TCTEVAPPST    # TEMPERATURE : EVAPORATION STATIFORME                        K/day
+TCTEVAPPSTL   # TEMPERATURE : EVAPORATION STRATIFORME LIQUIDE               K/day
+TCTEVAPPSTN   # TEMPERATURE : EVAPORATION STRATIFORME NEIGEUSE              K/day
+VCTF          # TEMPERATURE : TENDANCE MOYENNE                              K/day
+TCTFONTP      # TEMPERATURE : FONTE DES PRECIPITATIONS                      K/day
+TCTFONTPCO    # TEMPERATURE : FONTE PRECIPITATIONS CONVECTIVES              K/day
+TCTFONTPST    # TEMPERATURE : FONTE PRECIPITATIONS STRATIFORMES             K/day
+TCTFORMPCO    # TEMPERATURE : FORMATION PREC CONVECTIVES                    K/day
+TCTFORMPCOL   # TEMPERATURE : FORMATION PREC CONVECTIVES LIQUIDES           K/day
+TCTFORMPCON   # TEMPERATURE : FORMATION PREC CONVECTIVES NEIGEUSES          K/day
+TCTFORMPST    # TEMPERATURE : FORMATION PREC STRATIFORMES                   K/day
+TCTFORMPSTL   # TEMPERATURE : FORMATION PREC STRATIFORMES LIQUIDES          K/day
+TCTFORMPSTN   # TEMPERATURE : FORMATION PREC STRATIFORMES NEIGEUSES         K/day
+VCTM          # TEMPERATURE : TENDANCE MOYENNE                              K/day
+FCTPRECICO    # TEMPERATURE : PRECIP CONVECTIVES                            K/day
+TCTPRINCIPAL  # TEMPERATURE : TERME PRINCIPAL                               K/day
+FCTRAY        # TEMPERATURE : RAYONNEMENT                                   K/day
+TEPCOMPLEMENT # Z           : TERME COMPLEMENT                              m/day
+VEPD          # Z           : FINAL - INITAL                                m
+VEPF          # Z           : TENDANCE MOYENNE                              m/day
+VEPM          # Z           : TENDANCE MOYENNE                              m/day
+TEPPRINCIPAL  # Z           : TERME PRINCIPAL                               m/day
+VHRD          # HUM RELATIVE: FINAL - INITAL                                sans
+VHRF          # HUM RELATIVE: TENDANCE MOYENNE                              /day
+VHRM          # HUM RELATIVE: TENDANCE MOYENNE                              /day
+TKKCOMPLEMENT # ENERGIE CIN : TERME COMPLEMENT                              J/kg/day
+VKKD          # ENERGIE CIN : FINAL - INITAL                                J/kg
+VKKF          # ENERGIE CIN : TENDANCE MOYENNE                              J/kg/day
+VKKM          # ENERGIE CIN : TENDANCE MOYENNE                              J/kg/day
+TKKPRINCIPAL  # ENERGIE CIN : TERME PRINCIPAL                               J/kg/day
+VNTD          # NEBULOSITE  : FINAL - INITIAL                               sans
+VNTM          # NEBULOSITE  : TENDANCE MOYENNE                              /day
+VOMD          # OMEGA       : FINAL - INITAL                                Pa/s
+VOMF          # OMEGA       : TENDANCE MOYENNE                              Pa/s/day
+VOMM          # OMEGA       : TENDANCE MOYENNE                              Pa/s/day
+TPPCOMPLEMENT # PRESSION    : TERME COMPLEMENT                              Pa/day
+VPPD          # PRESSION    : FINAL - INITAL                                Pa
+VPPF          # PRESSION    : TENDANCE MOYENNE                              Pa/day
+VPPM          # PRESSION    : TENDANCE MOYENNE                              Pa/day
+TPPPRINCIPAL  # PRESSION    : TERME PRINCIPAL                               Pa/day
+VQC0          # EAU CONDENS : DIAGNOSTIC INITIAL                            g/kg
+VQC1          # EAU CONDENS : DIAGNOSTIC FINAL                              g/kg
+TQCCOMPLEMENT # EAU CONDENS : TERME COMPLEMENT                              g/kg/day
+VQCF          # EAU CONDENS : TENDANCE MOYENNE                              g/kg/day
+VQCM          # EAU CONDENS : TENDANCE MOYENNE                              g/kg/day
+TQCPRINCIPAL  # EAU CONDENS : TERME PRINCIPAL                               g/kg/day
+TQLCOMPLEMENT # EAU CONDENS : TERME COMPLEMENT                              g/kg/day
+VQLF          # EAU CONDENS : TENDANCE MOYENNE                              g/kg/day
+VQLM          # EAU CONDENS : TENDANCE MOYENNE                              g/kg/day
+TQLPRINCIPAL  # EAU CONDENS : TERME PRINCIPAL                               g/kg/day
+VQL0CV        # EAU LIQUIDE INITIALE : CUMUL VERTICAL                       g/m2
+VQL1CV        # EAU LIQUIDE FINALE : CUMUL VERTICAL                         g/m2
+VQN0CV        # EAU NEIGE INITIALE : CUMUL VERTICAL                         g/m2
+VQN1CV        # EAU NEIGE FINALE : CUMUL VERTICAL                           g/m2
+VQT0          # EAU TOTALE  : DIAGNOSTIC INITIAL                            g/kg
+VQT1          # EAU TOTALE  : DIAGNOSTIC FINAL                              g/kg
+TQTCOMPLEMENT # EAU TOTALE  : TERME COMPLEMENT                              g/kg/day
+VQTF          # EAU TOTALE  : TENDANCE MOYENNE                              g/kg/day
+VQTM          # EAU TOTALE  : TENDANCE MOYENNE                              g/kg/day
+FQTPRECI      # EAU         : PRECIPITATIONS TOTALES                        g/kg/day
+FQTPRECICOLF  # EAU         : PRECIP CONV LIQUIDES                          mm/day
+FQTPRECICONF  # EAU         : PRECIP CONV NEIGEUSES                         mm/day
+FQTPRECISTLF  # EAU         : PRECIP STRA LIQUIDES                          mm/day
+FQTPRECISTNF  # EAU         : PRECIP STRA NEIGEUSES                         mm/day
+TQTPRINCIPAL  # EAU TOTALE  : TERME PRINCIPAL                               g/kg/day
+VTH0          # THETA       : DIAGNOSTIC INITIAL                            K
+VTH1          # THETA       : DIAGNOSTIC FINAL                              K
+VTHM          # THETA       : TENDANCE MOYENNE                              K/day
+VQV0CV        # EAU VAPEUR INITIALE : CUMUL VERTICAL                        g/m2
+VQV1CV        # EAU VAPEUR FINALE : CUMUL VERTICAL                          g/m2
+TQVCOMPLEMENT # EAU VAPEUR  : TERME COMPLEMENT                              g/kg/day
+VQVD          # EAU VAPEUR  : FINAL - INITAL                                g/kg
+TQVEVAPPCO    # EAU VAPEUR  : EVAPORATION CONVECTIVE                        g/kg/day
+TQVEVAPPCOL   # EAU VAPEUR  : EVAPORATION CONVECTIVE LIQUIDE                g/kg/day
+TQVEVAPPCON   # EAU VAPEUR  : EVAPORATION CONVECTIVE NEIGEUSE               g/kg/day
+TQVEVAPPST    # EAU VAPEUR  : EVAPORATION STATIFORME                        g/kg/day
+TQVEVAPPSTL   # EAU VAPEUR  : EVAPORATION STRATIFORME LIQUIDE               g/kg/day
+TQVEVAPPSTN   # EAU VAPEUR  : EVAPORATION STRATIFORME NEIGEUSE              g/kg/day
+VQVF          # EAU VAPEUR  : TENDANCE MOYENNE                              g/kg/day
+TQVFONTP      # EAU VAPEUR  : FONTE DES PRECIPITATIONS                      g/kg/day
+TQVFONTPCO    # EAU VAPEUR  : FONTE DES PRECIPITATIONS CONVECTIVES          g/kg/day
+TQVFONTPST    # EAU VAPEUR  : FONTE DES PRECIPITATIONS STRATIFORMES         g/kg/day
+TQVFORMPCO    # EAU VAPEUR  : FORMATION PREC CONVECTIVES                    g/kg/day
+TQVFORMPCOL   # EAU VAPEUR  : FORMATION PREC CONVECTIVES LIQUIDES           g/kg/day
+TQVFORMPCON   # EAU VAPEUR  : FORMATION PREC CONVECTIVES NEIGEUSES          g/kg/day
+TQVFORMPST    # EAU VAPEUR  : FORMATION PREC STRATIFORMES                   g/kg/day
+TQVFORMPSTL   # EAU VAPEUR  : FORMATION PREC STRATIFORMES LIQUIDES          g/kg/day
+TQVFORMPSTN   # EAU VAPEUR  : FORMATION PREC STRATIFORMES NEIGEUSES         g/kg/day
+VQVM          # EAU VAPEUR  : TENDANCE MOYENNE                              g/kg/day
+TQVPRINCIPAL  # EAU VAPEUR  : TERME PRINCIPAL                               g/kg/day
+FQVDIFC       # WATER VAPOUR: CONVECTIVE TRANSPORT                          g/kg/day
+VSS0          # ENTROPIE    : DIAGNOSTIC INITIAL                            J/kg/K
+VSS1          # ENTROPIE    : DIAGNOSTIC FINAL                              J/kg/K
+TSSCOMPLEMENT # ENTROPIE    : TERME COMPLEMENT                              J/kg/K/day
+VSSD          # ENTROPIE    : FINAL - INITAL                                J/kg/K
+TSSDISSIPCONV # ENTROPIE    : DISSIPATION TURBULENTE CONVECTIVE             J/kg/K/day
+TSSDISSIPGREL # ENTROPIE    : DISSIPATION TURBULENTE ONDES DE RELIEF        J/kg/K/day
+TSSDISSIPTUR  # ENTROPIE    : DISSIPATION TURBULENTE SECHE                  J/kg/K/day
+TSSDIVFLUHOR  # ENTROPIE    : DIVERGENCE DES FLUX HORIZONTAUX               J/kg/K/day
+VSSF          # ENTROPIE    : TENDANCE MOYENNE                              J/kg/K/day
+FSSFLUVERTDYN # ENTROPIE    : FLUX VERTICAL DYNAMIQUE                       J/kg/K/day
+VSSM          # ENTROPIE    : TENDANCE MOYENNE                              J/kg/K/day
+TSSPRECICT    # ENTROPIE    : EFFET PRECIPITATIONS SUR ENTHALPIE            J/kg/K/day
+FSSPRECISS    # ENTROPIE    : EFFET PRECIPITATIONS SUR ENTROPIE             J/kg/K/day
+TSSPRINCIPAL  # ENTROPIE    : TERME PRINCIPAL                               J/kg/K/day
+TSSRAY1       # ENTROPIE    : RAYONNEMENT                                   J/kg/K/day
+TSSTURCTTOT   # ENTROPIE    : TURBULENCE TOTALE D ENTHALPIE                 J/kg/K/day
+TSSTURQVTOT   # ENTROPIE    : TURBULENCE TOTALE D HUMIDITE                  J/kg/K/day
+TUUCOMPLEMENT # VENT ZONAL  : TERME COMPLEMENT                              m/s/day
+VUUD          # VENT ZONAL  : FINAL - INITAL                                m/s
+VUUF          # VENT ZONAL  : TENDANCE MOYENNE                              m/s/day
+VUUM          # VENT ZONAL  : TENDANCE MOYENNE                              m/s/day
+TUUPRINCIPAL  # VENT ZONAL  : TERME PRINCIPAL                               m/s/day
+TVVCOMPLEMENT # VENT MERID  : TERME COMPLEMENT                              m/s/day
+VVVD          # VENT MERID  : FINAL - INITAL                                m/s
+VVVF          # VENT MERID  : TENDANCE MOYENNE                              m/s/day
+VVVM          # VENT MERID  : TENDANCE MOYENNE                              m/s/day
+TVVPRINCIPAL  # VENT MERID  : TERME PRINCIPAL                               m/s/day
+VTEM          # TKE : MEAN TENDENCY                                         J/kg/day

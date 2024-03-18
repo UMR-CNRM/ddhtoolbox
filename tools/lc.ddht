@@ -1,0 +1,95 @@
+0
+VCT0  +
+ECR"VCT0"
+0
+VCT1  +
+ECR"VCT1"
+0
+TCTADJU           +
+ECR"TCTCOMPL01"
+0
+FCTRAYSO      F>V +
+ECR"TCTCOMPL02"
++
+0
+FCTRAYTH      F>V +
+ECR"TCTCOMPL03"
++
+0
+TCTVTUR           +
+ECR"TCTCOMPL04"
++
+0
+TCTHTUR           +
+ECR"TCTCOMPL05"
++
+0
+TCTDISS           +
+ECR"TCTCOMPL06"
++
+0
+TCTNEGA           +
+ECR"TCTCOMPL07"
++
+0
+TCTHENU           +
+ECR"TCTCOMPL08"
++
+0
+TCTHON_           +
+ECR"TCTCOMPL09"
++
+0
+TCTSFR_           +
+ECR"TCTCOMPL10"
++
+0
+TCTDEPS           +
+ECR"TCTCOMPL11"
++
+0
+TCTDEPG           +
+ECR"TCTCOMPL12"
++
+0
+TCTREVA           +
+ECR"TCTCOMPL13"
++
+0
+TCTRIM_           +
+ECR"TCTCOMPL14"
++
+0
+TCTACC_           +
+ECR"TCTCOMPL15"
++
+0
+TCTCFRZ           +
+ECR"TCTCOMPL16"
++
+0
+TCTWETG           +
+ECR"TCTCOMPL17"
++
+0
+TCTDRYG           +
+ECR"TCTCOMPL18"
++
+0
+TCTGMLT           +
+ECR"TCTCOMPL19"
++
+0
+TCTIMLT           +
+ECR"TCTCOMPL20"
++
+0
+TCTBERF           +
+ECR"TCTCOMPL21"
++
+0
+TCTCORR           +
+ECR"TCTCOMPL22"
++
+COMPLEMENT
+ECR"TCTRESIDUAL"

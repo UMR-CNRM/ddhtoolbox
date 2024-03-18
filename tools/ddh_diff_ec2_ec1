@@ -1,0 +1,99 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   1999-10, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+if [ $# -eq 0 ]
+then
+	#
+	# Mauvais nombre d'arguments.
+	#
+	echo " "
+	echo "Passage de n fichiers de DDH, chacun étant un cumul de 0 au temps t,"
+	echo "à (n-1) fichiers valables 'sur les intermédiaires'."
+	echo "On doit donner la liste des fichiers dans l'ordre de leur production"
+	echo "par la prévision."
+	echo " "
+	echo "Utilisation: "$proc" F1 F2 [... Fn]"
+	echo " "
+	exit
+fi
+#
+#-----------------------------------------------
+# Exécution.
+#-----------------------------------------------
+#
+#
+#-----------------------------------------------
+# Date de base.
+#-----------------------------------------------
+#
+pivot=$1 ; shift
+#
+#-----------------------------------------------
+# Différences de fichiers consécutifs.
+#-----------------------------------------------
+#
+for f in $*
+do
+	#
+	#-----------------------------------------------
+	# Echéance du fichier 2.
+	#-----------------------------------------------
+	#
+	date2=`ddhr -ep $f`
+	#
+	#-----------------------------------------------
+	# Echéance du fichier 1.
+	#-----------------------------------------------
+	#
+	date1=`ddhr -ep $pivot`
+	#
+	#-----------------------------------------------
+	# Echéance de la différence des deux fichiers.
+	#-----------------------------------------------
+	#
+	temps=`cals -ff7.2 "$date1 $date2 + 2 /"`
+	#
+	#-----------------------------------------------
+	# Calcul de différence.
+	#-----------------------------------------------
+	#
+	fdiff=$proc.$temps.lfa
+	echo $fdiff
+	ddht -cDIFFE_EC2_EC1 -2$f -1$pivot -s$fdiff
+	#
+	#-----------------------------------------------
+	# Le pivot est pris égal au fichier courant.
+	#-----------------------------------------------
+	#
+	pivot=$f
+done
+#
+#-----------------------------------------------
+# Epilogue.
+#-----------------------------------------------
+#
+ls -lrt
+#
+#-----------------------------------------------
+# Nettoyage.
+#-----------------------------------------------
+#
+rm -f $pref*

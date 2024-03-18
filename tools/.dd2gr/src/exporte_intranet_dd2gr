@@ -1,0 +1,51 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2015-04, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+set -evx
+#
+#-------------------------------------------------
+# On désinstalle dd2gr pour créer un TAR plus petit.
+#-------------------------------------------------
+#
+./install clean
+#
+#-------------------------------------------------
+# Création du fichier TAR.
+#-------------------------------------------------
+#
+cd $HOME
+tar cvfh dd2gr.tar .dd2gr
+#
+#-------------------------------------------------
+# Copie de ce TAR sur Intranet et Lustre.
+#-------------------------------------------------
+#
+cp dd2gr.tar ~/html/NO_SAVE/dd2gr
+mv dd2gr.tar /cnrm/proc/piriou
+#
+#-------------------------------------------------
+# Copie de la doc dd2gr sur Intranet.
+#-------------------------------------------------
+#
+cp $HOME/.dd2gr/dd2gr_doc.odt ~/html/cours_memos_docs
+#
+#-------------------------------------------------
+# Réinstallation de dd2gr.
+#-------------------------------------------------
+#
+cd $HOME/.dd2gr/src
+./install
+vu

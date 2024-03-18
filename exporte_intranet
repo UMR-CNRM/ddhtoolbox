@@ -1,0 +1,59 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2015-07, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+set -evx
+#
+#-----------------------------------------------
+# Nettoyage préalable des fichiers inutiles.
+#-----------------------------------------------
+#
+net_points
+#
+#-------------------------------------------------
+# On désinstalle ddhtoolbox pour créer un TAR plus petit.
+#-------------------------------------------------
+#
+cd $dirloc/tools
+./install clean
+#
+#-----------------------------------------------
+# Cleanout the demonstration directory.
+#-----------------------------------------------
+#
+cd $dirloc/demonstration
+./cleanout
+#
+#-------------------------------------------------
+# Création du fichier TAR.
+#-------------------------------------------------
+#
+cd $dirloc/..
+tar cvfh ddhtoolbox.tar ddhtoolbox
+#
+#-------------------------------------------------
+# Copie de ce TAR sur Intranet et Lustre.
+#-------------------------------------------------
+#
+cp ddhtoolbox.tar ~/html/NO_SAVE/ddhtoolbox
+mv ddhtoolbox.tar /cnrm/proc/piriou
+#
+#-------------------------------------------------
+# Réinstallation de la ddhtoolbox.
+#-------------------------------------------------
+#
+cd $dirloc/tools
+./install
+vu

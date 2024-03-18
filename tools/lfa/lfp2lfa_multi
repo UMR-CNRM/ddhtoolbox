@@ -1,0 +1,37 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Conversion de fichiers LFP en LFA.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   97-10, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+#
+#-----------------------------------------------
+# Etablissement de la liste des fichiers LFP.
+#-----------------------------------------------
+#
+for i in $*
+do
+	echo "-----------------------------------"
+	#
+	#-----------------------------------------------
+	# On enlève au fichier son suffixe "lfp".
+	#-----------------------------------------------
+	#
+	base=`basename $i .lfp`
+	dir=`dirname $i`
+	entree=$i
+	sortie=$dir/$base.lfa
+	lfp2lfa $entree $sortie
+	ls -l $entree
+	ls -l $sortie
+	rm $i
+done

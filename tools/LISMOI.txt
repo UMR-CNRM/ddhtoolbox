@@ -1,0 +1,6 @@
+
+20131118: mise en cohérence des réels à 8 et des entiers à 4. En effet des messages de warning apparaissaient lors de la compilation avec gfortran, correspondant à des pbs réels: passage en argument de réels 8 sur des réels 4 octets.
+
+20131121: correction de bug: sous l'option -cINTERPOL, une division par 0 intervenait car le tableau zcoo_cum_1 était initialisé à 0 en son sommet. Correction appliquée: zcoo_cum_1=zpre_dn_cum_1.
+
+20200406: l'option "ddhi -n", calculant cp comme une fonction de qv, devient le défaut. Ceci impacte la valeur de T sortie par ddhi: jusqu'à 4K de différence dans les Tropiques. On peut revenir à l'ancien calcul (usage du cp sec) par "ddhi -noccd"

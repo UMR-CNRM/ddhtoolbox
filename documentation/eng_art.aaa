@@ -1,0 +1,20 @@
+%---------------------------------------------------------------------------
+%
+% Fichier appelant les déclarations utiles au style article en Anglais.
+%
+%---------------------------------------------------------------------------
+\documentclass[11pt,a4paper,twoside,english,dvips]{article}
+%
+%-----------------------------------------------
+% Paquets de sources LATEX.
+%-----------------------------------------------
+%
+\input{paquets.tex}
+%
+%-----------------------------------------------
+% Définitions JMP.
+%-----------------------------------------------
+%
+\input{art.tex}
+\input{com.tex}
+\input{eng.tex}

@@ -1,0 +1,9 @@
+mv tmp.TCTCOMPL01.dta budget.arpege/CT.DZ.lfa.dynamics.dta
+mv tmp.TCTCOMPL02.dta budget.arpege/CT.DZ.lfa.resmicrophysics.dta
+mv tmp.TCTCOMPL03.dta budget.arpege/CT.DZ.lfa.sgsmicrophysics.dta
+mv tmp.TCTCOMPL04.dta budget.arpege/CT.DZ.lfa.SGSTRANSPORT.dta
+mv tmp.TCTCOMPL05.dta budget.arpege/CT.DZ.lfa.Radiationsolar.dta
+mv tmp.TCTCOMPL06.dta budget.arpege/CT.DZ.lfa.RadiationIR.dta
+mv tmp.TCTCOMPL07.dta budget.arpege/CT.DZ.lfa.TURBULENCE.dta
+mv tmp.VCTM.dta budget.arpege/CT.DZ.lfa.VCTM.dta
+mv tmp.TCTRESIDUAL.dta budget.arpege/CT.DZ.lfa.TCTRESIDUAL.dta

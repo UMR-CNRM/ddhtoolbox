@@ -1,0 +1,46 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2024-02-12, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+set -evx
+#
+#-------------------------------------------------
+# .
+#-------------------------------------------------
+#
+rm -f *.doc
+net
+fddh="DHFZOFCST+0225_GSJ4_PCMT.lfa"
+fddh="DHFZOFCST+0015_GNLO_sylvie_malardel.lfa"
+ddhi $fddh
+coug -2.77e-4 5e-4
+for fdoc in *VQL*doc *VQI*doc *VCL*doc *VCI*doc
+do
+  dd2png $fdoc $fdoc.png
+done
+pre=`ddhr -i $fddh`
+imgcomb -x 2 $pre.VQx1.tmp.png \
+  $fddh.tmp.VQL1.doc.png \
+  $fddh.tmp.VQI1.doc.png \
+  $fddh.tmp.VCL1.doc.png \
+  $fddh.tmp.VCI1.doc.png
+v $pre.VQx1.tmp.png
+
+imgcomb -x 2 $pre.VQx0.tmp.png \
+  $fddh.tmp.VQL0.doc.png \
+  $fddh.tmp.VQI0.doc.png \
+  $fddh.tmp.VCL0.doc.png \
+  $fddh.tmp.VCI0.doc.png
+v $pre.VQx0.tmp.png

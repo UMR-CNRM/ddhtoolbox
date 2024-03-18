@@ -1,0 +1,75 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Précipitations au sol d'un fichier de DDH.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   2018-07, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+dirloc=`pwd` # chemin du répertoire local.
+pref=$dirloc/.$proc.tmp.$RANDOM # préfixe des fichiers temporaires.
+if [ $# -eq 0 ]
+then
+	echo " "
+	echo "Obtention de l'évolution des précipitations totales et de l'évaporation au sol"
+	echo "d'un fichier de DDH ne contenant qu'un seul domaine."
+	echo " "
+	echo "Utilisation: ddh_prec f1 [f2] ... [fn]"
+	echo " "
+	echo "où les fi sont des fichiers de DDH."
+	echo " "
+	exit 1
+fi
+set -evx
+#
+#-----------------------------------------------
+# Boucle sur les différents fichiers de DDH d'entrée.
+#-----------------------------------------------
+#
+liss=" "
+champ="rr"
+fdoc=$champ.tmp.doc
+for fddh in $*
+do
+  ddh2scm $fddh
+  liss="$liss $fddh.Dom001.Var_fin.scm"
+  run=`lfac $fddh 'INDICE EXPERIENCE'`
+  base=`ddhr -bs $fddh`
+done
+for art in PFPLCL PFPLCN PFPLSL PFPLSN PDIFTQ
+do
+  mevol -xJD -nl -c3600. $art $liss
+  cp PFPLCL.tmp.doc $champ.tmp.doc
+  cat <<EOF > $fdoc
+#FORMAT=XVI
+#TITRE=Précipitations, $run
+#DATE=BASE $base
+
+#CHAMP=RR SM liq
+#FICHIER=PFPLCL.tmp.evol
+
+#CHAMP=RR SM nei
+#FICHIER=PFPLCN.tmp.evol
+
+#CHAMP=RR RE liq
+#FICHIER=PFPLSL.tmp.evol
+
+#CHAMP=RR RE nei
+#FICHIER=PFPLSN.tmp.evol
+
+#CHAMP=évaporation surface
+#FICHIER=PDIFTQ.tmp.evol
+
+#LEGENDE_Y=rr (mm/h)
+#LEGENDE_X=validité (h)
+EOF
+done
+v $fdoc

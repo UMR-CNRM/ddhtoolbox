@@ -1,0 +1,6 @@
+Le fichier 9x15bold.ppm correspond à une fonte
+saisie par "grab xv" d'une fenêtre xterm.
+
+Le source ppm2scef90.f90 fait passer de ce fichier
+à data.f90, qui est la tabulation sous forme
+de data ftn des pixels associés à la fonte.

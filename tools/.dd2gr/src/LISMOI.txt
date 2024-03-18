@@ -1,0 +1,9 @@
+Historique:
+
+20200415: 
+  * possibilité de lecture de fichiers LFA pour les champs XYV et LLV.
+  * une fois les données 2D interpolées sur une grille régulière, le graphique matriciel résultant est écrit dans le SVG sous forme d'une matrice en base64 plutôt que sous forme de rectangles SVG. Cela réduit la taille du fichier SVG produit, et réduit fortement le temps de conversion du SVG en PNG par convert/inkscape.
+
+20210505:
+  * en vue du passage prévu de tous les PC puis serveurs d'équipe de Mageia à Ubuntu 20, modifs dans dd2gr pour passer
+ de la fonte SVG "URW Gothic L" à "Arial", car seule la seconde est supportée par convert d'Ubuntu 20 lorsqu'il convertit les SVG en PNG ou JPG.

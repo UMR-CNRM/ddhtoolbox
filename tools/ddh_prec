@@ -1,0 +1,299 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Précipitations au sol d'un fichier de DDH.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   97-02, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+dirloc=`pwd` # chemin du répertoire local.
+pref=$dirloc/.$proc.tmp.$RANDOM # préfixe des fichiers temporaires.
+if [ $# -eq 0 ]
+then
+	echo " "
+	echo "Get total precipitation and surface evaporation"
+	echo "from a DDH file."
+	echo " "
+	echo "Usage: ddh_prec [-1 XCoordinate] f1 [f2] ... [fn]"
+	echo " "
+	echo "where fi are the DDH files."
+	echo "For the syntax of the '-1' argument, see ddhi."
+	echo " "
+	echo "Examples:"
+	echo "  $proc DHFZOFCST+0026"
+	echo "  $proc -1 BIJ20000430 DHFZOFCST+0026"
+	echo "  $proc -1 JD1 DHFZOFCST+0026"
+	echo "  $proc -1 BA DHFZOFCST+0026"
+	echo " "
+	exit 1
+fi
+#set -evx
+if [ "$1" = "-1" ] ; then
+  shift
+  ligad="-1$1"
+  shift
+fi
+#
+#-----------------------------------------------
+# Boucle sur les différents fichiers de DDH d'entrée.
+#-----------------------------------------------
+#
+for fddh in $*
+do
+	prefsor=`basename $fddh`
+	#
+	#-----------------------------------------------
+	# Reconnaissance du type de fichier de DDH.
+	#-----------------------------------------------
+	#
+	lfac $fddh FCRSEDIM > $prefsor.fcrsedim
+	lfac $fddh FQRPL > $prefsor.fqrpl
+	lfac $fddh FQTPRECICOL > $prefsor.col
+	lfac $fddh FQRPLC > $prefsor.plc
+	lfac $fddh FQRSEDIM > $prefsor.sedim
+	if test -s $prefsor.fcrsedim
+	then
+		# Dans les fichiers DDH 37t1 code PCMT, dans le cas LGPCMT=T
+		#	- les précipitations résolues    sont RESOLVED = FQRPL + PQSPN
+		#	- les précipitations sous-maille sont SGS      = FQRSEDIM + FQSSEDIM
+		#	- les précipitations totales     sont TOTAL    = FQRPL + PQSPN + FQRSEDIM + FQSSEDIM
+		type_fddh="pcmt"
+	elif test -s $prefsor.fqrpl
+	then
+		# Dans les fichiers DDH 37t1 code PCMT, dans le cas LGPCMT=F
+		# les précipitations totales sont directement accessibles en un seul article DDH,
+		# et le détail des précipitations sous-mailles est disponible
+		# dans l'autoconversion issue du schéma ACCVIMP (puisque pour ce schéma autoconversion=précipitation).
+		#	- les précipitations résolues    sont RESOLVED = FQRPL + PQSPN - FQRACL - FQSACN
+		#	- les précipitations sous-maille sont SGS      = FQRACL + FQSACN
+		#	- les précipitations totales     sont TOTAL    = FQRPL + FQSPN
+		type_fddh="code_pcmt_no_pcmt"
+	elif test -s $prefsor.col
+	then
+		# Dans les fichiers opérationnels au 2012-01-03
+		#	- les précipitations résolues    sont RESOLVED = FQTPRECISTL + FQTPRECISTN
+		#	- les précipitations sous-maille sont SGS      = FQTPRECICOL + FQTPRECICON
+		#	- les précipitations totales     sont TOTAL    = FQTPRECISTL + FQTPRECISTN + FQTPRECICOL + FQTPRECICON
+		type_fddh="oper_20120103"
+	elif test -s $prefsor.plc
+	then
+		type_fddh="2"
+	else
+		type_fddh="3"
+	fi
+	echo "$proc: le fichier de DDH est du type $type_fddh"
+	
+	# Evaporation.
+	cat <<EOF > $prefsor.lc
+FQVTUR
+ECR"FQVTUR"
+EOF
+	ddht -cCALC -1$fddh -s$prefsor.s.evaporation.lfa -l$prefsor.lc
+	#
+	# Interprétation du fichier de DDH contenant le cumul.
+	#
+	cat <<EOF > $prefsor.lc
+FQVTUR
+EOF
+	ddhi $ligad -m86400. -l$prefsor.lc -cSOL -s$prefsor.EVAPORATION $prefsor.s.evaporation.lfa
+  rm $prefsor.s.evaporation.lfa
+	#
+	#-----------------------------------------------
+	# Précipitations totales.
+	#-----------------------------------------------
+	#
+	if [ "$type_fddh" = "pcmt" ] ; then
+		cat <<EOF > $prefsor.lc
+FQRPL
+FQSPN +
+FCRSEDIM +
+FCSSEDIM +
+ECR"FQTPRECI"
+EOF
+	elif [ "$type_fddh" = "code_pcmt_no_pcmt" ] ; then
+		cat <<EOF > $prefsor.lc
+FQRPL
+FQSPN +
+ECR"FQTPRECI"
+EOF
+	elif [ "$type_fddh" = "oper_20120103" ] ; then
+		cat <<EOF > $prefsor.lc
+FQTPRECICOL   # EAU         : CONDENSATION CONVECTIVE LIQUIDE               /JOUR
+FQTPRECICON + # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              /JOUR
+FQTPRECISTL + # EAU         : CONDENSATION STRATIFORME LIQUIDE              /JOUR
+FQTPRECISTN + # EAU         : CONDENSATION STRATIFORME NEIGEUSE             /JOUR
+ECR"FQTPRECI"
+EOF
+	elif [ "$type_fddh" = "2" ] ; then
+		cat <<EOF > $prefsor.lc
+FQRPLC             # rain, convective 
+FQRPLS   +         # rain, resolved
+FQSPLC   +         # snow, convective 
+FQSPLS   +         # snow, resolved
+ECR"FQTPRECI"
+EOF
+	else
+		cat <<EOF > $prefsor.lc
+FCRSEDIM           # rain, convective 
+FQRSEDIM +         # rain, resolved
+FCSSEDIM +         # snow, convective 
+FQSSEDIM +         # snow, resolved
+ECR"FQTPRECI"
+EOF
+	fi
+	ddht -cCALC -1$fddh -s$prefsor.s.RESOLVED+SGS.lfa -l$prefsor.lc
+	#
+	# Interprétation du fichier de DDH contenant le cumul.
+	#
+	cat <<EOF > $prefsor.lc
+FQTPRECI
+EOF
+	ddhi $ligad -m86400. -l$prefsor.lc -cSOL -s$prefsor.RESOLVED+SGS $prefsor.s.RESOLVED+SGS.lfa
+  rm $prefsor.s.RESOLVED+SGS.lfa
+	echo "#UNITE=mm/day" >> $prefsor.RESOLVED+SGS.FQTPRECI.doc
+	#
+	#-----------------------------------------------
+	# Précipitations convectives.
+	#-----------------------------------------------
+	#
+	if [ "$type_fddh" = "pcmt" ] ; then
+		cat <<EOF > $prefsor.lc
+FCRSEDIM
+FCSSEDIM +
+ECR"FQTPRECI"
+EOF
+	elif [ "$type_fddh" = "code_pcmt_no_pcmt" ] ; then
+		cat <<EOF > $prefsor.lc
+FQRACL -
+FQSACN -
+ECR"FQTPRECI"
+EOF
+	elif [ "$type_fddh" = "oper_20120103" ] ; then
+		cat <<EOF > $prefsor.lc
+FQTPRECICOL   # EAU         : CONDENSATION CONVECTIVE LIQUIDE               /JOUR
+FQTPRECICON + # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              /JOUR
+ECR"FQTPRECI"
+EOF
+	elif [ "$type_fddh" = "2" ] ; then
+		cat <<EOF > $prefsor.lc
+FQRPLC             # rain, convective 
+FQSPLC   +         # snow, convective 
+ECR"FQTPRECI"
+EOF
+	else
+		cat <<EOF > $prefsor.lc
+FCRSEDIM           # rain, convective 
+FCSSEDIM +         # snow, convective 
+ECR"FQTPRECI"
+EOF
+	fi
+	ddht -cCALC -1$fddh -s$prefsor.s.conv.lfa -l$prefsor.lc
+	#
+	# Interprétation du fichier de DDH contenant le cumul.
+	#
+	cat <<EOF > $prefsor.lc
+FQTPRECI
+EOF
+	ddhi $ligad -m86400. -l$prefsor.lc -cSOL -s$prefsor.SGS $prefsor.s.conv.lfa
+  rm $prefsor.s.conv.lfa
+	echo "#UNITE=mm/day" >> $prefsor.SGS.FQTPRECI.doc
+	echo "#TITRE=PRECIPITATION, SGS" >> $prefsor.SGS.FQTPRECI.doc
+	#
+	#-----------------------------------------------
+	# Précipitations résolues.
+	#-----------------------------------------------
+	#
+	if [ "$type_fddh" = "pcmt" ] ; then
+		cat <<EOF > $prefsor.lc
+FQRPL
+FQSPN +
+ECR"FQTPRECI"
+EOF
+	elif [ "$type_fddh" = "code_pcmt_no_pcmt" ] ; then
+		cat <<EOF > $prefsor.lc
+FQRPL
+FQSPN +
+FQRACL +
+FQSACN +
+ECR"FQTPRECI"
+EOF
+	elif [ "$type_fddh" = "oper_20120103" ] ; then
+		cat <<EOF > $prefsor.lc
+FQTPRECISTL + # EAU         : CONDENSATION STRATIFORME LIQUIDE              /JOUR
+FQTPRECISTN + # EAU         : CONDENSATION STRATIFORME NEIGEUSE             /JOUR
+ECR"FQTPRECI"
+EOF
+	elif [ "$type_fddh" = "2" ] ; then
+		cat <<EOF > $prefsor.lc
+FQRPLS   +         # rain, resolved
+FQSPLS   +         # snow, resolved
+ECR"FQTPRECI"
+EOF
+	else
+		cat <<EOF > $prefsor.lc
+FQRSEDIM +         # rain, resolved
+FQSSEDIM +         # snow, resolved
+ECR"FQTPRECI"
+EOF
+	fi
+	ddht -cCALC -1$fddh -s$prefsor.s.resol.lfa -l$prefsor.lc
+	#
+	# Interprétation du fichier de DDH contenant le cumul.
+	#
+	cat <<EOF > $prefsor.lc
+FQTPRECI
+EOF
+	ddhi $ligad -m86400. -l$prefsor.lc -cSOL -s$prefsor.RESOLVED $prefsor.s.resol.lfa
+  rm $prefsor.s.resol.lfa
+	echo "#UNITE=mm/jour" >> $prefsor.RESOLVED.FQTPRECI.doc
+	echo "#TITRE=PRECIPITATION, RESOLVED" >> $prefsor.RESOLVED.FQTPRECI.doc
+	#
+	#-----------------------------------------------
+	# Multicourbe avec résolu, sous-maille et RESOLVED+SGS.
+	#-----------------------------------------------
+	#
+	fmulti=$prefsor.MULTI.FQTPRECI.doc
+	cat <<EOF > $fmulti
+#FORMAT=XVI
+#TITRE=Precipitation
+
+#CHAMP=RESOLVED
+#FICHIER=$prefsor.RESOLVED.FQTPRECI.dta
+
+#CHAMP=SGS
+#FICHIER=$prefsor.SGS.FQTPRECI.dta
+
+#CHAMP=RESOLVED+SGS
+#FICHIER=$prefsor.RESOLVED+SGS.FQTPRECI.dta
+
+#CHAMP=EVAPORATION
+#FICHIER=$prefsor.EVAPORATION.FQVTUR.dta
+
+#Y_MIN_LIMIT=-6.
+#Y_MAX_LIMIT=11.
+EOF
+	for mnemo in DATE UNITE LEGENDE_X LEGENDE_Y ORIGINE 
+	do
+		grep $mnemo $prefsor.RESOLVED.FQTPRECI.doc >> $fmulti
+	done
+	#
+	#-----------------------------------------------
+	# Epilogue.
+	#-----------------------------------------------
+	#
+	echo "--------------------------------------------------------------"
+	echo "$proc:"
+	for f in $prefsor.RESOLVED.FQTPRECI.doc $prefsor.SGS.FQTPRECI.doc $prefsor.RESOLVED+SGS.FQTPRECI.doc $prefsor.MULTI.FQTPRECI.doc
+	do
+		ls -l $f
+	done
+	echo "--------------------------------------------------------------"
+done

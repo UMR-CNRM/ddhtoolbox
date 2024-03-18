@@ -1,0 +1,70 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   1999-07, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Exécution.
+# On travaille à partir d'un fichier zonal unique,
+# copié par sécurité dans un répertoire de travail.
+#-----------------------------------------------
+#
+reps=$proc.tmp
+rm -rf $reps ; mkdir $reps
+cp DZ_ref.lfa DZ_exp.lfa $reps
+cd $reps
+#
+#-----------------------------------------------
+# Test des moyennes horizontales et verticales.
+#-----------------------------------------------
+#
+ident="Test_de_commutation_de_ddhmh_et_ddhmv"
+cp DZ_ref.lfa DZ.lfa
+ddhmh DZ.lfa DZ.lfa.mh ; ddhmv DZ.lfa.mh DZ.lfa.mh.mv
+ddhmv DZ.lfa DZ.lfa.mv ; ddhmh DZ.lfa.mv DZ.lfa.mv.mh
+cat <<EOF > $ident
+
+Le diff relatif ci-dessous devrait être inférieur à 10**-7!...
+
+EOF
+lfadiffrelnz DZ.lfa.mh.mv DZ.lfa.mv.mh >> $ident
+#
+#-----------------------------------------------
+# Test d'invariance après une SOMME_PONDEREE 
+# suivie d'une DIFFE_PONDEREE.
+#-----------------------------------------------
+#
+ident="Test_d_invariance_apres_SOMME_PONDEREE_puis_DIFFE_PONDEREE"
+ddht -cSOMME_PONDEREE -1DZ_ref.lfa -2DZ_exp.lfa -sDZ_ref+DZ_exp.lfa
+ddht -cDIFFE_PONDEREE -2DZ_ref+DZ_exp.lfa -1DZ_exp.lfa -sDZ_invariant.lfa
+cat <<EOF > $ident
+
+Le diff relatif ci-dessous devrait être inférieur à 10**-7!...
+
+EOF
+lfadiffrelnz DZ_ref.lfa DZ_invariant.lfa >> $ident
+#
+#-----------------------------------------------
+# Epilogue.
+#-----------------------------------------------
+#
+cd ..
+ls -ld $reps
+#
+#-----------------------------------------------
+# Nettoyage.
+#-----------------------------------------------
+#
+rm -f $pref*

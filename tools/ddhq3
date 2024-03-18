@@ -1,0 +1,48 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2015-03, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-------------------------------------------------
+# .
+#-------------------------------------------------
+#
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+if [ $# -ne 1 ]
+then
+  #
+  # Mauvais nombre d'arguments.
+  #
+  echo " "
+  echo "OBJET: Bilan type Q3 d'un fichier de DDH zonal, en zone tropicale."
+  echo " "
+  echo "UTILISATION: $proc FDDH"
+  echo " "
+  echo "METHODE: extraction des domaines de la zone tropicale, moyenne horizontale, bilan de u."
+  echo " "
+  exit
+else
+  #
+  # Nombre d'arguments OK.
+  #
+  fddh=$1
+fi
+ddht -cEXTRAIT_DOMAIN -E8-23 -1$fddh -s$fddh.tropiques
+ddhmh $fddh.tropiques
+ddhb -v oper/UU -i $fddh.tropiques.mh

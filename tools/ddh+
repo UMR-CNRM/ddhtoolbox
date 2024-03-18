@@ -1,0 +1,43 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Somme de deux fichiers de DDH.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   97-01, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+option=SOMME_PONDEREE
+if [ $# -eq 2 ]
+then
+	f1=$1
+	f2=$2
+	fs=`basename $f1`+`basename $f2`
+	dir=`dirname $f1`
+elif [ $# -eq 3 ]
+then
+	f1=$1
+	f2=$2
+	fs=`basename $3`
+	dir=`dirname $3`
+else
+	echo " "
+	echo "Somme de deux fichiers de DDH."
+	echo "Effectue la somme (f1+f2), de type "$option"."
+	echo " "
+	echo "Utilisation: ddh+ f1 f2 [fs]"
+	echo " "
+	echo "Le résultat est porté sur fs si cet argument est fourni,"
+	echo "et sur le fichier de nom f1+f2 sinon."
+	echo " "
+	exit
+fi
+ddht -c$option -2$f2 -1$f1 -s$dir/$fs
+echo "Fichier généré: "$fs
+

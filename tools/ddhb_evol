@@ -1,0 +1,262 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2003-07, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+if [ $# -eq 0 ]
+then
+	#
+	# Mauvais nombre d'arguments.
+	#
+	echo " "
+	echo "OBJET:"
+	echo "	Bilan d'une variable pronostique, en évolution au cours du temps."
+	echo "	On utilise en entrée n fichiers DDH."
+	echo "	On doit donner leur liste dans l'ordre de leur production"
+	echo "	par la prévision."
+	echo "	Chacun est convertit en un fichier DDH à un seul domaine et niveau"
+	echo "	selon l'extraction proposée sur la ligne de commande."
+	echo " "
+	echo "METHODE:"
+	echo "	Le logiciel effectue les différences entre fichiers"
+	echo "	consécutifs puis calcule le bilan en évolution temporelle."
+	echo " "
+	echo "UTILISATION:"
+	echo "	$proc VARIABLE UNITE EXTRACT_DOM EXTRACT_NIV F1 [F2 ... Fn]"
+	echo "	avec"
+	echo "	VARIABLE: ec, t, qv, etc..."
+	echo "	UNITE: unité de temps pour l'axe des X: j, h"
+	echo " "
+	echo "EXEMPLE:"
+	echo "	$proc ec j 8-19 14 D*.lfa"
+	echo " "
+	exit
+else
+	#
+	# Nombre d'arguments OK.
+	#
+	variable=$1 ; shift
+	unite=$1 ; shift
+	dom=$1 ; shift
+	niv=$1 ; shift
+fi
+#
+#-----------------------------------------------
+# Exécution.
+#-----------------------------------------------
+#
+reps=$proc.$variable.dom$dom.niv$niv.tmp
+rm -rf $reps ; mkdir $reps
+cp $* $reps
+cd $reps
+#
+#-----------------------------------------------
+# Passage à un seul domaine et niveau.
+#-----------------------------------------------
+#
+liste_arg=" "
+for f in $*
+do
+	#
+	#-----------------------------------------------
+	# Extraction de domaines.
+	#-----------------------------------------------
+	#
+	fe=$f
+	fs=$f.dom$dom
+	ddht -cEXTRAIT_DOMAIN -E$dom -1$fe -s$fs
+	#
+	#-----------------------------------------------
+	# Moyenne horizontale.
+	#-----------------------------------------------
+	#
+	fe=$fs
+	fs=$fe.mh
+	ddht -cMOY_HORIZ -1$fe -s$fs
+	#
+	#-----------------------------------------------
+	# Extraction de niveaux.
+	#-----------------------------------------------
+	#
+	fe=$fs
+	fs=$fe.niv$niv
+	ddht -cEXTRAIT_NIVEAUX -E$niv -1$fe -s$fs
+	#
+	#-----------------------------------------------
+	# Moyenne verticale.
+	#-----------------------------------------------
+	#
+	fe=$fs
+	fs=$fe.mv
+	ddht -cMOY_VERTIC -1$fe -s$fs
+	liste_arg="$liste_arg $fs"
+done
+#
+#-----------------------------------------------
+# Date de base.
+#-----------------------------------------------
+#
+set $liste_arg
+pivot=$1 ; shift
+indexp=`ddhr -i $pivot`
+#
+#-----------------------------------------------
+# Test du nb de domaines et niveaux.
+#-----------------------------------------------
+#
+nivloc=`ddhr -n $pivot`
+if [ "$nivloc" != "1" ] ; then
+	echo "$proc/ERREUR: le nombre de niveaux des fichiers d'entrée doit être 1, or $nivloc!..."
+	exit
+fi
+domloc=`ddhr -d $pivot`
+if [ "$domloc" != "1" ] ; then
+	echo "$proc/ERREUR: le nombre de domaines des fichiers d'entrée doit être 1, or $domloc!..."
+	exit
+fi
+#
+#-----------------------------------------------
+# Différences de fichiers consécutifs.
+#-----------------------------------------------
+#
+fdate=$pref.dates # fichier recevant la liste des temps associés à chaque écart entre deux fichiers.
+rm -f $fdate
+for f in $*
+do
+	#
+	#-----------------------------------------------
+	# Echéance du fichier 2.
+	#-----------------------------------------------
+	#
+	date2=`ddhr -eh $f`
+	#
+	#-----------------------------------------------
+	# Echéance du fichier 1.
+	#-----------------------------------------------
+	#
+	date1=`ddhr -eh $pivot`
+	#
+	#-----------------------------------------------
+	# Echéance de la différence des deux fichiers.
+	#-----------------------------------------------
+	#
+	if [ "$unite" = "h" ] ; then
+		ratio="1."
+	elif [ "$unite" = "j" ] ; then
+		ratio="24."
+	else
+		echo " "
+		echo "$proc/ERREUR: unité de temps non connue!..."
+		echo "$unite"
+		echo " "
+		exit
+	fi
+	temps=`cals -ff10.4 "$date1 $date2 + 2 / $ratio /"`
+	echo $temps >> $fdate
+	#
+	#-----------------------------------------------
+	# Calcul de différence.
+	#-----------------------------------------------
+	#
+	fdiff=Diff.$temps
+	ddht -cDIFFE_EC2_EC1 -2$f -1$pivot -s$fdiff
+	#
+	#-----------------------------------------------
+	# Bilan pronostique du fichier-différence.
+	#-----------------------------------------------
+	#
+	repbddh=$fdiff.$variable
+	ddhb$variable $fdiff $repbddh
+	cp $repbddh/z*doc z.doc
+	#
+	#-----------------------------------------------
+	# Le pivot est pris égal au fichier courant.
+	#-----------------------------------------------
+	#
+	pivot=$f
+done
+#
+#-----------------------------------------------
+# Etablissement de la liste des postes du bilan.
+#-----------------------------------------------
+#
+find . -name '*.dta' -print > $pref.l1
+for item in `cat $pref.l1`
+do
+	poste=`mot 7 -2 $item`
+	echo $poste >> $pref.l2
+done
+sort -u $pref.l2 > $pref.liste_postes
+#
+#-----------------------------------------------
+# Boucle sur les postes.
+#-----------------------------------------------
+#
+for poste in `cat $pref.liste_postes`
+do
+	echo " "
+	echo "Traitement du poste $poste..."
+	#
+	#-----------------------------------------------
+	# Pour chaque poste, on établit l'évolution temporelle.
+	#-----------------------------------------------
+	#
+	find . -name "*$poste.dta" -print | sort > $pref.lposte
+	for f in `cat $pref.lposte`
+	do
+		echo "	Traitement du fichier $f..."
+		cat $f >> $pref.evol.$poste
+	done
+	#
+	#-----------------------------------------------
+	# On ajoute une autre colonne: le temps.
+	#-----------------------------------------------
+	#
+	paste $fdate $pref.evol.$poste > evol.$poste
+done
+#
+#-----------------------------------------------
+# Tracé des fichiers evol.*
+#-----------------------------------------------
+#
+fdoc=trac.doc
+dta2dd $fdoc evol.*
+for champ in TITRE DATE UNITE
+do
+	grep $champ z.doc >> $fdoc
+done
+cat <<EOF >> $fdoc
+#ORIGINE=$indexp - Dom $dom - Niv $niv
+#LEGENDE_X=t ($unite)
+#LEGENDE_Y=
+EOF
+dd2ur $fdoc
+#
+#-----------------------------------------------
+# Epilogue.
+#-----------------------------------------------
+#
+cd $dirloc
+ls -lrt
+#
+#-----------------------------------------------
+# Nettoyage.
+#-----------------------------------------------
+#
+rm -f $pref*

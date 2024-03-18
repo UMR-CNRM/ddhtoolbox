@@ -1,0 +1,36 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2015-06, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-------------------------------------------------
+# .
+#-------------------------------------------------
+#
+fref=DHFZO7DZK+0096.lfa
+fexp=DHFZO7E1B+0096.lfa
+
+ddht -cDIFFE_EXP_REFE -2$fexp -1$fref -sdiff.lfa
+cat <<EOF > lc
+VPP0
+VPP1
+VCTM
+VPPM
+EOF
+for fddh in $fref $fexp diff.lfa
+do
+  ddhmv $fddh
+  ddhi $fddh.mv
+done

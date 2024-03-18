@@ -1,0 +1,27 @@
+Idée: APRES traduction de la doc par Jean, modifier le plan:
+
+Grandes parties:
+
+1. Main principles
+
+2. Create budgets, write DDH files
+
+3. Read DDH files: cumulate, differenciate, plot budgets
+
+4. History
+
+Le chapitre 2 contiendrait les sections
+	- guide d'utilisation
+	- équation de bilan et moyenne horizontale
+	- budgets, ARPEGE and ALADIN models
+	- budgets, AROME model
+	- software maintenance
+
+Le chapitre 3 contiendrait les sections
+	- datastream and file format overview
+	- ddhr
+	- ddhi
+	- ddht
+	- ddhb 
+	- install software
+

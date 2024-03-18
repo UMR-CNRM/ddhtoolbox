@@ -1,0 +1,74 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   1999-10, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+if [ $# -eq 0 ]
+then
+	#
+	# Mauvais nombre d'arguments.
+	#
+	echo " "
+	echo "Diagrammes temps-altitude-valeur à partir de fichiers DDH comportant un seul domaine."
+	echo " "
+	echo "Utilisation: "$proc" DIAG CHAMP FDDH1 FDDH2 [... FDDHn]"
+	echo "avec"
+	echo "	DIAG: nom du fichier de sortie recevant le diagramme."
+	echo "	CHAMP: nom de la mnémonique DDH du champ; exemple: VCT1."
+	echo "	FDDH*: fichiers de DDH d'entrée."
+	echo "	"
+	echo "Exemple: "$proc" DIAG.dta VKK1 D*.lfa"
+	echo " "
+	exit
+else
+	#
+	# Nombre d'arguments OK.
+	#
+	fs=$1 ; shift ; champ=$1 ; shift
+fi
+#
+#-----------------------------------------------
+# Exécution.
+#-----------------------------------------------
+#
+cat <<EOF > $pref.lc
+$champ
+EOF
+rm -f $fs
+prefixe=$pref.int.$champ
+rm -f $prefixe*.dta
+for f in $*
+do
+	ddhi $f -s$prefixe -l$pref.lc -1TH -2VP
+	cat $prefixe*.dta >> $fs
+done
+#
+#-----------------------------------------------
+# Epilogue.
+#-----------------------------------------------
+#
+echo " "
+echo "Fichier de sortie: $fs"
+ls -l $fs
+#
+#-----------------------------------------------
+# Nettoyage.
+#-----------------------------------------------
+#
+rm -f $pref*

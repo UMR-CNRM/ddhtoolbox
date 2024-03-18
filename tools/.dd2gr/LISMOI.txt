@@ -1,0 +1,13 @@
+Objet: outils FORTRAN permettant de tracer des données et écrire des images SVG.
+
+Auteur:         
+  * 2000, Jean-Marcel Piriou: logiciel IMG.
+Modifications:  
+  * 2009, Jean-Marcel Piriou: logiciel dd2gr produisant des images matricielles (GIF, JPG, PNG, etc).
+  * 2015, Jean-Marcel Piriou: logiciel dd2gr produisant des images vectorielles SVG.
+  * 2017, Jean-Marcel Piriou: logiciel dd2gr produisant des tracés de vecteurs en SVG.
+  * 2017, Jean-Marcel Piriou: logiciel dd2gr produisant des tracés d'isolignes en SVG.
+
+La documentation de dd2gr est dans le fichier dd2gr_doc.odt .
+
+Questions, suggestions, remarques bienvenues : jean-marcel.piriou@meteo.fr .

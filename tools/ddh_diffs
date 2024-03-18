@@ -1,0 +1,833 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   1999-01, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+if [ $# -eq 3 ]
+then
+	#
+	# Nombre d'arguments OK.
+	#
+	ref=$1
+	exp=$2
+	reps=$3
+else
+	#
+	# Mauvais nombre d'arguments.
+	#
+	echo " "
+	echo "Comparaison de deux fichiers de DDH,"
+	echo "par étude des écarts de tendance, des écarts finaux, etc..."
+	echo "Ceci permet de comparer tant deux prévisions isolées"
+	echo "que deux fichiers cumulés issus de deux chaînes d'assimilation, par exemple."
+	echo "Le présent script utilise les externes ddhi, ddhr et ddht pour produire ses résultats."
+	echo " "
+	echo "ATTENTION: les deux fichiers doivent être de même échéance."
+	echo " "
+	echo "Utilisation: "$proc" F_DDH_REF F_DDH_EXP REPERTOIRE_DE_RESULTATS"
+	echo " "
+	exit
+fi
+#
+#-----------------------------------------------
+# Liste des aspects à traiter.
+# Une ligne débutant par "<tab>" est un commentaire.
+#-----------------------------------------------
+#
+cat <<EOF > $pref.aspects
+#moyenne_horizontale_tendances
+#moyenne_horizontale_init_fin
+#moyenne_verticale_tendances
+#moyenne_verticale_init_fin
+#stabilite_de_chacun_des_cycles
+#stabilite:ecart_des_val_abs_des_tend
+#derive_de_exp_versus_ref
+#precipitations_au_sol
+EOF
+fe=$pref.aspects 
+echo "Edition du fichier-liste des aspects à traiter: décommenter les aspects désirés."
+$EDITOR $fe
+cat $fe | grep -v '^#' > $pref.int ; mv $pref.int $fe
+#
+#-----------------------------------------------
+# Liste des champs à traiter.
+# Une ligne débutant par "#" est un commentaire.
+#-----------------------------------------------
+#
+fe=$pref.champs
+cat <<EOF > $fe
+#PP
+#KK
+#CT
+#QV
+#HR
+#NT
+#QL
+#QN
+EOF
+echo "Edition du fichier-liste des champs à traiter: décommenter les champs désirés."
+$EDITOR $fe
+cat $fe | grep -v '^#' > $pref.int ; mv $pref.int $fe
+#
+#-----------------------------------------------
+# Exécution.
+#-----------------------------------------------
+#
+if test ! -d $reps
+then
+	mkdir $reps
+fi
+cp $ref $reps/ref
+cp $exp $reps/exp
+cd $reps
+base=`pwd` # répertoire des résultats.
+mkdir ps # répertoire recevant les fichiers postscripts générés.
+ps=$base/ps
+#
+#-----------------------------------------------
+# Mnémoniques.
+#-----------------------------------------------
+#
+mnref=`ddhr -i ref`
+mnexp=`ddhr -i exp`
+#
+#-----------------------------------------------
+# Boucle sur les variables.
+#-----------------------------------------------
+#
+#
+#-----------------------------------------------
+# // Etude en moyenne horizontale: tendances.
+#-----------------------------------------------
+#
+res="moyenne_horizontale_tendances"
+grep $res $pref.aspects > $pref.grep
+if test -s $pref.grep ; then
+	echo "---------------------------------------------------------"
+	echo " "
+	echo " Etude en moyenne horizontale: tendances."
+	echo " "
+	echo "---------------------------------------------------------"
+	for var in `cat $pref.champs`
+	do
+		resloc=$res.$var
+		#
+		#-----------------------------------------------
+		# Prolégomènes.
+		#-----------------------------------------------
+		#
+		cd $base
+		mkdir $res
+		cd $res
+		mkdir $var
+		cd $var
+		cp $base/ref $base/exp .
+		cat <<EOF > lc
+V${var}M
+EOF
+		ddhmh ref
+		ddhmh exp
+		ddhi ref.mh ; ddhi exp.mh
+		#
+		#-----------------------------------------------
+		# Tendances,
+		# i.e. pour chaque variable on crée un graphique
+		# bicourbe: tendance ref et exp.
+		#-----------------------------------------------
+		#
+		cat <<EOF > $resloc.doc
+#FORMAT=YVI
+#ORIGINE=$mnref et $mnexp
+#CHAMP=$mnref
+#FICHIER=ref.mh.tmp.V${var}M.dta
+#CHAMP=$mnexp
+#FICHIER=exp.mh.tmp.V${var}M.dta
+#VREF=0.
+EOF
+		fic=ref.mh.tmp.V${var}M.doc
+		for item in "TITRE" "DATE" "UNITE" "LEGENDE_X" "LEGENDE_Y" "0PF"
+		do
+			grep $item $fic >> $resloc.doc
+		done
+		dd2eps $resloc.doc ; mv $resloc.doc.eps $ps
+		#
+		#-----------------------------------------------
+		# Epilogue.
+		#-----------------------------------------------
+		#
+		echo "dd2ur $resloc.doc" > TRACE.sh ; chmod 755 TRACE.sh
+		dd2eps $resloc.doc ; mv $resloc.doc.eps $ps
+	done
+fi
+#
+#-----------------------------------------------
+# // Etude en moyenne horizontale: variables initiales et finales.
+#-----------------------------------------------
+#
+res="moyenne_horizontale_init_fin"
+grep $res $pref.aspects > $pref.grep
+if test -s $pref.grep ; then
+	echo "---------------------------------------------------------"
+	echo " "
+	echo " Etude en moyenne horizontale: variables initiales et finales."
+	echo " "
+	echo "---------------------------------------------------------"
+	for var in `cat $pref.champs`
+	do
+		resloc=$res.$var
+		#
+		#-----------------------------------------------
+		# Prolégomènes.
+		#-----------------------------------------------
+		#
+		cd $base
+		mkdir $res
+		cd $res
+		mkdir $var
+		cd $var
+		cp $base/ref $base/exp .
+		cat <<EOF > lc
+V${var}1
+V${var}0
+EOF
+		ddhmh ref
+		ddhmh exp
+		ddhi ref.mh ; ddhi exp.mh
+		#
+		#-----------------------------------------------
+		# Variables initiales et finales,
+		# i.e. pour chaque variable on crée un graphique
+		# quadricourbe: initial et final de ref et exp.
+		# A chacun de ces 4 profils on soustrait un
+		# patron, ici pris égal à l'initial de ref.
+		#-----------------------------------------------
+		#
+		cp ref.mh.tmp.V${var}0.dta patron
+		for profil in *0.dta *1.dta
+		do
+			cat <<EOF> tmp.calf.nam
+			&NAMCALF
+			clent(1)='F1: $profil'
+			clent(2)='F2: patron'
+			clent(3)='F3: '
+			clent(4)='F4: '
+			clent(5)='F5: '
+			clent(6)='F6: '
+			clent(7)='F7: '
+			clent(8)='F8: '
+			clent(9)='F9: '
+			clop1='C1: c11'
+			clop2='C2: c12 c22 -'
+			clop3='C3: '
+			clop4='C4: '
+			clop5='C5: '
+			clop6='C6: '
+			clop7='C7: '
+			clop8='C8: '
+			clop9='C9: '
+			clficout='mpatron.$profil'
+			clformat='(9ES16.7)'
+			&END
+EOF
+			calf tmp.calf.nam ; rm tmp.calf.nam
+		done
+		#
+		#-----------------------------------------------
+		# Pour chaque variable on crée un graphique
+		# quadricourbe: initial et final, ref et exp.
+		#-----------------------------------------------
+		#
+		cat <<EOF > $resloc.doc
+#FORMAT=YVI
+#ORIGINE=$mnref et $mnexp
+#CHAMP=$mnref INITIAL
+#FICHIER=mpatron.ref.mh.tmp.V${var}0.dta
+#CHAMP=$mnref FINAL
+#FICHIER=mpatron.ref.mh.tmp.V${var}1.dta
+#CHAMP=$mnexp INITIAL
+#FICHIER=mpatron.exp.mh.tmp.V${var}0.dta
+#CHAMP=$mnexp FINAL
+#FICHIER=mpatron.exp.mh.tmp.V${var}1.dta
+#VREF=0.
+EOF
+		fic=ref.mh.tmp.V${var}0.doc
+		for item in "TITRE" "DATE" "UNITE" "LEGENDE_X" "LEGENDE_Y"
+		do
+			grep $item $fic >> $resloc.doc
+		done
+		dd2eps $resloc.doc ; mv $resloc.doc.eps $ps
+		#
+		#-----------------------------------------------
+		# Epilogue.
+		#-----------------------------------------------
+		#
+		echo "dd2ur $resloc.doc" > TRACE.sh ; chmod 755 TRACE.sh
+		dd2eps $resloc.doc ; mv $resloc.doc.eps $ps
+	done
+fi
+#
+#-----------------------------------------------
+# // Etude en moyenne verticale: tendances.
+#-----------------------------------------------
+#
+res="moyenne_verticale_tendances"
+grep $res $pref.aspects > $pref.grep
+if test -s $pref.grep ; then
+	echo "---------------------------------------------------------"
+	echo " "
+	echo " Etude en moyenne verticale: tendances."
+	echo " "
+	echo "---------------------------------------------------------"
+	for var in `cat $pref.champs`
+	do
+		resloc=$res.$var
+		#
+		#-----------------------------------------------
+		# Prolégomènes.
+		#-----------------------------------------------
+		#
+		cd $base
+		mkdir $res
+		cd $res
+		mkdir $var
+		cd $var
+		cp $base/ref $base/exp .
+		cat <<EOF > lc
+V${var}M
+EOF
+		ddhmv ref
+		ddhmv exp
+		ddhi ref.mv ; ddhi exp.mv
+		#
+		#-----------------------------------------------
+		# Tendances,
+		# i.e. pour chaque variable on crée un graphique
+		# bicourbe: tendance ref et exp.
+		#-----------------------------------------------
+		#
+		cat <<EOF > $resloc.doc
+#FORMAT=XVI
+#ORIGINE=$mnref et $mnexp
+#CHAMP=$mnref
+#FICHIER=ref.mv.tmp.V${var}M.dta
+#CHAMP=$mnexp
+#FICHIER=exp.mv.tmp.V${var}M.dta
+#VREF=0.
+EOF
+		fic=ref.mv.tmp.V${var}M.doc
+		for item in "TITRE" "DATE" "UNITE" "LEGENDE_X" "LEGENDE_Y" "0PF"
+		do
+			grep $item $fic >> $resloc.doc
+		done
+		dd2eps $resloc.doc ; mv $resloc.doc.eps $ps
+		#
+		#-----------------------------------------------
+		# Epilogue.
+		#-----------------------------------------------
+		#
+		echo "dd2ur $resloc.doc" > TRACE.sh ; chmod 755 TRACE.sh
+		dd2eps $resloc.doc ; mv $resloc.doc.eps $ps
+	done
+fi
+#
+#-----------------------------------------------
+# // Etude en moyenne verticale: variables initiales et finales.
+#-----------------------------------------------
+#
+res="moyenne_verticale_init_fin"
+grep $res $pref.aspects > $pref.grep
+if test -s $pref.grep ; then
+	echo "---------------------------------------------------------"
+	echo " "
+	echo " Etude en moyenne verticale: variables initiales et finales."
+	echo " "
+	echo "---------------------------------------------------------"
+	for var in `cat $pref.champs`
+	do
+		resloc=$res.$var
+		#
+		#-----------------------------------------------
+		# Prolégomènes.
+		#-----------------------------------------------
+		#
+		cd $base
+		mkdir $res
+		cd $res
+		mkdir $var
+		cd $var
+		cp $base/ref $base/exp .
+		cat <<EOF > lc
+V${var}1
+V${var}0
+EOF
+		ddhmv ref
+		ddhmv exp
+		ddhi ref.mv ; ddhi exp.mv
+		#
+		#-----------------------------------------------
+		# Variables initiales et finales,
+		# i.e. pour chaque variable on crée un graphique
+		# quadricourbe: initial et final de ref et exp.
+		# A chacun de ces 4 profils on soustrait un
+		# patron, ici pris égal à l'initial de ref.
+		#-----------------------------------------------
+		#
+		cp ref.mv.tmp.V${var}0.dta patron
+		for profil in *0.dta *1.dta
+		do
+			cat <<EOF> tmp.calf.nam
+			&NAMCALF
+			clent(1)='F1: $profil'
+			clent(2)='F2: patron'
+			clent(3)='F3: '
+			clent(4)='F4: '
+			clent(5)='F5: '
+			clent(6)='F6: '
+			clent(7)='F7: '
+			clent(8)='F8: '
+			clent(9)='F9: '
+			clop1='C1: c11'
+			clop2='C2: c12 c22 -'
+			clop3='C3: '
+			clop4='C4: '
+			clop5='C5: '
+			clop6='C6: '
+			clop7='C7: '
+			clop8='C8: '
+			clop9='C9: '
+			clficout='mpatron.$profil'
+			clformat='(9ES16.7)'
+			&END
+EOF
+			calf tmp.calf.nam ; rm tmp.calf.nam
+		done
+		#
+		#-----------------------------------------------
+		# Pour chaque variable on crée un graphique
+		# quadricourbe: initial et final, ref et exp.
+		#-----------------------------------------------
+		#
+		cat <<EOF > $resloc.doc
+#FORMAT=XVI
+#ORIGINE=$mnref et $mnexp
+#CHAMP=$mnref INITIAL
+#FICHIER=mpatron.ref.mv.tmp.V${var}0.dta
+#CHAMP=$mnref FINAL
+#FICHIER=mpatron.ref.mv.tmp.V${var}1.dta
+#CHAMP=$mnexp INITIAL
+#FICHIER=mpatron.exp.mv.tmp.V${var}0.dta
+#CHAMP=$mnexp FINAL
+#FICHIER=mpatron.exp.mv.tmp.V${var}1.dta
+#VREF=0.
+EOF
+		fic=ref.mv.tmp.V${var}0.doc
+		for item in "TITRE" "DATE" "UNITE" "LEGENDE_X" "LEGENDE_Y"
+		do
+			grep $item $fic >> $resloc.doc
+		done
+		dd2eps $resloc.doc ; mv $resloc.doc.eps $ps
+		#
+		#-----------------------------------------------
+		# Epilogue.
+		#-----------------------------------------------
+		#
+		echo "dd2ur $resloc.doc" > TRACE.sh ; chmod 755 TRACE.sh
+		dd2eps $resloc.doc ; mv $resloc.doc.eps $ps
+	done
+fi
+#
+#-----------------------------------------------
+# // Stabilité de chacun des cycles.
+#-----------------------------------------------
+#
+res="stabilite_de_chacun_des_cycles"
+grep $res $pref.aspects > $pref.grep
+if test -s $pref.grep ; then
+	echo "---------------------------------------------------------"
+	echo " "
+	echo " STABILITE DU CYCLE DE LA VARIABLE "$var
+	echo " TRACE DE V${var}M pour chacune des chaînes"
+	echo " "
+	echo "---------------------------------------------------------"
+	for var in `cat $pref.champs`
+	do
+		resloc=$res.$var
+		#
+		#-----------------------------------------------
+		# Prolégomènes.
+		#-----------------------------------------------
+		#
+		cd $base
+		mkdir $res
+		cd $res
+		mkdir $var
+		cd $var
+		cp $base/ref $base/exp .
+		cat <<EOF > lc
+V${var}M
+EOF
+		ddhi ref ; ddhi exp
+		#
+		#-----------------------------------------------
+		# Epilogue.
+		#-----------------------------------------------
+		#
+		echo "dd2ur ref.tmp.V${var}M.doc ; dd2ur exp.tmp.V${var}M.doc" > TRACE.sh ; chmod 755 TRACE.sh
+		dd2eps ref.tmp.V${var}M.doc exp.tmp.V${var}M.doc ; mv ref.tmp.V${var}M.doc.eps exp.tmp.V${var}M.doc.eps $ps
+	done
+fi
+#
+#-----------------------------------------------
+# // Lequel des deux cycles est-il le plus stable?
+#-----------------------------------------------
+#
+res="stabilite:ecart_des_val_abs_des_tend"
+grep $res $pref.aspects > $pref.grep
+if test -s $pref.grep ; then
+	echo "---------------------------------------------------------"
+	echo " "
+	echo " Lequel des deux cycles est-il le plus stable?"
+	echo " Ecart des valeurs absolues des tendances."  
+	echo " Variable: $var."
+	echo " "
+	echo "---------------------------------------------------------"
+	for var in `cat $pref.champs`
+	do
+		resloc=$res.$var
+		#
+		#-----------------------------------------------
+		# Prolégomènes.
+		#-----------------------------------------------
+		#
+		cd $base
+		mkdir $res
+		cd $res
+		mkdir $var
+		cd $var
+		cp $base/ref $base/exp .
+		cat <<EOF > lc
+V${var}M
+EOF
+		ddhi ref ; ddhi exp
+		cat <<EOF> tmp.calf.nam
+		&NAMCALF
+		clent(1)='F1: ref.tmp.V${var}M.dta'
+		clent(2)='F2: exp.tmp.V${var}M.dta'
+		clent(3)='F3: '
+		clent(4)='F4: '
+		clent(5)='F5: '
+		clent(6)='F6: '
+		clent(7)='F7: '
+		clent(8)='F8: '
+		clent(9)='F9: '
+		clop1='C1: c11'
+		clop2='C2: c12'
+		clop3='C3: c23 abs c13 abs -'
+		clop4='C4: '
+		clop5='C5: '
+		clop6='C6: '
+		clop7='C7: '
+		clop8='C8: '
+		clop9='C9: '
+		clficout='$res'
+		clformat='(9ES16.7)'
+		&END
+EOF
+		calf tmp.calf.nam ; rm tmp.calf.nam
+		#
+		#-----------------------------------------------
+		# Informations de géométrie, dates, légendes des axes, etc...
+		#-----------------------------------------------
+		#
+		rm -f $resloc.doc 
+		fic=ref.tmp.V${var}M.doc
+		for item in "FORMAT" "DATE" "INTERPOLE" "UNITE" "LEGENDE_X" "LEGENDE_Y" "0PF"
+		do
+			grep $item $fic >> $resloc.doc
+		done
+		echo "#FICHIER=$res" >> $resloc.doc
+		#
+		#-----------------------------------------------
+		# Min et max.
+		#-----------------------------------------------
+		#
+		dta2dd gol.doc $res
+		fic=gol.doc
+		for item in "MIN" "MAX" "MOY" "ECT" "RCM"
+		do
+			grep $item $fic >> $resloc.doc
+		done
+		#
+		#-----------------------------------------------
+		# Titres en clair.
+		#-----------------------------------------------
+		#
+		echo "#TITRE=Ecart des valeurs absolues des tendances" >> $resloc.doc
+		echo "#ORIGINE=$mnexp - $mnref" >> $resloc.doc
+		#
+		#-----------------------------------------------
+		# Epilogue.
+		#-----------------------------------------------
+		#
+		echo "dd2ur $resloc.doc" > TRACE.sh ; chmod 755 TRACE.sh
+		dd2eps $resloc.doc ; mv $resloc.doc.eps $ps
+	done
+fi
+#
+#-----------------------------------------------
+# // Dérive d'une chaîne par rapport à l'autre?
+#-----------------------------------------------
+#
+res="derive_de_exp_versus_ref"
+grep $res $pref.aspects > $pref.grep
+if test -s $pref.grep ; then
+	echo "---------------------------------------------------------"
+	echo " "
+	echo " Dérive d'une chaîne par rapport à l'autre? "$var
+	echo " "
+	echo "---------------------------------------------------------"
+	for var in `cat $pref.champs`
+	do
+		if [ "$var" = "CT" ] ; then
+			champ="de température"
+		elif [ "$var" = "KK" ] ; then
+			champ="d'énergie cinétique"
+		elif [ "$var" = "QV" ] ; then
+			champ="d'humidité spécifique vapeur"
+		elif [ "$var" = "HR" ] ; then
+			champ="d'humidité relative"
+		elif [ "$var" = "NT" ] ; then
+			champ="de nébulosité totale"
+		elif [ "$var" = "QL" ] ; then
+			champ="d'humidité spécifique liquide"
+		elif [ "$var" = "QN" ] ; then
+			champ="d'humidité spécifique glace"
+		else
+			champ="de la variable $var"
+		fi
+		#
+		#-----------------------------------------------
+		# Prolégomènes.
+		#-----------------------------------------------
+		#
+		cd $base
+		mkdir $res
+		cd $res
+		mkdir $var
+		cd $var
+		cp $base/ref $base/exp .
+		cat <<EOF > lc
+V${var}1
+EOF
+		ddhi ref ; ddhi exp
+		#
+		#-----------------------------------------------
+		# Ecart absolu exp - ref.
+		#-----------------------------------------------
+		#
+		resloc=$res.$var.absolu
+		cat <<EOF> tmp.calf.nam
+		&NAMCALF
+		clent(1)='F1: ref.tmp.V${var}1.dta'
+		clent(2)='F2: exp.tmp.V${var}1.dta'
+		clent(3)='F3: '
+		clent(4)='F4: '
+		clent(5)='F5: '
+		clent(6)='F6: '
+		clent(7)='F7: '
+		clent(8)='F8: '
+		clent(9)='F9: '
+		clop1='C1: c11'
+		clop2='C2: c12'
+		clop3='C3: c23 c13 -'
+		clop4='C4: '
+		clop5='C5: '
+		clop6='C6: '
+		clop7='C7: '
+		clop8='C8: '
+		clop9='C9: '
+		clficout='$resloc.diff.dta'
+		clformat='(9ES16.7)'
+		&END
+EOF
+		calf tmp.calf.nam ; rm tmp.calf.nam
+		#
+		#-----------------------------------------------
+		# Informations de géométrie, dates, légendes des axes, etc...
+		#-----------------------------------------------
+		#
+		rm -f $resloc.doc 
+		fic=ref.tmp.V${var}1.doc
+		for item in "FORMAT" "DATE" "INTERPOLE" "LEGENDE_X" "LEGENDE_Y" "0PF" "UNITE"
+		do
+			grep $item $fic >> $resloc.doc
+		done
+		echo "#TITRE=Ecart absolu $champ" >> $resloc.doc
+		echo "#FICHIER=$resloc.diff.dta" >> $resloc.doc
+		echo "#ORIGINE=$mnexp - $mnref" >> $resloc.doc
+		#
+		#-----------------------------------------------
+		# Epilogue.
+		#-----------------------------------------------
+		#
+		echo "dd2ur $resloc.doc" > TRACE.sh ; chmod 755 TRACE.sh
+		freq $resloc.diff.dta ; cl2cmd freq.tmp.cl c.cmd
+		dd2eps $resloc.doc ; cp $resloc.doc.eps $ps
+		#
+		#-----------------------------------------------
+		# Ecart relatif exp - ref en %.
+		#-----------------------------------------------
+		#
+		resloc=$res.$var.relatif
+		cat <<EOF> tmp.calf.nam
+		&NAMCALF
+		clent(1)='F1: ref.tmp.V${var}1.dta'
+		clent(2)='F2: exp.tmp.V${var}1.dta'
+		clent(3)='F3: '
+		clent(4)='F4: '
+		clent(5)='F5: '
+		clent(6)='F6: '
+		clent(7)='F7: '
+		clent(8)='F8: '
+		clent(9)='F9: '
+		clop1='C1: c11'
+		clop2='C2: c12'
+		clop3='C3: c13 c23 %ch'
+		clop4='C4: '
+		clop5='C5: '
+		clop6='C6: '
+		clop7='C7: '
+		clop8='C8: '
+		clop9='C9: '
+		clficout='$resloc.diff.dta'
+		clformat='(9ES16.7)'
+		&END
+EOF
+		calf tmp.calf.nam ; rm tmp.calf.nam
+		#
+		#-----------------------------------------------
+		# Informations de géométrie, dates, légendes des axes, etc...
+		#-----------------------------------------------
+		#
+		rm -f $resloc.doc 
+		fic=ref.tmp.V${var}1.doc
+		for item in "FORMAT" "DATE" "INTERPOLE" "LEGENDE_X" "LEGENDE_Y" "0PF"
+		do
+			grep $item $fic >> $resloc.doc
+		done
+		echo "#TITRE=Ecart relatif $champ" >> $resloc.doc
+		echo "#FICHIER=$resloc.diff.dta" >> $resloc.doc
+		echo "#ORIGINE=$mnexp - $mnref" >> $resloc.doc
+		echo "#UNITE=%" >> $resloc.doc
+		#
+		#-----------------------------------------------
+		# Epilogue.
+		#-----------------------------------------------
+		#
+		echo "dd2ur $resloc.doc" >> TRACE.sh ; chmod 755 TRACE.sh
+		freq $resloc.diff.dta ; cl2cmd freq.tmp.cl c.cmd
+		dd2eps $resloc.doc ; cp $resloc.doc.eps $ps
+		2ps -noview *eps $ps/$res.$var.ps
+	done
+fi
+#
+#-----------------------------------------------
+# // Précipitations.
+#-----------------------------------------------
+#
+res="precipitations_au_sol"
+grep $res $pref.aspects > $pref.grep
+if test -s $pref.grep ; then
+	echo "---------------------------------------------------------"
+	echo " "
+	echo " Précipitations "
+	echo " "
+	echo "---------------------------------------------------------"
+	resloc=$res
+	#
+	#-----------------------------------------------
+	# Prolégomènes.
+	#-----------------------------------------------
+	#
+	cd $base
+	mkdir $res
+	cd $res
+	cp $base/ref $base/exp .
+	ddh_prec ref
+	ddh_prec exp
+	#
+	#-----------------------------------------------
+	# Informations de géométrie, dates, légendes des axes, etc...
+	#-----------------------------------------------
+	#
+	echo "#FORMAT=XVI" > $resloc.doc
+	fic=ref.TOTAL.FQTPRECI.doc
+	for item in "DATE" "UNITE" "LEGENDE_X" "LEGENDE_Y"
+	do
+		grep $item $fic >> $resloc.doc
+	done
+	#
+	#-----------------------------------------------
+	# Titres en clair.
+	#-----------------------------------------------
+	#
+	cat <<EOF >> $resloc.doc
+#TITRE=Précipitations et évaporation au sol
+#ORIGINE=$mnexp et $mnref
+#CHAMP=$mnref précipitations
+#FICHIER=ref.TOTAL.FQTPRECI.dta
+#CHAMP=$mnexp précipitations
+#FICHIER=exp.TOTAL.FQTPRECI.dta
+#CHAMP=$mnref évaporation
+#FICHIER=ref.FQVTUR.dta
+#CHAMP=$mnexp évaporation
+#FICHIER=exp.FQVTUR.dta
+EOF
+	#
+	#-----------------------------------------------
+	# Epilogue.
+	#-----------------------------------------------
+	#
+	echo "dd2ur $resloc.doc" > TRACE.sh ; chmod 755 TRACE.sh
+	dd2eps $resloc.doc ; mv $resloc.doc.eps $ps
+fi
+#
+#-----------------------------------------------
+# Epilogue.
+#-----------------------------------------------
+#
+cd $dirloc
+echo "---------------------------------------------------------"
+echo " "
+echo " $proc/EPILOGUE: les tracés ont été préparés sur les répertoires suivants:"
+echo " "
+echo "---------------------------------------------------------"
+find . -type d -name '*' -print | sort
+echo "---------------------------------------------------------"
+echo " "
+echo " $proc/EPILOGUE: fichiers postscripts générés:"
+echo " "
+echo "---------------------------------------------------------"
+find $reps/ps -name '*' -print | sort
+#
+#-----------------------------------------------
+# Nettoyage.
+#-----------------------------------------------
+#
+rm -f $pref*

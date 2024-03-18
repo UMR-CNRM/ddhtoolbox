@@ -1,0 +1,20 @@
+%---------------------------------------------------------------------------
+%
+% Fichier appelant les déclarations utiles au style book en Anglais.
+%
+%---------------------------------------------------------------------------
+\documentclass[11pt,a4paper,twoside,english,dvips]{book}
+%
+%-----------------------------------------------
+% Paquets de sources LATEX.
+%-----------------------------------------------
+%
+\input{paquets.tex}
+%
+%-----------------------------------------------
+% Définitions JMP.
+%-----------------------------------------------
+%
+\input{boo.tex}
+\input{com.tex}
+\input{eng.tex}

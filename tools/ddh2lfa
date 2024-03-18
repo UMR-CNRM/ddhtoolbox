@@ -1,0 +1,60 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2000-03, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+if [ $# -eq 0 ]
+then
+	#
+	# Mauvais nombre d'arguments.
+	#
+	echo " "
+	echo "Transforme tous les fichiers de DDH LFI en LFA."
+	echo "Les fichiers sont en entrée/sortie."
+	echo "Les fichiers déjà LFA sont inchangés."
+	echo " "
+	echo "Utilisation: $proc F1 [F2 ... Fn]"
+	echo " "
+	exit
+fi
+#
+#-----------------------------------------------
+# Exécution.
+#-----------------------------------------------
+#
+for f in $*
+do
+	type_d=`typf $f`
+	if [ "$type_d" = "lfi" ] ; then
+		echo "Conversion du fichier $type_d $f..."
+		ddh-lfi2lfa $f $pref.lfa
+		mv $pref.lfa $f
+	fi
+done
+#
+#-----------------------------------------------
+# Epilogue.
+#-----------------------------------------------
+#
+#
+#-----------------------------------------------
+# Nettoyage.
+#-----------------------------------------------
+#
+rm -f $pref*

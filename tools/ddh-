@@ -1,0 +1,93 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Différence de deux fichiers de DDH.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   97-01, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+option=DIFFE_EXP_REFE
+if [ $# -eq 2 ]
+then
+	f1=$1
+	f2=$2
+	base=`basename $f1`-`basename $f2`
+	dir=`dirname $f1`
+	fs=$dir"/"$base
+elif [ $# -eq 3 ]
+then
+	f1=$1
+	f2=$2
+	fs=$3
+else
+	echo " "
+	echo "Différence de deux fichiers de DDH."
+	echo "Effectue la différence (f1-f2), de type "$option"."
+	echo " "
+	echo "Utilisation: ddh- f1 f2 [fs]"
+	echo " "
+	echo "Le résultat est porté sur fs si cet argument est fourni,"
+	echo "et sur le fichier de nom f1-f2 sinon."
+	echo " "
+	exit
+fi
+#
+#-----------------------------------------------
+# Nettoyage préalable.
+#-----------------------------------------------
+#
+rm -f $fs
+#
+#-----------------------------------------------
+# On force les deux échéances à être égales.
+#-----------------------------------------------
+#
+echeance1=`ddhr -ej $f1`
+echeance2=`ddhr -ej $f2`
+if [ "$echeance1" != "$echeance2" ] ; then
+	echo "---------------------------------------------------------------------------------------"
+	echo " "
+	echo "ATTENTION: les deux échéances d'entrée étaient différentes: $echeance1 et $echeance2 jours respectivement."
+	echo "L'échéance de $f1 a été ajustée sur celle de $f2 avant différence."
+	echo " "
+	echo "---------------------------------------------------------------------------------------"
+	exe="ddhmech $f1 $echeance2 $pref.lfa"
+	echo $exe
+	$exe
+else
+	cp $f1 $pref.lfa
+fi
+#
+#-----------------------------------------------
+# Différence.
+#-----------------------------------------------
+#
+ddht -c$option -2$pref.lfa -1$f2 -s$fs
+#
+#-----------------------------------------------
+# Epilogue.
+#-----------------------------------------------
+#
+if test -s $fs
+then
+	echo "Fichier généré: "$fs
+else
+	echo " "
+	echo "$proc/ERREUR: fichier $fs non généré!..."
+  exit 1
+fi

@@ -1,0 +1,51 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2015-05, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+if [ $# -ne 3 ]
+then
+  #
+  # Mauvais nombre d'arguments.
+  #
+  echo " "
+  echo "OBJET: Interpolation d'un fichier DDH sur un autre."
+  echo " "
+  echo "UTILISATION: $proc F1 F2 FSORTIE"
+  echo "va interpoler le fichier F1 sur la grille de F2, le résultat étant sur FSORTIE."
+  echo "Si F1 et F2 ont le même nombre de niveaux et de domaines, simple copie de F1 sur FSORTIE."
+  echo " "
+  exit
+else
+  #
+  # Nombre d'arguments OK.
+  #
+  f1=$1
+  f2=$2
+  fs=$3
+fi
+n1=`ddhr -n $f1` ; n2=`ddhr -n $f2`
+d1=`ddhr -d $f1` ; d2=`ddhr -d $f2`
+if [[ "$n1" = "$n2" && "$d1" == "$d2" ]] ; then
+  echo "$proc: les 2 fichiers DDH d'entrée ont la même grille ; simple copie."
+  cp $f1 $fs
+else
+  echo "$proc: interpolation..."
+  ddht -cINTERPOL -1$f1 -2$f2 -s$fs
+fi

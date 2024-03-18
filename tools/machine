@@ -1,0 +1,46 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Recognize machine type.
+# --------------------------------------------------------------
+# Subject:
+# Method:
+# Externals:
+# Author:   98-03, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# In input:
+# In output:
+# --------------------------------------------------------------
+pref=/tmp/machine.$RANDOM # prefix for temporary files.
+uname -a > $pref.name # get machine type from UNIX system.
+#
+#-----------------------------------------------
+# Convert UNIX output to clear name.
+#-----------------------------------------------
+#
+machine="UNKNOWN"
+for chain in "HP-UX" "CRAY" "F700" "SUN" "Linux" "alpha"
+do
+	grep -i $chain $pref.name > $pref.grep
+	if test -s $pref.grep ; then
+		if [ "$chain" = "F700" ] ; then
+			machine="FUJITSU"
+		elif [ "$chain" = "alpha" ] ; then
+			machine="DEC"
+		else
+			machine=$chain
+		fi
+	fi
+done
+#
+#-----------------------------------------------
+# Print out result.
+#-----------------------------------------------
+#
+echo $machine
+#
+#-----------------------------------------------
+# Cleanings.
+#-----------------------------------------------
+#
+rm -f $pref*

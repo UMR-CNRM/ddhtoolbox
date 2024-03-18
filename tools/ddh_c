@@ -1,0 +1,102 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   1999-09, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+if [ $# -eq 0 ]
+then
+	#
+	# Mauvais nombre d'arguments.
+	#
+	echo " "
+	echo "Tracé des condensats liquides et neigeux d'un ou plusieurs fichiers de DDH."
+	echo " "
+	echo "Utilisation: "$proc" F1 [F2 ... Fn]"
+	echo " "
+	exit
+fi
+#
+#-----------------------------------------------
+# Exécution.
+#-----------------------------------------------
+#
+for f in $*
+do
+	#
+	#-----------------------------------------------
+	# ql, qn et nébulosité en moyenne verticale.
+	#-----------------------------------------------
+	#
+	cat <<EOF > lc
+VQL1
+VQN1
+VPP1
+EOF
+	ddhmv $f ; ddhi $f.mv
+	#
+	#-----------------------------------------------
+	# Addition liquide + neigeux et multiplication par la masse surfacique
+	# pour passer des kg/kg aux kg/m2.
+	#-----------------------------------------------
+	#
+	cat <<EOF> tmp.calf.nam
+	&NAMCALF
+	clent(1)='F1: $f.mv.tmp.VQL1.dta'
+	clent(2)='F2: $f.mv.tmp.VQN1.dta'
+	clent(3)='F3: $f.mv.tmp.VPP1.dta'
+	clent(4)='F4: '
+	clent(5)='F5: '
+	clent(6)='F6: '
+	clent(7)='F7: '
+	clent(8)='F8: '
+	clent(9)='F9: '
+	clop1='C1: c11'
+	clop2='C2: c12 c22 + c32 100 * 9.80665 / *'
+	clop3='C3: '
+	clop4='C4: '
+	clop5='C5: '
+	clop6='C6: '
+	clop7='C7: '
+	clop8='C8: '
+	clop9='C9: '
+	clficout='$f.mv.tmp.QC.dta'
+	clformat='(9EN17.7)'
+	&END
+EOF
+	calf tmp.calf.nam ; rm tmp.calf.nam
+done
+#
+#-----------------------------------------------
+# On amène sur le répertoire courant les climatologies-références.
+#-----------------------------------------------
+#
+cp `basejmp`/ch/obs/ssmi/SSMI*.dta .
+dta2ur SSMI*.dta *.mv.tmp.QC.dta
+#
+#-----------------------------------------------
+# Epilogue.
+#-----------------------------------------------
+#
+ls -l
+#
+#-----------------------------------------------
+# Nettoyage.
+#-----------------------------------------------
+#
+rm -f $pref*

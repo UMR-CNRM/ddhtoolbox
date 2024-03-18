@@ -1,0 +1,19 @@
+SYSTEMD sur les DDH, mardi 17 septembre 2019 14h, salle Joël Noilhan.
+
+DDH: Diagnostics en Domaines Horizontaux, un outil pour AROME et ARPEGE
+
+Tout ce que vous pouvez -devez- savoir sur les DDH ;)
+
+Les DDH ça permet de sortir des moyennes zonales, mais aussi des moyennes sur domaines variés donnés en lat-lon via namelist, on peut s'en servir également pour "pipeter" la valeur de n'importe quel champ en un lieu donné, lieu fourni en namelist par sa latitude et longitude.
+
+Suite aux travaux récents de Fabrice sur les DDH flexibles, une simple ligne de code suffit pour ajouter le champ de votre choix à la liste des champs de DDH. 
+
+Elle ajoute à la volée votre nouveau diagnostic comme une variable DDH nouvelle, dont vous pouvez alors disposer sous forme de profil sur le domaine de votre choix: zonal, domaine limité, ou en un point. Des coupes verticales sont également possibles.
+
+Les DDH aident donc à développer / déboguer dans AROME et ARPEGE.
+
+Ils peuvent également servir à la validation des cycles, permettant par exemple, par la sortie de DDH sur les premiers pas de temps modèle, de voir quelle partie du modèle est responsable d'une prévision différente: dynamique, rayonnement solaire, thermique, turbulence, ondes de gravité,etc.
+
+Fabrice vous montrera comment ajouter de nouveaux champs aux DDH, Jean-Marcel comment les lire / tracer sur votre PC. Venez nombreux !!
+ 
+Jean-Marcel et Fabrice

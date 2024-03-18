@@ -1,0 +1,183 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   97-01, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+if [ $# -eq 1 ]
+then
+  fe=$1
+else
+  echo " "
+  echo "Cellule de Hadley d'un fichier de DDH, i.e. coupe verticale (vent méridien, vitesse verticale)."
+  echo " "
+  echo "Utilisation: $proc fic_ddh"
+  echo " "
+  exit
+fi
+for instant in 0 1
+do
+  cat <<EOF > $pref.lc
+VOM$instant
+VVV$instant
+VPP$instant
+VCT$instant
+EOF
+  ddh=ZO
+  #ddhi -1HLAT -2VZ -l$pref.lc $fe
+  ddhi -1HLAT -2VP -l$pref.lc $fe
+  #
+  # Les champs calculés sont 
+  # 1. latitude
+  # 2. pression
+  # 3. vent méridien
+  # 4. vitesse verticale (on passe de oméga à cette vitesse
+  #    en supposant le lien p-T de l'atmosphère-standard)
+  #    multipliée par 588 (inverse du rapport d'aspect entre la hauteur
+  #    et la largeur atmosphériques).
+  # 5. sqrt(c3^2+c4^2)
+  #
+  fs=$fe
+  rapa=300 # rapport d'aspect.
+  cat <<EOF > calf.nam
+  &NAMCALF
+    clent(1)='f1: $fe.tmp.VOM$instant.dta'
+    clent(2)='f2: $fe.tmp.VVV$instant.dta'
+    clent(3)='f3: $fe.tmp.VPP$instant.dta'
+    clent(4)='f4: $fe.tmp.VCT$instant.dta'
+    clent(5)='f5: '
+    clent(6)='f6: '
+    clent(7)='f7: '
+    clent(8)='f8: '
+    clent(9)='f9: '
+    clop1='c1: c11'
+    clop2='c2: c12 -50 sss'
+    clop3='c3: c23 '
+    clop4='c4: c13 chs 287.05 * 9.80665 / c43 * c32 -100 * / $rapa *'
+    clop5=' '
+    clop6='c5: c23 x^2 c13 chs 287.05 * 9.80665 / c43 * c32 -100 * / x^2 + 2 / c6: '
+    clop7='c7: '
+    clop8='c8: '
+    clop9='c9: '
+    clficout='$fs.xyuvc.$instant.tmp.dta'
+    clformat='(9ES16.7)'
+  &END
+EOF
+  calf ; rm calf.nam
+  base_ech=`ddhr -be $fe`
+  if test $instant = "0"
+  then
+    champ='INITIAL'
+  elif test $instant = "1"
+  then
+    champ='FINAL'
+  else
+    echo "hadley/ERREUR: type d'instant inconnu!..."
+    exit
+  fi
+  #
+  #-----------------------------------------------
+  # Fichier "doc" en vue des graphiques.
+  #-----------------------------------------------
+  #
+  fdoc=$fs.xyuvc.$instant.tmp.doc
+  fdta=$fs.xyuvc.$instant.tmp.dta
+  cat <<EOF > $fdoc
+#FORMAT=XYUVC
+EOF
+grep "#LEGENDE" $fe.tmp.VOM$instant.doc >> $fdoc
+grep "#DATE" $fe.tmp.VOM$instant.doc >> $fdoc
+grep "#ORIGINE" $fe.tmp.VOM$instant.doc >> $fdoc
+grep "#GRILLE" $fe.tmp.VOM$instant.doc >> $fdoc
+cat <<EOF >> $fdoc
+#TITRE=Vecteur vent (méridien et vertical) $champ
+#FICHIER=$fdta
+#UNITE=Ecin (J/kg)
+#LEGENDE_U=v
+#LEGENDE_V=w
+#LEGENDE_C=Ecin
+#ECHELLE_VECTEURS=6.
+  #VMIN=-10.
+  #VMAX=60.
+#IMAGE=1800 900
+EOF
+  #v $fdoc
+done # instant
+#
+#-------------------------------------------------
+# Différence final - initial.
+#-------------------------------------------------
+#
+cat <<EOF > calf.nam
+&NAMCALF
+  clent(1)='f1: $fs.xyuvc.0.tmp.dta'
+  clent(2)='f2: $fs.xyuvc.1.tmp.dta'
+  clent(3)='f3: '
+  clent(4)='f4: '
+  clent(5)='f5: '
+  clent(6)='f6: '
+  clent(7)='f7: '
+  clent(8)='f8: '
+  clent(9)='f9: '
+  clop1='c1: c11'
+  clop2='c2: c12 -50 sss'
+  clop3='c3: c23 c13 - '
+  clop4='c4: c24 c14 - '
+  clop5=' '
+  clop6='c5: c25 c15 - c6: '
+  clop7='c7: '
+  clop8='c8: '
+  clop9='c9: '
+  clficout='$fs.xyuvc.D.tmp.dta'
+  clformat='(9ES16.7)'
+&END
+EOF
+calf ; rm calf.nam
+#
+#-----------------------------------------------
+# Fichier "doc" en vue du graphique.
+#-----------------------------------------------
+#
+fdoc=$fs.xyuvc.D.tmp.doc
+fdta=$fs.xyuvc.D.tmp.dta
+cat <<EOF > $fdoc
+#FORMAT=XYUVC
+EOF
+grep "#LEGENDE" $fe.tmp.VOM0.doc >> $fdoc
+grep "#DATE" $fe.tmp.VOM0.doc >> $fdoc
+grep "#ORIGINE" $fe.tmp.VOM0.doc >> $fdoc
+grep "#GRILLE" $fe.tmp.VOM0.doc >> $fdoc
+cat <<EOF >> $fdoc
+#TITRE=Tendance de vecteur vent (méridien et vertical)
+#FICHIER=$fdta
+#UNITE=delta Ecin (J/kg)
+#LEGENDE_U=v
+#LEGENDE_V=w
+#LEGENDE_C=Ecin
+#ECHELLE_VECTEURS=6.
+  #VMIN=-10.
+  #VMAX=60.
+#IMAGE=1800 900
+EOF
+  #v $fdoc
+#
+#-------------------------------------------------
+# Epilogue.
+#-------------------------------------------------
+#
+ls -l $fs.xyuvc.*

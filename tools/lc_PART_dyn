@@ -1,0 +1,44 @@
+FCTFLUVERTDYN # TEMPERATURE : FLUX VERTICAL DYNAMIQUE                       K/day
+FKKFLUVERTDYN # ENERGIE CIN : FLUX VERTICAL DYNAMIQUE                       J/kg/day
+FPPFLUVERTDYN # PRESSION    : FLUX VERTICAL DYNAMIQUE                       Pa/day
+FQLFLUVERTDYN # EAU LIQUIDE : FLUX VERTICAL DYNAMIQUE                       g/kg/day
+FQNFLUVERTDYN # EAU NEIGE   : FLUX VERTICAL DYNAMIQUE                       g/kg/day
+FQVFLUVERTDYN # EAU VAPEUR  : FLUX VERTICAL DYNAMIQUE                       g/kg/day
+FUUFLUVERTDYN # VENT ZONAL  : FLUX VERTICAL DYNAMIQUE                       m/s/day
+FVVFLUVERTDYN # VENT MERID  : FLUX VERTICAL DYNAMIQUE                       m/s/day
+TA1DELTAP     # MOM ANG A1  : TENDANCE DE PRESSION                          m**2/s/day
+TA2DELTAP     # MOM ANG A2  : TENDANCE DE PRESSION                          m**2/s/day
+TA3DELTAP     # MOM ANG A3  : TENDANCE DE PRESSION                          m**2/s/day
+TCTCONVERSI2  # TEMPERATURE : CONVERSION ADIABATIQUE EN POTENT > EN INTERNE K/day
+TCTDELTAP     # TEMPERATURE : TENDANCE DE PRESSION                          K/day
+TCTDIVFLUHOR  # TEMPERATURE : DIVERGENCE DES FLUX HORIZONTAUX               K/day
+TEPDELTAP     # Z           : TENDANCE DE PRESSION                          m/day
+TEPDIVFLUHOR  # Z           : DIVERGENCE DES FLUX HORIZONTAUX               m/day
+TKKCONVERSI1  # ENERGIE CIN : CONVERSION POTENTIEL+PRESSION > EN CIN        J/kg/day
+TKKDELTAP     # ENERGIE CIN : TENDANCE DE PRESSION                          J/kg/day
+TKKDIVFLUHOR  # ENERGIE CIN : DIVERGENCE DES FLUX HORIZONTAUX               J/kg/day
+TPPDIVFLUHOR  # PRESSION    : DIVERGENCE DES FLUX HORIZONTAUX               Pa/day
+TQLDIVFLUHOR  # EAU LIQUIDE : DIVERGENCE DES FLUX HORIZONTAUX               g/kg/day
+TQNDIVFLUHOR  # EAU NEIGE   : DIVERGENCE DES FLUX HORIZONTAUX               g/kg/day
+TQVDELTAP     # EAU VAPEUR  : TENDANCE DE PRESSION                          g/kg/day
+TQVDIVFLUHOR  # EAU VAPEUR  : DIVERGENCE DES FLUX HORIZONTAUX               g/kg/day
+TSSDELTAP     # ENTROPIE    : TENDANCE DE PRESSION                          J/kg/K/day
+TUUDELTAP     # VENT ZONAL  : TENDANCE DE PRESSION                          m/s/day
+TUUDIVFLUHOR  # VENT ZONAL  : DIVERGENCE DES FLUX HORIZONTAUX               m/s/day
+TUUFFVGADPSG  # VENT ZONAL  : CORIOLIS + GRAVITE + GRAD PRESSION            m/s/day
+TVVDELTAP     # VENT MERID  : TENDANCE DE PRESSION                          m/s/day
+TVVDIVFLUHOR  # VENT MERID  : DIVERGENCE DES FLUX HORIZONTAUX               m/s/day
+TVVFFUGADPSG  # VENT MERID  : CORIOLIS + GRAVITE + GRAD PRESSION            m/s/day
+TA1ADJUST     # MOM ANG A1  : FORCE D AJUSTEMENT                            m**2/s/day
+TA1DIVFLUHOR  # MOM ANG A1  : DIVERGENCE DES FLUX HORIZONTAUX               m**2/s/day
+FA1FLUVERTDYN # MOM ANG A1  : FLUX VERTICAL DYNAMIQUE                       m**2/s/day
+TA1NONAX      # MOM ANG A1  : MOMENTS NON AXIAUX                            m**2/s/day
+TA2ADJUST     # MOM ANG A2  : FORCE D AJUSTEMENT                            m**2/s/day
+TA2DIVFLUHOR  # MOM ANG A2  : DIVERGENCE DES FLUX HORIZONTAUX               m**2/s/day
+FA2FLUVERTDYN # MOM ANG A2  : FLUX VERTICAL DYNAMIQUE                       m**2/s/day
+TA2NONAX      # MOM ANG A2  : MOMENTS NON AXIAUX                            m**2/s/day
+TA3ADJUST     # MOM ANG A3  : FORCE D AJUSTEMENT                            m**2/s/day
+TA3DIVFLUHOR  # MOM ANG A3  : DIVERGENCE DES FLUX HORIZONTAUX               m**2/s/day
+FA3FLUVERTDYN # MOM ANG A3  : FLUX VERTICAL DYNAMIQUE                       m**2/s/day
+TSSDIVFLUHOR  # ENTROPIE    : DIVERGENCE DES FLUX HORIZONTAUX               J/kg/K/day
+FSSFLUVERTDYN # ENTROPIE    : FLUX VERTICAL DYNAMIQUE                       J/kg/K/day

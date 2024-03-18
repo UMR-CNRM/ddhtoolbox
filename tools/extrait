@@ -1,0 +1,33 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2017-03, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-------------------------------------------------
+# .
+#-------------------------------------------------
+#
+fddh=DHFZOARPE+0096_lflexdia_t.lfa
+fddh=DHFDLAROM+0012.lfa
+for dom in 9 10 14
+do
+  fdom=$fddh.extdom$dom.lfa
+  ddht -cEXTRAIT_DOMAIN  -1$fddh -s$fdom -E$dom > toto
+  for champ in SVTS0 SVTP1
+  do
+    resultat=`lfac $fdom $champ`
+    echo "Fichier $fddh, domaine $dom, $champ = $resultat"
+  done
+done

@@ -1,0 +1,322 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Author:   2008-12, Alex Deckmyn.
+# Modifications:
+#      2008-12-12, J.M. Piriou: allow "-v" option to address a variable name only (and not a directory and a variable name).
+#      2009-03-25, J.M. Piriou: use the variable name to prefix the EPS file.
+#      2009-12-31, J.M. Piriou: introduce ymax, a way to limit the graphics of the vertical profiles above a given height.
+#      2018-06-01, J.M. Piriou: specify min and max value for dd2gr graphics, through n and x arguments.
+# --------------------------------------------------------------
+proc=$(basename $0) # present procedure name.
+dirloc=`pwd` # local calling directory.
+pref=$dirloc/.$proc.tmp.$RANDOM # prefix for temporary files.
+
+# default values:
+bpsdir=${DDHB_BPS}
+
+xcoor=" " ; ycoor="-1VP" # most frequent case: use ddhb to plotting vertical profiles.
+#xcoor=" " ; ycoor="-1VZ" # most frequent case: use ddhb to plotting vertical profiles.
+#xcoor="-1HLAT" ; ycoor="-2VP" # use ddhb to plotting latitude - height cross-sections.
+#xcoor=" " ; ycoor=" " # use ddhb for global (horizontal and vertical) mean budgets.
+#xcoor="-1JD1" ; ycoor=" " # Julian date.
+
+y=15.
+liscfile=${DDHI_LIST}
+vmin="None"
+vmax="None"
+outgf="None"
+tmpdir="None"
+
+usage(){
+  echo ' '
+  echo 'Usage: ddhb -v <variable> -i <inputfile> [-n <minXvalue>] [-x <maxXvalue> [-y <maxYvalue>]] [-X <X coordinate> [-Y <Y coordinate>]] [-c <conversion_option>] [-d <BPSdirectory>] [-F <conversion_list>] [-o <output_graphic_file>] [-r output_directory]'
+  echo ' '
+  echo '  -c : if "tend" convert fluxes into tendencies (default option), if "flux" convert tendencies into fluxes'
+  echo ' '
+  echo 'Example: ddhb -v oper/QV -i DHFDLALAD+0036.mv -n -3. -x 7. -o budget.svg '
+  echo 'Example: ddhb -X HLAT -Y VP -v oper/QV -i DHFDLALAD+0036 -o budget.svg '
+  echo 'Example: ddhb -Y VP -v oper/QV -i DHFDLALAD+0036.mh -o budget.svg '
+  echo 'Example for a budget in fluxes (and not in tendencies): ddhb -v oper/CT -i DHFDLALAD+0036.mh -o budget.svg -c flux' 
+  echo ' '
+}
+
+
+coorx="indef"
+coory="indef"
+convft="tend"
+
+while getopts "v:i:n:x:y:X:c:Y:o:r:d:F" opt; do
+    case $opt in 
+   v  ) budvar=$OPTARG ;;
+   i  ) inputfile=$OPTARG ;;
+   n  ) vmin=$OPTARG ;;
+   x  ) vmax=$OPTARG ;;
+   y  ) y=$OPTARG ;;
+   X  ) coorx=$OPTARG ;;
+   c  ) convft=$OPTARG ;;
+   Y  ) coory=$OPTARG ;;
+   o  ) outgf=$OPTARG ;;
+   r  ) tmpdir=$OPTARG ;;
+   d  ) bpsdir=$OPTARG ;;
+   F  ) liscfile=$OPTARG ;;
+   \? ) usage
+        exit 1
+    esac
+done
+if [ "$coorx" != "indef" -a "$coory" != "indef" ] ; then
+  xcoor="-1$coorx"
+  ycoor="-2$coory"
+elif [ "$coory" != "indef" ] ; then
+  xcoor=" "
+  ycoor="-1$coory"
+elif [ "$coorx" != "indef" ] ; then
+  xcoor=" "
+  ycoor="-1$coorx"
+fi
+
+if [ "$budvar" = "" ] ; then
+  echo "No variable provided."
+  usage
+  exit 1
+fi
+set -evx
+#
+#-----------------------------------------------
+# Is budvar of the form "arome/QV" or simply "QV"?
+# In the first case, one will read directives files (FBL),
+# in the second case one will produce these directive files, using the ddh2fbl tool.
+#-----------------------------------------------
+#
+echo $budvar > $pref.grep
+grep "/" $pref.grep > $pref.res
+if test ! -s $pref.res
+then
+  #
+  #-----------------------------------------------
+  # The user typed a command line of the form "ddhb -v QV -i ddhfile".
+  # One has to generate the FBL files.
+  #-----------------------------------------------
+  #
+  dirfbl=tmp.$RANDOM
+  ddh2fbl $inputfile $dirfbl
+  budvar="$dirfbl/$budvar" 
+  fbl_files="generated"
+else
+  #
+  #-----------------------------------------------
+  # The user typed a command line of the form "ddhb -v arome/QV -i ddhfile".
+  # Nothing special to do here.
+  #-----------------------------------------------
+  #
+  fbl_files="read"
+fi
+
+if [ "$inputfile" = "" ] ; then
+  echo "No inputfile provided."
+  usage
+  exit 1
+fi
+
+if [ ! -e ${inputfile} ] ; then
+  echo "$proc: Input file " $inputfile "does not exist."
+  usage
+  exit 1
+fi
+
+budlist=${bpsdir}/${budvar}.fbl
+if [ ! -e $budlist ] ; then
+  echo "$proc: Budget list " $budlist "does not exist."
+  echo "$proc: Maybe check settings for $DDHB_BPS?"
+  usage
+  exit 1
+fi
+
+echo "$proc: budget for variable " $budvar
+echo "$proc: input file: " $inputfile
+echo "$proc: Reading budget list " $budlist
+
+levels=`ddhr -n $inputfile`
+if [ $levels -eq 1 ] ; then
+  ycoor=' '
+fi
+
+if [ "$tmpdir" = "None" ] ; then
+  #
+  #-------------------------------------------------
+  # The user did not prescribe the workdir directory.
+  #-------------------------------------------------
+  #
+  #tmpdir=${inputfile}.tmp.$RANDOM
+  tmpdir=${inputfile}.ddhb.${budvar}.tmp
+fi
+mkdir -p $tmpdir
+cp $inputfile $tmpdir
+cd $tmpdir
+
+echo " " ; echo "$proc: parse the budget file and prepare all lists"
+prefix=budget.${budvar}.${inputfile}.
+ddhb_makelists $budlist $prefix $liscfile $convft
+
+ddht -cCALC -1$inputfile -s$inputfile.s -llc.ddht
+# ddht doesn't return an exit status when there is an error
+# so the following doesn't work...
+if [ $? = 1 ] ; then
+  echo "ddhb: ddht has encountered a problem."
+  exit 1
+fi  
+  
+if [ "$convft" = "tend" ] ; then
+  conv=" "
+  timnc=" "
+elif [ "$convft" = "flux" ] ; then
+  conv="-cNON"
+  cumtddf=`ddhr -es $inputfile` # cumulated time duration of the ddh file, in seconds.
+  timnc="-d$cumtddf" # time normalization coefficient to be applied.
+else
+  echo " "
+  echo "$proc/ERROR: convft unexpected !..."
+  echo "$convft "
+  exit 1
+fi
+echo " " ; echo "$proc: run the ddhi script"
+exe="ddhi $xcoor $ycoor $conv $timnc -stmp -llc.ddhi -Fddhi_list.tmp -ymax$y $inputfile.s"
+echo $exe
+$exe
+if [ $? = 1 ] ; then
+  echo "ddhb: ddhi has encountered a problem."
+  exit 1
+fi  
+
+echo " " ; echo "$proc: rename the .dta files $budvar"
+echo $budvar
+base=`dirname $budvar`
+mkdir -p budget.$base
+cat ddhb_rename
+sh ddhb_rename
+
+echo " " ; echo "$proc: Now, finally, prepare the doc file for the graph"
+index=`ddhr -i $inputfile`
+basedate=`ddhr -be $inputfile`
+bs=`ddhr -bs $inputfile`
+grille=`ddhr -g $inputfile`
+origine=`ddhr -i $inputfile`" ("$inputfile")"
+
+if test -s tmp.V??M.doc
+then
+  legendex=`grep LEGENDE_X tmp.V??M.doc`
+  legendey=`grep LEGENDE_Y tmp.V??M.doc`
+  format=`grep FORMAT tmp.V??M.doc`I
+  unite=`grep UNITE tmp.V??M.doc`
+else
+  legendex=`grep LEGENDE_X tmp.F??M.doc`
+  legendey=`grep LEGENDE_Y tmp.F??M.doc`
+  format=`grep FORMAT tmp.F??M.doc`I
+  unite=`grep UNITE tmp.F??M.doc`
+fi
+if [ "$format" = "#FORMAT=XYVI" ] ; then
+  format="#FORMAT=XYV"
+fi
+
+fdoc=zddhb.`basename $budvar`.$index.graph.doc
+cat <<EOF > $fdoc
+$format
+#DATE=$basedate
+#ORIGINE=$origine
+#GRILLE=$grille
+$legendex
+$legendey
+#VREF=0.
+#ISOL
+EOF
+
+cat ddhb_graph >> $fdoc
+
+if [ $ycoor =  '-1VZ' -o $ycoor =  '-1VN' ] ; then
+  echo "#Y_MAX_LIMIT=$y" >> $fdoc
+elif [ $ycoor =  '-2VZ' -o $ycoor =  '-2VN' ] ; then
+  echo "#X_MAX_LIMIT=$y" >> $fdoc
+fi
+
+#
+#-----------------------------------------------
+# Cleanings.
+#-----------------------------------------------
+#
+if [ "$fbl_files" = "generated" ] ; then
+  #
+  #-----------------------------------------------
+  # One removes the temporary directory,
+  # containing directive files (.fbl).
+  #-----------------------------------------------
+  #
+  echo "toto"
+  exe="rm -rf $DDHB_BPS/$dirfbl"
+  echo $exe
+  $exe
+fi
+#
+#-----------------------------------------------
+# Epilog and final plot.
+#-----------------------------------------------
+#
+echo " "
+echo "$proc: in the directory $tmpdir"
+echo "the DOC file is $fdoc"
+field=`mot 9 2 $budvar` # budvar=oper/CT, field=CT.
+if [ "$DDH_PLOT" = "dd2gr" -o "$DDH_PLOT" = "v" ] ; then
+  #
+  #-------------------------------------------------
+  # Graphic tool dd2gr.
+  #-------------------------------------------------
+  #
+  #
+  #-------------------------------------------------
+  # 1 level or 1 domain?
+  #-------------------------------------------------
+  #
+  niv=`ddhr -n $inputfile`
+  if [ "$niv" = "1" ] ; then
+    xouy="Y"
+  else
+    xouy="X"
+  fi
+  if [ "$vmin" != "None" ] ; then
+    cat <<EOF >> $fdoc
+#${xouy}_MIN_LIMIT=$vmin
+EOF
+  fi
+  if [ "$vmax" != "None" ] ; then
+    cat <<EOF >> $fdoc
+#${xouy}_MAX_LIMIT=$vmax
+EOF
+  fi
+  dd2gr $fdoc $fdoc.svg
+  #
+  #-------------------------------------------------
+  # Name of output graphic file.
+  #-------------------------------------------------
+  #
+  if [ "$outgf" = "None" ] ; then
+    outgf="$fdoc.svg"
+  fi
+  locn=`pwd`/$fdoc.svg
+  cd $dirloc
+  cp $locn $outgf
+elif [ "x$DDH_PLOT" = "x" ] ; then
+  #
+  #-------------------------------------------------
+  # No DDH_PLOT variable set.
+  #-------------------------------------------------
+  #
+  echo "$proc: no DDH_PLOT provided: no graphics done."
+  ls -lrt
+else
+  #
+  #-------------------------------------------------
+  # General case: grapĥic tool defined in DDH_PLOT environment variable.
+  #-------------------------------------------------
+  #
+  $DDH_PLOT $fdoc
+fi

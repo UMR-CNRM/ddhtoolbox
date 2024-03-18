@@ -1,0 +1,184 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Bilan d'un fichier de DDH.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   97-01, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+typb='main' # type de variable dont le bilan est à exécuter.
+fd=$1     # fichier de DDH.
+reps=$2   # répertoire de sortie.
+ligcd=$3  # ligne de commande additionnelle à ddhi.
+ent=`basename $fd` # mnémonique du fichier d'entrée.
+cp $fd $reps/$ent # copie de sécurité.
+cd $reps
+#
+# Bilan main.
+#
+bilan=$typb.$ent
+sbil=main
+titre="TEMPERATURE : CONVECTIF"
+cat <<EOF > lc.$bilan.$sbil
+	VA10          # MOM ANG A1  : DIAGNOSTIC INITIAL                            M**2/S
+	VA11          # MOM ANG A1  : DIAGNOSTIC FINAL                              M**2/S
+	TA1ADJUST     # MOM ANG A1  : FORCE D AJUSTEMENT                            M**2/S/JOUR
+	TA1DIVFLUHOR  # MOM ANG A1  : DIVERGENCE DES FLUX HORIZONTAUX               M**2/S/JOUR
+	VA1M          # MOM ANG A1  : TENDANCE MOYENNE                              M**2/S/JOUR
+	FA1FLUDUAPLUI # MOM ANG A1  : PRECIPITATIONS                                M**2/S/JOUR
+	FA1FLUVERTDYN # MOM ANG A1  : FLUX VERTICAL DYNAMIQUE                       M**2/S/JOUR
+	FA1GRAV       # MOM ANG A1  : FORCE DUE AU RELIEF                           M**2/S/JOUR
+	TA1NONAX      # MOM ANG A1  : MOMENTS NON AXIAUX                            M**2/S/JOUR
+	FA1ONDEGREL   # MOM ANG A1  : ONDES DE RELIEF                               M**2/S/JOUR
+	FA1TUR        # MOM ANG A1  : DIFFUSION VERTICALE                           M**2/S/JOUR
+	FA1TURCONV    # MOM ANG A1  : PROCESSUS CONVECTIFS TURBULENTS               M**2/S/JOUR
+	VA20          # MOM ANG A2  : DIAGNOSTIC INITIAL                            M**2/S
+	VA21          # MOM ANG A2  : DIAGNOSTIC FINAL                              M**2/S
+	TA2ADJUST     # MOM ANG A2  : FORCE D AJUSTEMENT                            M**2/S/JOUR
+	TA2DIVFLUHOR  # MOM ANG A2  : DIVERGENCE DES FLUX HORIZONTAUX               M**2/S/JOUR
+	VA2M          # MOM ANG A2  : TENDANCE MOYENNE                              M**2/S/JOUR
+	FA2FLUDUAPLUI # MOM ANG A2  : PRECIPITATIONS                                M**2/S/JOUR
+	FA2FLUVERTDYN # MOM ANG A2  : FLUX VERTICAL DYNAMIQUE                       M**2/S/JOUR
+	FA2GRAV       # MOM ANG A2  : FORCE DUE AU RELIEF                           M**2/S/JOUR
+	TA2NONAX      # MOM ANG A2  : MOMENTS NON AXIAUX                            M**2/S/JOUR
+	FA2ONDEGREL   # MOM ANG A2  : ONDES DE RELIEF                               M**2/S/JOUR
+	FA2TUR        # MOM ANG A2  : DIFFUSION VERTICALE                           M**2/S/JOUR
+	FA2TURCONV    # MOM ANG A2  : PROCESSUS CONVECTIFS TURBULENTS               M**2/S/JOUR
+	VA30          # MOM ANG A3  : DIAGNOSTIC INITIAL                            M**2/S
+	VA31          # MOM ANG A3  : DIAGNOSTIC FINAL                              M**2/S
+	TA3ADJUST     # MOM ANG A3  : FORCE D AJUSTEMENT                            M**2/S/JOUR
+	TA3DIVFLUHOR  # MOM ANG A3  : DIVERGENCE DES FLUX HORIZONTAUX               M**2/S/JOUR
+	VA3M          # MOM ANG A3  : TENDANCE MOYENNE                              M**2/S/JOUR
+	FA3FLUDUAPLUI # MOM ANG A3  : PRECIPITATIONS                                M**2/S/JOUR
+	FA3FLUVERTDYN # MOM ANG A3  : FLUX VERTICAL DYNAMIQUE                       M**2/S/JOUR
+	FA3GRAV       # MOM ANG A3  : FORCE DUE AU RELIEF                           M**2/S/JOUR
+	FA3ONDEGREL   # MOM ANG A3  : ONDES DE RELIEF                               M**2/S/JOUR
+	FA3TUR        # MOM ANG A3  : DIFFUSION VERTICALE                           M**2/S/JOUR
+	FA3TURCONV    # MOM ANG A3  : PROCESSUS CONVECTIFS TURBULENTS               M**2/S/JOUR
+VCT0          # TEMPERATURE : DIAGNOSTIC INITIAL                            K
+VCT1          # TEMPERATURE : DIAGNOSTIC FINAL                              K
+	TCTCONVERSI2  # TEMPERATURE : CONVERSION ADIABATIQUE EN POTENT > EN INTERNE K/JOUR
+	TCTCONVERSI3  # TEMPERATURE : CONVERSION EN POT PRECIP > EN INTERNE         K/JOUR
+	TCTDIVFLUHOR  # TEMPERATURE : DIVERGENCE DES FLUX HORIZONTAUX               K/JOUR
+	VCTM          # TEMPERATURE : TENDANCE MOYENNE                              K/JOUR
+	FCTFLUVERTDYN # TEMPERATURE : FLUX VERTICAL DYNAMIQUE                       K/JOUR
+FCTPRECCSCOL  # TEMPERATURE : CH. SENS. DUE AUX PREC. CONV. LIQ.            K/JOUR
+FCTPRECCSCON  # TEMPERATURE : CH. SENS. DUE AUX PREC. CONV. NEI.            K/JOUR
+	FCTPRECCSSTL  # TEMPERATURE : CH. SENS. DUE AUX PREC. STRA. LIQ.            K/JOUR
+	FCTPRECCSSTN  # TEMPERATURE : CH. SENS. DUE AUX PREC. STRA. NEI.            K/JOUR
+FCTPRECICOL   # TEMPERATURE : PRECIP CONVECTIVES LIQUIDES                   K/JOUR
+FCTPRECICON   # TEMPERATURE : PRECIP CONVECTIVES NEIGEUSES                  K/JOUR
+	FCTPRECISTL   # TEMPERATURE : PRECIP STRATIFORMES LIQUIDES                  K/JOUR
+	FCTPRECISTN   # TEMPERATURE : PRECIP STRATIFORMES NEIGEUSES                 K/JOUR
+	FCTRAYSOL1    # TEMPERATURE : RAYONNEMENT SOLAIRE                           K/JOUR
+	FCTRAYTER1    # TEMPERATURE : RAYONNEMENT THERMIQUE                         K/JOUR
+	FCTTUR        # TEMPERATURE : DIFFUSION VERTICALE                           K/JOUR
+	FCTTURCONV    # TEMPERATURE : PROCESSUS CONVECTIFS TURBULENTS               K/JOUR
+	VEP0          # Z           : DIAGNOSTIC INITIAL                            M
+	VEP1          # Z           : DIAGNOSTIC FINAL                              M
+	TEPDIVFLUHOR  # Z           : DIVERGENCE DES FLUX HORIZONTAUX               M/JOUR
+	VEPM          # Z           : TENDANCE MOYENNE                              M/JOUR
+	VHR0          # HUM RELATIVE: DIAGNOSTIC INITIAL                            SANS
+	VHR1          # HUM RELATIVE: DIAGNOSTIC FINAL                              SANS
+	VHRM          # HUM RELATIVE: TENDANCE MOYENNE                              /JOUR
+	VKK0          # ENERGIE CIN : DIAGNOSTIC INITIAL                            J/KG
+	VKK1          # ENERGIE CIN : DIAGNOSTIC FINAL                              J/KG
+	TKKCONVERSI1  # ENERGIE CIN : CONVERSION POTENTIEL+PRESSION > EN CIN        J/KG/JOUR
+	TKKDISSIPCONV # ENERGIE CIN : DISSIPATION CONVECTIVE                        J/KG/JOUR
+	TKKDISSIPGREL # ENERGIE CIN : DISSIPATION DUE AUX ONDES DE RELIEF           J/KG/JOUR
+	TKKDISSIPTUR  # ENERGIE CIN : DISSIPATION TURBULENTE                        J/KG/JOUR
+	TKKDIVFLUHOR  # ENERGIE CIN : DIVERGENCE DES FLUX HORIZONTAUX               J/KG/JOUR
+	VKKM          # ENERGIE CIN : TENDANCE MOYENNE                              J/KG/JOUR
+	FKKFLUDUAPLUI # ENERGIE CIN : VARIATION DE MASSE DUE AUX PRECIPITATIONS     J/KG/JOUR
+	FKKFLUVERTDYN # ENERGIE CIN : FLUX VERTICAL DYNAMIQUE                       J/KG/JOUR
+	VNT0          # NEBULOSITE  : DIAGNOSTIC INITIAL                            SANS
+	VNT1          # NEBULOSITE  : DIAGNOSTIC FINAL                              SANS
+	VOM0          # OMEGA       : DIAGNOSTIC INITIAL                            PA/S
+	VOM1          # OMEGA       : DIAGNOSTIC FINAL                              PA/S
+	VOMM          # OMEGA       : TENDANCE MOYENNE                              PA/S/JOUR
+	PPP           # PRESSION    : CUMUL TEMPOREL                                PA
+	VPP0          # PRESSION    : DIAGNOSTIC INITIAL                            PA
+	VPP1          # PRESSION    : DIAGNOSTIC FINAL                              PA
+	TPPDIVFLUHOR  # PRESSION    : DIVERGENCE DES FLUX HORIZONTAUX               PA/JOUR
+	VPPM          # PRESSION    : TENDANCE MOYENNE                              PA/JOUR
+	FPPFLUVERTDYN # PRESSION    : FLUX VERTICAL DYNAMIQUE                       PA/JOUR
+	FPPSUMFPL     # PRESSION    : VARIATION DE MASSE DUE AUX PRECIPITATIONS     PA/JOUR
+	VQL0          # EAU LIQUIDE : DIAGNOSTIC INITIAL                            SANS
+	VQL0CV        # EAU LIQUIDE INITIALE : CUMUL VERTICAL                       KG/M2
+	VQL1          # EAU LIQUIDE : DIAGNOSTIC FINAL                              SANS
+	VQL1CV        # EAU LIQUIDE FINALE : CUMUL VERTICAL                         KG/M2
+	TQLDIVFLUHOR  # EAU LIQUIDE : DIVERGENCE DES FLUX HORIZONTAUX               /JOUR
+	FQLFLUVERTDYN # EAU LIQUIDE : FLUX VERTICAL DYNAMIQUE                       /JOUR
+	FQLTUR        # EAU LIQUIDE : DIFFUSION VERTICALE                           /JOUR
+	FQLTURCONV    # EAU LIQUIDE : PROCESSUS CONVECTIFS TURBULENTS               /JOUR
+	VQN0          # EAU NEIGE   : DIAGNOSTIC INITIAL                            SANS
+	VQN0CV        # EAU NEIGE INITIALE : CUMUL VERTICAL                         KG/M2
+	VQN1          # EAU NEIGE   : DIAGNOSTIC FINAL                              SANS
+	VQN1CV        # EAU NEIGE FINALE : CUMUL VERTICAL                           KG/M2
+	TQNDIVFLUHOR  # EAU NEIGE   : DIVERGENCE DES FLUX HORIZONTAUX               /JOUR
+	FQNFLUVERTDYN # EAU NEIGE   : FLUX VERTICAL DYNAMIQUE                       /JOUR
+	FQNTUR        # EAU NEIGE   : DIFFUSION VERTICALE                           /JOUR
+	FQNTURCONV    # EAU NEIGE   : PROCESSUS CONVECTIFS TURBULENTS               /JOUR
+	FQTCONDECOL   # EAU         : CONDENSATION CONVECTIVE LIQUIDE               /JOUR
+	FQTCONDECON   # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              /JOUR
+	FQTCONDESTL   # EAU         : CONDENSATION STRATIFORME LIQUIDE              /JOUR
+	FQTCONDESTN   # EAU         : CONDENSATION STRATIFORME NEIGEUSE             /JOUR
+	FQTPRECICOL   # EAU         : PRECIP CONV LIQUIDES                          /JOUR
+	FQTPRECICON   # EAU         : PRECIP CONV NEIGEUSES                         /JOUR
+	FQTPRECISTL   # EAU         : PRECIP STRA LIQUIDES                          /JOUR
+	FQTPRECISTN   # EAU         : PRECIP STRA NEIGEUSES                         /JOUR
+	VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            SANS
+	VQV0CV        # EAU VAPEUR INITIALE : CUMUL VERTICAL                        KG/M2
+	VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              SANS
+	VQV1CV        # EAU VAPEUR FINALE : CUMUL VERTICAL                          KG/M2
+	TQVDIVFLUHOR  # EAU VAPEUR  : DIVERGENCE DES FLUX HORIZONTAUX               /JOUR
+	VQVM          # EAU VAPEUR  : TENDANCE MOYENNE                              /JOUR
+	FQVFLUVERTDYN # EAU VAPEUR  : FLUX VERTICAL DYNAMIQUE                       /JOUR
+	FQVTUR        # EAU VAPEUR  : DIFFUSION VERTICALE                           /JOUR
+	FQVTURCONV    # EAU VAPEUR  : PROCESSUS CONVECTIFS TURBULENTS               /JOUR
+	VSS0          # ENTROPIE    : DIAGNOSTIC INITIAL                            J/KG/K
+	VSS1          # ENTROPIE    : DIAGNOSTIC FINAL                              J/KG/K
+	TSSDISSIPCONV # ENTROPIE    : DISSIPATION TURBULENTE CONVECTIVE             J/KG/K/JOUR
+	TSSDISSIPGREL # ENTROPIE    : DISSIPATION TURBULENTE ONDES DE RELIEF        J/KG/K/JOUR
+	TSSDISSIPTUR  # ENTROPIE    : DISSIPATION TURBULENTE SECHE                  J/KG/K/JOUR
+	TSSDIVFLUHOR  # ENTROPIE    : DIVERGENCE DES FLUX HORIZONTAUX               J/KG/K/JOUR
+	VSSM          # ENTROPIE    : TENDANCE MOYENNE                              J/KG/K/JOUR
+	FSSFLUVERTDYN # ENTROPIE    : FLUX VERTICAL DYNAMIQUE                       J/KG/K/JOUR
+	TSSPRECICT    # ENTROPIE    : EFFET PRECIPITATIONS SUR ENTHALPIE            J/KG/K/JOUR
+	FSSPRECISS    # ENTROPIE    : EFFET PRECIPITATIONS SUR ENTROPIE             J/KG/K/JOUR
+	TSSRAY1       # ENTROPIE    : RAYONNEMENT                                   J/KG/K/JOUR
+	TSSTURCTTOT   # ENTROPIE    : TURBULENCE TOTALE D ENTHALPIE                 J/KG/K/JOUR
+	TSSTURQVTOT   # ENTROPIE    : TURBULENCE TOTALE D HUMIDITE                  J/KG/K/JOUR
+	VUU0          # VENT ZONAL  : DIAGNOSTIC INITIAL                            M/S
+	VUU1          # VENT ZONAL  : DIAGNOSTIC FINAL                              M/S
+	TUUDIVFLUHOR  # VENT ZONAL  : DIVERGENCE DES FLUX HORIZONTAUX               M/S/JOUR
+	VUUM          # VENT ZONAL  : TENDANCE MOYENNE                              M/S/JOUR
+	TUUFFVGADPSG  # VENT ZONAL  : CORIOLIS + GRAVITE + GRAD PRESSION            M/S/JOUR
+	FUUFLUDUAPLUI # VENT ZONAL  : VARIATION DE MASSE DUE AUX PRECIPITATIONS     M/S/JOUR
+	FUUFLUVERTDYN # VENT ZONAL  : FLUX VERTICAL DYNAMIQUE                       M/S/JOUR
+	FUUONDEGREL   # VENT ZONAL  : ONDES DE RELIEF                               M/S/JOUR
+	FUUTUR        # VENT ZONAL  : DIFFUSION VERTICALE                           M/S/JOUR
+	FUUTURCONV    # VENT ZONAL  : PROCESSUS CONVECTIFS TURBULENTS               M/S/JOUR
+	VVV0          # VENT MERID  : DIAGNOSTIC INITIAL                            M/S
+	VVV1          # VENT MERID  : DIAGNOSTIC FINAL                              M/S
+	TVVDIVFLUHOR  # VENT MERID  : DIVERGENCE DES FLUX HORIZONTAUX               M/S/JOUR
+	VVVM          # VENT MERID  : TENDANCE MOYENNE                              M/S/JOUR
+	TVVFFUGADPSG  # VENT MERID  : CORIOLIS + GRAVITE + GRAD PRESSION            M/S/JOUR
+	FVVFLUDUAPLUI # VENT MERID  : VARIATION DE MASSE DUE AUX PRECIPITATIONS     M/S/JOUR
+	FVVFLUVERTDYN # VENT MERID  : FLUX VERTICAL DYNAMIQUE                       M/S/JOUR
+	FVVONDEGREL   # VENT MERID  : ONDES DE RELIEF                               M/S/JOUR
+	FVVTUR        # VENT MERID  : DIFFUSION VERTICALE                           M/S/JOUR
+	FVVTURCONV    # VENT MERID  : PROCESSUS CONVECTIFS TURBULENTS               M/S/JOUR
+EOF
+ddht -cSEPAR_PR_COMPL -1$ent -s$ent.separ -llc.$bilan.$sbil
+cat <<EOF > lc
+TCTPRINCIPAL/$titre
+EOF
+ddhi $ligcd -e$ent.separ

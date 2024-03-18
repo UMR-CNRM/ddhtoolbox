@@ -1,0 +1,61 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   98-12, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+if [ $# -eq 2 ]
+then
+	#
+	# Nombre d'arguments OK.
+	#
+	f1=$1
+	f2=$2
+else
+	#
+	# Mauvais nombre d'arguments.
+	#
+	echo " "
+	echo "Pour deux fichiers LFA donnés, "
+	echo "recherche des articles qui diffèrent entre les deux,"
+	echo "et affichage alors des extrema de leur différence relative."
+	echo " "
+	echo "Utilisation: "$proc" LFA1 LFA2"
+	echo " "
+	echo "La sortie se fait sur output standard."
+	echo " "
+	exit
+fi
+#
+#-----------------------------------------------
+# Exécution.
+#-----------------------------------------------
+#
+lfadiffrel $f1 $f2 $pref.diff
+lfaminm $pref.diff | grep -v 'min=   0.000     max=   0.000   ' | grep -v 'LFAMINM'
+#
+#-----------------------------------------------
+# Epilogue.
+#-----------------------------------------------
+#
+#
+#-----------------------------------------------
+# Nettoyage.
+#-----------------------------------------------
+#
+rm -f $pref*

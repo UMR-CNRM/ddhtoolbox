@@ -1,0 +1,48 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Extraction de domaines et/ou niveaux d'un fichier de DDH.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   1997-11, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+if [ $# -eq 0 ]
+then
+	echo " "
+	echo "Extraction de domaines et/ou niveaux d'un fichier de DDH."
+	echo " "
+	echo "Utilisation: ddh_ext F1 [F2 ... Fn]"
+	echo " "
+	exit
+fi
+for f in $*
+do
+	fe=$f
+	#
+	#-----------------------------------------------
+	# Extraction de niveaux.
+	#-----------------------------------------------
+	#
+	extr=EXTRAIT_NIVEAUX ; mnemo=Niv ; selection=30 ; fs=$f.$mnemo$selection
+	ddht -c$extr -E$selection -1$fe -s$fs ; fe=$fs
+	#
+	#-----------------------------------------------
+	# Extraction de domaines.
+	#-----------------------------------------------
+	#
+	extr=EXTRAIT_DOMAIN ; mnemo=Dom ; selection=1 ; fs=$fe.$mnemo$selection
+	ddht -c$extr -E$selection -1$fe -s$fs ; fe=$fs
+	#
+	#-----------------------------------------------
+	# Epilogue.
+	#-----------------------------------------------
+	#
+	echo "Fichier résultant: "$fe
+done

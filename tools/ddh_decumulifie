@@ -1,0 +1,81 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2004-05, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+dirloc=`pwd` # chemin du répertoire local.
+pref=$dirloc/.$proc.tmp.$RANDOM # préfixe des fichiers temporaires.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+if [ $# -eq 0 ]
+then
+	#
+	# Mauvais nombre d'arguments.
+	#
+	echo " "
+	echo "OBJET: à partir de n fichiers DDH, chacun étant valide de 0 à t1, puis de 0 à t2 > t, etc...,"
+	echo "effectue la différence entre deux fichiers DDH successifs."
+	echo " "
+	echo "UTILISATION: $proc FICDDH1 FICDDH2 [... FICDDHn]"
+	echo "Les fichiers de sortie seront suffixes '.instantane'. ATTENTION: le script effectue"
+	echo "au prélable un 'rm *.instantane'!..."
+	echo " "
+	echo "METHODE: ddht -cDIFFE_EC2_EC1"
+	echo " "
+	exit
+fi
+#
+#-----------------------------------------------
+# Exécution.
+#-----------------------------------------------
+#
+rm -f *.instantane
+fddh_prec="gogolbidon"
+rm -f $fddh_prec
+for fddh in $*
+do
+	#
+	#-----------------------------------------------
+	# Nom du fichier différence.
+	#-----------------------------------------------
+	#
+	fdiff=$fddh.instantane
+	rm -f $fdiff
+	if test -s $fddh_prec
+	then
+		#
+		# Le fichier précédent existe. On effectue la différence.
+		#
+		ddht -cDIFFE_EC2_EC1 -2$fddh -1$fddh_prec -s$fdiff
+	else
+		#
+		# Le fichier différence n'existe pas.
+		# Simple copie du 1er fichier.
+		#
+		cp $fddh $fdiff
+	fi
+	#
+	#-----------------------------------------------
+	# Le fichier DDH courant devient le précédent de l'itération suivante.
+	#-----------------------------------------------
+	#
+	fddh_prec=$fddh
+done
+#
+#-----------------------------------------------
+# Nettoyage.
+#-----------------------------------------------
+#
+rm -f $pref*

@@ -1,0 +1,157 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Edition d'un fichier LFA.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   97-11, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+dirloc=`pwd` # chemin du répertoire local.
+pref=`tempo`/lfaedit.$RANDOM
+if [ $# -eq 0 ]
+then
+  #
+  # Nombre d'arguments non attendu.
+  #
+  cllang=`cllangu`
+  if [ "$cllang" = "FRA" ] ; then
+    echo " "
+    echo "Edition d'un(plusieurs) fichier(s) LFA."
+    echo "Le but est ici de pouvoir visualiser ou modifier à l'aide"
+    echo "de son éditeur habituel toutes les valeurs d'un fichier LFA."
+    echo " "
+    echo "Utilisation: lfaedit F1 [F2 ... Fn]"
+    echo " "
+    echo "Principe: les fichiers sont transformés en leur forme LFP (ASCII texte),"
+    echo "puis on appelle l'éditeur. Les fichiers en sortie de l'éditeur,"
+    echo "s'ils ont été modifiés, sont retransformés en leur forme LFA."
+    echo "L'éditeur appelé est celui défini par la variable"
+    echo "d'environnement EDITOR."
+    echo " "
+    exit
+  else
+    echo " "
+    echo "Edit one (or more) LFA file(s)."
+    echo "The goal is here to visualize or modify "
+    echo "a LFA file directly with your usual editor."
+    echo " "
+    echo "Usage: lfaedit F1 [F2 ... Fn]"
+    echo " "
+    echo "Principle: files are transformed into the LFP form (ASCII text),"
+    echo "then one calls the editor. Files in output from editor,"
+    echo "if modified, are transformed back to the LFA form."
+    echo "The invoked editor is given by EDITOR environment variable."
+    echo " "
+    exit
+  fi
+fi
+#
+#-----------------------------------------------
+# Test d'existence de la variable EDITOR.
+#-----------------------------------------------
+#
+if [ "x$EDITOR" = "x" ]; then
+  cllang=`cllangu`
+  if [ "$cllang" = "FRA" ] ; then
+    echo " "
+    echo "$proc/ERREUR: la variable EDITOR doit contenir le nom d'un éditeur!..."
+    echo " "
+    exit
+  else
+    echo " "
+    echo "$proc/ERROR: the EDITOR variable should contain an editor name!..."
+    echo " "
+    exit
+  fi
+fi
+#
+#-----------------------------------------------
+# On transforme tous les LFA en LFP.
+#-----------------------------------------------
+#
+exe="$EDITOR "
+liste=$pref.liste
+for i in $*
+do
+  #
+  # On contrôle que le fichier est bien un LFA.
+  #
+  type_fichier=`lfatest $i`
+  if [ "$type_fichier" = "lfa" ] 
+  then
+    #
+    # Le fichier est bien LFA.
+    # On l'ajoute à la liste des fichiers à traiter.
+    #
+    echo $i >> $liste
+    echo $i
+    flfp=$i.lfp
+    fcomparo=$i.gol
+    #
+    # Transformation en LFP.
+    #
+    lfa2lfp $i $flfp
+    #
+    # Copie de sauvegarde pour voir s'il y a eu modif
+    # par l'éditeur.
+    #
+    cp $flfp $fcomparo
+    #
+    # Préparation de la chaîne d'appel à l'éditeur.
+    #
+    exe=$exe" "$flfp
+  else
+    echo $i" n'est pas un fichier LFA."
+  fi
+done
+if test -s $liste
+then
+  #
+  #-----------------------------------------------
+  # Au moins un fichier de la liste-argument était de type LFA.
+  # On édite les LFP associés.
+  #-----------------------------------------------
+  #
+  $exe
+  #
+  #-----------------------------------------------
+  # On retransforme en LFA les fichiers modifiés.
+  #-----------------------------------------------
+  #
+  for i in `cat $liste`
+  do
+    flfp=$i.lfp
+    fcomparo=$i.gol
+    #
+    # On compare le fichier LFP en sortie de l'éditeur
+    # à celui avant édition.
+    #
+    diff $flfp $fcomparo > $pref.comp
+    if test -s $pref.comp
+    then
+      #
+      # Les deux fichiers sont différents.
+      #
+      lfp2lfa $flfp $i
+      echo "Fichier "$i" modifié et remplacé."
+    fi
+    #
+    # Nettoyage du LFP et de sa sauvegarde pré-édition.
+    #
+    rm $flfp $fcomparo
+  done
+fi
+#
+#-----------------------------------------------
+# Nettoyage final.
+#-----------------------------------------------
+#
+rm -f $pref*

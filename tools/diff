@@ -1,0 +1,1442 @@
+18c18
+< ! 92-12-07, J.M. Piriou.
+---
+> !  1992-12-07, J.M. Piriou.
+21a22
+> !  2008-11-05, J.M. Piriou: correction de bug dans les poids d'interpolation verticale.
+49,52d49
+< 
+< 
+< 
+< 
+78a76,77
+> ! 2006-06-12, J.M. Piriou: implémentation de la fonctionnalité interpolation d'un fichier DDH sur la grille d'un autre.
+> ! 2008-07-17, J.M. Piriou: translate somme comments to English.
+95c94
+< CHARACTER *80 clmot(60)
+---
+> CHARACTER *80 clmot(180)
+100d98
+< INTEGER(KIND=4) :: ILLOC
+138a137
+> INTEGER(KIND=4) :: ILEV2COU
+154a154,155
+> INTEGER(KIND=4) :: IPROD1
+> INTEGER(KIND=4) :: IPROD2
+179a181
+> INTEGER(KIND=4) imaxval_idoma
+185a188,189
+> REAL(KIND=8) zgol1(jpprod) ! donnees du fichier d'entree 1.
+> REAL(KIND=8) zgol3(jpprod) ! donnees du fichier d'entree 1.
+236,247c240,251
+< 			illoc=len_trim(clloc)
+< 			if(clloc(1:illoc) == 'SOMME_PONDEREE') then
+< 			elseif(clloc(1:illoc) == 'SOMME_CONTIGUE') then
+< 			elseif(clloc(1:illoc) == 'DIFFE_EXP_REFE') then
+< 			elseif(clloc(1:illoc) == 'DIFFE_EC2_EC1') then
+< 			elseif(clloc(1:illoc) == 'DIFFE_PONDEREE') then
+< 			elseif(clloc(1:illoc) == 'SEPAR_PR_COMPL') then
+< 			elseif(clloc(1:illoc) == 'MOY_VERTIC') then
+< 			elseif(clloc(1:illoc) == 'MOY_HORIZ') then
+< 			elseif(clloc(1:illoc) == 'EXTRAIT_DOMAIN') then
+< 			elseif(clloc(1:illoc) == 'EXTRAIT_NIVEAUX') then
+< 			elseif(clloc(1:illoc) == 'CALC') then
+---
+> 			if(trim(clloc) == 'SOMME_PONDEREE') then
+> 			elseif(trim(clloc) == 'SOMME_CONTIGUE') then
+> 			elseif(trim(clloc) == 'DIFFE_EXP_REFE') then
+> 			elseif(trim(clloc) == 'DIFFE_EC2_EC1') then
+> 			elseif(trim(clloc) == 'DIFFE_PONDEREE') then
+> 			elseif(trim(clloc) == 'SEPAR_PR_COMPL') then
+> 			elseif(trim(clloc) == 'MOY_VERTIC') then
+> 			elseif(trim(clloc) == 'INTERPOL') then
+> 			elseif(trim(clloc) == 'MOY_HORIZ') then
+> 			elseif(trim(clloc) == 'EXTRAIT_DOMAIN') then
+> 			elseif(trim(clloc) == 'EXTRAIT_NIVEAUX') then
+> 			elseif(trim(clloc) == 'CALC') then
+262,263c266
+< 			illoc=len_trim(clloc)
+< 			if(clloc(1:illoc) == 'TOUS') then
+---
+> 			if(trim(clloc) == 'TOUS') then
+265c268
+< 			elseif(clloc(1:illoc) == 'PAR_FICHIER') then
+---
+> 			elseif(trim(clloc) == 'PAR_FICHIER') then
+277,278c280
+< 			illoc=len_trim(clloc)
+< 			if(clloc(1:illoc) == 'OUI') then
+---
+> 			if(trim(clloc) == 'OUI') then
+280c282
+< 			elseif(clloc(1:illoc) == 'NON') then
+---
+> 			elseif(trim(clloc) == 'NON') then
+288,290c290,291
+< 			illoc=len_trim(clloc)
+< 			if(clloc(1:illoc) == 'OUI') then
+< 			elseif(clloc(1:illoc) == 'NON') then
+---
+> 			if(trim(clloc) == 'OUI') then
+> 			elseif(trim(clloc) == 'NON') then
+298,299c299
+< 			illoc=len_trim(clloc)
+< 			if(clloc(1:illoc) == 'OUI') then
+---
+> 			if(trim(clloc) == 'OUI') then
+301c301
+< 			elseif(clloc(1:illoc) == 'NON') then
+---
+> 			elseif(trim(clloc) == 'NON') then
+317c317
+< 	print*,'Transformation de fichiers de DDH.'
+---
+> 	print*,'Transforms on DDH file:'
+319,322c319,322
+< & 		,'Permet de calculer les somme ou difference de deux fichiers de DDH,'
+< 	print*,'effectuer des moyennes verticale ou horizontale,'
+< 	print*,'extraire des domaines ou niveaux,'
+< 	print*,'ou additionner n termes d''un bilan.'
+---
+> & 		,'ddht cumulates or differentiate 2 DDH files,'
+> 	print*,'operates vertical or horizontal means,'
+> 	print*,'extracts domains or levels,'
+> 	print*,'performs simple operations on budget terms.'
+324c324
+< & 		,'Les fichiers d''entrée et de sortie sont des fichiers de DDH.'
+---
+> & 		,'Input and output files are DDH files.'
+326c326
+< 	print*,'Utilisation: ddht -c -1 -2 -l -S -s -r -d'
+---
+> 	print*,'Usage: ddht -c -1 -2 -l -S -s -r -d'
+328c328
+< 	print*,'avec'
+---
+> 	print*,'where'
+332c332
+< 	print*,'                    MOY_VERTIC,     MOY_HORIZ,'
+---
+> 	print*,'                    MOY_VERTIC,     MOY_HORIZ, INTERPOL,'
+334,352c334
+< 	print*,'     Defaut: DIFFE_EXP_REFE.'
+< 	print* &
+< & 		,'     Les différences effectuent fichier 2 moins fichier 1,'
+< 	print*,'     au sens des arguments ci-dessous.'
+< 	print*,'  -1 fichier d''entree 1.'
+< 	print*,'     Defaut: ddh1.'
+< 	print*,'  -2 fichier d''entree 2.'
+< 	print*,'     Defaut: ddh2.'
+< 	print*,'  -L liste des champs a traiter (TOUS, PAR_FICHIER).'
+< 	print* &
+< & 		,'     TOUS: tous les champs du fichier d''entree seront traites.'
+< 	print* &
+< & 		,'       En ce cas l''option -S est inutile: elle est forcée à OUI.'
+< 	print* &
+< & 		,'     PAR_FICHIER: les champs dont la liste est dans le fichier'
+< 	print*,'       de nom fourni par -l ci-dessous seront traites.'
+< 	print*,'     Defaut: TOUS.'
+< 	print*,'  -l fichier-liste des champs a traiter'
+< 	print*,'     dans le cas -LPAR_FICHIER,'
+---
+> 	print*,'     Default: DIFFE_EXP_REFE.'
+354,360c336,349
+< & 		,'     ou liste des operations a effectuer dans le cas -cCALC.'
+< 	print*,'     Defaut: lc.'
+< 	print*,'     Les articles (VPP0, VPP1, PPP, VEP0, VEP1) '
+< 	print*,'     seront traites quelle que soit la liste d''entree.'
+< 	print*,'  -S traitement des champs sol (OUI, NON).'
+< 	print*,'     Defaut: NON.'
+< 	print*,'  -E dans le cas des options -cEXTRAIT_DOMAIN'
+---
+> & 		,'     Differences are file 2 minus file 1.'
+> 	print*,'  -1 input file 1.'
+> 	print*,'  -2 input file 2.'
+> 	print*,'  -L liste of DDH fields to be processed (TOUS, PAR_FICHIER).'
+> 	print*,'     TOUS: all fields from DDH file will be processed.'
+> 	print*,'     PAR_FICHIER: the fields from a given list will be processed.'
+> 	print*,'       This list is given in a file, which name is given by the argument -l below.'
+> 	print*,'     Default: TOUS.'
+> 	print*,'  -l file-list if fields to be processed, in the case -LPAR_FICHIER,'
+> 	print*,'     ou liste des operations a effectuer dans le cas -cCALC.'
+> 	print*,'     Default: lc.'
+> 	print*,'  -S process soil fields (OUI, NON).'
+> 	print*,'     Default: NON.'
+> 	print*,'  -E in case of options -cEXTRAIT_DOMAIN'
+362c351
+< & 		,'     ou -cEXTRAIT_NIVEAUX, liste des domaines ou niveaux a extraire.'
+---
+> & 		,'     or -cEXTRAIT_NIVEAUX, list of domains or levels to be extracted. '
+364,374c353,365
+< & 		,'     On entre les niveaux ou domaines sous la forme 1,2,4'
+< 	print*,'     pour avoir les domaines 1, 2 et 4,'
+< 	print*,'     ou 7-11 pour avoir les domaines 7 a 11.'
+< 	print*,'     Defaut: 1,2,4.'
+< 	print*,'  -s fichier de sortie.'
+< 	print*,'     Defaut: ddht.lfa.'
+< 	print*,'  -r renseignements en clair (OUI, NON).'
+< 	print*,'     Defaut: OUI.'
+< 	print*,'  -d mode debug (OUI, NON).'
+< 	print*,'     Defaut: NON.'
+< 	print*,'Exemples:'
+---
+> & 		,'     Levels are given in the form 1,2,4'
+> 	print*,'     to extract domains 1, 2 and 4,'
+> 	print*,'     or 7-11 to extract domains 7 to 11.'
+> 	print*,'     or -0.692_+44.832_Bordeaux to get the domain, closest to the place longitude=-0.692°, latitude=44.832°.'
+> 	print*,'     	Remark1: in the notation above the format used to write the real data does not matter.'
+> 	print*,'     	Remark2: in the notation above the text right to the second "_" is not read by ddht.'
+> 	print*,'     		It can be omitted: -0.692_+44.832 leads to the same as -0.692_+44.832_Bordeaux.'
+> 	print*,'  -s output file.'
+> 	print*,'  -r information prints on standard output (OUI, NON).'
+> 	print*,'     Default: OUI.'
+> 	print*,'  -d debug mode (OUI, NON).'
+> 	print*,'     Default: NON.'
+> 	print*,'Examples:'
+376a368
+> 	print*,'	ddht -cEXTRAIT_DOMAIN -1f1 -sresul -E+001.374_+43.575_Toulouse-Meteopole.'
+377a370
+> 	print*,'	ddht -cINTERPOL -1DZ_41_niv.lfa -2DZ_46_niv.lfa -sDZ_41_niv_interpole_sur_46.lfa'
+397c390
+< if(clloc(1:illoc) == 'CALC') then
+---
+> if(trim(clloc) == 'CALC') then
+475c468
+< 				stop 'call abort'
+---
+>                                 call exit(1)
+487c480
+< 		stop 'call abort'
+---
+>                 call exit(1)
+533c526
+< & 			,'ddht/ERREUR "iplus": recompiler avec une valeur plus grande de jpnomct!...'
+---
+> & 			,'ddht/ERROR "iplus": recompile with a greater value of jpnomct!...'
+535c528
+< 		stop 'call abort'
+---
+>                 call exit(1)
+570c563
+< & 		,'ddht/ERREUR: recompiler avec une valeur plus grande de jplev!...'
+---
+> & 		,'ddht/ERROR: recompile with a greater jplev!...'
+572c565
+< 	stop 'call abort'
+---
+>         call exit(1)
+576c569
+< & 		,'ddht/ERREUR: recompiler avec une valeur plus grande de jpdom!...'
+---
+> & 		,'ddht/ERROR: recompile with a greater jpdom!...'
+578c571
+< 	stop 'call abort'
+---
+>         call exit(1)
+583c576
+< call inide(cllisde,idoma,jpdom,indoma)
+---
+> call inide(iul1,cllisde,idoma,jpdom,indoma)
+592,595c585,592
+< 	if(maxval(idoma) > ilev1) then
+< 		print*,'ddht/ERREUR: demande d''extraction de niveau impossible:'
+< 		print*,'	niveau ',maxval(idoma),' demandé, or ',ilev1,' niveaux dans le fichier!...'
+< 		stop 'call abort'
+---
+> 	imaxval_idoma=0
+> 	do jdom=1,indoma
+> 		if(idoma(jdom) > imaxval_idoma) imaxval_idoma=idoma(jdom)
+> 	enddo
+> 	if(imaxval_idoma > ilev1) then
+> 		print*,'ddht/ERROR: extract levels impossible:'
+> 		print*,'	level ',maxval(idoma),' required by te user,  ',ilev1,' levels in the file!...'
+>                 call exit(1)
+598,601c595,602
+< 	if(maxval(idoma) > idom1) then
+< 		print*,'ddht/ERREUR: demande d''extraction de domaine impossible:'
+< 		print*,'	domaine ',maxval(idoma),' demandé, or ',idom1,' domaines dans le fichier!...'
+< 		stop 'call abort'
+---
+> 	imaxval_idoma=0
+> 	do jdom=1,indoma
+> 		if(idoma(jdom) > imaxval_idoma) imaxval_idoma=idoma(jdom)
+> 	enddo
+> 	if(imaxval_idoma > idom1) then
+> 		print*,'ddht/ERROR: extract domains impossible:'
+> 		print*,'	domain ',maxval(idoma),' required by the user, ',idom1,' domains in the file!...'
+>                 call exit(1)
+650c651
+< if (cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE') then
+---
+> if (cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE' .or. trim(cgconf) == 'INTERPOL') then
+677c678
+< 	if(ilev1 /= ilev2) then
+---
+> 	if(ilev1 /= ilev2 .and. (cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE')) then
+679c680
+< & 			' ddht/ERREUR: nombre de niveaux différent entre les deux fichiers d''entrée!...'
+---
+> & 			' ddht/ERROR: the two DDH files have a different number of levels!...'
+683c684
+< 	if(idom1 /= idom2) then
+---
+> 	if(idom1 /= idom2 .and. (cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE')) then
+685c686
+< & 			' ddht/ERREUR: nombre de domaines différent entre les deux fichiers d''entrée!...'
+---
+> & 			' ddht/ERROR: the two DDH files have a different number of domains!...'
+689c690,692
+< 	if(ierrd == 1) stop 'call abort'
+---
+> 	if(ierrd == 1) then
+>                 call exit(1)
+>         endif
+779a783,785
+> elseif(cgconf(1:len_trim(cgconf)) == 'INTERPOL') then
+> 	ilev3=ilev2 ! on porte le nombre de niveaux verticaux à celui du fichier 2.
+> 	idocfi3(6)=ilev3
+787,788d792
+< 		! print*,'ddht/ERREUR: profil vertical de fichier global!...'
+< 		! stop 'call abort'
+859c863
+< 			print*,'ddht/ERREUR: DIFFE_EXP_REFE de deux fichiers d''échéances différentes!...'
+---
+> 			print*,'ddht/ERROR: DIFFE_EXP_REFE of two DDH files from different prediction ranges!...'
+861c865
+< 			stop 'call abort'
+---
+>                         call exit(1)
+985c989
+< 		! liste des champs cllisct().
+---
+> 		! liste des champs cllisct.
+989,993c993,995
+< 			print* &
+< & 				,'ddht/ERREUR: pour les séparations de tendance il faut fournir'
+< 			print*,'une liste explicite de champs. L''option -LTOUS'
+< 			print*,'n''est donc pas autorisée!...'
+< 			stop 'call abort'
+---
+> 			print*,'ddht/ERROR: to separate in tendencies '
+> 			print*,'an explicit list of fields is required!'
+>                         call exit(1)
+1050c1052
+< 						write(*,fmt=*) 'ddht/ERREUR: type de variable non attendu!...'
+---
+> 						write(*,fmt=*) 'ddht/ERROR: unknown variable type!...'
+1052c1054
+< 						stop 'call abort'
+---
+>                                                 call exit(1)
+1220c1222
+< & 						,'ddht/ERREUR: passage flux > tendance sur champ non de flux!...'
+---
+> & 						,'ddht/ERROR: convert flux > tendency on a field, which is not a flux!...'
+1222c1224
+< 					stop 'call abort'
+---
+>                                         call exit(1)
+1288,1289c1290,1291
+< & 						,'ddht/ERREUR: le champ en X doit être de dimension de variable!...'
+< 					stop 'call abort'
+---
+> & 						,'ddht/ERROR: the field in X should have the same dimension as a variable!...'
+>                                         call exit(1)
+1324a1327
+> 		iprod1=ilong
+1330c1333
+< 			if (cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE') then
+---
+> 			if (cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE'.or.trim(cgconf) == 'INTERPOL') then
+1334a1338,1343
+> 				iprod2=ilong
+> 			endif
+> 			if (cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE') then
+> 				!
+> 				! Il faut calculer une combinaison de deux champs.
+> 				!
+1378a1388,1415
+> 			elseif(cgconf(1:len_trim(cgconf)) == 'INTERPOL') then
+> 				!
+> 				!-------------------------------------------------
+> 				! Le profil 3 va recevoir le 1, interpolé sur la grille verticale du 2.
+> 				!-------------------------------------------------
+> 				!
+> 				if(idom1 /= idom2) then
+> 					write(*,fmt=*) ' '
+> 					write(*,fmt=*) 'ddht/ERROR: the configuration "INTERPOL" deals only with vertical interpolation,'
+> 					write(*,fmt=*) '	although the file 2 has a different number of domains than file 1.'
+> 					write(*,fmt=*) 
+> 				endif
+> 				if(cladcou(1:1) == 'F') then
+> 					ilev2cou=ilev2+1
+> 					iprod3=idom1*(ilev2+1)
+> 				else
+> 					ilev2cou=ilev2
+> 					iprod3=idom1*ilev2
+> 				endif
+> 				call interpolddh(cladcou,zprod1,ilev1,ilev2cou,idom1,idom2,iprod1,jpprod &
+> 				&,zpre_ini_1,zpre_ini_2 &
+> 				&,zpre_fin_1,zpre_fin_2 &
+> 				&,zpre_cum_1,zpre_cum_2 &
+> 				&,zprod3)
+> 				!
+> 				! Ecriture du tableau resultat.
+> 				!
+> 				call lfaecrr(iul3,cladcou,zprod3,iprod3)
+1470c1507
+< 		call somd_sol(iul1,iul2,iul3,idocfi1(12),idocfi1(14),zech1,zech2,idom1)
+---
+> 		call somd_sol(iul1,iul2,iul3,idocfi1(12),idocfi1(14),zech1,zech2,idom1,idoma,jpdom,indoma)
+1497c1534
+< 		call somd_libres(iul1,iul2,iul3,idocfi1(16),idocfi1(17),zech1,zech2,idom1)
+---
+> 		call somd_libres(iul1,iul2,iul3,idocfi1(16),idocfi1(17),zech1,zech2,idom1,idoma,jpdom,indoma)
+1587,1588c1624,1625
+< 	print*,'ddht/CUMUL/ERREUR: longueurs fausses: ',iprod,klong
+< 	stop 'call abort'
+---
+> 	print*,'ddht/CUMUL/ERROR: wrong lengths: ',iprod,klong
+>         call exit(1)
+1612,1613c1649
+< 
+< subroutine inide(cdlisde,kdoma,kdom,kndoma)
+---
+> subroutine inide(kul,cdlisde,kdoma,kdom,kndoma)
+1632a1669
+> ! 2006-04-04, J.M. Piriou: prise en compte de domaines donnés par leur long. et lat.
+1634a1672
+> ! kul unité logique du fichier LFA de DDH.
+1644a1683
+> ! cdlisde='+001.374_+43.575_Toulouse-Meteopole,-000.692_+44.832_Bordeaux' ==> kndoma=2, kdom(1)=domaine proche de ce (lon,lat), kdom(2)=domaine proche de ce (lon,lat).
+1646,1648d1684
+< ! Remarque:
+< ! Les chiffres sont separes par l'algorithme par des caracteres "non chiffres", donc
+< ! cdlisde='1,2,4' ou cdlisde='#1  2._004' conduisent au meme resultat.
+1651,1664c1687,1703
+< INTEGER(KIND=4) :: KDOM
+< CHARACTER*(*) cdlisde
+< CHARACTER*1 cl1
+< INTEGER(KIND=4) kdoma(kdom)
+< LOGICAL llcarcnc
+< LOGICAL llmoins
+< INTEGER(KIND=4) :: IDOM1
+< INTEGER(KIND=4) :: ITMP
+< INTEGER(KIND=4) :: J1
+< INTEGER(KIND=4) :: J2
+< INTEGER(KIND=4) :: JC
+< INTEGER(KIND=4) :: JDOM
+< INTEGER(KIND=4) :: KNDOMA
+< 
+---
+> !
+> ! Variables arguments.
+> !
+> CHARACTER*(*), intent(in) :: cdlisde
+> INTEGER(KIND=4), intent(in) :: kul,kdom
+> INTEGER(KIND=4), intent(out) :: kdoma(kdom),kndoma
+> !
+> ! Variables locales.
+> !
+> CHARACTER *80 clmot(180)
+> INTEGER(KIND=4) :: ilmot,jmot,ipos_und,ipos_tra,idom1,idom2,jdom,idom
+> REAL(KIND=8) :: zdist
+> !
+> !-------------------------------------------------
+> ! Initialisation du nombre de domaines rencontrés.
+> !-------------------------------------------------
+> !
+1666d1704
+< llcarcnc=.true. ! vrai si le caractere precedent est un non chiffre.
+1668,1669c1706,1711
+< ! llmoins: vrai si l'utilisateur a fourni la liste des niveaux de la façon "7-9".
+< ! llmoins: faux si l'utilisateur a fourni la liste des niveaux de la façon "7,8,9".
+---
+> !-------------------------------------------------
+> ! On casse la chaîne fournie par l'utilisateur en n mots, 
+> ! le séparateur entre mots étant la virgule.
+> !-------------------------------------------------
+> !
+> call casc(cdlisde,10,clmot,ilmot)
+1671,1675c1713,1748
+< llmoins=.false.
+< do jc=1,len(cdlisde)
+< 	cl1=cdlisde(jc:jc)
+< 	if(cl1 >= '0'.and.cl1 <= '9') then
+< 		if(llcarcnc) then
+---
+> !-------------------------------------------------
+> ! Boucle sur le nombre de mots.
+> !-------------------------------------------------
+> !
+> do jmot=1,ilmot
+> 	ipos_und=index(clmot(jmot),'_') ! underscore.
+> 	ipos_tra=index(clmot(jmot),'-') ! trait d'union.
+> 	if(ipos_und /= 0) then
+> 		!
+> 		!-------------------------------------------------
+> 		! Il y a un "_" dans le mot.
+> 		! L'utilisateur a fourni un couple (lon, lat) du type "-000.692_+44.832_Bordeaux".
+> 		! Recherche du domaine DDH le plus proche de ce couple (lon,lat).
+> 		!-------------------------------------------------
+> 		!
+> 		call recddpp(kul,clmot(jmot),idom,zdist)
+> 		kndoma=kndoma+1
+> 		kdoma(kndoma)=idom
+> 		!
+> 		!-------------------------------------------------
+> 		! Affichage sur output standard de la distance au domaine le plus proche.
+> 		!-------------------------------------------------
+> 		!
+> 		write(*,fmt=*) 'ddht: domaine le plus proche: '
+> 		write(*,fmt=*) '	numéro = ',idom
+> 		write(*,fmt=*) '	dist(km) = ',zdist/1000.
+> 	elseif (ipos_tra /= 0) then
+> 		!
+> 		!-------------------------------------------------
+> 		! Il y a un "-" dans le mot.
+> 		! L'utilisateur a fourni une liste de domaines du type "5-9".
+> 		!-------------------------------------------------
+> 		!
+> 		read(clmot(jmot)(1:ipos_tra-1),fmt=*) idom1
+> 		read(clmot(jmot)(ipos_tra+1:),fmt=*) idom2
+> 		do jdom=idom1,idom2
+1677,1688c1750,1751
+< 			kdoma(kndoma)=ichar(cl1)-48
+< 		else
+< 			kdoma(kndoma)=kdoma(kndoma)*10+ichar(cl1)-48
+< 		endif
+< 		llcarcnc=.false.
+< 	elseif(cl1 == ',') then
+< 		llcarcnc=.true.
+< 		llmoins=.false.
+< 	elseif(cl1 == '-') then
+< 		llcarcnc=.true.
+< 		llmoins=.true.
+< 	elseif(cl1 == ' ') then
+---
+> 			kdoma(kndoma)=jdom
+> 		enddo
+1690,1693c1753,1760
+< 		print* &
+< & 			,'ddht/INIDE/ERREUR: caractère non attendu dans la liste des niveaux/domaines.'
+< 		print*,cl1
+< 		stop 'call abort'
+---
+> 		!
+> 		!-------------------------------------------------
+> 		! Il n'y a ni "_" ni "-" dans le mot.
+> 		! L'utilisateur a donc fourni un domaine simple, type "8".
+> 		!-------------------------------------------------
+> 		!
+> 		kndoma=kndoma+1
+> 		read(clmot(jmot),fmt=*) kdoma(kndoma)
+1695a1763,1787
+> end
+> subroutine recddpp(kul,cdmot,kdom,pdist)
+> ! --------------------------------------------------------------------------
+> ! **** *recddpp* Recherche du domaine DDH le plus proche d'un couple (lon,lat) donné.
+> ! --------------------------------------------------------------------------
+> ! Sujet:
+> ! ------
+> ! Arguments explicites: /
+> ! ---------------------
+> ! Arguments implicites: /
+> ! ---------------------
+> ! Methode:
+> ! --------
+> ! Externes: /
+> ! ---------
+> ! Original :
+> ! ----------
+> ! 2006-04-05, J.M. Piriou.
+> !
+> ! Modifications:
+> ! --------------
+> ! --------------------------------------------------------------------------
+> ! En entree:
+> ! kul unité logique du fichier LFA de DDH.
+> ! cdmot   chaine contenant le couple (lon,lat) au format "+001.374_+43.575_Toulouse-Meteopole".
+1697c1789,1791
+< ! Tri de la liste.
+---
+> ! En sortie:
+> ! kdom   numéro du domaine DDH le plus proche.
+> ! pdist  distance (en m) entre le (lon,lat) utilisateur et le domaine DDH le plus proche.
+1699,1708c1793,1853
+< do j1=1,kndoma
+< 	do j2=j1,kndoma
+< 		if(kdoma(j1) > kdoma(j2)) then
+< 			itmp=kdoma(j1)
+< 			kdoma(j1)=kdoma(j2)
+< 			kdoma(j2)=itmp
+< 		endif
+< 	enddo
+< enddo
+< if(llmoins) then
+---
+> ! --------------------------------------------------------------------------
+> implicit none
+> !
+> ! Variables arguments.
+> !
+> CHARACTER*(*), intent(in) :: cdmot
+> INTEGER(KIND=4), intent(in) :: kul
+> INTEGER(KIND=4), intent(out) :: kdom
+> REAL(KIND=8), intent(out) :: pdist
+> !
+> ! Variables locales.
+> !
+> CHARACTER *80 clmot(180),clart
+> INTEGER(KIND=4) :: ilmot,ilong,ierr,idom,jdom
+> INTEGER(KIND=4) idocfi(17)
+> REAL(KIND=8) zdocd(11),zmodyx
+> REAL(KIND=8) :: zlon,zlat,zpi,zmpi,zlon1,zlon2,zlon3,zlon4
+> REAL(KIND=8) :: zlat1,zlat2,zlat3,zlat4,zproscal,zproscal_loc,zlonu,zlatu,zproscalx,zcondr
+> !
+> !-------------------------------------------------
+> ! On casse la chaîne d'entrée en mots, le séparateur étant l'underscore.
+> !-------------------------------------------------
+> !
+> call casc(cdmot,-95,clmot,ilmot)
+> !
+> !-------------------------------------------------
+> ! Lecture de longitude et latitude.
+> !-------------------------------------------------
+> !
+> read(clmot(1),fmt=*) zlonu
+> read(clmot(2),fmt=*) zlatu
+> !
+> !-------------------------------------------------
+> ! Conversion en radians.
+> !-------------------------------------------------
+> !
+> zcondr=atan(1.)/45.
+> zlonu=zlonu*zcondr
+> zlatu=zlatu*zcondr
+> !
+> !-------------------------------------------------
+> ! Lecture de l'autodocumentation des domaines du fichier de DDH.
+> !-------------------------------------------------
+> !
+> !
+> !-------------------------------------------------
+> ! Nombre de domaines.
+> !-------------------------------------------------
+> !
+> call lfaleci(kul,'DOCFICHIER',17,idocfi,ilong,ierr)
+> idom=idocfi(15) ! nombre de domaines.
+> !
+> !-------------------------------------------------
+> ! Boucle sur les domaines de ce fichier DDH,
+> ! pour rechercher celui dont le centre de gravité est le plus proche
+> ! du (lon,lat) demandé.
+> !-------------------------------------------------
+> !
+> zproscalx=-1.01 ! on initialise le produit scalaire entre vecteurs normés à celui de la distance maximale.
+> kdom=1
+> do jdom=1,idom
+1710,1712c1855
+< 	! L'utilisateur a fourni une liste de type 27-34.
+< 	! Or à ce niveau on n'a que 2 valeurs dans kdoma,
+< 	! 27 et 34. On restaure ci-dessous la liste complète.
+---
+> 	! On lit la documentation du domaine jdom.
+1714,1727c1857,1973
+< 	if(kndoma /= 2) then
+< 		print* &
+< & 			,'ddht/INIDE/ERREUR: fourniture de niveaux avec un moins,'
+< 		print* &
+< & 			,'or le nombre de niveaux de part et d''autre de ce moins '
+< 		print*,'n''est pas égal à 2!...'
+< 		stop 'call abort'
+< 	endif
+< 	kndoma=kdoma(2)-kdoma(1)+1
+< 	idom1=kdoma(1)
+< 	do jdom=1,kndoma
+< 		kdoma(jdom)=idom1+jdom-1
+< 	enddo
+< endif
+---
+> 	write(clart,fmt='(a,i3.3)') 'DOCD',jdom
+> 	call lfalecr(kul,clart(1:7),11,zdocd,ilong,ierr)
+> 	!
+> 	!-------------------------------------------------
+> 	! On gère chaque type de domaine: points limités, quadrilatère, etc.
+> 	!-------------------------------------------------
+> 	!
+> 	zpi=4.*atan(1.)
+> 	zmpi=-zpi
+> 	if(nint(zdocd(11)) == 1.or.nint(zdocd(11)) == 4) then
+> 		!
+> 		! Type point.
+> 		!
+> 		zlon=zdocd(3)
+> 		zlat=asin(zdocd(4))
+> 		zlon=zmodyx(zlon,zmpi,zpi)
+> 	elseif(nint(zdocd(11)) == 2) then
+> 		!
+> 		! Type quadrilatère.
+> 		!
+> 		zlon1=zdocd(3)
+> 		zlon2=zdocd(5)
+> 		zlon3=zdocd(7)
+> 		zlon4=zdocd(9)
+> 		!
+> 		zlat1=asin(zdocd(4))
+> 		zlat2=asin(zdocd(6))
+> 		zlat3=asin(zdocd(8))
+> 		zlat4=asin(zdocd(10))
+> 		!
+> 		zlon1=zmodyx(zlon1,zmpi,zpi)
+> 		zlon2=zmodyx(zlon2,zmpi,zpi)
+> 		zlon3=zmodyx(zlon3,zmpi,zpi)
+> 		zlon4=zmodyx(zlon4,zmpi,zpi)
+> 		!
+> 		zlon=0.5*(zlon1+zlon2)
+> 		zlat=0.5*(zlat1+zlat2)
+> 	elseif(nint(zdocd(11)) == 3) then
+> 		!
+> 		! Type rectangle.
+> 		!
+> 		zlon1=zdocd(3)
+> 		zlat1=asin(min(1.,max(-1.,zdocd(4))))
+> 		zlon2=zdocd(5)
+> 		zlat2=asin(min(1.,max(-1.,zdocd(8))))
+> 		!
+> 		zlon1=zmodyx(zlon1,zmpi,zpi)
+> 		zlon2=zmodyx(zlon2,zmpi,zpi)
+> 		if(zlon2 < zlon1) zlon2=zlon2+360.
+> 		zlon=0.5*(zlon1+zlon2)
+> 		zlat=0.5*(zlat1+zlat2)
+> 	elseif(nint(zdocd(11)) == 5) then
+> 		!
+> 		! Type globe.
+> 		!
+> 		zlon=0.
+> 		zlat=0.
+> 	elseif(nint(zdocd(11)) == 6) then
+> 		!
+> 		! Type bande zonale.
+> 		!
+> 		zlon=0.
+> 		zlat=asin(zdocd(4))
+> 	else
+> 		print*,'ddht/ERROR: the kind of domain ',nint(zdocd(11)),' is not yet taken into account!...'
+>                 call exit(1)
+> 	endif
+> 	!
+> 	!-------------------------------------------------
+> 	! A ce stade on a la position du domaine DDH dans (zlon,zlat)
+> 	! et celle demandée par l'utilisateur dans (zlonu,zlatu).
+> 	! Calcul du produit scalaire de ces 2 vecteurs.
+> 	!-------------------------------------------------
+> 	!
+> 	zproscal_loc=zproscal(zlon,zlat,zlonu,zlatu)
+> 	if(zproscal_loc > zproscalx) then
+> 		!
+> 		!-------------------------------------------------
+> 		! Le domaine courant est plus proche
+> 		! de celui souhaité par l'utilisateur
+> 		! que le précédent.
+> 		!-------------------------------------------------
+> 		!
+> 		kdom=jdom
+> 		pdist=6371229.*acos(zproscal_loc)
+> 		zproscalx=zproscal_loc
+> 	endif
+> 	!write(*,fmt=*) 'proscal courant=',zproscal_loc,' proscal x=',zproscalx
+> enddo
+> end
+> function zproscal(plon,plat,plonu,platu)
+> ! --------------------------------------------------------------------------
+> ! **** *zproscal* Produit scalaire de deux vecteurs normés donnés par leur (lon,lat).
+> ! --------------------------------------------------------------------------
+> ! Sujet:
+> ! ------
+> ! Arguments explicites: /
+> ! ---------------------
+> ! Arguments implicites: /
+> ! ---------------------
+> ! Methode:
+> ! --------
+> ! Externes: /
+> ! ---------
+> ! Original :
+> ! ----------
+> ! 2006-04-05, J.M. Piriou.
+> !
+> ! Modifications:
+> ! --------------
+> ! --------------------------------------------------------------------------
+> implicit none
+> REAL(KIND=8), intent(in) :: plon,plat,plonu,platu
+> REAL(KIND=8) :: zproscal
+> zproscal=cos(plat)*cos(plon)*cos(platu)*cos(plonu) &
+> & +cos(plat)*sin(plon)*cos(platu)*sin(plonu) &
+> & +sin(plat)*sin(platu)
+1729d1974
+< 
+1823,1824c2068,2069
+< 			print*,'DDHT/ERREUR: caractère 4 non attendu dans ',cdadcou(1:len_trim(cdadcou))
+< 			stop 'call abort'
+---
+> 			print*,'DDHT/ERROR: character 4 unexpected in ',cdadcou(1:len_trim(cdadcou))
+>                         call exit(1)
+1874,1875c2119,2120
+< 		print*,'DDHT/SOMDD/ERREUR: var. non coord.'
+< 		stop 'call abort'
+---
+> 		print*,'DDHT/SOMDD/ERROR: var. non coord.'
+>                 call exit(1)
+1901,1902c2146,2147
+< 		print*,'DDHT/SOMDD/ERREUR: var. ccord.'
+< 		stop 'call abort'
+---
+> 		print*,'DDHT/SOMDD/ERROR: var. ccord.'
+>                 call exit(1)
+1923c2168
+< & 		,'DDHT/SOMDD/ERREUR: champ non prevu lors de somme/difference.'
+---
+> & 		,'DDHT/SOMDD/ERROR: unexpected field for the cumulate/differenciate operation.'
+1925c2170
+< 	stop 'call abort'
+---
+>         call exit(1)
+1985,1986c2230,2231
+< 	print*,'ddht/ERREUR dans calpasd: options de combinee.'
+< 	stop 'call abort'
+---
+> 	print*,'ddht/ERROR in calpasd: combination options.'
+>         call exit(1)
+1989,1990c2234,2235
+< 
+< subroutine somd_sol(kul1,kul2,kul3,knomvif,knomf,pech1,pech2,kdom)
+---
+> subroutine somd_sol(kul1,kul2,kul3,knomvif,knomf,pech1,pech2 &
+> & ,kdom,kdoma,kddom,kndoma)
+2033d2277
+< INTEGER(KIND=4) :: KDOM
+2039a2284,2286
+> INTEGER(KIND=4) :: KDOM,kddom,jindoma
+> INTEGER(KIND=4) :: kdoma(kddom)
+> INTEGER(KIND=4) :: kndoma
+2116c2363
+< 				print*,'ddht/ATTENTION: traitement des champs sol de l''option ', &
+---
+> 				print*,'ddht/somd_sol 1/ATTENTION: traitement des champs sol de l''option ', &
+2212a2460,2496
+> elseif(trim(cgconf) == 'EXTRAIT_DOMAIN') then
+> 	!
+> 	! Traitement des variables.
+> 	!
+> 	inomvs=knomvif ! nombre de variables initiales ou finales.
+> 	do jvar=0,1
+> 		do jchamp=1,inomvs
+> 			write(clsol,fmt='(a,i2.2,a,i1.1)') 'S',jchamp,'_',jvar
+> 			call lfalecr(kul1,clsol,jpdom,zsols1,ilong,irep)
+> 			!
+> 			! Operation a effectuer sur le champ sol:
+> 			! extraire certains domaines,
+> 			! puis reecriture d'icelui sur le fichier de sortie.
+> 			!
+> 			do jindoma=1,kndoma
+> 				zsols3(jindoma)=zsols1(kdoma(jindoma))
+> 			enddo
+> 			call lfaecrr(kul3,clsol,zsols3,kndoma)
+> 		enddo
+> 	enddo
+> 	!
+> 	! Traitement des flux.
+> 	!
+> 	inomvs=knomf ! nombre de flux.
+> 	do jchamp=1,inomvs
+> 		write(clsol,fmt='(a,i2.2)') 'G',jchamp
+> 		call lfalecr(kul1,clsol,jpdom,zsols1,ilong,irep)
+> 		!
+> 		! Operation a effectuer sur le champ sol:
+> 		! extraire certains domaines,
+> 		! puis reecriture d'icelui sur le fichier de sortie.
+> 		!
+> 		do jindoma=1,kndoma
+> 			zsols3(jindoma)=zsols1(kdoma(jindoma))
+> 		enddo
+> 		call lfaecrr(kul3,clsol,zsols3,kndoma)
+> 	enddo
+2218c2502
+< & 		,'ddht/ATTENTION: traitement des champs sol de l''option ', &
+---
+> & 		,'ddht/somd_sol 2/ATTENTION: traitement des champs sol de l''option ', &
+2223,2224c2507,2508
+< 
+< subroutine somd_libres(kul1,kul2,kul3,knomvif,knomf,pech1,pech2,kdom)
+---
+> subroutine somd_libres(kul1,kul2,kul3,knomvif,knomf,pech1,pech2 &
+> & ,kdom,kdoma,kddom,kndoma)
+2276c2560,2562
+< INTEGER(KIND=4) :: KDOM
+---
+> INTEGER(KIND=4) :: KDOM,kddom,jindoma
+> INTEGER(KIND=4) :: kdoma(kddom)
+> INTEGER(KIND=4) :: kndoma
+2338c2624
+< 			print*,'ddht/ATTENTION: traitement des champs libres de l''option ', &
+---
+> 			print*,'ddht/somd_libres 1/ATTENTION: traitement des champs libres de l''option ', &
+2388c2674
+< 		write(cllibre,fmt='(a,i2.2)') 'SVGFS',jchamp
+---
+> 		write(cllibre,fmt='(a,i2.2)') 'SFGFS',jchamp
+2429a2716,2750
+> elseif(trim(cgconf) == 'EXTRAIT_DOMAIN') then
+> 	!
+> 	! Traitement des variables.
+> 	!
+> 	inomvs=knomvif ! nombre de variables initiales ou finales.
+> 	do jchamp=1,inomvs
+> 		write(cllibre,fmt='(a,i2.2)') 'SVGFS',jchamp
+> 		call lfalecr(kul1,cllibre,jpdom,zlibres1,ilong,irep)
+> 		!
+> 		! Operation a effectuer sur le champ libre:
+> 		! extraire certains domaines,
+> 		! puis reecriture d'icelui sur le fichier de sortie.
+> 		!
+> 		do jindoma=1,kndoma
+> 			zlibres3(jindoma)=zlibres1(kdoma(jindoma))
+> 		enddo
+> 		call lfaecrr(kul3,cllibre,zlibres3,kndoma)
+> 	enddo
+> 	!
+> 	! Traitement des flux.
+> 	!
+> 	inomvs=knomf ! nombre de flux.
+> 	do jchamp=1,inomvs
+> 		write(cllibre,fmt='(a,i2.2)') 'SFGFS',jchamp
+> 		call lfalecr(kul1,cllibre,jpdom,zlibres1,ilong,irep)
+> 		!
+> 		! Operation a effectuer sur le champ libre:
+> 		! extraire certains domaines,
+> 		! puis reecriture d'icelui sur le fichier de sortie.
+> 		!
+> 		do jindoma=1,kndoma
+> 			zlibres3(jindoma)=zlibres1(kdoma(jindoma))
+> 		enddo
+> 		call lfaecrr(kul3,cllibre,zlibres3,kndoma)
+> 	enddo
+2435c2756
+< & 		,'ddht/ATTENTION: traitement des champs libres de l''option ', &
+---
+> & 		,'ddht/somd_libres 2/ATTENTION: traitement des champs libres de l''option ', &
+2439a2761,3272
+> subroutine interpolddh(cdadcou,pchamp_uni_1,klev1,klev2,kdom1,kdom2,kuni1,kuni &
+> &,ppre_uni_ini_1,ppre_uni_ini_2 &
+> &,ppre_uni_fin_1,ppre_uni_fin_2 &
+> &,ppre_uni_cum_1,ppre_uni_cum_2 &
+> &,pchamp_uni_3)
+> ! --------------------------------------------------------------------------
+> ! **** *interpolddh* Interpolation verticale de variables et flux.
+> ! --------------------------------------------------------------------------
+> ! Sujet:
+> ! ------
+> ! Arguments explicites: /
+> ! ---------------------
+> ! Arguments implicites: /
+> ! ---------------------
+> ! Methode:
+> ! --------
+> ! Externes: /
+> ! ---------
+> ! Original :
+> ! ----------
+> ! 2006-08-17, J.M. Piriou.
+> !
+> ! Modifications:
+> ! --------------
+> ! --------------------------------------------------------------------------
+> ! En entree:
+> ! pchamp_uni_1: profil 1.
+> ! klev1,klev2: nb de niveaux des 2 fichiers d'entrée.
+> ! kdom1,kdom2: nb de domaines des 2 fichiers d'entrée.
+> ! kuni1: dimension physique réelle des tableaux de réels écrits sur le fichier d'entrée 1.
+> ! kuni:         dimension maximale des tableaux de réels écrits sur le fichier de sortie 3 (parameter).
+> ! ppre_uni_ini_1,ppre_uni_ini_2: profils de VPP0 des fichiers d'entrée 1 et 2.
+> ! ppre_uni_fin_1,ppre_uni_fin_2: profils de VPP1 des fichiers d'entrée 1 et 2.
+> ! ppre_uni_cum_1,ppre_uni_cum_2: profils de PPP  des fichiers d'entrée 1 et 2.
+> !
+> ! En sortie:
+> ! pchamp_uni_3: profil 3, résultat de l'interpolation du profil 1 sur la grille 2.
+> !
+> ! --------------------------------------------------------------------------
+> !
+> !-------------------------------------------------
+> ! Variables arguments.
+> !-------------------------------------------------
+> !
+> implicit none
+> CHARACTER*(*), intent(in) :: CDADCOU
+> REAL(KIND=8), INTENT(in) :: pchamp_uni_1(kuni)
+> INTEGER(KIND=4), intent(in) :: klev1,klev2,kdom1,kdom2,kuni1,kuni
+> REAL(KIND=8), INTENT(in), dimension(kuni) :: ppre_uni_ini_1,ppre_uni_ini_2 &
+> &,ppre_uni_fin_1,ppre_uni_fin_2 &
+> &,ppre_uni_cum_1,ppre_uni_cum_2
+> REAL(KIND=8), INTENT(out) :: pchamp_uni_3(kuni)
+> !
+> !-------------------------------------------------
+> ! Variables locales.
+> !-------------------------------------------------
+> !
+> INTEGER(KIND=4) :: juni,jdom,jlev,ilev1,ilev2,iuni1,iuni2,iuni
+> REAL(KIND=8), dimension(kdom1,klev1) :: zchamp_dn_1,zpre_dn_ini_1,zpre_dn_fin_1,zpre_dn_cum_1
+> REAL(KIND=8), dimension(kdom1,klev1) :: zcoo_ini_1,zcoo_fin_1,zcoo_cum_1
+> REAL(KIND=8), dimension(kdom2,klev2) :: zchamp_dn_2,zpre_dn_ini_2,zpre_dn_fin_2,zpre_dn_cum_2
+> REAL(KIND=8), dimension(kdom2,klev2) :: zcoo_ini_2,zcoo_fin_2,zcoo_cum_2
+> REAL(KIND=8), dimension(kdom2,klev2) :: zsigma_ini,zsigma_fin,zsigma_cum,zgripc_ini,zgripc_fin,zgripc_cum
+> REAL(KIND=8), dimension(klev1) :: zchamp_g1,zcoop_g1
+> REAL(KIND=8), dimension(klev2) :: zchamp_g2,zcoop_g2
+> logical llflux
+> if(trim(cdadcou) == 'VPP0') then
+> 	!
+> 	!-------------------------------------------------
+> 	! Champ pression initiale.
+> 	! Pas d'interpolation: on recopie celui du fichier 2,
+> 	! puisque la grille verticale visée est celle du fichier 2.
+> 	!-------------------------------------------------
+> 	!
+> 	do juni=1,klev2*kdom2
+> 		pchamp_uni_3(juni)=ppre_uni_ini_2(juni)
+> 	enddo
+> elseif(trim(cdadcou) == 'VPP1') then
+> 	!
+> 	!-------------------------------------------------
+> 	! Champ pression finale.
+> 	! Pas d'interpolation: on recopie celui du fichier 2,
+> 	! puisque la grille verticale visée est celle du fichier 2.
+> 	!-------------------------------------------------
+> 	!
+> 	do juni=1,klev2*kdom2
+> 		pchamp_uni_3(juni)=ppre_uni_fin_2(juni)
+> 	enddo
+> elseif(trim(cdadcou) == 'PPP') then
+> 	!
+> 	!-------------------------------------------------
+> 	! Champ pression cumulée temporellement.
+> 	! Pas d'interpolation: on recopie celui du fichier 2,
+> 	! puisque la grille verticale visée est celle du fichier 2.
+> 	!-------------------------------------------------
+> 	!
+> 	do juni=1,klev2*kdom2
+> 		pchamp_uni_3(juni)=ppre_uni_cum_2(juni)
+> 	enddo
+> else
+> 	!
+> 	!-------------------------------------------------
+> 	! Champs autres que la pression.
+> 	! Interpolation verticale.
+> 	!-------------------------------------------------
+> 	!
+> 	!-------------------------------------------------
+> 	! Conversion des tableaux 1D issus de la lecture sur fichier de DDH
+> 	! en tableaux 2D (domaine, niveau).
+> 	!-------------------------------------------------
+> 	!
+> 	if(cdadcou(1:1) == 'F') then
+> 		ilev1=klev1-1
+> 		ilev2=klev2-1
+> 		llflux=.true.
+> 	else
+> 		ilev1=klev1
+> 		ilev2=klev2
+> 		llflux=.false.
+> 	endif
+> 	iuni1=ilev1*kdom1
+> 	iuni2=ilev2*kdom2
+> 	call uni2dn(pchamp_uni_1,kuni1,kdom1,klev1,zchamp_dn_1)
+> 	call uni2dn(ppre_uni_ini_1,iuni1,kdom1,ilev1,zpre_dn_ini_1)
+> 	call uni2dn(ppre_uni_fin_1,iuni1,kdom1,ilev1,zpre_dn_fin_1)
+> 	call uni2dn(ppre_uni_cum_1,iuni1,kdom1,ilev1,zpre_dn_cum_1)
+> 	call uni2dn(ppre_uni_ini_2,iuni2,kdom2,ilev2,zpre_dn_ini_2)
+> 	call uni2dn(ppre_uni_fin_2,iuni2,kdom2,ilev2,zpre_dn_fin_2)
+> 	call uni2dn(ppre_uni_cum_2,iuni2,kdom2,ilev2,zpre_dn_cum_2)
+> 	!
+> 	!-------------------------------------------------
+> 	! Interpolation verticale proprement dite:
+> 	! 1. Calcul des (ilev2+1) niveaux sigma (sigma = p/ps) de la grille 2.
+> 	! 1.1. On remplace dans les tableaux zpre_dn* le contenu deltap
+> 	! en un contenu p.
+> 	!-------------------------------------------------
+> 	!
+> 	zcoo_ini_1=0.
+> 	zcoo_fin_1=0.
+> 	zcoo_cum_1=0.
+> 	do jdom=1,kdom1
+> 		do jlev=2,ilev1
+> 			zcoo_ini_1(jdom,jlev)=zpre_dn_ini_1(jdom,jlev)+zcoo_ini_1(jdom,jlev-1)
+> 			zcoo_fin_1(jdom,jlev)=zpre_dn_fin_1(jdom,jlev)+zcoo_fin_1(jdom,jlev-1)
+> 			zcoo_cum_1(jdom,jlev)=zpre_dn_cum_1(jdom,jlev)+zcoo_cum_1(jdom,jlev-1)
+> 		enddo
+> 	enddo
+> 	zcoo_ini_2=0.
+> 	zcoo_fin_2=0.
+> 	zcoo_cum_2=0.
+> 	do jdom=1,kdom2
+> 		do jlev=2,ilev2
+> 			zcoo_ini_2(jdom,jlev)=zpre_dn_ini_2(jdom,jlev)+zcoo_ini_2(jdom,jlev-1)
+> 			zcoo_fin_2(jdom,jlev)=zpre_dn_fin_2(jdom,jlev)+zcoo_fin_2(jdom,jlev-1)
+> 			zcoo_cum_2(jdom,jlev)=zpre_dn_cum_2(jdom,jlev)+zcoo_cum_2(jdom,jlev-1)
+> 		enddo
+> 	enddo
+> 	!
+> 	!-------------------------------------------------
+> 	! A ce stade les tableaux zcoo* contiennent la pression
+> 	! de chaque niveau de flux courant. 
+> 	! 1.2. On en déduit sigma sur les niveaux de flux.
+> 	!-------------------------------------------------
+> 	!
+> 	do jdom=1,kdom2
+> 		do jlev=1,ilev2
+> 			zsigma_ini(jdom,jlev)=zcoo_ini_2(jdom,jlev)/zcoo_ini_2(jdom,ilev2)
+> 			zsigma_fin(jdom,jlev)=zcoo_fin_2(jdom,jlev)/zcoo_fin_2(jdom,ilev2)
+> 			zsigma_cum(jdom,jlev)=zcoo_cum_2(jdom,jlev)/zcoo_cum_2(jdom,ilev2)
+> 		enddo
+> 	enddo
+> 	!
+> 	!-------------------------------------------------
+> 	! 2. Soit ps1 la pression de surface du fichier 1. 
+> 	! On va appliquer les (ilev2+1) niveaux sigma de la grille 2
+> 	! à ps1, i.e. on détermine la grille-pression cible en niveaux de flux 
+> 	! comme p(j)=ps1*sigma(j), j=1,ilev2+1.
+> 	!-------------------------------------------------
+> 	!
+> 	do jdom=1,kdom2
+> 		do jlev=1,ilev2
+> 			zgripc_ini(jdom,jlev)=zcoo_ini_1(jdom,ilev1)*zsigma_ini(jdom,jlev)
+> 			zgripc_fin(jdom,jlev)=zcoo_fin_1(jdom,ilev1)*zsigma_fin(jdom,jlev)
+> 			zgripc_cum(jdom,jlev)=zcoo_cum_1(jdom,ilev1)*zsigma_cum(jdom,jlev)
+> 		enddo
+> 	enddo
+> 	iuni=0
+> 	do jdom=1,kdom1
+> 		!
+> 		!-------------------------------------------------
+> 		! On va générer les tableaux attendus par la routine d'interpolation:
+> 		! - zchamp_g1: champ sur la grille 1.
+> 		! - zcoop_g1: coordonnée pression de la grille 1.
+> 		! - zcoop_g2: coordonnée pression de la grille 2.
+> 		!-------------------------------------------------
+> 		!
+> 		if(llflux) then
+> 			!
+> 			!-------------------------------------------------
+> 			! Cas des flux. On veut une coordonnée-pression sur les niveaux de flux.
+> 			!-------------------------------------------------
+> 			!
+> 			do jlev=1,klev1
+> 				if(jlev == 1) then
+> 					zcoop_g1(jlev)=0.
+> 				else
+> 					zcoop_g1(jlev)=zcoo_cum_1(jdom,jlev-1)
+> 				endif
+> 				zchamp_g1(jlev)=zchamp_dn_1(jdom,jlev)
+> 			enddo
+> 			do jlev=1,klev2
+> 				if(jlev == 1) then
+> 					zcoop_g2(jlev)=0.
+> 				else
+> 					zcoop_g2(jlev)=zgripc_cum(jdom,jlev-1)
+> 				endif
+> 			enddo
+> 		else
+> 			!
+> 			!-------------------------------------------------
+> 			! Cas des variables. On veut une coordonnée-pression sur les niveaux de variables.
+> 			!-------------------------------------------------
+> 			!
+> 			do jlev=1,klev1
+> 				if(jlev == 1) then
+> 					if(cdadcou(4:4) == '0') then
+> 						zcoop_g1(jlev)=0.5*zcoo_ini_1(jdom,1)
+> 					elseif(cdadcou(4:4) == '1') then
+> 						zcoop_g1(jlev)=0.5*zcoo_fin_1(jdom,1)
+> 					else
+> 						zcoop_g1(jlev)=0.5*zcoo_cum_1(jdom,1)
+> 					endif
+> 				else
+> 					if(cdadcou(4:4) == '0') then
+> 						zcoop_g1(jlev)=0.5*(zcoo_ini_1(jdom,jlev)+zcoo_ini_1(jdom,jlev-1))
+> 					elseif(cdadcou(4:4) == '1') then
+> 						zcoop_g1(jlev)=0.5*(zcoo_fin_1(jdom,jlev)+zcoo_fin_1(jdom,jlev-1))
+> 					else
+> 						zcoop_g1(jlev)=0.5*(zcoo_cum_1(jdom,jlev)+zcoo_cum_1(jdom,jlev-1))
+> 					endif
+> 				endif
+> 				if(cdadcou(4:4) == '0') then
+> 					zchamp_g1(jlev)=zchamp_dn_1(jdom,jlev)/zpre_dn_ini_1(jdom,jlev)
+> 				elseif(cdadcou(4:4) == '1') then
+> 					zchamp_g1(jlev)=zchamp_dn_1(jdom,jlev)/zpre_dn_fin_1(jdom,jlev)
+> 				else
+> 					zchamp_g1(jlev)=zchamp_dn_1(jdom,jlev)/zpre_dn_cum_1(jdom,jlev)
+> 				endif
+> 			enddo
+> 			do jlev=1,klev2
+> 				if(jlev == 1) then
+> 					if(cdadcou(4:4) == '0') then
+> 						zcoop_g2(jlev)=0.5*zgripc_ini(jdom,1)
+> 					elseif(cdadcou(4:4) == '1') then
+> 						zcoop_g2(jlev)=0.5*zgripc_fin(jdom,1)
+> 					else
+> 						zcoop_g2(jlev)=0.5*zgripc_cum(jdom,1)
+> 					endif
+> 				else
+> 					if(cdadcou(4:4) == '0') then
+> 						zcoop_g2(jlev)=0.5*(zgripc_ini(jdom,jlev)+zgripc_ini(jdom,jlev-1))
+> 					elseif(cdadcou(4:4) == '1') then
+> 						zcoop_g2(jlev)=0.5*(zgripc_fin(jdom,jlev)+zgripc_fin(jdom,jlev-1))
+> 					else
+> 						zcoop_g2(jlev)=0.5*(zgripc_cum(jdom,jlev)+zgripc_cum(jdom,jlev-1))
+> 					endif
+> 				endif
+> 			enddo
+> 		endif
+> 		!
+> 		!-------------------------------------------------
+> 		! 3. Interpolation du champ courant pchamp_uni_1 sur la grille-pression cible.
+> 		!-------------------------------------------------
+> 		!
+> 		call interpol1d(klev1,zcoop_g1,zchamp_g1,klev2,zcoop_g2,zchamp_g2)
+> 		!if(jdom == 1 .and. trim(cdadcou) == 'VCT1') then
+> 		!	do jlev=1,klev1
+> 		!		write(59,*) zcoop_g1(jlev),zchamp_g1(jlev)
+> 		!	enddo
+> 		!	do jlev=1,klev2
+> 		!		write(60,*) zcoop_g2(jlev),zchamp_g2(jlev)
+> 		!	enddo
+> 		!endif
+> 		!
+> 		!-------------------------------------------------
+> 		! 4. Copie du résultat interpolé du domaine courant
+> 		! sur le tableau recevant tous les domaines.
+> 		!-------------------------------------------------
+> 		!
+> 		do jlev=1,klev2
+> 			iuni=iuni+1
+> 			if(llflux) then
+> 				pchamp_uni_3(iuni)=zchamp_g2(jlev)
+> 			else
+> 				if(cdadcou(4:4) == '0') then
+> 					pchamp_uni_3(iuni)=zchamp_g2(jlev)*zpre_dn_ini_2(jdom,jlev)
+> 				elseif(cdadcou(4:4) == '1') then
+> 					pchamp_uni_3(iuni)=zchamp_g2(jlev)*zpre_dn_fin_2(jdom,jlev)
+> 				else
+> 					pchamp_uni_3(iuni)=zchamp_g2(jlev)*zpre_dn_cum_2(jdom,jlev)
+> 				endif
+> 			endif
+> 		enddo
+> 	enddo
+> endif
+> end
+> subroutine uni2dn(pchamp_uni,kuni,kdom,klev,pchamp_dn)
+> ! --------------------------------------------------------------------------
+> ! **** *uni2dn* Conversion d'un tableau 1D contenant toutes les valeurs (dom,niv) à un tableau 2D (dom,niv).
+> ! --------------------------------------------------------------------------
+> ! Sujet:
+> ! ------
+> ! Cette routine convient aussi bien aux tableaux de variables (VPP0, VCT0, etc) que de flux (FCTRAYTER1, etc).
+> ! Les arguments kuni et klev sont alors différents (klev est + grand de 1 et kuni est + grand de kdom, si flux).
+> !
+> ! Arguments explicites: /
+> ! ---------------------
+> ! Arguments implicites: /
+> ! ---------------------
+> ! Methode:
+> ! --------
+> ! Externes: /
+> ! ---------
+> ! Original :
+> ! ----------
+> ! 2006-08-17, J.M. Piriou.
+> !
+> ! Modifications:
+> ! --------------
+> ! --------------------------------------------------------------------------
+> ! En entree:
+> ! pchamp_uni: tableau 1D contenant toutes les valeurs (dom,niv).
+> ! kuni: produit nb domaines * nb niveaux.
+> ! kdom: nombre de domaines.
+> ! klev: nombre de niveaux.
+> ! En sortie:
+> ! pchamp_dn: tableau 2D (dom,niv).
+> !
+> ! --------------------------------------------------------------------------
+> !
+> !-------------------------------------------------
+> ! Variables arguments.
+> !-------------------------------------------------
+> !
+> implicit none
+> REAL(KIND=8), INTENT(in) :: pchamp_uni(kuni)
+> INTEGER(KIND=4), intent(in) :: kuni,kdom,klev
+> REAL(KIND=8), INTENT(out) :: pchamp_dn(kdom,klev)
+> !
+> !-------------------------------------------------
+> ! Variables locales.
+> !-------------------------------------------------
+> !
+> INTEGER(KIND=4) :: jdom,jlev,i_uni
+> !
+> !-------------------------------------------------
+> ! Copie du tableau 1D sur un tableau 2D.
+> !-------------------------------------------------
+> !
+> do jdom=1,kdom
+> 	do jlev=1,klev
+> 		i_uni=(jdom-1)*klev+jlev
+> 		pchamp_dn(jdom,jlev)=pchamp_uni(i_uni)
+> 	enddo
+> enddo
+> end
+> subroutine interpol1d(klev1,pcoo1,pval1,klev2,pcoo2,pval2)
+> ! --------------------------------------------------------------
+> ! **** ** Interpolation d'un tableau 1D sur un autre.
+> ! --------------------------------------------------------------
+> ! Sujet:
+> ! Arguments explicites:
+> ! Arguments implicites:
+> ! Methode:
+> ! Externes:
+> ! Auteur:   2002-09, J.M. Piriou.
+> ! Modifications:
+> ! --------------------------------------------------------------
+> ! En entree:
+> !	klev1: nb de niveaux en entrée.
+> !	pcoo1: coordonnée irrégulière du tableau 1 d'entrée.
+> !	pval1: valeurs du tableau 1 d'entrée.
+> !	klev2: nb de niveaux en sortie.
+> !	pcoo2: coordonnée irrégulière du tableau 2 de sortie.
+> ! En sortie:
+> !	pval2: valeurs du tableau 2 de sortie.
+> ! --------------------------------------------------------------
+> ! Les coordonnées peuvent être croissantes ou décroissantes.
+> ! --------------------------------------------------------------
+> implicit none
+> REAL(KIND=8), INTENT(in) :: pcoo1(klev1),pval1(klev1),pcoo2(klev2)
+> INTEGER(KIND=4), intent(in) :: klev1,klev2
+> REAL(KIND=8), INTENT(out) :: pval2(klev2)
+> !
+> !-------------------------------------------------
+> ! Variables locales.
+> !-------------------------------------------------
+> !
+> REAL(KIND=8) :: zcoo1(klev1),zval1(klev1),zcoo2(klev2),zcoo
+> INTEGER(KIND=4) :: jlev,jlev1
+> logical llok
+> !
+> !-------------------------------------------------
+> ! Test de croissance ou décroissance de la coordonnée.
+> !-------------------------------------------------
+> !
+> if(pcoo1(1) > pcoo1(klev1)) then
+> 	!
+> 	!-------------------------------------------------
+> 	! On permute tout.
+> 	!-------------------------------------------------
+> 	!
+> 	do jlev=1,klev1
+> 		zcoo1(jlev)=pcoo1(klev1-jlev+1) 
+> 		zval1(jlev)=pval1(klev1-jlev+1)
+> 	enddo
+> else
+> 	!
+> 	!-------------------------------------------------
+> 	! Rien à permuter.
+> 	!-------------------------------------------------
+> 	!
+> 	zcoo1=pcoo1
+> 	zval1=pval1
+> endif
+> if(pcoo2(1) > pcoo2(klev2)) then
+> 	!
+> 	!-------------------------------------------------
+> 	! On permute tout.
+> 	!-------------------------------------------------
+> 	!
+> 	do jlev=1,klev2
+> 		zcoo2(jlev)=pcoo2(klev2-jlev+1) 
+> 	enddo
+> else
+> 	!
+> 	!-------------------------------------------------
+> 	! Rien à permuter.
+> 	!-------------------------------------------------
+> 	!
+> 	zcoo2=pcoo2
+> endif
+> !
+> !-------------------------------------------------
+> ! Boucle sur les valeurs du tableau de sortie.
+> !-------------------------------------------------
+> !
+> do jlev=1,klev2
+> 	zcoo=zcoo2(jlev)
+> 	if(zcoo <= zcoo1(1)) then
+> 		!
+> 		!-------------------------------------------------
+> 		! Echantillonnage.
+> 		!-------------------------------------------------
+> 		!
+> 		!pval2(jlev)=zval1(1)
+> 		!
+> 		!-------------------------------------------------
+> 		! Extrapolation.
+> 		!-------------------------------------------------
+> 		!
+> 		pval2(jlev)=zval1(1)+(zval1(1+1)-zval1(1))*(zcoo-zcoo1(1))/(zcoo1(1+1)-zcoo1(1))
+> 	elseif(zcoo >= zcoo1(klev1)) then
+> 		!
+> 		!-------------------------------------------------
+> 		! Echantillonnage.
+> 		!-------------------------------------------------
+> 		!
+> 		!pval2(jlev)=zval1(klev1)
+> 		!
+> 		!-------------------------------------------------
+> 		! Extrapolation.
+> 		!-------------------------------------------------
+> 		!
+> 		pval2(jlev)=zval1(klev1-1)+(zval1(klev1-1+1)-zval1(klev1-1))*(zcoo-zcoo1(klev1-1))/(zcoo1(klev1-1+1)-zcoo1(klev1-1))
+> 	else
+> 		llok=.false.
+> 		do jlev1=1,klev1-1
+> 			if(zcoo >= zcoo1(jlev1) .and. zcoo <= zcoo1(jlev1+1)) then
+> 				llok=.true.
+> 				pval2(jlev)=zval1(jlev1)+(zval1(jlev1+1)-zval1(jlev1))*(zcoo-zcoo1(jlev1))/(zcoo1(jlev1+1)-zcoo1(jlev1))
+> 			endif
+> 		enddo
+> 		if(.not.llok) then
+> 			write(*,fmt=*) 'interpol1d/ERROR: the interpolation of an array of size ',klev1,' on an array of size ',klev2
+> 			write(*,fmt=*) '	no solution can be provided!...'
+> 			write(*,fmt=*) '	likely an ERROR in the input coordinates.'
+>                         call exit(1)
+> 		endif
+> 	endif
+> enddo
+> !
+> !-------------------------------------------------
+> ! Test de croissance ou décroissance de la coordonnée.
+> !-------------------------------------------------
+> !
+> if(pcoo2(1) > pcoo2(klev2)) then
+> 	!
+> 	!-------------------------------------------------
+> 	! On permute tout.
+> 	!-------------------------------------------------
+> 	!
+> 	do jlev=1,klev2/2
+> 		call permute(pval2(jlev),pval2(klev2-jlev+1))
+> 	enddo
+> endif
+> end
+> subroutine permute(px1,px2)
+> zx=px1
+> px1=px2
+> px2=zx
+> end

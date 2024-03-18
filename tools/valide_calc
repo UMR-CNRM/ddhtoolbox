@@ -1,0 +1,72 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2002-08, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Exécution.
+#-----------------------------------------------
+#
+pref=valid.tmp
+rm $pref*
+fe=DZ.lfa.mg
+cat <<EOF > $pref.lcref
+VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            SANS
+VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              SANS
+FQVFLUVERTDYN # EAU VAPEUR  : FLUX VERTICAL DYNAMIQUE                       /JOUR
+FQVTURQNEGAT  # EAU VAPEUR  : CORRECTION DES HUMIDITES NEGATIVES            /JOUR
+TQVDIVFLUHOR  # EAU VAPEUR  : DIVERGENCE DES FLUX HORIZONTAUX               /JOUR
+TQVDELTAP     # EAU VAPEUR  : TENDANCE DE PRESSION                          /JOUR
+FQTCONDECOL   # EAU         : CONDENSATION CONVECTIVE LIQUIDE               /JOUR
+FQTCONDECON   # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              /JOUR
+FQTCONDESTL   # EAU         : CONDENSATION STRATIFORME LIQUIDE              /JOUR
+FQTCONDESTN   # EAU         : CONDENSATION STRATIFORME NEIGEUSE             /JOUR
+FQVTUR        # EAU VAPEUR  : DIFFUSION VERTICALE                           /JOUR
+FQVTURCONV    # EAU VAPEUR  : PROCESSUS CONVECTIFS TURBULENTS               /JOUR
+EOF
+ddht -cSEPAR_PR_COMPL -1$fe -l$pref.lcref -s$pref.ref.lfa
+#------------------------------------------------------------------
+cat <<EOF > $pref.lcexp
+# Initial et final.
+VQV0 ECR"VQV0"
+VQV1 ECR"VQV1"
+# Cumul du terme principal.
+0
+FQVFLUVERTDYN + # EAU VAPEUR  : FLUX VERTICAL DYNAMIQUE                       /JOUR
+FQVTURQNEGAT + # EAU VAPEUR  : CORRECTION DES HUMIDITES NEGATIVES            /JOUR
+FQTCONDECOL + # EAU         : CONDENSATION CONVECTIVE LIQUIDE               /JOUR
+FQTCONDECON +  # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              /JOUR
+FQTCONDESTL +  # EAU         : CONDENSATION STRATIFORME LIQUIDE              /JOUR
+FQTCONDESTN +  # EAU         : CONDENSATION STRATIFORME NEIGEUSE             /JOUR
+FQVTUR      +  # EAU VAPEUR  : DIFFUSION VERTICALE                           /JOUR
+FQVTURCONV  +  # EAU VAPEUR  : PROCESSUS CONVECTIFS TURBULENTS               /JOUR
+F>V
+TQVDIVFLUHOR + # EAU VAPEUR  : DIVERGENCE DES FLUX HORIZONTAUX               /JOUR
+TQVDELTAP   +  # EAU VAPEUR  : TENDANCE DE PRESSION                          /JOUR
+# Ecriture sur fichier.
+ECR"TQVPRINCIPAL" 
+# Terme complement.
+COMPLEMENT 
+# Ecriture sur fichier.
+ECR"TQVCOMPLEMENT"
+EOF
+ddht -cCALC -1$fe -l$pref.lcexp -s$pref.exp.lfa
+#------------------------------------------------------------------
+rm $pref*minm
+lfaminm $pref.exp.lfa > $pref.exp.lfa.minm
+lfaminm $pref.ref.lfa > $pref.ref.lfa.minm
+e $pref*minm
+#------------------------------------------------------------------
+

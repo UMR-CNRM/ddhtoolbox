@@ -1,0 +1,441 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Bilan de vapeur d'eau d'un fichier de DDH.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   97-01, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+typb='qv' # type de variable dont le bilan est à exécuter.
+if [ $# -eq 4 ]
+then
+	fd=$1     # fichier de DDH.
+	reps=$2   # répertoire de sortie.
+	ligcad=$3  # ligne de commande additionnelle à ddhi.
+	niv_bil=$4 # niveau de bilan à traiter (argument optionnel).
+elif [ $# -eq 2 ]
+then
+	fd=$1     # fichier de DDH.
+	reps=$2   # répertoire de sortie.
+	ligcad=" "  # ligne de commande additionnelle à ddhi.
+	niv_bil="b1" # niveau de bilan à traiter (argument optionnel).
+elif [ $# -eq 1 ]
+then
+	fd=$1     # fichier de DDH.
+	reps=`ddhr -i $fd`.tmp.ddhbqv # répertoire de sortie.
+	ligcad=" "  # ligne de commande additionnelle à ddhi.
+	niv_bil="b1" # niveau de bilan à traiter (argument optionnel).
+else
+	echo " "
+	echo "Bilan de vapeur d'eau d'un fichier de DDH."
+	echo " "
+	echo "Utilisation: ddhbqv fic_ddh [rep_sor]"
+	echo " "
+	echo "avec"
+	echo "	fic_ddh fichier de ddh d'entrée."
+	echo "	rep_sor répertoire des fichiers de sortie; défaut: \$fic_ddh.bilan.tmp"
+	echo " "
+	exit
+fi
+ent=`basename $fd` # mnémonique du fichier d'entrée.
+#
+#-----------------------------------------------
+# On crée un répertoire vide.
+#-----------------------------------------------
+#
+rm -rf $reps ; mkdir $reps
+#
+#-----------------------------------------------
+# Copie de sécurité.
+#-----------------------------------------------
+#
+cp $fd $reps/$ent
+cd $reps
+#
+# L'unité utilisée en sortie dépend
+# du nombre de niveaux verticaux du fichier de DDH.
+#
+niv=`ddhr -n $fd` 
+if [ "$niv" = "1" ] 
+then
+	#
+	# Un seul niveau dans le fichier DDH.
+	#
+	coef='-m10060.e-3' ; unite='mm/jour' # ps/g global: passage g/kg/jour > mm/jour.
+else
+	#
+	# n niveaux dans le fichier DDH.
+	#
+	coef='-m-2.48907927' ; unite='K/jour' # 2.48907927 = 2.5e6 / 1004. / 1000., convertit des g/kg/jour en K/jour.
+	coef=' ' ; unite='g/kg/jour'
+fi
+#
+#-----------------------------------------------
+# La dynamique des DDH dans le fichier est-elle 
+# écrite en tendance ou en divergence de flux?
+#-----------------------------------------------
+#
+typdyn=`lfac $fd DYNAMIQUE`
+if [ "$typdyn" = "TENDANCE" ] ; then
+	#
+	# Tendance.
+	#
+	TxxDELTAP="#"
+else
+	#
+	# Divergence de flux.
+	#
+	TxxDELTAP="TQVDELTAP"
+fi
+#
+# Afin de savoir quel type de tracé effectuer,
+# et quelles sont les légendes des axes X et Y,
+# on fait une interprétation d'un champ,
+# et on porte cette information
+# sur des variables UNIX locales.
+#
+cat <<EOF > lc
+VUU0
+EOF
+ddhi $coef $ligcad -e$ent -stmp
+format=`grep FORMAT tmp.VUU0.doc`
+legendex=`grep LEGENDE_X tmp.VUU0.doc`
+legendey=`grep LEGENDE_Y tmp.VUU0.doc`
+rm *VUU0*
+base=`ddhr -be $ent`
+grille=`ddhr -g $ent`
+if [ "$niv_bil" = "b0" -o "$niv_bil" = "" ]
+then
+	#
+	# Bilan b0 dynamique.
+	#
+	bilan=b0.$typb.$ent
+	sbil=dyn
+	cat <<EOF > lc.$bilan.$sbil
+VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            SANS
+VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              SANS
+TQVDIVFLUHOR  # EAU VAPEUR  : DIVERGENCE DES FLUX HORIZONTAUX               /JOUR
+FQVFLUVERTDYN # EAU VAPEUR  : FLUX VERTICAL DYNAMIQUE                       /JOUR
+$TxxDELTAP
+FQVTURQNEGAT  # EAU VAPEUR  : CORRECTION DES HUMIDITES NEGATIVES            /JOUR
+EOF
+	ddht -cSEPAR_PR_COMPL -1$ent -s$ent.s -llc.$bilan.$sbil
+	cat <<EOF > lc
+TQVPRINCIPAL/EAU VAPEUR : DYNAMIQUE
+EOF
+	ddhi $coef $ligcad -e$ent.s -stmp
+	mv tmp.TQVPRINCIPAL.dta $bilan.$sbil.dta
+	mv tmp.TQVPRINCIPAL.doc $bilan.$sbil.doc
+	#
+	# Bilan b0 physique.
+	#
+	bilan=b0.$typb.$ent
+	sbil=phys
+	cat <<EOF > lc.$bilan.$sbil
+VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            SANS
+VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              SANS
+FQTCONDECOL   # EAU         : CONDENSATION CONVECTIVE LIQUIDE               /JOUR
+FQTCONDECON   # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              /JOUR
+FQTCONDESTL   # EAU         : CONDENSATION STRATIFORME LIQUIDE              /JOUR
+FQTCONDESTN   # EAU         : CONDENSATION STRATIFORME NEIGEUSE             /JOUR
+FQVTUR        # EAU VAPEUR  : DIFFUSION VERTICALE                           /JOUR
+FQVTURCONV    # EAU VAPEUR  : PROCESSUS CONVECTIFS TURBULENTS               /JOUR
+EOF
+	ddht -cSEPAR_PR_COMPL -1$ent -s$ent.s -llc.$bilan.$sbil
+	cat <<EOF > lc
+TQVPRINCIPAL/EAU VAPEUR : PHYSIQUE
+EOF
+	ddhi $coef $ligcad -e$ent.s -stmp
+	mv tmp.TQVPRINCIPAL.dta $bilan.$sbil.dta
+	mv tmp.TQVPRINCIPAL.doc $bilan.$sbil.doc
+	#
+	# Bilan b0 VQVM.
+	#
+	bilan=b0.$typb.$ent
+	sbil=tendance
+	cat <<EOF > lc
+VQVM
+EOF
+	ddhi $coef $ligcad -e$ent
+	mv $ent.tmp.VQVM.dta $bilan.$sbil.dta
+	mv $ent.tmp.VQVM.doc $bilan.$sbil.doc
+	#
+	# Bilan b0 résidu.
+	#
+	bilan=b0.$typb.$ent
+	sbil=residu
+	cat <<EOF > lc.$bilan.$sbil
+VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            SANS
+VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              SANS
+FQVFLUVERTDYN # EAU VAPEUR  : FLUX VERTICAL DYNAMIQUE                       /JOUR
+FQVTURQNEGAT  # EAU VAPEUR  : CORRECTION DES HUMIDITES NEGATIVES            /JOUR
+TQVDIVFLUHOR  # EAU VAPEUR  : DIVERGENCE DES FLUX HORIZONTAUX               /JOUR
+$TxxDELTAP
+FQTCONDECOL   # EAU         : CONDENSATION CONVECTIVE LIQUIDE               /JOUR
+FQTCONDECON   # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              /JOUR
+FQTCONDESTL   # EAU         : CONDENSATION STRATIFORME LIQUIDE              /JOUR
+FQTCONDESTN   # EAU         : CONDENSATION STRATIFORME NEIGEUSE             /JOUR
+FQVTUR        # EAU VAPEUR  : DIFFUSION VERTICALE                           /JOUR
+FQVTURCONV    # EAU VAPEUR  : PROCESSUS CONVECTIFS TURBULENTS               /JOUR
+EOF
+	ddht -cSEPAR_PR_COMPL -1$ent -s$ent.s -llc.$bilan.$sbil
+	cat <<EOF > lc
+TQVCOMPLEMENT/EAU VAPEUR : RESIDU
+EOF
+	ddhi $coef $ligcad -e$ent.s -stmp
+	mv tmp.TQVCOMPLEMENT.dta $bilan.$sbil.dta
+	mv tmp.TQVCOMPLEMENT.doc $bilan.$sbil.doc
+	#
+	# On crée un fichier ".doc" en vue du tracé documenté.
+	#
+	origine=`ddhr -i $ent`" - "$ent
+	cat <<EOF > z$bilan.doc
+${format}I
+#TITRE=Bilan de vapeur d'eau
+#DATE=$base
+#UNITE=$unite
+#ORIGINE=$origine
+#GRILLE=$grille
+$legendex
+$legendey
+#MIN=
+#MAX=
+#MOY=
+#ECT=
+#RCM=
+#VREF=0.
+EOF
+	for dta in $bilan.*.dta
+	do
+	nom_en_clair=`mot 7 -2 $dta`
+	cat <<EOF >> z$bilan.doc
+#CHAMP=$nom_en_clair
+#FICHIER=$dta
+EOF
+	done
+fi
+if [ "$niv_bil" = "b1" -o "$niv_bil" = "" ]
+then
+	#
+	# Bilan b1 dyn.
+	#
+	bilan=b1.$typb.$ent
+	sbil=dyn
+	cat <<EOF > lc.$bilan.$sbil
+VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            SANS
+VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              SANS
+TQVDIVFLUHOR  # EAU VAPEUR  : DIVERGENCE DES FLUX HORIZONTAUX               /JOUR
+FQVFLUVERTDYN # EAU VAPEUR  : FLUX VERTICAL DYNAMIQUE                       /JOUR
+$TxxDELTAP
+FQVTURQNEGAT  # EAU VAPEUR  : CORRECTION DES HUMIDITES NEGATIVES            /JOUR
+EOF
+	ddht -cSEPAR_PR_COMPL -1$ent -s$ent.s -llc.$bilan.$sbil
+	cat <<EOF > lc
+TQVPRINCIPAL/EAU VAPEUR : DYNAMIQUE
+EOF
+	ddhi $coef $ligcad -e$ent.s -stmp
+	mv tmp.TQVPRINCIPAL.dta $bilan.$sbil.dta
+	mv tmp.TQVPRINCIPAL.doc $bilan.$sbil.doc
+	#
+	# Bilan b1 prec.
+	#
+	bilan=b1.$typb.$ent
+	sbil=prec
+	cat <<EOF > lc.$bilan.$sbil
+VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            SANS
+VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              SANS
+FQTCONDECOL   # EAU         : CONDENSATION CONVECTIVE LIQUIDE               /JOUR
+FQTCONDECON   # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              /JOUR
+FQTCONDESTL   # EAU         : CONDENSATION STRATIFORME LIQUIDE              /JOUR
+FQTCONDESTN   # EAU         : CONDENSATION STRATIFORME NEIGEUSE             /JOUR
+EOF
+	ddht -cSEPAR_PR_COMPL -1$ent -s$ent.s -llc.$bilan.$sbil
+	cat <<EOF > lc
+TQVPRINCIPAL/EAU VAPEUR : PRECIPITATIONS
+EOF
+	ddhi $coef $ligcad -e$ent.s -stmp
+	mv tmp.TQVPRINCIPAL.dta $bilan.$sbil.dta
+	mv tmp.TQVPRINCIPAL.doc $bilan.$sbil.doc
+	#
+	# Bilan b1 tur.
+	#
+	bilan=b1.$typb.$ent
+	sbil=tur
+	cat <<EOF > lc.$bilan.$sbil
+VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            SANS
+VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              SANS
+FQVTUR        # EAU VAPEUR  : DIFFUSION VERTICALE                           /JOUR
+EOF
+	ddht -cSEPAR_PR_COMPL -1$ent -s$ent.s -llc.$bilan.$sbil
+	cat <<EOF > lc
+TQVPRINCIPAL/EAU VAPEUR : TURBULENCE
+EOF
+	ddhi $coef $ligcad -e$ent.s -stmp
+	mv tmp.TQVPRINCIPAL.dta $bilan.$sbil.dta
+	mv tmp.TQVPRINCIPAL.doc $bilan.$sbil.doc
+	#
+	# Bilan b1 turconv.
+	#
+	bilan=b1.$typb.$ent
+	sbil=turconv
+	cat <<EOF > lc.$bilan.$sbil
+VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            SANS
+VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              SANS
+FQVTURCONV    # EAU VAPEUR  : PROCESSUS CONVECTIFS TURBULENTS               /JOUR
+EOF
+	ddht -cSEPAR_PR_COMPL -1$ent -s$ent.s -llc.$bilan.$sbil
+	cat <<EOF > lc
+TQVPRINCIPAL/EAU VAPEUR : CONVECTION TURB.
+EOF
+	ddhi $coef $ligcad -e$ent.s -stmp
+	mv tmp.TQVPRINCIPAL.dta $bilan.$sbil.dta
+	mv tmp.TQVPRINCIPAL.doc $bilan.$sbil.doc
+	#
+	# Bilan b1 VQVM.
+	#
+	bilan=b1.$typb.$ent
+	sbil=tendance
+	cat <<EOF > lc
+VQVM
+EOF
+	ddhi $coef $ligcad -e$ent
+	mv $ent.tmp.VQVM.dta $bilan.$sbil.dta
+	mv $ent.tmp.VQVM.doc $bilan.$sbil.doc
+	#
+	# Bilan b1 résidu.
+	#
+	bilan=b1.$typb.$ent
+	sbil=residu
+	cat <<EOF > lc.$bilan.$sbil
+VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            SANS
+VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              SANS
+TQVDIVFLUHOR  # EAU VAPEUR  : DIVERGENCE DES FLUX HORIZONTAUX               /JOUR
+FQVFLUVERTDYN # EAU VAPEUR  : FLUX VERTICAL DYNAMIQUE                       /JOUR
+$TxxDELTAP
+FQTCONDECOL   # EAU         : CONDENSATION CONVECTIVE LIQUIDE               /JOUR
+FQTCONDECON   # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              /JOUR
+FQTCONDESTL   # EAU         : CONDENSATION STRATIFORME LIQUIDE              /JOUR
+FQTCONDESTN   # EAU         : CONDENSATION STRATIFORME NEIGEUSE             /JOUR
+FQVTUR        # EAU VAPEUR  : DIFFUSION VERTICALE                           /JOUR
+FQVTURCONV    # EAU VAPEUR  : PROCESSUS CONVECTIFS TURBULENTS               /JOUR
+FQVTURQNEGAT  # EAU VAPEUR  : CORRECTION DES HUMIDITES NEGATIVES            /JOUR
+EOF
+	ddht -cSEPAR_PR_COMPL -1$ent -s$ent.s -llc.$bilan.$sbil
+	cat <<EOF > lc
+TQVCOMPLEMENT/EAU VAPEUR : RESIDU
+EOF
+	ddhi $coef $ligcad -e$ent.s -stmp
+	mv tmp.TQVCOMPLEMENT.dta $bilan.$sbil.dta
+	mv tmp.TQVCOMPLEMENT.doc $bilan.$sbil.doc
+	#
+	# On crée un fichier ".doc" en vue du tracé documenté.
+	#
+	origine=`ddhr -i $ent`" - "$ent
+	cat <<EOF > z$bilan.doc
+${format}I
+#TITRE=Bilan de vapeur d'eau
+#DATE=$base
+#UNITE=$unite
+#ORIGINE=$origine
+#GRILLE=$grille
+$legendex
+$legendey
+#MIN=
+#MAX=
+#MOY=
+#ECT=
+#RCM=
+#VREF=0.
+EOF
+	for dta in $bilan.*.dta
+	do
+	nom_en_clair=`mot 7 -2 $dta`
+	cat <<EOF >> z$bilan.doc
+#CHAMP=$nom_en_clair
+#FICHIER=$dta
+EOF
+	done
+fi
+if [ "$niv_bil" = "b2" -o "$niv_bil" = "" ]
+then
+	#
+	# Bilan b2: détail maximal.
+	#
+	bilan=b2.$typb.$ent
+	cat <<EOF > lc
+VQVM
+TQVDIVFLUHOR  # EAU VAPEUR  : DIVERGENCE DES FLUX HORIZONTAUX               /JOUR
+FQVFLUVERTDYN # EAU VAPEUR  : FLUX VERTICAL DYNAMIQUE                       /JOUR
+$TxxDELTAP
+FQTCONDECOL   # EAU         : CONDENSATION CONVECTIVE LIQUIDE               /JOUR
+FQTCONDECON   # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              /JOUR
+FQTCONDESTL   # EAU         : CONDENSATION STRATIFORME LIQUIDE              /JOUR
+FQTCONDESTN   # EAU         : CONDENSATION STRATIFORME NEIGEUSE             /JOUR
+FQVTUR        # EAU VAPEUR  : DIFFUSION VERTICALE                           /JOUR
+FQVTURCONV    # EAU VAPEUR  : PROCESSUS CONVECTIFS TURBULENTS               /JOUR
+FQVTURQNEGAT  # EAU VAPEUR  : CORRECTION DES HUMIDITES NEGATIVES            /JOUR
+EOF
+	ddhi $coef $ligcad -e$ent -s$bilan
+	#
+	# Bilan b2: résidu.
+	#
+	bilan=b2.$typb.$ent
+	sbil=residu
+	cat <<EOF > lc
+VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            SANS
+VQV1          # EAU VAPEUR  : DIAGNOSTIC FINAL                              SANS
+TQVDIVFLUHOR  # EAU VAPEUR  : DIVERGENCE DES FLUX HORIZONTAUX               /JOUR
+FQVFLUVERTDYN # EAU VAPEUR  : FLUX VERTICAL DYNAMIQUE                       /JOUR
+$TxxDELTAP
+FQTCONDECOL   # EAU         : CONDENSATION CONVECTIVE LIQUIDE               /JOUR
+FQTCONDECON   # EAU         : CONDENSATION CONVECTIVE NEIGEUSE              /JOUR
+FQTCONDESTL   # EAU         : CONDENSATION STRATIFORME LIQUIDE              /JOUR
+FQTCONDESTN   # EAU         : CONDENSATION STRATIFORME NEIGEUSE             /JOUR
+FQVTUR        # EAU VAPEUR  : DIFFUSION VERTICALE                           /JOUR
+FQVTURCONV    # EAU VAPEUR  : PROCESSUS CONVECTIFS TURBULENTS               /JOUR
+FQVTURQNEGAT  # EAU VAPEUR  : CORRECTION DES HUMIDITES NEGATIVES            /JOUR
+EOF
+	ddht -cSEPAR_PR_COMPL -1$ent -s$ent.s -llc
+	cat <<EOF > lc
+TQVCOMPLEMENT/EAU VAPEUR : RESIDU
+EOF
+	ddhi $coef $ligcad -e$ent.s -stmp
+	mv tmp.TQVCOMPLEMENT.dta $bilan.$sbil.dta
+	mv tmp.TQVCOMPLEMENT.doc $bilan.$sbil.doc
+	#
+	# On crée un fichier ".doc" en vue du tracé documenté.
+	#
+	origine=`ddhr -i $ent`" - "$ent
+	cat <<EOF > z$bilan.doc
+${format}I
+#TITRE=Bilan de vapeur d'eau
+#DATE=$base
+#UNITE=$unite
+#ORIGINE=$origine
+#GRILLE=$grille
+$legendex
+$legendey
+#MIN=
+#MAX=
+#MOY=
+#ECT=
+#RCM=
+#VREF=0.
+EOF
+	for dta in $bilan.*.dta
+	do
+	nom_en_clair=`mot 7 -2 $dta`
+	cat <<EOF >> z$bilan.doc
+#CHAMP=$nom_en_clair
+#FICHIER=$dta
+EOF
+	done
+fi
+cd .. ; ls -lrt

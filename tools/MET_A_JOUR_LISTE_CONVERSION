@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# SEUL FICHIER D'ENTREE: liste_conversion.
+# Création de lisc.f90 à partir de liste_conversion et liste_ordonnee.
+# 	- liste_ordonnee doit contenir la liste des articles
+#	  de DDH dans l'ordre PHYSIQUE où ils sont dans les fichiers,
+#	  ce afin d'accroître l'efficacité de lecture.
+#	- liste_conversion contient le type de conversion
+#	  par champ, l'ordre étant ici indifférent, 
+#	  car il sera reconstitué égal à celui de liste_ordonnee
+#	  par cree_lisc_point_f.
+#	- en sortie lisc.f90 est une routine fortran fournissant
+#	  l'information de liste_conversion dans l'ordre de liste_ordonnee.
+#
+cl cree_lisc_point_f.F90
+#
+# Création des lc_* à partir de lisc.f90.
+#
+cl lisc_eclate.F90
+#install

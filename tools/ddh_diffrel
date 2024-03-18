@@ -1,0 +1,112 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2000-12, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+if [ $# -ne 3 ]
+then
+	#
+	# Mauvais nombre d'arguments.
+	#
+	echo " "
+	echo "Différence relative entre deux fichiers de DDH, pour leurs variables initiales et finales."
+	echo " "
+	echo "Utilisation: $proc LISTE_VAR FREF FEXP"
+	echo " "
+	echo "Exemple: $proc lc FREF FEXP"
+	echo " "
+	exit
+else
+	#
+	# Nombre d'arguments OK.
+	#
+	lc=$1
+	f1=$2
+	f2=$3
+fi
+#
+#-----------------------------------------------
+# Exécution.
+#-----------------------------------------------
+#
+gr "ddhi -1HLAT -2VZ" $f1 $f2
+for champ in `cat $lc`
+do
+	cat <<EOF> tmp.calf.nam
+	&NAMCALF
+	   clent(1)='F1: $f1.tmp.$champ.dta'
+	   clent(2)='F2: $f2.tmp.$champ.dta'
+	   clent(3)='F3: '
+	   clent(4)='F4: '
+	   clent(5)='F5: '
+	   clent(6)='F6: '
+	   clent(7)='F7: '
+	   clent(8)='F8: '
+	   clent(9)='F9: '
+	   clop1='C1: c11'
+	   clop2='C2: c12'
+	   clop3='C3: c13 c23 %ch'
+	   clop4='C4: '
+	   clop5='C5: '
+	   clop6='C6: '
+	   clop7='C7: '
+	   clop8='C8: '
+	   clop9='C9: '
+	   clficout='$champ.diffrel.dta'
+	   clformat='(9g16.7)'
+	&END
+EOF
+	calf tmp.calf.nam ; rm tmp.calf.nam
+	cat <<EOF> tmp.calf.nam
+	&NAMCALF
+	   clent(1)='F1: $f1.tmp.$champ.dta'
+	   clent(2)='F2: $f2.tmp.$champ.dta'
+	   clent(3)='F3: '
+	   clent(4)='F4: '
+	   clent(5)='F5: '
+	   clent(6)='F6: '
+	   clent(7)='F7: '
+	   clent(8)='F8: '
+	   clent(9)='F9: '
+	   clop1='C1: c11'
+	   clop2='C2: c12'
+	   clop3='C3: c23 c13 -'
+	   clop4='C4: '
+	   clop5='C5: '
+	   clop6='C6: '
+	   clop7='C7: '
+	   clop8='C8: '
+	   clop9='C9: '
+	   clficout='$champ.diffabs.dta'
+	   clformat='(9g16.7)'
+	&END
+EOF
+	calf tmp.calf.nam ; rm tmp.calf.nam
+done
+#
+#-----------------------------------------------
+# Epilogue.
+#-----------------------------------------------
+#
+#
+#-----------------------------------------------
+# Nettoyage.
+#-----------------------------------------------
+#
+rm -f $pref*

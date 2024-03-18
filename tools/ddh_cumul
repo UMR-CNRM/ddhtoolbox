@@ -1,0 +1,66 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Cumul de n fichiers de DDH.
+# --------------------------------------------------------------
+# Sujet:
+# Arguments explicites:
+# Arguments implicites:
+# Methode:
+# Externes:
+# Auteur:   97-03, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entree:
+# En sortie:
+# --------------------------------------------------------------
+pref=`tempo`/ddh_cumul.$RANDOM
+if [ $# -eq 0 ]
+then
+	echo " "
+	echo "Cumul de n fichiers de DDH."
+	echo " "
+	echo "Utilisation: ddh_cumul f_sortie f1 [f2] ... [fn]"
+	echo " "
+	echo "La sortie se fait sur le fichier f_sortie"
+	echo " "
+	exit
+fi
+# Nom du fichier de sortie, recevant le cumul.
+fs=$1 ; shift
+if test -s $fs
+then
+	#
+	# Le fichier de sortie existe déjà et est non vide.
+	# On le supprime.
+	#
+	rm $fs
+fi
+for i in $*
+do
+	f=$i
+	if test -s $f
+	then
+		if test -s $fs
+		then
+			#
+			# Le fichier $fs existe. On cumule
+			# dedans le fichier courant.
+			#
+			ddht -cSOMME_PONDEREE -1$fs -2$f -s$pref.sor
+			mv $pref.sor $fs
+			ddhr $fs
+		else
+			#
+			# Le fichier $fs n'existe pas. 
+			# On l'initialise.
+			#
+			cp $f $fs
+		fi
+	else
+		echo "Fichier d'entrée $f inexistant!..."$f
+		rm -f $fs
+		exit
+	fi
+done
+rm -f $pref*
+ls -l $fs

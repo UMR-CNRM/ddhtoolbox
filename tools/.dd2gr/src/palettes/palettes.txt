@@ -1,0 +1,392 @@
+
+Palette pour tracé de relief en m.
+#PALETTE=SPECIF
+#PAL_SPECIF= < 1.   040 054 153 bleu
+#PAL_SPECIF= < 200. 029 210 103 vert
+#PAL_SPECIF= < 400. 161 234 129 vert clair
+#PAL_SPECIF= < 600. 245 228 148 ocre clair
+#PAL_SPECIF= < 900. 142 096 083 marron
+#PAL_SPECIF= < 1200.  177 150 139 marron clair
+#PAL_SPECIF= < 2000.  219 205 202 marron très clair
+#PAL_SPECIF= > 2000.  255 255 255 blanc
+
+Palette RR différenciant bruine vs pluie vs pluie forte.
+#PALETTE=SPECIF
+#PAL_SPECIF= < 0.1  255 255 255 blanc
+#PAL_SPECIF= < 0.5  000 223 063 vert moyen
+#PAL_SPECIF= < 1.0  000 191 063 vert foncé
+#PAL_SPECIF= < 1.6  229 255 159 jaune 1
+#PAL_SPECIF= < 2.5  229 223 095 jaune 2
+#PAL_SPECIF= < 4.   229 191 000 jaune 3
+#PAL_SPECIF= < 6.3  229 127 000 orange
+#PAL_SPECIF= < 10.  229 000 000 rouge
+#PAL_SPECIF= < 20.  051 142 204 bleu 1
+#PAL_SPECIF= < 40.  000 095 191 bleu 2
+#PAL_SPECIF= > 40.  000 000 000 noir
+
+Palette RR radar JM en mm/3h
+#PALETTE=SPECIF
+#PAL_SPECIF= < 1.   255 255 255 blanc
+#PAL_SPECIF= < 3.   129 001 255 violet
+#PAL_SPECIF= < 5.   000 000 255 bleu
+#PAL_SPECIF= < 7.   000 178 255 bleu ciel
+#PAL_SPECIF= < 10.  000 255 178 bleu vert 
+#PAL_SPECIF= < 15.  028 184 165 bleu lagune
+#PAL_SPECIF= < 20.  109 164 044 vert pétrole
+#PAL_SPECIF= < 30.  255 255 000 jaune
+#PAL_SPECIF= < 50.  255 216 000 jaune orangé
+#PAL_SPECIF= < 70.  255 165 000 orange
+#PAL_SPECIF= < 100. 255 000 000 rouge
+#PAL_SPECIF= < 150. 128 000 043 marron
+#PAL_SPECIF= > 150. 000 000 000 noir
+
+Palette type synopsis RR radar en mm/h
+#PALETTE=SPECIF
+#PAL_SPECIF= < 0.01 255 255 255 blanc
+#PAL_SPECIF= < 0.02 044 002 044 marron sombre
+#PAL_SPECIF= < 0.05 004 066 252 bleu drapeau
+#PAL_SPECIF= < 0.1  004 130 252 bleu franc
+#PAL_SPECIF= < 0.2  068 194 252 bleu clair
+#PAL_SPECIF= < 0.5  068 226 252 bleu ciel
+#PAL_SPECIF= < 1.   068 254 196 bleu vert
+#PAL_SPECIF= < 2.   132 254 068 vert jaune
+#PAL_SPECIF= < 5.   196 254 068 jaune vert
+#PAL_SPECIF= < 10.  252 226 068 jaune
+#PAL_SPECIF= < 20.  252 162 068 orange
+#PAL_SPECIF= < 50.  252 034 068 rouge
+#PAL_SPECIF= < 100. 252 098 196 rose
+#PAL_SPECIF= < 200. 252 226 252 rose pâle
+#PAL_SPECIF= > 200. 252 254 252 blanc souffle de rose
+
+Palette type synopsis RR modèle en mm indiquée en 2021 par Yann Prigent
+#PALETTE=SPECIF
+#PAL_SPECIF= < 1.0  255 255 255 blanc
+#PAL_SPECIF= < 3.0  000 000 255 bleu
+#PAL_SPECIF= < 5.0  000 178 255 bleu moyen
+#PAL_SPECIF= < 7.0  000 255 255 cyan
+#PAL_SPECIF= < 10.  008 226 222 bleu ciel
+#PAL_SPECIF= < 15.  024 190 172 bleu-vert
+#PAL_SPECIF= < 20.  107 165 048 vert d'eau
+#PAL_SPECIF= < 30.  255 255 000 jaune
+#PAL_SPECIF= < 50.  255 222 000 jaune orangé
+#PAL_SPECIF= < 70.  255 165 000 orange
+#PAL_SPECIF= < 100. 255 000 000 rouge
+#PAL_SPECIF= < 150. 153 020 007 rouge-marron
+#PAL_SPECIF= < 200. 255 000 255 rose
+#PAL_SPECIF= < 250. 164 255 000 vert clair
+#PAL_SPECIF= < 300. 000 250 000 vert
+#PAL_SPECIF= < 350. 049 190 000 vert prairie
+#PAL_SPECIF= > 350. 049 133 139 vert pétrole
+
+Palette type synopsis RR modèle en mm indiquée en 2020 par Karine Maynard
+#PALETTE=SPECIF
+#PAL_SPECIF= < 0.1  255 255 255 blanc
+#PAL_SPECIF= < 1.0  099 000 110 violet
+#PAL_SPECIF= < 3.0  000 000 255 bleu
+#PAL_SPECIF= < 5.0  000 178 255 bleu franc
+#PAL_SPECIF= < 7.0  000 255 255 cyan
+#PAL_SPECIF= < 10.  008 223 214 bleu ciel
+#PAL_SPECIF= < 15.  028 184 165 bleu-vert
+#PAL_SPECIF= < 20.  107 165 048 vert d'eau
+#PAL_SPECIF= < 30.  255 255 000 jaune
+#PAL_SPECIF= < 50.  255 216 000 jaune orangé
+#PAL_SPECIF= < 70.  255 165 000 orange
+#PAL_SPECIF= < 100. 255 000 000 rouge
+#PAL_SPECIF= < 150. 153 020 007 rouge-marron
+#PAL_SPECIF= < 200. 255 000 255 rose
+#PAL_SPECIF= < 250. 164 255 000 vert clair
+#PAL_SPECIF= < 300. 000 250 000 vert
+#PAL_SPECIF= < 350. 049 190 000 vert prairie
+#PAL_SPECIF= > 350. 049 133 139 vert pétrole
+
+Palette cycle diurne par plages de 2h, bleue le matin, jaune-rouge l'après-midi, issue d'une présentation de Marat Khairoutdinov.
+#PALETTE=SPECIF
+#PAL_SPECIF= < 2    000 043 209 bleu 1
+#PAL_SPECIF= < 4    000 054 254 bleu 2
+#PAL_SPECIF= < 6    000 137 254 bleu 3
+#PAL_SPECIF= < 8    002 208 254 bleu clair
+#PAL_SPECIF= < 10   031 248 229 bleu turquoise
+#PAL_SPECIF= < 12   149 251 163 vert d'eau
+#PAL_SPECIF= < 14   207 250 085 vert jaune
+#PAL_SPECIF= < 16   253 253 000 jaune
+#PAL_SPECIF= < 18   253 152 000 orange
+#PAL_SPECIF= < 20   249 053 000 rouge orangé
+#PAL_SPECIF= < 22   228 030 000 rouge fraise
+#PAL_SPECIF= > 22   153 018 002 marron
+
+Palette type cycle diurne en h
+#PALETTE=SPECIF
+#PAL_SPECIF= < 3    128 000 255 violet
+#PAL_SPECIF= < 6    000 000 255 bleu
+#PAL_SPECIF= < 9    000 178 255 bleu clair
+#PAL_SPECIF= < 12   000 255 000 vert
+#PAL_SPECIF= < 15   255 255 000 jaune
+#PAL_SPECIF= < 18   255 165 000 jaune orangé
+#PAL_SPECIF= < 21   255 000 000 rouge
+#PAL_SPECIF= > 21   255 255 255 noir
+
+Palette type CIN Michaël Kreitz
+#PALETTE=SPECIF
+#PAL_SPECIF= < -200 153 000 153 violet
+#PAL_SPECIF= < -150 255 051 153 rose
+#PAL_SPECIF= < -100 255 000 000 rouge
+#PAL_SPECIF= < -75  255 192 000 orange
+#PAL_SPECIF= < -50  255 255 000 jaune
+#PAL_SPECIF= < -25  219 255 117 vert très clair
+#PAL_SPECIF= < -10  146 208 080 vert clair
+#PAL_SPECIF= <   0  000 176 080 vert
+#PAL_SPECIF= >   0  255 255 255 blanc
+
+Palette type synopsis rafales (en km/h) indiquée en 2020 par Karine Maynard
+#PALETTE=SPECIF
+#PAL_SPECIF= <   40 255 255 255 blanc
+#PAL_SPECIF= <   50 208 208 208 gris très clair
+#PAL_SPECIF= <   60 178 178 178 gris clair
+#PAL_SPECIF= <   70 102 000 255 violet
+#PAL_SPECIF= <   80 000 178 255 bleu franc
+#PAL_SPECIF= <   90 000 255 178 bleu-vert
+#PAL_SPECIF= <  100 153 255 000 vert clair
+#PAL_SPECIF= <  110 216 255 000 vert-jaune
+#PAL_SPECIF= <  120 255 255 000 jaune
+#PAL_SPECIF= <  130 255 192 000 orange
+#PAL_SPECIF= <  140 255 000 000 rouge
+#PAL_SPECIF= <  150 122 018 178 violet
+#PAL_SPECIF= <  180 082 003 000 marron
+#PAL_SPECIF= >  180 000 000 000 noir
+
+Palette type synopsis CAPE (en J/kg) indiquée en 2020 par Karine Maynard; cette palette est utilisée pour MUCAPE et CAPE-modèle
+#PALETTE=SPECIF
+#PAL_SPECIF= <  100 255 255 255 blanc
+#PAL_SPECIF= <  300 000 255 000 vert
+#PAL_SPECIF= <  500 178 255 000 vert-jaune
+#PAL_SPECIF= <  700 255 255 000 jaune
+#PAL_SPECIF= <  900 255 192 000 jaune orangé
+#PAL_SPECIF= < 1100 255 165 000 orange jaune
+#PAL_SPECIF= < 1400 255 128 000 orange clair
+#PAL_SPECIF= < 1700 255 102 000 orange
+#PAL_SPECIF= < 2000 255 000 000 rouge
+#PAL_SPECIF= < 2300 255 000 128 rouge-rose
+#PAL_SPECIF= < 2600 255 000 255 rose
+#PAL_SPECIF= < 2900 178 000 255 violet clair
+#PAL_SPECIF= < 3200 128 000 255 violet
+#PAL_SPECIF= < 3500 102 000 255 violet foncé
+#PAL_SPECIF= > 3500 000 000 255 bleu
+
+Palette type synopsis foudre Météorage (en éclairs/km2) indiquée en 2020 par Karine Maynard
+#PALETTE=SPECIF
+#PAL_SPECIF= <  0.2 255 255 255 
+#PAL_SPECIF= <  0.3 255 000 000
+#PAL_SPECIF= <  0.4 255 102 000
+#PAL_SPECIF= <  0.5 255 128 000
+#PAL_SPECIF= <  0.7 255 165 000
+#PAL_SPECIF= <  0.9 255 192 000
+#PAL_SPECIF= <  1.1 255 216 000
+#PAL_SPECIF= <  1.3 255 234 000
+#PAL_SPECIF= <  1.5 255 255 000
+#PAL_SPECIF= <  2.0 216 255 000
+#PAL_SPECIF= <  3.0 153 255 000
+#PAL_SPECIF= >  3.0 000 255 000
+
+Palette type synopsis foudre Météorage (en éclairs/km2) proposée par Fabienne Dupont, son mail du 12.4.2021, sur laquelle j'ai projeté ses gris bleus vers des gris purs.
+#PALETTE=SPECIF
+#PAL_SPECIF= <  0.01 255 255 255 
+#PAL_SPECIF= <  0.02 098 098 098 
+#PAL_SPECIF= <  0.05 153 153 153 
+#PAL_SPECIF= <  0.1  198 198 198 
+#PAL_SPECIF= <  0.2  237 139 152 
+#PAL_SPECIF= <  0.3 255 000 000
+#PAL_SPECIF= <  0.4 255 102 000
+#PAL_SPECIF= <  0.5 255 128 000
+#PAL_SPECIF= <  0.7 255 165 000
+#PAL_SPECIF= <  0.9 255 192 000
+#PAL_SPECIF= <  1.1 255 216 000
+#PAL_SPECIF= <  1.3 255 234 000
+#PAL_SPECIF= <  1.5 255 255 000
+#PAL_SPECIF= <  2.0 216 255 000
+#PAL_SPECIF= <  3.0 153 255 000
+#PAL_SPECIF= >  3.0 000 255 000
+
+Palette type synopsis foudre Météorage (en éclairs/km2) + 2 intervalles vers le bas ajoutés par JM Piriou le 25.9.2020 pour mieux tracer la foudre des modèles ARPEGE et AROME
+#PALETTE=SPECIF
+#PAL_SPECIF= <  0.05 255 255 255
+#PAL_SPECIF= <  0.1 150 000 000
+#PAL_SPECIF= <  0.2 200 000 000
+#PAL_SPECIF= <  0.3 255 000 000
+#PAL_SPECIF= <  0.4 255 102 000
+#PAL_SPECIF= <  0.5 255 128 000
+#PAL_SPECIF= <  0.7 255 165 000
+#PAL_SPECIF= <  0.9 255 192 000
+#PAL_SPECIF= <  1.1 255 216 000
+#PAL_SPECIF= <  1.3 255 234 000
+#PAL_SPECIF= <  1.5 255 255 000
+#PAL_SPECIF= <  2.0 216 255 000
+#PAL_SPECIF= <  3.0 153 255 000
+#PAL_SPECIF= >  3.0 000 255 000
+
+Palette type foudre JM basée sur une échelle log de densité d'éclairs en éclairs/km2, utilisée pour les tracés du Groupe de Travail Diagnostics de Convection (tracés pour le comparateur du LABO) en déc 2020.
+#PALETTE=SPECIF
+#PAL_SPECIF= < 0.001  255 255 255 blanc
+#PAL_SPECIF= < 0.002  099 000 110 violet
+#PAL_SPECIF= < 0.004  000 000 255 bleu
+#PAL_SPECIF= < 0.008  000 178 255 bleu franc
+#PAL_SPECIF= < 0.015  000 255 255 cyan
+#PAL_SPECIF= < 0.030  008 223 214 bleu ciel
+#PAL_SPECIF= < 0.060  028 184 165 bleu-vert
+#PAL_SPECIF= < 0.11   107 165 048 vert d'eau
+#PAL_SPECIF= < 0.22   255 255 000 jaune
+#PAL_SPECIF= < 0.44   255 216 000 jaune orangé
+#PAL_SPECIF= < 0.90   255 165 000 orange
+#PAL_SPECIF= < 1.70   255 000 000 rouge
+#PAL_SPECIF= < 3.30   153 020 007 rouge-marron
+#PAL_SPECIF= < 6.60   255 000 255 rose
+#PAL_SPECIF= < 13.0   164 255 000 vert clair
+#PAL_SPECIF= < 25.0   000 250 000 vert
+#PAL_SPECIF= < 50.    049 190 000 vert prairie
+#PAL_SPECIF= > 50.    049 133 139 vert pétrole
+
+Palette foudre synopsis fournie par Benoît Touzé par mail le 24.11.2020. Elle est adaptée à une unité en éclairs/100km2/h.
+#PALETTE=SPECIF
+#PAL_SPECIF= < 0.1    255 255 255 
+#PAL_SPECIF= < 0.5    202 151 161
+#PAL_SPECIF= < 1.     094 011 028
+#PAL_SPECIF= < 2.     165 006 035
+#PAL_SPECIF= < 5.     254 006 035
+#PAL_SPECIF= < 10.    254 112 004
+#PAL_SPECIF= < 20.    253 161 001
+#PAL_SPECIF= < 50.    254 217 002
+#PAL_SPECIF= < 100.   254 250 002
+#PAL_SPECIF= > 100.   242 239 182
+
+Palette type synopsis diag grêle ground shading 2 AROME
+#PALETTE=SPECIF
+#PAL_SPECIF= <  8.  255 255 255
+#PAL_SPECIF= <  16  255 255 000
+#PAL_SPECIF= <  20  255 165 000
+#PAL_SPECIF= >  20  255 000 000
+
+Palette type synopsis RFLCTVT ISOBARIC OPPIDUM DBZ SHADING réflectivités AROME dBZ
+#PALETTE=SPECIF
+#PAL_SPECIF= <  8.  255 255 255
+#PAL_SPECIF= <  16  076 000 152
+#PAL_SPECIF= <  20  036 020 196
+#PAL_SPECIF= <  24  008 056 232
+#PAL_SPECIF= <  28  000 100 252
+#PAL_SPECIF= <  32  008 152 252
+#PAL_SPECIF= <  36  036 196 232
+#PAL_SPECIF= <  40  076 232 196
+#PAL_SPECIF= <  44  124 252 152
+#PAL_SPECIF= <  48  176 252 100
+#PAL_SPECIF= <  52  216 232 056
+#PAL_SPECIF= <  56  244 196 020
+#PAL_SPECIF= <  60  252 152 000
+#PAL_SPECIF= <  64  244 100 000
+#PAL_SPECIF= <  68  216 056 020
+#PAL_SPECIF= >  68  255 000 000
+
+Palette type synopsis RFLCTVT MAX MMH SHADING (i.e. réflectivités AROME pas en dBZ)
+#PALETTE=SPECIF
+#PAL_SPECIF= <  0.1 255 255 255
+#PAL_SPECIF= <  0.4 128 000 255
+#PAL_SPECIF= <  0.6 000 000 255
+#PAL_SPECIF= <  1.2 000 178 255
+#PAL_SPECIF= <  2.1 000 255 255
+#PAL_SPECIF= <  3.6 000 255 178
+#PAL_SPECIF= <  6.5 028 184 165
+#PAL_SPECIF= <  12  107 165 048
+#PAL_SPECIF= <  21  255 255 000
+#PAL_SPECIF= <  36  255 216 000
+#PAL_SPECIF= <  65  255 165 000
+#PAL_SPECIF= <  120 255 000 000
+#PAL_SPECIF= <  205 178 051 000
+#PAL_SPECIF= <  360 128 000 043
+#PAL_SPECIF= <  650 178 000 255
+#PAL_SPECIF= >  650 255 000 255
+
+Palette type synopsis Tb IR 10.8 convection: champs C006_METEOSAT_09, C002_METEOSAT_09
+#PALETTE=SPECIF
+#PAL_SPECIF= <  -68.5 167   0   0
+#PAL_SPECIF= <  -67.5 173   0   0
+#PAL_SPECIF= <  -66.5 183   0   0
+#PAL_SPECIF= <  -65.5 191   0   0
+#PAL_SPECIF= <  -64.5 198   0   0
+#PAL_SPECIF= <  -63.5 208   0   0
+#PAL_SPECIF= <  -62.5 216   0   0
+#PAL_SPECIF= <  -61.5 224   0   0
+#PAL_SPECIF= <  -60.5 239   0   0
+#PAL_SPECIF= <  -59.5 252  40   0
+#PAL_SPECIF= <  -58.5 255  76   0
+#PAL_SPECIF= <  -57.5 255 106   0
+#PAL_SPECIF= <  -56.5 255 129   0
+#PAL_SPECIF= <  -55.5 255 146   0
+#PAL_SPECIF= <  -54.5 255 169   0
+#PAL_SPECIF= <  -53.5 255 187   0
+#PAL_SPECIF= <  -52.5 255 202   0
+#PAL_SPECIF= <  -51.5 255 226   0
+#PAL_SPECIF= <  -50.5 227 255  26
+#PAL_SPECIF= <  -49.5 208 255  45
+#PAL_SPECIF= <  -48.5 202 255  51
+#PAL_SPECIF= <  -47.5 187 255  66
+#PAL_SPECIF= <  -46.5 148 255 105
+#PAL_SPECIF= <  -45.5  88 255 165
+#PAL_SPECIF= <  -44.5  37 255 217
+#PAL_SPECIF= <  -43.5   0 221 255
+#PAL_SPECIF= <  -42.5   0 206 255
+#PAL_SPECIF= <  -41.5   0 191 255
+#PAL_SPECIF= <  -40.5   0 176 255
+#PAL_SPECIF= <  -39.5   0 161 255
+#PAL_SPECIF= <  -36.5 226 226 226
+#PAL_SPECIF= <  -34.5 222 222 222
+#PAL_SPECIF= <  -31.5 218 218 218
+#PAL_SPECIF= <  -29.5 214 214 214
+#PAL_SPECIF= <  -27.5 210 210 210
+#PAL_SPECIF= <  -26.5 206 206 206
+#PAL_SPECIF= <  -24.5 202 202 202
+#PAL_SPECIF= <  -22.5 198 198 198
+#PAL_SPECIF= <  -21.5 194 194 194
+#PAL_SPECIF= <  -19.5 190 190 190
+#PAL_SPECIF= <  -18.5 186 186 186
+#PAL_SPECIF= <  -17.5 182 182 182
+#PAL_SPECIF= <  -15.5 178 178 178
+#PAL_SPECIF= <  -14.5 174 174 174
+#PAL_SPECIF= <  -12.5 170 170 170
+#PAL_SPECIF= <  -11.5 165 165 165
+#PAL_SPECIF= <  -10.5 161 161 161
+#PAL_SPECIF= <  -7.5  157 157 157
+#PAL_SPECIF= <   -6.5 149 149 149
+#PAL_SPECIF= <   -5.5 145 145 145
+#PAL_SPECIF= <   -3.5 141 141 141
+#PAL_SPECIF= <   -2.5 137 137 137
+#PAL_SPECIF= <   -1.5 133 133 133
+#PAL_SPECIF= <   -0.5 129 129 129
+#PAL_SPECIF= <    1.5 125 125 125
+#PAL_SPECIF= <    2.5 121 121 121
+#PAL_SPECIF= <    3.5 117 117 117
+#PAL_SPECIF= <    4.5 113 113 113
+#PAL_SPECIF= <    6.5 109 109 109
+#PAL_SPECIF= <    7.5 105 105 105
+#PAL_SPECIF= <    8.5 101 101 101
+#PAL_SPECIF= <   10.5  97  97  97
+#PAL_SPECIF= <   11.5  93  93  93
+#PAL_SPECIF= <   12.5  89  89  89
+#PAL_SPECIF= <   14.5  85  85  85
+#PAL_SPECIF= <   15.5  80  80  80
+#PAL_SPECIF= <   17.5  76  76  76
+#PAL_SPECIF= <   18.5  72  72  72
+#PAL_SPECIF= <   20.5  68  68  68
+#PAL_SPECIF= <   22.5  64  64  64
+#PAL_SPECIF= <   23.5  60  60  60
+#PAL_SPECIF= <   25.5  56  56  56
+#PAL_SPECIF= <   27.5  52  52  52
+#PAL_SPECIF= <   29.5  48  48  48
+#PAL_SPECIF= <   31.5  44  44  44
+#PAL_SPECIF= <   33.5  40  40  40
+#PAL_SPECIF= <   36.5  36  36  36
+#PAL_SPECIF= <   39.5  32  32  32
+#PAL_SPECIF= <   42.4  28  28  28
+#PAL_SPECIF= <   45.5  24  24  24
+#PAL_SPECIF= <   49.5  20  20  20
+#PAL_SPECIF= <   53.5  16  16  16
+#PAL_SPECIF= <   59.5  12  12  12
+#PAL_SPECIF= <   66.5   8   8   8
+#PAL_SPECIF= <   75.5   4   4   4
+#PAL_SPECIF= <   75.5   1   1   1

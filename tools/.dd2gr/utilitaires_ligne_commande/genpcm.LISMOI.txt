@@ -1,0 +1,38 @@
+#ISO=200.=0.=0.=1.
+#ISO=202.5=0.=0.2=1.
+#ISO=205.=0.=0.4=1.
+#ISO=207.5=0.=0.6=1.
+#ISO=210.=0.=0.8=1.
+#ISO=212.5=0.=1.=1.
+#ISO=215.=0.=1.=0.8
+#ISO=217.5=0.=1.=0.6
+#ISO=220.=0.=1.=0.4
+#ISO=222.5=0.=1.=0.2
+#ISO=225.=0.=1.=0.
+#ISO=227.5=0.2=1.=0.
+#ISO=230.=0.4=1.=0.
+#ISO=235.=0.6=1.=0.
+
+
+#ISO=val=R=G=B
+
+Pour des raisons techniques je suis obligé de continuer d'utiliser le = comme séparateur sur une ligne donnée, sinon ce serait méchant compliqué !
+
+En fait la couleur de 1 est celle entre 1 et 2, la couleur de la dernière ligne #ISO n'est pas utilisée, mais il semble que  metview en a besoin, et on la retrouve dans la legende ! Il faut que je regarde plus précisément ce problème.
+
+si tu écrit :
+
+#ISO=val
+
+sans indication de couleur alors il trace des isolignes sans shading mais avec des label
+
+WARNING : ne pas essayer des truc débiles comme #ISO=val=R  ,  je suppose que l'utilisateur n'est pas complètement stupide et que si il veut fixer les couleurs il le fait jusqu'au bout !
+
+
+Si tu veux un shading implicite (calcul automatique des couleurs) mais avec tes isolignes tu rajoutes
+
+#SHADE
+
+Si enfin tu veux des label en plus du shading tu rajoutes
+
+#LABEL 
