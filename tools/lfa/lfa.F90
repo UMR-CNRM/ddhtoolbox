@@ -3175,13 +3175,6 @@ integer(kind=jpintesb) iversionesb
 character*2000 clna
 #include"lfayom.h"
 character*2 cltype
-if(lglang) then
-  write(*,'(3a)') 'LFAMINM du fichier ' &
-&     ,cgnomf(kul)(1:index(cgnomf(kul),' ')),':'
-else
-  write(*,'(3a)') 'LFAMINM from file ' &
-&     ,cgnomf(kul)(1:index(cgnomf(kul),' ')),':'
-endif
 rewind(kul)
 read(kul) iversionesb
 iversion=iversionesb
