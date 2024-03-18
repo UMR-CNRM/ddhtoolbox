@@ -14,6 +14,7 @@
 proc=$(basename $0) # nom de la présente procédure.
 pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
 dirloc=`pwd` # chemin du répertoire local.
+set -evx
 #
 #-----------------------------------------------
 # Exécution.
