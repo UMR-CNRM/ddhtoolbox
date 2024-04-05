@@ -29,8 +29,7 @@ then
 	echo "effectue la différence entre deux fichiers DDH successifs."
 	echo " "
 	echo "UTILISATION: $proc FICDDH1 FICDDH2 [... FICDDHn]"
-	echo "Les fichiers de sortie seront suffixes '.instantane'. ATTENTION: le script effectue"
-	echo "au prélable un 'rm *.instantane'!..."
+	echo "Les fichiers de sortie seront suffixes '.instantane'."
 	echo " "
 	echo "METHODE: ddht -cDIFFE_EC2_EC1"
 	echo " "
@@ -41,7 +40,6 @@ fi
 # Exécution.
 #-----------------------------------------------
 #
-rm -f *.instantane
 fddh_prec="gogolbidon"
 rm -f $fddh_prec
 for fddh in $*

@@ -623,7 +623,7 @@ do jficddh=1,ificddh
         zlon=zconrd*zdocd(3)
         zlat=zconrd*asin(zdocd(4))
         zlon=zmodyx(zlon,zm180,z180)
-        write(*,fmt='(a,f9.4,a,f9.4)') '  type point, longitude=',zlon,', latitude=',zlat
+        write(*,fmt='(a,f10.5,a,f10.5)') '  type point, longitude=',zlon,', latitude=',zlat
         if(llddd) then
           write(iuldta,fmt='(a)') clsaut(1:ilsaut)
           write(iuldta,*) zlon,zlat
@@ -649,10 +649,10 @@ do jficddh=1,ificddh
         zlon4=zmodyx(zlon4,zm180,z180)
         !
         print*,'  type quadrilatère'
-        write(*,fmt='(a,f9.4,a,f9.4)') '  coin1: longitude=',zlon1,', latitude=',zlat1
-        write(*,fmt='(a,f9.4,a,f9.4)') '  coin2: longitude=',zlon2,', latitude=',zlat2
-        write(*,fmt='(a,f9.4,a,f9.4)') '  coin3: longitude=',zlon3,', latitude=',zlat3
-        write(*,fmt='(a,f9.4,a,f9.4)') '  coin4: longitude=',zlon4,', latitude=',zlat4
+        write(*,fmt='(a,f10.5,a,f10.5)') '  coin1: longitude=',zlon1,', latitude=',zlat1
+        write(*,fmt='(a,f10.5,a,f10.5)') '  coin2: longitude=',zlon2,', latitude=',zlat2
+        write(*,fmt='(a,f10.5,a,f10.5)') '  coin3: longitude=',zlon3,', latitude=',zlat3
+        write(*,fmt='(a,f10.5,a,f10.5)') '  coin4: longitude=',zlon4,', latitude=',zlat4
         if(llddd) then
           write(iuldta,fmt='(a)') clsaut(1:ilsaut)
           write(iuldta,*) zlon1,zlat1
@@ -675,8 +675,8 @@ do jficddh=1,ificddh
         if(zlon2 < zlon1) zlon2=zlon2+360.
         !
         print*,'  type rectangle'
-        write(*,fmt='(a,f9.4,a,f9.4)') '  coin1: longitude=',zlon1,', latitude=',zlat1
-        write(*,fmt='(a,f9.4,a,f9.4)') '  coin2: longitude=',zlon2,', latitude=',zlat2
+        write(*,fmt='(a,f10.5,a,f10.5)') '  coin1: longitude=',zlon1,', latitude=',zlat1
+        write(*,fmt='(a,f10.5,a,f10.5)') '  coin2: longitude=',zlon2,', latitude=',zlat2
         if(llddd) then
           write(iuldta,fmt='(a)') clsaut(1:ilsaut)
           write(iuldta,*) zlon1,zlat1

@@ -5203,7 +5203,7 @@ if(iarg < 3) then
     write(*,*) ' '
     write(*,*) 'Copy n articles from a LFA file to another LFA file.'
     write(*,*) ' '
-    write(*,*) 'Usage: lfac LFA1 LFA2 ART1 [ART2 ... ARTn]'
+    write(*,*) 'Usage: lfacop LFA1 LFA2 ART1 [ART2 ... ARTn]'
     write(*,*) 'with'
     write(*,*) '    LFA1: input LFA file.'
     write(*,*) '    LFA2: output LFA file.'
