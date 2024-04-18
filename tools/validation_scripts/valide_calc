@@ -14,13 +14,15 @@
 proc=$(basename $0) # nom de la présente procédure.
 pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
 dirloc=`pwd` # chemin du répertoire local.
+set -evx
 #
 #-----------------------------------------------
 # Exécution.
 #-----------------------------------------------
 #
 pref=valid.tmp
-rm $pref*
+rm -f $pref*
+cd ../data
 fe=DZ.lfa.mg
 cat <<EOF > $pref.lcref
 VQV0          # EAU VAPEUR  : DIAGNOSTIC INITIAL                            SANS
@@ -64,9 +66,7 @@ ECR"TQVCOMPLEMENT"
 EOF
 ddht -cCALC -1$fe -l$pref.lcexp -s$pref.exp.lfa
 #------------------------------------------------------------------
-rm $pref*minm
+rm -f $pref*minm
 lfaminm $pref.exp.lfa > $pref.exp.lfa.minm
 lfaminm $pref.ref.lfa > $pref.ref.lfa.minm
 e $pref*minm
-#------------------------------------------------------------------
-

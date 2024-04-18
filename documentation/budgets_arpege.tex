@@ -605,7 +605,6 @@ where $xx$ is between $1$ and {\tt NFPASS}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Free style variables}
 
-
 \begin{tabbing}
 xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
 \tt SVGFS01 \>  $2 \, m$ temperature \\[1ex]
@@ -617,8 +616,11 @@ xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \k
 \tt SVGFS07 \>  $g \, z_0$ , where $z_0$ is the thermal roughness \\[1ex]
 \tt SVGFS08 \>  albedo \\[1ex]
 \tt SVGFS09 \>  boundary layer height \\[1ex]
+\tt SVGFS10 \>  surface temperature $T_s$ \\[1ex]
 \\[1ex]
 \end{tabbing}
+
+\noi These arrays are initialized in cpphddh.F90.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -626,10 +628,15 @@ xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \k
 
 \begin{tabbing}
 xxxxxxxxxxxxxxxxxxxxxxx \= yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy \= cumulxx \kill
-\tt SFGFS01 \>  downward solar radiation \\[1ex]
-\tt SFGFS02 \>  downward thermal radiation \\[1ex]
+\tt SFGFS01 \>  surface downward solar radiation  \\[1ex]
+\tt SFGFS02 \>  surface downward thermal radiation  \\[1ex]
+\tt SFGFS03 \>  surface sensible flux \\[1ex]
+\tt SFGFS04 \>  surface latent heat flux liquid \\[1ex]
+\tt SFGFS05 \>  surface latent heat flux solid \\[1ex]
 \\[1ex]
 \end{tabbing}
+
+\noi These arrays are initialized in cpphddh.F90.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Cumulated mass}

@@ -438,7 +438,7 @@ if(.not.lltous) then
   else
     print*,'ddht/ERREUR: fichier-liste des champs inexistant!...'
     print*,clficc
-                call exit(1)
+    call exit(1)
   endif
 else
   !
@@ -455,23 +455,31 @@ else
   do jlisct=1,ilisct0
     cllis=cllisct(jlisct)
     illis=len_trim(cllis)
-    if(cllis(1:illis) /= 'DATE' &
-&       .and.cllis(1:illis) /= 'DOCFICHIER' &
-&       .and.cllis(1:illis) /= 'INDICE EXPERIENCE' &
-&       .and.cllis(1:illis) /= 'SVGFS' &
-&       .and.cllis(1:illis) /= 'SFGFS' &
-&       .and.cllis(1:4) /= 'DOCD' &
-&       .and.(cllis(1:1) /= 'S'.or.cllis(4:4) /= '_'.or.(cllis(5:5) &
-&        /= '0'.and.cllis(5:5) /= '1')) &
-&       .and.(cllis(1:1) /= 'G'.or.illis /= 3) &
-&       .and.cllis(1:illis) /= 'ECHEANCE' &
-&       .and.cllis(1:illis) /= 'ECHEANCEDV') then
+!    if(cllis(1:illis) /= 'DATE' &
+!&       .and.cllis(1:illis) /= 'DOCFICHIER' &
+!&       .and.cllis(1:illis) /= 'INDICE EXPERIENCE' &
+!&       .and.cllis(1:illis) /= 'SVGFS' &
+!&       .and.cllis(1:illis) /= 'SFGFS' &
+!&       .and.cllis(1:4) /= 'DOCD' &
+!&       .and.(cllis(1:1) /= 'S'.or.cllis(4:4) /= '_'.or.(cllis(5:5) &
+!&        /= '0'.and.cllis(5:5) /= '1')) &
+!&       .and.(cllis(1:1) /= 'G'.or.illis /= 3) &
+!&       .and.cllis(1:illis) /= 'ECHEANCE' &
+!&       .and.cllis(1:illis) /= 'ECHEANCEDV') then
+    if(cllis(1:1) == 'V' &
+      &  .or. cllis(1:1) == 'T' &
+      &  .or. cllis(1:1) == 'F' &
+      &  .or. cllis(1:1) == 'S' &
+      &  .or. cllis(1:1) == 'G' &
+      &  .or. trim(cllis) == 'PPP' &
+      &  ) then
       !
       ! Il s'agit d'un article de champ réel DDH.
       ! On le porte sur la liste de sortie.
       !
       ilisct=ilisct+1
       cllisct(ilisct)=cllisct(jlisct)
+    else
     endif
   enddo
 endif
@@ -969,7 +977,6 @@ do jlisct=1,ilisct
     &.or.(clc(2:3) == 'A3'.and.idocfi3(3) == 0) &
     &.or.(clc(2:3) == 'SS'.and.idocfi3(4) == 0) &
     &.or.clc(1:9) == 'DYNAMIQUE' &
-    &.or.clc(1:1) == 'S' &
     &) then
     !
     ! L'utilisateur a demandé de traiter
@@ -981,7 +988,7 @@ do jlisct=1,ilisct
     !if(clc(1:5) /= 'SVGFS' .and. clc(1:5) /= 'SFGFS') then
     !  print*,'ddht: ATTENTION: champ ',clc(1:13),' ignoré.'
     !endif
-    goto 755
+    cycle
   endif
   if (cgconf(1:len_trim(cgconf)) == 'SEPAR_PR_COMPL') then
     !
@@ -1029,7 +1036,7 @@ do jlisct=1,ilisct
         ! Cumul de l'article de ddh dans le tableau de tendance zcumt.
         !
         call cumul(clc,jpprod,zprod3,imaxv1,idom1,ilev1,zcumt)
-      elseif(clc(1:1) == 'F'.or.clc(1:1) == 'T') then
+      elseif(clc(1:1) == 'F'.or.clc(1:1) == 'T' .or. clc(1:2) == 'SF') then
         !
         ! Lecture de l'article.
         !
@@ -1288,7 +1295,7 @@ do jlisct=1,ilisct
         do jprod=1,idimpile
           zcalcx(jprod)=zcumt(jprod)
         enddo
-      elseif(clc(1:1) == 'V'.or.clc(1:1) == 'T'.or.clc(1:1) == 'F') then
+      elseif(clc(1:1) == 'V'.or.clc(1:1) == 'T'.or.clc(1:1) == 'F' .or. clc(1:2) == 'SF') then
         !
         ! Lecture sur fichier d'un article de DDH.
         !
@@ -1399,12 +1406,12 @@ do jlisct=1,ilisct
     ! Lecture d'article sur le fichier d'entree 1.
     !
     cladcou=clc
-    call longa(cladcou(1:1),inivv)
-    ilev1=inivv+idocfi1(6)
+    inlev=idocfi1(6)
+    call longa(cladcou,inlev,ilev1)
     call lfalecr(iul1,cladcou,jpprod,zprod1,ilong,irep)
     iprod1=ilong
-    if(irep == 0.and.inivv >= 0 .and. .not. (cladcou(1:1) == 'V' &
-    & .and. len_trim(cladcou) > 4)) then
+    if(cladcou(1:2) == 'SF' .or. (irep == 0.and.inivv >= 0 .and. .not. (cladcou(1:1) == 'V' &
+    & .and. len_trim(cladcou) > 4))) then
       !
       ! L'article existe dans le fichier 1.
       ! On le lit eventuellement dans le fichier 2.
@@ -1420,12 +1427,32 @@ do jlisct=1,ilisct
         !
         ! Il faut calculer une combinaison de deux champs.
         !
-        if(irep == 0) call somd_alt(zprod1,zprod2,jpprod,ilong,ilev1 &
-&           ,idom1 &
-&           ,cladcou,cgconf,len_trim(cgconf),zech1,zech2,iul3 &
-&           ,zpre_ini_1,zpre_fin_1,zpre_cum_1 &
-&           ,zpre_ini_2,zpre_fin_2,zpre_cum_2 &
-&           )
+        if(cladcou(1:1) == 'G') then
+          !-------------------------------------------------
+          ! Flux en surface: G12 (ARPEGE).
+          !-------------------------------------------------
+          zech1_scal=zech1(1)
+          zech2_scal=zech2(1)
+          call somd_sol(cladcou,iul1,iul2,iul3,idocfi1(12),idocfi1(14),zech1_scal,zech2_scal,idom1,idoma,jpdom,indoma)
+        elseif(cladcou(1:1) == 'S') then
+          !-------------------------------------------------
+          ! Variables libres  en surface: S04_0 (ARPEGE), SVTS1 (AROME), SFRAYSODW (AROME), etc.
+          !-------------------------------------------------
+          if(lgrens) print*,'CHAMPS LIBRES'
+          zech1_scal=zech1(1)
+          zech2_scal=zech2(1)
+          call somd_libres(cladcou,iul1,iul2,iul3,idocfi1(16),idocfi1(17),zech1_scal,zech2_scal,idom1,idoma,jpdom,indoma)
+        else
+          !-------------------------------------------------
+          ! Autres cas: VCT0, VUU1, FCTRAYSOL1, etc.
+          !-------------------------------------------------
+          if(irep == 0) call somd_alt(zprod1,zprod2,jpprod,ilong,ilev1 &
+          & ,idom1 &
+          & ,cladcou,cgconf,len_trim(cgconf),zech1,zech2,iul3 &
+          & ,zpre_ini_1,zpre_fin_1,zpre_cum_1 &
+          & ,zpre_ini_2,zpre_fin_2,zpre_cum_2 &
+          & )
+        endif
       elseif(cgconf(1:len_trim(cgconf)) == 'MOY_VERTIC') then
         !
         ! Profil horizontal.
@@ -1576,102 +1603,7 @@ do jlisct=1,ilisct
       endif
     endif
   endif
-  755   continue
-enddo
-if(clconvs == 'OUI'.or.lltous) then
-  !
-  !-------------------------------------------------
-  ! Traitement des champs sol.
-  !-------------------------------------------------
-  !
-  !
-  call lfacas(iul1,'S01_0',cltype,ilart,ierr1)
-  if(cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE') then
-    !
-    ! Il faut lire le deuxieme fichier.
-    !
-    call lfacas(iul2,'S01_0',cltype,ilart,ierr2)
-  else
-    ierr2=0
-  endif
-  if(ierr1 == 0.and.ierr2 == 0) then
-    !
-    ! Les champs sol sont présents dans les deux fichiers.
-    !
-    if(lgrens) print*,'CHAMPS SOL'
-    zech1_scal=zech1(1)
-    zech2_scal=zech2(1)
-    call somd_sol(iul1,iul2,iul3,idocfi1(12),idocfi1(14),zech1_scal,zech2_scal,idom1,idoma,jpdom,indoma)
-  else
-    !
-    ! Les champs sol sont absents d'au moins un des deux fichiers.
-    !
-    !print*,'ddht/ATTENTION: champs sol absents de l''un au moins des fichiers!...'
-  endif
-  !
-  !-------------------------------------------------
-  ! Traitement des champs libres.
-  !-------------------------------------------------
-  !
-  call lfacas(iul1,'SVGFS01',cltype,ilart,ierr1)
-  if(cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE') then
-    !
-    ! Il faut lire le deuxieme fichier.
-    !
-    call lfacas(iul2,'SVGFS01',cltype,ilart,ierr2)
-  else
-    ierr2=0
-  endif
-  if(ierr1 == 0.and.ierr2 == 0) then
-    !
-    ! Les champs libres sont présents dans les deux fichiers.
-    !
-    if(lgrens) print*,'CHAMPS LIBRES'
-    zech1_scal=zech1(1)
-    zech2_scal=zech2(1)
-    call somd_libres(iul1,iul2,iul3,idocfi1(16),idocfi1(17),zech1_scal,zech2_scal,idom1,idoma,jpdom,indoma)
-  else
-    !
-    ! Les champs libres sont absents d'au moins un des deux fichiers.
-    !
-    !print*,'ddht/ATTENTION: champs libres absents de l''un au moins des fichiers!...'
-  endif
-  !
-  !-------------------------------------------------
-  ! Traitement des champs de surface type AROME, ils débutent par 'SV' (variable) ou 'SF' (flux) ou 'ST' (tendance).
-  !-------------------------------------------------
-  !
-  !
-  ! Boucle sur les champs.
-  !
-  do jlisct=1,ilisct
-    clc=cllisct(jlisct)
-    if(clc(1:2) == 'SV' .or. clc(1:2) == 'SF' .or. clc(1:2) == 'ST') then
-      !
-      !-------------------------------------------------
-      ! On est bien en présence d'un champ de surface.
-      !-------------------------------------------------
-      !
-      write(*,fmt=*) trim(clc)
-      if(cgconf(1:len_trim(cgconf)) == 'EXTRAIT_DOMAIN') then
-        !
-        ! Lecture du champ de surface.
-        call lfalecr(iul1,clc,jpprod,zprod1,ilong,ierr)
-        !
-        ! Boucle sur les domaines.
-        do jindoma=1,indoma
-          zprod3(jindoma)=zprod1(idoma(jindoma))
-        enddo
-        !
-        !-------------------------------------------------
-        ! Ecriture du champ de surface contenant les indoma domaines extraits.
-        !-------------------------------------------------
-        !
-        call lfaecrr(iul3,clc,zprod3,indoma)
-      endif
-    endif ! SV SF ST
-  enddo ! jlisct
-endif ! lltous
+enddo ! jlisct
 !
 ! ** Fermeture du fichier d'entree.
 !
@@ -1681,7 +1613,6 @@ call lfafer(iul1)
 !
 call lfafer(iul3)
 end
-
 subroutine cumul(cdc,kprod,pprod,klong,kdom1,klev1,pcumt)
 ! --------------------------------------------------------------------------
 ! **** *CUMUL* Cumul de tendances ou flux sur un tableau 2D.
@@ -1740,18 +1671,35 @@ REAL(KIND=8) pcumt(kprod)
 REAL(KIND=8) zinterm(kdom1,klev1+1)
 CHARACTER*(*) cdc
 if(lgdebu) print*,'début cumul'
+if(cdc(1:1) == 'F') then
+  !
+  ! Champ de flux.
+  !
+  ilev=klev1+1
+  iflux=1
+else
+  !
+  ! Champ de tendance.
+  !
+  ilev=klev1
+  iflux=0
+endif
 !
 ! On copie le tableau 1D lu sur le fichier
 ! sur un tableau 2D afin de faciliter la différenciation.
 !
 iprod=0
 do jdom=1,kdom1
-  do jlev=1,klong
+  do jlev=1,ilev
     iprod=iprod+1
     zinterm(jdom,jlev)=pprod(iprod)
   enddo
 enddo
-if(trim(cdc) == 'F>V') then
+if(iprod /= klong) then
+  print*,'ddht/CUMUL/ERROR: wrong lengths: ',iprod,klong
+        call exit(1)
+endif
+if(iflux == 1) then
   !
   ! Champ de flux.
   ! On opère la différenciation sur la verticale.
@@ -1759,16 +1707,6 @@ if(trim(cdc) == 'F>V') then
   do jdom=1,kdom1
     do jlev=1,klev1
       zinterm(jdom,jlev)=zinterm(jdom,jlev)-zinterm(jdom,jlev+1)
-    enddo
-  enddo
-elseif(trim(cdc) == 'V>F') then
-  !
-  ! Champ de flux.
-  ! On opère le cumul vertical.
-  !
-  do jdom=1,kdom1
-    do jlev=2,klev1
-      zinterm(jdom,jlev)=zinterm(jdom,jlev)+zinterm(jdom,jlev-1)
     enddo
   enddo
 endif
@@ -2316,7 +2254,7 @@ if(cdadcou(1:3) == 'VPP'.or.cdadcou(1:3) == 'VEP') then
     print*,'DDHT/SOMDD/ERROR: var. non coord.'
     call exit(1)
   endif
-elseif(cdadcou(1:1) == 'V') then
+elseif(cdadcou(1:1) == 'V' .or. cdadcou(1:2) == 'SV') then
   !
   ! Variables non de coordonnees instantanees.
   !
@@ -2325,27 +2263,28 @@ elseif(cdadcou(1:1) == 'V') then
 &     .or.cdconf(1:14) == 'SOMME_PONDEREE') then
     call lfaecrr(kul3,cdadcou,zprod3,klong)
   elseif(cdconf(1:14) == 'DIFFE_EC2_EC1 ' &
-&     .and.cdadcou(4:4) == '1') then
+&     .and.cdadcou(len_trim(cdadcou):len_trim(cdadcou)) == '1') then
     call lfaecrr(kul3,cdadcou,pprod2,klong)
-    cdadcou(4:4)='0'
+    cdadcou(len_trim(cdadcou):len_trim(cdadcou))='0'
     call lfaecrr(kul3,cdadcou,pprod1,klong)
   elseif(cdconf(1:14) == 'DIFFE_EC2_EC1 ' &
-&     .and.cdadcou(4:4) == '0') then
-    ! Rien a lfare: ce champ n'a pas sa place
+&     .and.cdadcou(len_trim(cdadcou):len_trim(cdadcou)) == '0') then
+    ! Rien a faire: ce champ n'a pas sa place
     ! dans le fichier resultant.
   elseif(cdconf(1:14) == 'SOMME_CONTIGUE' &
-&     .and.cdadcou(4:4) == '0') then
+&     .and.cdadcou(len_trim(cdadcou):len_trim(cdadcou)) == '0') then
     call lfaecrr(kul3,cdadcou,pprod1,klong)
   elseif(cdconf(1:14) == 'SOMME_CONTIGUE' &
-&     .and.cdadcou(4:4) == '1') then
+&     .and.cdadcou(len_trim(cdadcou):len_trim(cdadcou)) == '1') then
     call lfaecrr(kul3,cdadcou,pprod2,klong)
   else
-    print*,'DDHT/SOMDD/ERROR: var. ccord.'
+    print*,'DDHT/SOMDD/WARNING: var. syntax unknown'
     print*,trim(cdconf)
     print*,trim(cdadcou)
-    call exit(1)
+    !call exit(1)
+    return
   endif
-elseif(cdadcou(1:1) == 'P') then
+elseif(cdadcou(1:1) == 'P' .or. cdadcou(1:2) == 'SF') then
   !
   ! Masse cumulee.
   !
@@ -2354,7 +2293,7 @@ elseif(cdadcou(1:1) == 'P') then
   else
     call lfaecrr(kul3,cdadcou,zprod3,klong)
   endif
-elseif(cdadcou(1:1) == 'F'.or.cdadcou(1:1) == 'T') then
+elseif(cdadcou(1:1) == 'F'.or.cdadcou(1:1) == 'T' .or. cdadcou(1:2) == 'SF') then
   !
   ! Flux ou tendance.
   !
@@ -2366,7 +2305,7 @@ else
   print* &
 &     ,'DDHT/SOMDD/ERROR: unexpected field for the cumulate/differenciate operation.'
   print*,cdadcou
-        call exit(1)
+  call exit(1)
 endif
 if(lgdebu) print*,'fin somd_alt'
 end
@@ -2443,7 +2382,7 @@ else
 endif
 if(lgdebu) print*,'fin calpasd'
 end
-subroutine somd_sol(kul1,kul2,kul3,knomvif,knomf,pech1,pech2 &
+subroutine somd_sol(cdadcou,kul1,kul2,kul3,knomvif,knomf,pech1,pech2 &
 & ,kdom,kdoma,kddom,kndoma)
 ! --------------------------------------------------------------------------
 ! **** *somd_sol* Traitement des champs sol.
@@ -2500,6 +2439,7 @@ REAL(KIND=8) :: ZPOIV1
 REAL(KIND=8) :: ZDENO
 REAL(KIND=8) :: ZPOIE1
 REAL(KIND=8) :: ZPOIV2
+character(len=*) :: cdadcou
 INTEGER(KIND=4) :: INOMVS
 INTEGER(KIND=4) :: KDOM,kddom,jindoma
 INTEGER(KIND=4) :: kdoma(kddom)
@@ -2539,180 +2479,61 @@ if(cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE') then
   call calpasd(cgconf,len_trim(cgconf),pech1,pech2,zpoiv1,zpoiv2,zdeno, &
 &     zpoie1,zpoie2)
   !
-  ! Traitement des variables.
-  !
-  inomvs=knomvif ! nombre de variables initiales ou finales.
-  do jvar=0,1
-    do jchamp=1,inomvs
-      !
-      ! Lecture des deux champs d'entrée.
-      !
-      write(clsol,fmt='(a,i2.2,a,i1.1)') 'S',jchamp,'_',jvar
-      call lfalecr(kul1,clsol,jpdom,zsols1,ilong,irep)
-      call lfalecr(kul2,clsol,jpdom,zsols2,ilong,irep)
-      !
-      ! On combine les deux champs d'entrée.
-      !
-      do jdom=1,kdom
-        zsols3(jdom)=(zsols1(jdom)*zpoiv1+zsols2(jdom)*zpoiv2)/zdeno
-      enddo
-      if(cgconf(1:14) == 'DIFFE_EXP_REFE' &
-&         .or.cgconf(1:14) == 'DIFFE_PONDEREE' &
-&         .or.cgconf(1:14) == 'SOMME_PONDEREE') then
-        write(clsol,fmt='(a,i2.2,a,i1.1)') 'S',jchamp,'_',jvar
-        call lfaecrr(kul3,clsol,zsols3,kdom)
-      elseif(cgconf(1:14) == 'DIFFE_EC2_EC1 '.and.jvar == 1) then
-        write(clsol,fmt='(a,i2.2,a,i1.1)') 'S',jchamp,'_',1
-        call lfaecrr(kul3,clsol,zsols2,kdom)
-        write(clsol,fmt='(a,i2.2,a,i1.1)') 'S',jchamp,'_',0
-        call lfaecrr(kul3,clsol,zsols1,kdom)
-      elseif(cgconf(1:14) == 'DIFFE_EC2_EC1 '.and.jvar == 0) then
-        ! Rien a faire: ce champ n'a pas sa place
-        ! dans le fichier resultant.
-      elseif(cgconf(1:14) == 'SOMME_CONTIGUE'.and.jvar == 0) then
-        write(clsol,fmt='(a,i2.2,a,i1.1)') 'S',jchamp,'_',0
-        call lfaecrr(kul3,clsol,zsols1,kdom)
-      elseif(cgconf(1:14) == 'SOMME_CONTIGUE'.and.jvar == 1) then
-        write(clsol,fmt='(a,i2.2,a,i1.1)') 'S',jchamp,'_',1
-        call lfaecrr(kul3,clsol,zsols2,kdom)
-      else
-        !
-        ! Autres cas; ils sont non prevus.
-        !
-        print*,'ddht/somd_sol 1/ATTENTION: traitement des champs sol de l''option ', &
-&           cgconf(1:len_trim(cgconf)),' non encore implemente.'
-        return
-      endif
-    enddo
-  enddo
-  !
   ! Traitement des flux.
   !
-  inomvs=knomf ! nombre de flux.
-  do jchamp=1,inomvs
-    !
-    ! Lecture des deux champs d'entrée.
-    !
-    write(clsol,fmt='(a,i2.2)') 'G',jchamp
-    call lfalecr(kul1,clsol,jpdom,zsols1,ilong,irep)
-    call lfalecr(kul2,clsol,jpdom,zsols2,ilong,irep)
-    !
-    ! On combine les deux champs d'entrée.
-    !
-    do jdom=1,kdom
-      zsols3(jdom)=zsols1(jdom)*zpoie1+zsols2(jdom)*zpoie2
-    enddo
-    call lfaecrr(kul3,clsol,zsols3,kdom)
+  !
+  ! Lecture des deux champs d'entrée.
+  !
+  call lfalecr(kul1,cdadcou,jpdom,zsols1,ilong,irep)
+  call lfalecr(kul2,cdadcou,jpdom,zsols2,ilong,irep)
+  !
+  ! On combine les deux champs d'entrée.
+  !
+  do jdom=1,kdom
+    zsols3(jdom)=zsols1(jdom)*zpoie1+zsols2(jdom)*zpoie2
   enddo
+  call lfaecrr(kul3,cdadcou,zsols3,kdom)
 elseif(cgconf(1:len_trim(cgconf)) == 'MOY_HORIZ') then
   !
-  ! Traitement des variables.
-  !
-  inomvs=knomvif ! nombre de variables initiales ou finales.
-  do jvar=0,1
-    do jchamp=1,inomvs
-      write(clsol,fmt='(a,i2.2,a,i1.1)') 'S',jchamp,'_',jvar
-      call lfalecr(kul1,clsol,jpdom,zsols1,ilong,irep)
-      !
-      ! Operation a effectuer sur le champ sol
-      ! et reecriture d'icelui sur
-      ! le fichier de sortie.
-      !
-      ! On va moyenner selon l'horizontale.
-      !
-      zmoy(1)=0.
-      do jdom=1,ilong
-        zmoy(1)=zmoy(1)+zsols1(jdom)/float(ilong)
-      enddo
-      call lfaecrr(kul3,clsol,zmoy,1)
-    enddo
-  enddo
-  !
   ! Traitement des flux.
   !
-  inomvs=knomf ! nombre de flux.
-  do jchamp=1,inomvs
-    write(clsol,fmt='(a,i2.2)') 'G',jchamp
-    call lfalecr(kul1,clsol,jpdom,zsols1,ilong,irep)
-    !
-    ! Operation a effectuer sur le champ sol
-    ! et reecriture d'icelui sur
-    ! le fichier de sortie.
-    !
-    ! On va moyenner selon l'horizontale.
-    !
-    zmoy(1)=0.
-    do jdom=1,ilong
-      zmoy(1)=zmoy(1)+zsols1(jdom)/float(ilong)
-    enddo
-    call lfaecrr(kul3,clsol,zmoy,1)
+  call lfalecr(kul1,cdadcou,jpdom,zsols1,ilong,irep)
+  !
+  ! Operation a effectuer sur le champ sol
+  ! et reecriture d'icelui sur
+  ! le fichier de sortie.
+  !
+  ! On va moyenner selon l'horizontale.
+  !
+  zmoy(1)=0.
+  do jdom=1,ilong
+    zmoy(1)=zmoy(1)+zsols1(jdom)/float(ilong)
   enddo
+  call lfaecrr(kul3,cdadcou,zmoy,1)
 elseif(cgconf(1:len_trim(cgconf)) == 'MOY_VERTIC') then
   !
-  ! Traitement des variables.
-  !
-  inomvs=knomvif ! nombre de variables initiales ou finales.
-  do jvar=0,1
-    do jchamp=1,inomvs
-      write(clsol,fmt='(a,i2.2,a,i1.1)') 'S',jchamp,'_',jvar
-      !
-      !-------------------------------------------------
-      ! Simple recopie d'un article d'un fichier à l'autre.
-      !-------------------------------------------------
-      !
-      call lfacop(kul1,clsol,clsol,kul3)
-    enddo
-  enddo
-  !
   ! Traitement des flux.
   !
-  inomvs=knomf ! nombre de flux.
-  do jchamp=1,inomvs
-    write(clsol,fmt='(a,i2.2)') 'G',jchamp
-    !
-    !-------------------------------------------------
-    ! Simple recopie d'un article d'un fichier à l'autre.
-    !-------------------------------------------------
-    !
-    call lfacop(kul1,clsol,clsol,kul3)
-  enddo
+  !
+  !-------------------------------------------------
+  ! Simple recopie d'un article d'un fichier à l'autre.
+  !-------------------------------------------------
+  !
+  call lfacop(kul1,cdadcou,cdadcou,kul3)
 elseif(trim(cgconf) == 'EXTRAIT_DOMAIN') then
   !
-  ! Traitement des variables.
-  !
-  inomvs=knomvif ! nombre de variables initiales ou finales.
-  do jvar=0,1
-    do jchamp=1,inomvs
-      write(clsol,fmt='(a,i2.2,a,i1.1)') 'S',jchamp,'_',jvar
-      call lfalecr(kul1,clsol,jpdom,zsols1,ilong,irep)
-      !
-      ! Operation a effectuer sur le champ sol:
-      ! extraire certains domaines,
-      ! puis reecriture d'icelui sur le fichier de sortie.
-      !
-      do jindoma=1,kndoma
-        zsols3(jindoma)=zsols1(kdoma(jindoma))
-      enddo
-      call lfaecrr(kul3,clsol,zsols3,kndoma)
-    enddo
-  enddo
-  !
   ! Traitement des flux.
   !
-  inomvs=knomf ! nombre de flux.
-  do jchamp=1,inomvs
-    write(clsol,fmt='(a,i2.2)') 'G',jchamp
-    call lfalecr(kul1,clsol,jpdom,zsols1,ilong,irep)
-    !
-    ! Operation a effectuer sur le champ sol:
-    ! extraire certains domaines,
-    ! puis reecriture d'icelui sur le fichier de sortie.
-    !
-    do jindoma=1,kndoma
-      zsols3(jindoma)=zsols1(kdoma(jindoma))
-    enddo
-    call lfaecrr(kul3,clsol,zsols3,kndoma)
+  call lfalecr(kul1,cdadcou,jpdom,zsols1,ilong,irep)
+  !
+  ! Operation a effectuer sur le champ sol:
+  ! extraire certains domaines,
+  ! puis reecriture d'icelui sur le fichier de sortie.
+  !
+  do jindoma=1,kndoma
+    zsols3(jindoma)=zsols1(kdoma(jindoma))
   enddo
+  call lfaecrr(kul3,cdadcou,zsols3,kndoma)
 else
   !
   ! Autres cas; ils sont non prevus.
@@ -2724,7 +2545,7 @@ else
 endif
 if(lgdebu) print*,'fin somd_sol'
 end
-subroutine somd_libres(kul1,kul2,kul3,knomvif,knomf,pech1,pech2 &
+subroutine somd_libres(cdadcou,kul1,kul2,kul3,knomvif,knomf,pech1,pech2 &
 & ,kdom,kdoma,kddom,kndoma)
 ! --------------------------------------------------------------------------
 ! **** *somd_libres* Traitement des champs libres.
@@ -2769,6 +2590,7 @@ implicit real(kind=8) (z,p)
 #include"ddhpar.h"
 #include"ddht_yom_ent.h"
 !
+character(len=*) :: cdadcou
 CHARACTER*200 :: CGNFE1
 CHARACTER*200 :: CGNFE2
 CHARACTER*200 :: CGNFLC
@@ -2815,18 +2637,40 @@ if(cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE') then
   ! Calcul des poids à appliquer lors de sommes ou différences.
   !
   call calpasd(cgconf,len_trim(cgconf),pech1,pech2,zpoiv1,zpoiv2,zdeno, &
-&     zpoie1,zpoie2)
-  !
-  ! Traitement des variables.
-  !
-  inomvs=knomvif ! nombre de variables initiales ou finales.
-  do jchamp=1,inomvs
+  & zpoie1,zpoie2)
+  if(cdadcou(1:2) == 'SF') then
+    
+    !-------------------------------------------------
+    ! Flux.
+    !-------------------------------------------------
+    !
+    ! Traitement des flux.
+    !
     !
     ! Lecture des deux champs d'entrée.
     !
-    write(cllibre,fmt='(a,i2.2)') 'SVGFS',jchamp
-    call lfalecr(kul1,cllibre,jpdom,zlibres1,ilong,irep)
-    call lfalecr(kul2,cllibre,jpdom,zlibres2,ilong,irep)
+    call lfalecr(kul1,cdadcou,jpdom,zlibres1,ilong,irep)
+    call lfalecr(kul2,cdadcou,jpdom,zlibres2,ilong,irep)
+    !
+    ! On combine les deux champs d'entrée.
+    !
+    do jdom=1,kdom
+      zlibres3(jdom)=zlibres1(jdom)*zpoie1+zlibres2(jdom)*zpoie2
+    enddo
+    call lfaecrr(kul3,cdadcou,zlibres3,kdom)
+  else
+    
+    !-------------------------------------------------
+    ! Variable.
+    !-------------------------------------------------
+    !
+    ! Traitement des variables.
+    !
+    !
+    ! Lecture des deux champs d'entrée.
+    !
+    call lfalecr(kul1,cdadcou,jpdom,zlibres1,ilong,irep)
+    call lfalecr(kul2,cdadcou,jpdom,zlibres2,ilong,irep)
     !
     ! On combine les deux champs d'entrée.
     !
@@ -2834,147 +2678,81 @@ if(cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE') then
       zlibres3(jdom)=(zlibres1(jdom)*zpoiv1+zlibres2(jdom)*zpoiv2)/zdeno
     enddo
     if(cgconf(1:14) == 'DIFFE_EXP_REFE' &
-&         .or.cgconf(1:14) == 'DIFFE_PONDEREE' &
-&         .or.cgconf(1:14) == 'SOMME_PONDEREE') then
-      write(cllibre,fmt='(a,i2.2)') 'SVGFS',jchamp
-      call lfaecrr(kul3,cllibre,zlibres3,kdom)
+  &         .or.cgconf(1:14) == 'DIFFE_PONDEREE' &
+  &         .or.cgconf(1:14) == 'SOMME_PONDEREE') then
+      call lfaecrr(kul3,cdadcou,zlibres3,kdom)
     elseif(cgconf(1:14) == 'DIFFE_EC2_EC1 ') then
-      write(cllibre,fmt='(a,i2.2)') 'SVGFS',jchamp
-      call lfaecrr(kul3,cllibre,zlibres2,kdom)
+      if(cdadcou(1:5) == 'SVGFS' .or. (cdadcou(len_trim(cdadcou):len_trim(cdadcou)) /= '0' .and. cdadcou(len_trim(cdadcou):len_trim(cdadcou)) /= '1')) then
+        !-------------------------------------------------
+        ! Cas de variables libres dont le fichier DDH ne contient que la valeur finale (initiale absente).
+        ! Exemples: SVGFS01, SVGFS02 (ARPEGE), SVTCLS, SVOROG (AROME), etc.
+        !-------------------------------------------------
+        call lfaecrr(kul3,cdadcou,zlibres2,kdom)
+      elseif(cdadcou(len_trim(cdadcou):len_trim(cdadcou)) == '1') then
+        !-------------------------------------------------
+        ! Cas de variables dont le fichier DDH contient la valeur initiale et finale.
+        ! Ce sont des variables dont on n'a effectué la moyenne par les DDH que sur continent.
+        ! Exemples: SVTS1 (AROME), S01_1 (ARPEGE).
+        !-------------------------------------------------
+        call lfaecrr(kul3,cdadcou,zlibres2,kdom)
+      elseif(cdadcou(len_trim(cdadcou):len_trim(cdadcou)) == '0') then
+        !-------------------------------------------------
+        ! Cas de variables dont le fichier DDH contient la valeur initiale et finale.
+        ! Ce sont des variables dont on n'a effectué la moyenne par les DDH que sur continent.
+        ! Exemples: SVTS0 (AROME), S01_0 (ARPEGE).
+        !-------------------------------------------------
+        clfinal=cdadcou(1:len_trim(cdadcou)-1)//'1'
+        call lfalecr(kul1,clfinal,jpdom,zlibres1,ilong,irep)
+        call lfaecrr(kul3,cdadcou,zlibres1,kdom)
+      else
+        write(*,fmt=*) 'ddht/WARNING : the variable name ',trim(cdadcou),' is not recognized. This article is ignored.' 
+      endif
     elseif(cgconf(1:14) == 'SOMME_CONTIGUE') then
-      write(cllibre,fmt='(a,i2.2)') 'SVGFS',jchamp
-      call lfaecrr(kul3,cllibre,zlibres2,kdom)
+      call lfaecrr(kul3,cdadcou,zlibres2,kdom)
     else
       !
       ! Autres cas; ils sont non prevus.
       !
       print*,'ddht/somd_libres 1/ATTENTION: traitement des champs libres de l''option ', &
-&           cgconf(1:len_trim(cgconf)),' non encore implemente.'
+  &           cgconf(1:len_trim(cgconf)),' non encore implemente.'
       return
     endif
-  enddo
-  !
-  ! Traitement des flux.
-  !
-  inomvs=knomf ! nombre de flux.
-  do jchamp=1,inomvs
-    !
-    ! Lecture des deux champs d'entrée.
-    !
-    write(cllibre,fmt='(a,i2.2)') 'SFGFS',jchamp
-    call lfalecr(kul1,cllibre,jpdom,zlibres1,ilong,irep)
-    call lfalecr(kul2,cllibre,jpdom,zlibres2,ilong,irep)
-    !
-    ! On combine les deux champs d'entrée.
-    !
-    do jdom=1,kdom
-      zlibres3(jdom)=zlibres1(jdom)*zpoie1+zlibres2(jdom)*zpoie2
-    enddo
-    call lfaecrr(kul3,cllibre,zlibres3,kdom)
-  enddo
+  endif
 elseif(cgconf(1:len_trim(cgconf)) == 'MOY_HORIZ') then
+  call lfalecr(kul1,cdadcou,jpdom,zlibres1,ilong,irep)
   !
-  ! Traitement des variables.
+  ! Operation a effectuer sur le champ libre
+  ! et reecriture d'icelui sur
+  ! le fichier de sortie.
   !
-  inomvs=knomvif ! nombre de variables initiales ou finales.
-  do jchamp=1,inomvs
-    write(cllibre,fmt='(a,i2.2)') 'SVGFS',jchamp
-    call lfalecr(kul1,cllibre,jpdom,zlibres1,ilong,irep)
-    !
-    ! Operation a effectuer sur le champ libre
-    ! et reecriture d'icelui sur
-    ! le fichier de sortie.
-    !
-    ! On va moyenner selon l'horizontale.
-    !
-    zmoy(1)=0.
-    do jdom=1,ilong
-      zmoy(1)=zmoy(1)+zlibres1(jdom)/float(ilong)
-    enddo
-    call lfaecrr(kul3,cllibre,zmoy,1)
+  ! On va moyenner selon l'horizontale.
+  !
+  zmoy(1)=0.
+  do jdom=1,ilong
+    zmoy(1)=zmoy(1)+zlibres1(jdom)/float(ilong)
   enddo
-  !
-  ! Traitement des flux.
-  !
-  inomvs=knomf ! nombre de flux.
-  do jchamp=1,inomvs
-    write(cllibre,fmt='(a,i2.2)') 'SFGFS',jchamp
-    call lfalecr(kul1,cllibre,jpdom,zlibres1,ilong,irep)
-    !
-    ! Operation a effectuer sur le champ libre
-    ! et reecriture d'icelui sur
-    ! le fichier de sortie.
-    !
-    ! On va moyenner selon l'horizontale.
-    !
-    zmoy(1)=0.
-    do jdom=1,ilong
-      zmoy(1)=zmoy(1)+zlibres1(jdom)/float(ilong)
-    enddo
-    call lfaecrr(kul3,cllibre,zmoy,1)
-  enddo
+  call lfaecrr(kul3,cdadcou,zmoy,1)
 elseif(cgconf(1:len_trim(cgconf)) == 'MOY_VERTIC') then
   !
-  ! Traitement des variables.
+  !-------------------------------------------------
+  ! Simple recopie d'un article d'un fichier à l'autre.
+  !-------------------------------------------------
   !
-  inomvs=knomvif ! nombre de variables initiales ou finales.
-  do jchamp=1,inomvs
-    write(cllibre,fmt='(a,i2.2)') 'SVGFS',jchamp
-    !
-    !-------------------------------------------------
-    ! Simple recopie d'un article d'un fichier à l'autre.
-    !-------------------------------------------------
-    !
-    call lfacop(kul1,cllibre,cllibre,kul3)
-  enddo
-  !
-  ! Traitement des flux.
-  !
-  inomvs=knomf ! nombre de flux.
-  do jchamp=1,inomvs
-    write(cllibre,fmt='(a,i2.2)') 'SFGFS',jchamp
-    !
-    !-------------------------------------------------
-    ! Simple recopie d'un article d'un fichier à l'autre.
-    !-------------------------------------------------
-    !
-    call lfacop(kul1,cllibre,cllibre,kul3)
-  enddo
+  call lfacop(kul1,cdadcou,cdadcou,kul3)
 elseif(trim(cgconf) == 'EXTRAIT_DOMAIN') then
   !
   ! Traitement des variables.
   !
-  inomvs=knomvif ! nombre de variables initiales ou finales.
-  do jchamp=1,inomvs
-    write(cllibre,fmt='(a,i2.2)') 'SVGFS',jchamp
-    call lfalecr(kul1,cllibre,jpdom,zlibres1,ilong,irep)
-    !
-    ! Operation a effectuer sur le champ libre:
-    ! extraire certains domaines,
-    ! puis reecriture d'icelui sur le fichier de sortie.
-    !
-    do jindoma=1,kndoma
-      zlibres3(jindoma)=zlibres1(kdoma(jindoma))
-    enddo
-    call lfaecrr(kul3,cllibre,zlibres3,kndoma)
-  enddo
+  call lfalecr(kul1,cdadcou,jpdom,zlibres1,ilong,irep)
   !
-  ! Traitement des flux.
+  ! Operation a effectuer sur le champ libre:
+  ! extraire certains domaines,
+  ! puis reecriture d'icelui sur le fichier de sortie.
   !
-  inomvs=knomf ! nombre de flux.
-  do jchamp=1,inomvs
-    write(cllibre,fmt='(a,i2.2)') 'SFGFS',jchamp
-    call lfalecr(kul1,cllibre,jpdom,zlibres1,ilong,irep)
-    !
-    ! Operation a effectuer sur le champ libre:
-    ! extraire certains domaines,
-    ! puis reecriture d'icelui sur le fichier de sortie.
-    !
-    do jindoma=1,kndoma
-      zlibres3(jindoma)=zlibres1(kdoma(jindoma))
-    enddo
-    call lfaecrr(kul3,cllibre,zlibres3,kndoma)
+  do jindoma=1,kndoma
+    zlibres3(jindoma)=zlibres1(kdoma(jindoma))
   enddo
+  call lfaecrr(kul3,cdadcou,zlibres3,kndoma)
 else
   !
   ! Autres cas; ils sont non prevus.
@@ -3578,7 +3356,7 @@ zx=px1
 px1=px2
 px2=zx
 end
-subroutine longa(cdcar,knivv)
+subroutine longa(cdcar,knlev,klev1)
 ! --------------------------------------------------------------------------
 ! **** *LONGA  * Type d'article DDH > nombre de niveaux correspondant.
 ! --------------------------------------------------------------------------
@@ -3612,28 +3390,35 @@ implicit integer(kind=4) (i,k)
 implicit real(kind=8) (z,p)
 #include"ddhpar.h"
 #include"ddht_yom_ent.h"
-CHARACTER*1 cdcar
-INTEGER(KIND=4) :: KNIVV
+character(len=*), intent(in) :: cdcar
+INTEGER(KIND=4), intent(in) :: knlev
+INTEGER(KIND=4), intent(out) :: klev1
 
 ! Determination de la longueur de champ
-if(cdcar == 'V') then
+if(cdcar(1:1) == 'V') then
   ! Champ de type variable: N niveaux.
-  knivv=0
-elseif(cdcar == 'T') then
+  klev1=knlev
+elseif(cdcar(1:1) == 'T') then
   ! Champ de type tendance: N niveaux.
-  knivv=0
-elseif(cdcar == 'F') then
+  klev1=knlev
+elseif(cdcar(1:1) == 'F') then
   ! Champ de type flux    : N+1 niveaux.
-  knivv=1
-elseif(cdcar == 'P') then
+  klev1=knlev+1
+elseif(cdcar(1:1) == 'P') then
   ! Champ de type cumul de masse: N niveaux.
-  knivv=0
+  klev1=knlev
+elseif(cdcar(1:2) == 'SV') then
+  ! Champ de type variable de surface.
+  klev1=1
+elseif(cdcar(1:2) == 'SF') then
+  ! Champ de type flux en surface.
+  klev1=1
 else
   ! Attention: cas de champ non prevu.
   print*,'ddht/LONGA/ATTENTION:'
-  print*,'cdcar=',cdcar
+  print*,'cdcar=',trim(cdcar)
   print*,'Type de champ non prevu.'
-  knivv=-1
+  klev1=-1
 endif
 end
 #include"lited.F90"

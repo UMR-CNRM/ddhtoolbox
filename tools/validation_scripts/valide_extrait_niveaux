@@ -25,6 +25,7 @@ set -evx
 # .
 #-------------------------------------------------
 #
+cd ../data
 ddht -cEXTRAIT_DOMAIN -E15 -1DZ.lfa -sDZ_dom15.lfa
 ddht -cEXTRAIT_NIVEAUX -E103,104,105 -1DZ_dom15.lfa -sDZ_dom15_niv103-105.lfa
 ddht -cEXTRAIT_NIVEAUX -E105 -1DZ_dom15.lfa -sDZ_dom15_niv105.lfa
