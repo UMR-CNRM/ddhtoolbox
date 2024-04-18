@@ -2299,9 +2299,6 @@ elseif(cdadcou(1:1) == 'F'.or.cdadcou(1:1) == 'T' .or. cdadcou(1:2) == 'SF') the
   !
   call lfaecrr(kul3,cdadcou,zprod3,klong)
 else
-  !
-  ! Erreur: type de champ non prevu.
-  !
   print* &
 &     ,'DDHT/SOMDD/ERROR: unexpected field for the cumulate/differenciate operation.'
   print*,cdadcou
@@ -3412,6 +3409,12 @@ elseif(cdcar(1:2) == 'SV') then
   klev1=1
 elseif(cdcar(1:2) == 'SF') then
   ! Champ de type flux en surface.
+  klev1=1
+elseif(cdcar(1:1) == 'G') then
+  ! Champ de type flux en surface.
+  klev1=1
+elseif(cdcar(1:1) == 'S' .and. cdcar(4:4) == '_') then
+  ! Champ de type variable en surface.
   klev1=1
 else
   ! Attention: cas de champ non prevu.
