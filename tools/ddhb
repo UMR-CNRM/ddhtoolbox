@@ -81,7 +81,7 @@ if [ "$budvar" = "" ] ; then
   usage
   exit 1
 fi
-set -evx
+set -e
 #
 #-----------------------------------------------
 # Is budvar of the form "arome/QV" or simply "QV"?
