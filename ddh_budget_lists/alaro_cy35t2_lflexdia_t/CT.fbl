@@ -1,0 +1,34 @@
+BUDGET LIST TEMPERATURE BUDGET
+MAIN CT
+CT
+# --------------------------
+BEGIN BLOCK Dynamics
+FCTFLUVERTDYN 
+TCTDELTAP
+TCTDIVFLUHOR 
+TCTCONVERSI2
+# --------------------------
+BEGIN BLOCK Res microphysics
+FCTHPSL           
+FCTHPSN           
+FCTHSSL           
+FCTHSSN     
+# --------------------------
+BEGIN BLOCK SGS microphysics
+FCTHPCL           
+FCTHPCN           
+FCTHSCL           
+FCTHSCN           
+# --------------------------
+BEGIN BLOCK SGS transport
+FCTDIFC
+# --------------------------
+BEGIN BLOCK Radiation: solar
+FCTRSO
+# --------------------------
+BEGIN BLOCK Radiation: IR
+FCTRTH
+# --------------------------
+BEGIN BLOCK Turbulence
+FCTDIFT
+# --------------------------

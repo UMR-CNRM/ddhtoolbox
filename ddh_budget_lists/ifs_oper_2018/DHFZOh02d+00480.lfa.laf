@@ -1,0 +1,307 @@
+LFAMINM du fichier DHFZOh02d+00480.lfa :
+l=       1, min=h02d         max=h02d                                          |C | INDICE EXPERIENCE 
+l=      11, min=           0 max=        2018 moy=   237.5     rcm=   626.1    |I4| DATE              
+l=      17, min=           0 max=         480 moy=   90.94     rcm=   161.0    |I4| DOCFICHIER        
+l=       1, min=  0.3456E+06 max=  0.3456E+06 moy=  0.3456E+06 rcm=  0.3456E+06|R8| ECHEANCE          
+l=      11, min=   0.000     max=   30.00     moy=   3.452     rcm=   9.234    |R8| DOCD001           
+l=      11, min=   0.000     max=   30.00     moy=   3.536     rcm=   9.248    |R8| DOCD002           
+l=      11, min=   0.000     max=   30.00     moy=   3.621     rcm=   9.272    |R8| DOCD003           
+l=      11, min=   0.000     max=   30.00     moy=   3.706     rcm=   9.306    |R8| DOCD004           
+l=      11, min=   0.000     max=   30.00     moy=   3.791     rcm=   9.349    |R8| DOCD005           
+l=      11, min=   0.000     max=   30.00     moy=   3.876     rcm=   9.402    |R8| DOCD006           
+l=      11, min=   0.000     max=   30.00     moy=   3.961     rcm=   9.464    |R8| DOCD007           
+l=      11, min=   0.000     max=   30.00     moy=   4.045     rcm=   9.536    |R8| DOCD008           
+l=      11, min=   0.000     max=   30.00     moy=   4.130     rcm=   9.616    |R8| DOCD009           
+l=      11, min=   0.000     max=   30.00     moy=   4.215     rcm=   9.705    |R8| DOCD010           
+l=      11, min=   0.000     max=   30.00     moy=   4.300     rcm=   9.803    |R8| DOCD011           
+l=      11, min=   0.000     max=   30.00     moy=   4.385     rcm=   9.909    |R8| DOCD012           
+l=      11, min=   0.000     max=   30.00     moy=   4.470     rcm=   10.02    |R8| DOCD013           
+l=      11, min=   0.000     max=   30.00     moy=   4.555     rcm=   10.14    |R8| DOCD014           
+l=      11, min=   0.000     max=   30.00     moy=   4.639     rcm=   10.27    |R8| DOCD015           
+l=      11, min= -0.3333E-01 max=   30.00     moy=   4.724     rcm=   10.41    |R8| DOCD016           
+l=      11, min= -0.1000     max=   30.00     moy=   4.809     rcm=   10.55    |R8| DOCD017           
+l=      11, min= -0.1667     max=   30.00     moy=   4.894     rcm=   10.70    |R8| DOCD018           
+l=      11, min= -0.2333     max=   30.00     moy=   4.979     rcm=   10.86    |R8| DOCD019           
+l=      11, min= -0.3000     max=   30.00     moy=   5.064     rcm=   11.02    |R8| DOCD020           
+l=      11, min= -0.3667     max=   30.00     moy=   5.148     rcm=   11.19    |R8| DOCD021           
+l=      11, min= -0.4333     max=   30.00     moy=   5.233     rcm=   11.36    |R8| DOCD022           
+l=      11, min= -0.5000     max=   30.00     moy=   5.318     rcm=   11.54    |R8| DOCD023           
+l=      11, min= -0.5667     max=   30.00     moy=   5.403     rcm=   11.73    |R8| DOCD024           
+l=      11, min= -0.6333     max=   30.00     moy=   5.488     rcm=   11.91    |R8| DOCD025           
+l=      11, min= -0.7000     max=   30.00     moy=   5.573     rcm=   12.11    |R8| DOCD026           
+l=      11, min= -0.7667     max=   30.00     moy=   5.658     rcm=   12.31    |R8| DOCD027           
+l=      11, min= -0.8333     max=   30.00     moy=   5.742     rcm=   12.51    |R8| DOCD028           
+l=      11, min= -0.9000     max=   30.00     moy=   5.827     rcm=   12.71    |R8| DOCD029           
+l=      11, min= -0.9667     max=   30.00     moy=   5.912     rcm=   12.92    |R8| DOCD030           
+l=    4110, min=  0.1123     max=   214.4     moy=   73.38     rcm=   98.53    |R8| VPP0              
+l=    4110, min=  0.2176E-06 max=   1.656     moy=  0.1920     rcm=  0.3978    |R8| VQV0              
+l=    4110, min=  -1409.     max=   4471.     moy=   354.6     rcm=   1093.    |R8| VUU0              
+l=    4110, min=  -432.7     max=   345.6     moy=   1.109     rcm=   78.56    |R8| VVV0              
+l=    4110, min=   23.05     max=  0.1303E+06 moy=  0.1186E+05 rcm=  0.2193E+05|R8| VKK0              
+l=    4110, min=  0.2278E+05 max=  0.5859E+08 moy=  0.1869E+08 rcm=  0.2581E+08|R8| VCT0              
+l=    4110, min=   2533.     max=  0.1255E+08 moy=  0.5473E+07 rcm=  0.6925E+07|R8| VEP0              
+l=    4110, min=  0.4268E-07 max=   149.0     moy=   34.31     rcm=   50.81    |R8| VHR0              
+l=    4110, min=   0.000     max=  0.7641E-02 moy=  0.4151E-03 rcm=  0.1030E-02|R8| VQL0              
+l=    4110, min=   0.000     max=  0.1953E-02 moy=  0.1458E-03 rcm=  0.3649E-03|R8| VQN0              
+l=    4110, min=   0.000     max=  0.2603E-02 moy=  0.1340E-03 rcm=  0.3422E-03|R8| VQR0              
+l=    4110, min=   0.000     max=  0.6890E-02 moy=  0.3681E-03 rcm=  0.9897E-03|R8| VQS0              
+l=    4110, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| V010              
+l=    4110, min=   0.000     max=   51.22     moy=   5.123     rcm=   9.874    |R8| VNT0              
+l=    4110, min=  -12.19     max=   8.507     moy=  0.1091E-02 rcm=   1.972    |R8| VOM0              
+l=    4110, min=  0.1123     max=   214.5     moy=   73.38     rcm=   98.53    |R8| VPP1              
+l=    4110, min=  0.2186E-06 max=   1.679     moy=  0.1924     rcm=  0.3978    |R8| VQV1              
+l=    4110, min=  -1352.     max=   4462.     moy=   351.2     rcm=   1080.    |R8| VUU1              
+l=    4110, min=  -438.7     max=   421.3     moy= -0.6554E-01 rcm=   80.79    |R8| VVV1              
+l=    4110, min=   23.93     max=  0.1326E+06 moy=  0.1254E+05 rcm=  0.2349E+05|R8| VKK1              
+l=    4110, min=  0.2199E+05 max=  0.5851E+08 moy=  0.1871E+08 rcm=  0.2584E+08|R8| VCT1              
+l=    4110, min=   2532.     max=  0.1256E+08 moy=  0.5477E+07 rcm=  0.6931E+07|R8| VEP1              
+l=    4110, min=  0.3684E-07 max=   145.9     moy=   33.86     rcm=   49.83    |R8| VHR1              
+l=    4110, min=   0.000     max=  0.1075E-01 moy=  0.4293E-03 rcm=  0.1080E-02|R8| VQL1              
+l=    4110, min=   0.000     max=  0.2169E-02 moy=  0.1461E-03 rcm=  0.3657E-03|R8| VQN1              
+l=    4110, min=   0.000     max=  0.1957E-02 moy=  0.1326E-03 rcm=  0.3231E-03|R8| VQR1              
+l=    4110, min=   0.000     max=  0.5994E-02 moy=  0.3518E-03 rcm=  0.9522E-03|R8| VQS1              
+l=    4110, min=   0.000     max=   87.65     moy=   13.00     rcm=   21.52    |R8| V011              
+l=    4110, min=   0.000     max=   63.84     moy=   5.218     rcm=   10.10    |R8| VNT1              
+l=    4110, min=  -13.15     max=   8.177     moy= -0.2435E-03 rcm=   2.075    |R8| VOM1              
+l=    4110, min=  -138.7     max=   167.6     moy=  0.7935E-04 rcm=   21.00    |R8| TPPDIVFLUHOR      
+l=    4110, min=  -1.208     max=   1.089     moy=  0.3573E-02 rcm=  0.1483    |R8| TQVDIVFLUHOR      
+l=    4110, min=  -3137.     max=   3808.     moy=   34.78     rcm=   401.6    |R8| TUUDIVFLUHOR      
+l=    4110, min=  -2309.     max=   5814.     moy=   65.45     rcm=   785.8    |R8| TVVDIVFLUHOR      
+l=    4110, min=  -3709.     max=   4513.     moy=  -3.340     rcm=   761.5    |R8| TUUFFVGADPSG      
+l=    4110, min= -0.1134E+05 max=   7268.     moy=  -501.3     rcm=   2251.    |R8| TVVFFUGADPSG      
+l=    4110, min= -0.1236E+06 max=  0.1123E+06 moy=  -35.01     rcm=  0.1131E+05|R8| TKKDIVFLUHOR      
+l=    4110, min= -0.1362E+06 max=  0.1525E+06 moy=   9201.     rcm=  0.2549E+05|R8| TKKCONVERSI1      
+l=    4110, min= -0.3079E+08 max=  0.3761E+08 moy=   396.8     rcm=  0.5385E+07|R8| TCTDIVFLUHOR      
+l=    4110, min= -0.5216E+07 max=  0.3898E+07 moy=  -8938.     rcm=  0.8559E+06|R8| TCTCONVERSI2      
+l=    4110, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| TCTCONVERSI3      
+l=    4110, min= -0.1690E+08 max=  0.1931E+08 moy=   36.28     rcm=  0.1805E+07|R8| TEPDIVFLUHOR      
+l=    4110, min=  0.3882E+05 max=  0.7415E+08 moy=  0.2536E+08 rcm=  0.3405E+08|R8| PPP               
+l=    4110, min= -0.1929E-01 max=  0.6727E-02 moy= -0.1020E-02 rcm=  0.2784E-02|R8| TQLDIVFLUHOR      
+l=    4110, min= -0.2046E-01 max=  0.2023E-02 moy= -0.6292E-03 rcm=  0.2097E-02|R8| TQNDIVFLUHOR      
+l=    4110, min= -0.1002E-02 max=  0.1223E-01 moy=  0.6667E-03 rcm=  0.1873E-02|R8| TQRDIVFLUHOR      
+l=    4110, min= -0.1202E-01 max=  0.5455E-01 moy=  0.1660E-02 rcm=  0.6173E-02|R8| TQSDIVFLUHOR      
+l=    4140, min=  -1736.     max=   1339.     moy=  0.1819     rcm=   342.9    |R8| FPPFLUVERTDY      
+l=    4140, min=  -17.08     max=   3.048     moy= -0.8750     rcm=   2.269    |R8| FQVFLUVERTDY      
+l=    4140, min= -0.2223E+05 max=  0.2079E+05 moy=  -135.8     rcm=   3655.    |R8| FUUFLUVERTDY      
+l=    4140, min= -0.2560E+05 max=  0.8809E+05 moy=   4106.     rcm=  0.1575E+05|R8| FVVFLUVERTDY      
+l=    4140, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| FUUFLUDUAPLU      
+l=    4140, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| FVVFLUDUAPLU      
+l=    4140, min= -0.7977E+06 max=  0.5587E+06 moy=  -9476.     rcm=  0.8946E+05|R8| FKKFLUVERTDY      
+l=    4140, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| FKKFLUDUAPLU      
+l=    4140, min= -0.4600E+09 max=  0.3561E+09 moy= -0.1364E+07 rcm=  0.9123E+08|R8| FCTFLUVERTDY      
+l=    4140, min= -0.1642E+09 max=  0.1308E+09 moy= -0.1725E+05 rcm=  0.2150E+08|R8| FEPCONVERSIF      
+l=    4140, min= -0.2582     max=  0.1675E-01 moy= -0.1654E-01 rcm=  0.4228E-01|R8| FQLFLUVERTDY      
+l=    4140, min= -0.3019     max=  0.6527E-02 moy= -0.1332E-01 rcm=  0.3727E-01|R8| FQNFLUVERTDY      
+l=    4140, min= -0.1885     max=   0.000     moy= -0.8444E-02 rcm=  0.2461E-01|R8| FQRFLUVERTDY      
+l=    4140, min= -0.7989     max=  0.1774E-01 moy= -0.3908E-01 rcm=  0.1131    |R8| FQSFLUVERTDY      
+l=    4140, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| FPPSUMFPL         
+l=    4140, min=  -22.52     max=   1.094     moy=  -1.276     rcm=   3.699    |R8| FQVTUR            
+l=    4140, min=  -14.74     max=   1.897     moy=  -1.584     rcm=   3.525    |R8| FQVTURCONV        
+l=    4140, min=   0.000     max=   10.97     moy=   1.075     rcm=   2.489    |R8| FQTPRECISTL       
+l=    4140, min=   0.000     max=   9.783     moy=  0.6203     rcm=   1.597    |R8| FQTPRECISTN       
+l=    4140, min=   0.000     max=   24.95     moy=   1.740     rcm=   4.605    |R8| FQTPRECICOL       
+l=    4140, min=   0.000     max=   17.12     moy=  0.5288     rcm=   1.688    |R8| FQTPRECICON       
+l=    4140, min= -0.3940E-04 max=  0.3234E-20 moy= -0.4330E-06 rcm=  0.2556E-05|R8| FQVTURQNEGAT      
+l=    4140, min= -0.4119E+05 max=  0.6613E+05 moy=   616.1     rcm=   6656.    |R8| FUUTUR            
+l=    4140, min=  -6988.     max=  0.2035E+05 moy=   285.8     rcm=   2040.    |R8| FVVTUR            
+l=    4140, min= -0.1053E+05 max=  0.1945E+05 moy=   289.7     rcm=   2953.    |R8| FUUTURCONV        
+l=    4140, min=  -5742.     max=  0.1004E+05 moy=  -125.9     rcm=   1176.    |R8| FVVTURCONV        
+l=    4140, min=  -1467.     max=   2974.     moy=   30.81     rcm=   269.7    |R8| FUUONDEGREL       
+l=    4140, min=  -1669.     max=   3068.     moy=   12.46     rcm=   241.5    |R8| FVVONDEGREL       
+l=    4140, min= -0.9801E+07 max=  0.7408E+07 moy= -0.1893E+06 rcm=  0.1728E+07|R8| FCTTUR            
+l=    4140, min= -0.1213E+07 max=  0.1708E+08 moy=  0.1128E+07 rcm=  0.2643E+07|R8| FCTTURCONV        
+l=    4140, min=   0.000     max=  0.1233E+09 moy=  0.7121E+08 rcm=  0.8022E+08|R8| FCTRAYSOL1        
+l=    4140, min= -0.9808E+08 max= -0.8599E+07 moy= -0.6484E+08 rcm=  0.6949E+08|R8| FCTRAYTER1        
+l=    4140, min= -0.2742E+08 max=   0.000     moy= -0.2689E+07 rcm=  0.6223E+07|R8| FCTPRECISTL       
+l=    4140, min= -0.2773E+08 max=   0.000     moy= -0.1758E+07 rcm=  0.4528E+07|R8| FCTPRECISTN       
+l=    4140, min= -0.6239E+08 max=   0.000     moy= -0.4352E+07 rcm=  0.1152E+08|R8| FCTPRECICOL       
+l=    4140, min= -0.4853E+08 max=   0.000     moy= -0.1499E+07 rcm=  0.4785E+07|R8| FCTPRECICON       
+l=    4140, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| FCTPRECCSCOL      
+l=    4140, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| FCTPRECCSCON      
+l=    4140, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| FCTPRECCSSTL      
+l=    4140, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| FCTPRECCSSTN      
+l=    4140, min= -0.2772     max=   1.094     moy= -0.1201E-01 rcm=  0.9021E-01|R8| FQLTUR            
+l=    4140, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| FQNTUR            
+l=    4140, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| FQLTURCONV        
+l=    4140, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| FQNTURCONV        
+l=    4140, min= -0.4613E-01 max=  0.1800E-03 moy= -0.3921E-02 rcm=  0.8765E-02|R8| FQLTURQNEGAT      
+l=    4140, min= -0.4961E-01 max=   0.000     moy= -0.3152E-02 rcm=  0.6199E-02|R8| FQNTURQNEGAT      
+l=    4140, min=   0.000     max=   11.11     moy=   1.130     rcm=   2.636    |R8| FQTCONDECOL       
+l=    4140, min=   0.000     max=   2.949     moy=  0.4227     rcm=  0.8004    |R8| FQTCONDECON       
+l=    4140, min= -0.8362     max=   11.15     moy=   1.144     rcm=   2.655    |R8| FQTCONDESTL       
+l=    4140, min= -0.3116E-03 max=   2.949     moy=  0.4309     rcm=  0.7957    |R8| FQTCONDESTN       
+l=    4140, min= -0.4585E-01 max=  0.1794E-03 moy= -0.3754E-02 rcm=  0.8515E-02|R8| FQRTURQNEGAT      
+l=    4140, min= -0.4933E-01 max=   0.000     moy= -0.3074E-02 rcm=  0.6069E-02|R8| FQSTURQNEGAT      
+l=    4140, min= -0.3481E-05 max=   11.04     moy=   1.090     rcm=   2.554    |R8| FQTCONDESTR       
+l=    4140, min= -0.3117E-03 max=   2.949     moy=  0.4217     rcm=  0.7838    |R8| FQTCONDESTS       
+l=    4110, min= -0.1668E+06 max=   6812.     moy=  -6735.     rcm=  0.1954E+05|R8| TKKDISSIPTUR      
+l=    4110, min= -0.3947E+05 max=  0.3847E+05 moy=  -1040.     rcm=   5909.    |R8| TKKDISSIPCON      
+l=    4110, min=  -2388.     max=   1199.     moy=  -116.6     rcm=   348.4    |R8| TKKDISSIPGRE      
+l=     270, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| SVGTLF0           
+l=     270, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| SVGTLT0           
+l=     270, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| SVGTLALB0         
+l=      30, min=   0.000     max=  0.4924E+06 moy=  0.2512E+05 rcm=  0.9343E+05|R8| SVLTSC0           
+l=      30, min=   1.089     max=   193.8     moy=   77.53     rcm=   91.57    |R8| SVLTST0           
+l=      30, min=   0.000     max=  0.1126E+09 moy=  0.6058E+07 rcm=  0.2164E+08|R8| SVLTSCT0          
+l=      30, min=   0.000     max=  0.7369     moy=  0.3279E-01 rcm=  0.1368    |R8| SVLTSDEP0         
+l=      30, min=  0.7503     max=   224.2     moy=   36.24     rcm=   53.57    |R8| SVLTSRHO0         
+l=      30, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| SVLTSALB0         
+l=     120, min=   620.6     max=  0.3099E+07 moy=  0.4575E+06 rcm=  0.7677E+06|R8| SVLTTC0           
+l=     120, min=   1.106     max=   202.3     moy=   82.68     rcm=   97.06    |R8| SVLTTT0           
+l=     120, min=  0.1698E+06 max=  0.8010E+09 moy=  0.1303E+09 rcm=  0.2139E+09|R8| SVLTTCT0          
+l=     120, min=  0.2829E-03 max=   1.413     moy=  0.2086     rcm=  0.3500    |R8| SVLTTDEP0         
+l=     120, min=   0.000     max=  0.6736E+06 moy=  0.2741E+05 rcm=  0.1042E+06|R8| SVITIC0           
+l=     120, min=   0.000     max=   133.1     moy=   10.31     rcm=   32.53    |R8| SVITIT0           
+l=     120, min=   0.000     max=  0.1778E+09 moy=  0.7318E+07 rcm=  0.2785E+08|R8| SVITICT0          
+l=     120, min=   0.000     max=  0.3575     moy=  0.1455E-01 rcm=  0.5533E-01|R8| SVITIDEP0         
+l=      30, min=   0.000     max=   7320.     moy=   315.9     rcm=   1358.    |R8| SVLSS0            
+l=      30, min=  0.8423E-03 max=  0.9485E-01 moy=  0.2538E-01 rcm=  0.3550E-01|R8| SVLII0            
+l=     120, min=  0.9894E-01 max=   491.9     moy=   55.97     rcm=   99.23    |R8| SVLWL0            
+l=     120, min=   0.000     max=   213.3     moy=   8.341     rcm=   33.03    |R8| SVLWLI0           
+l=     270, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| SVGTLF1           
+l=     270, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| SVGTLT1           
+l=     270, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| SVGTLALB1         
+l=      30, min=  0.8093E-05 max=  0.4926E+06 moy=  0.2468E+05 rcm=  0.9337E+05|R8| SVLTSC1           
+l=      30, min=   1.086     max=   194.2     moy=   77.59     rcm=   91.66    |R8| SVLTST1           
+l=      30, min=  0.2211E-02 max=  0.1125E+09 moy=  0.5933E+07 rcm=  0.2160E+08|R8| SVLTSCT1          
+l=      30, min=  0.2716E-10 max=  0.7375     moy=  0.3270E-01 rcm=  0.1369    |R8| SVLTSDEP1         
+l=      30, min=  0.7915     max=   222.2     moy=   36.45     rcm=   53.49    |R8| SVLTSRHO1         
+l=      30, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| SVLTSALB1         
+l=     120, min=   620.6     max=  0.3099E+07 moy=  0.4575E+06 rcm=  0.7677E+06|R8| SVLTTC1           
+l=     120, min=   1.103     max=   203.2     moy=   82.72     rcm=   97.14    |R8| SVLTTT1           
+l=     120, min=  0.1694E+06 max=  0.8017E+09 moy=  0.1303E+09 rcm=  0.2141E+09|R8| SVLTTCT1          
+l=     120, min=  0.2829E-03 max=   1.413     moy=  0.2086     rcm=  0.3500    |R8| SVLTTDEP1         
+l=     120, min=   0.000     max=  0.6736E+06 moy=  0.2741E+05 rcm=  0.1042E+06|R8| SVITIC1           
+l=     120, min=   0.000     max=   133.0     moy=   10.30     rcm=   32.48    |R8| SVITIT1           
+l=     120, min=   0.000     max=  0.1773E+09 moy=  0.7311E+07 rcm=  0.2782E+08|R8| SVITICT1          
+l=     120, min=   0.000     max=  0.3575     moy=  0.1455E-01 rcm=  0.5533E-01|R8| SVITIDEP1         
+l=      30, min=  0.1513E-07 max=   7320.     moy=   315.8     rcm=   1358.    |R8| SVLSS1            
+l=      30, min=  0.9139E-03 max=  0.8847E-01 moy=  0.2667E-01 rcm=  0.3622E-01|R8| SVLII1            
+l=     120, min=  0.9794E-01 max=   491.8     moy=   55.92     rcm=   99.11    |R8| SVLWL1            
+l=     120, min=   0.000     max=   213.3     moy=   8.174     rcm=   32.67    |R8| SVLWLI1           
+l=      30, min=   237.2     max=   300.1     moy=   289.0     rcm=   289.3    |R8| SVGFST2M          
+l=      30, min=  0.3943E-03 max=  0.1756E-01 moy=  0.1059E-01 rcm=  0.1173E-01|R8| SVGFSQ2M          
+l=      30, min=  -5.696     max=   6.296     moy= -0.4957     rcm=   3.268    |R8| SVGFS10U          
+l=      30, min= -0.6890     max=   3.180     moy=  0.7375     rcm=   1.424    |R8| SVGFS10V          
+l=      30, min=   235.1     max=   300.2     moy=   289.5     rcm=   289.9    |R8| SVGFSTSK          
+l=      30, min=  0.9973E-03 max=  0.5648     moy=  0.1685     rcm=  0.2283    |R8| SVGFSZ0M          
+l=      30, min=  0.3146E-03 max=  0.4844     moy=  0.1157     rcm=  0.1722    |R8| SVGFSZ0H          
+l=      30, min=  0.6616E-01 max=  0.8114     moy=  0.1424     rcm=  0.2064    |R8| SVGFSAL           
+l=      30, min=   194.1     max=   1158.     moy=   669.7     rcm=   712.6    |R8| SVGFSBLH          
+l=      30, min=  0.4042E-02 max=  0.7474     moy=  0.2887     rcm=  0.3440    |R8| SVGFSLF           
+l=      30, min=   0.000     max=  0.4965     moy=  0.3883E-01 rcm=  0.1224    |R8| SVGFSIF           
+l=      30, min=   6.335     max=   15.49     moy=   9.292     rcm=   9.673    |R8| SVGFSFG           
+l=      30, min=   12.35     max=  0.1497E+05 moy=   2274.     rcm=   3596.    |R8| SVGFSZ            
+l=      30, min=  0.4068     max=  0.8922     moy=  0.6231     rcm=  0.6412    |R8| SVGFSTCC          
+l=      30, min=  0.1927     max=  0.7616     moy=  0.3675     rcm=  0.4028    |R8| SVGFSLCC          
+l=      30, min=  0.1053     max=  0.5523     moy=  0.2506     rcm=  0.2779    |R8| SVGFSMCC          
+l=      30, min=  0.1390     max=  0.6973     moy=  0.3446     rcm=  0.3745    |R8| SVGFSHCC          
+l=      30, min=  0.8943     max=   797.9     moy=   216.0     rcm=   329.1    |R8| SVGFSCAPE         
+l=      30, min=   648.4     max=   9348.     moy=   3879.     rcm=   4518.    |R8| SVGFSCBAS         
+l=      30, min=  0.3468     max=   4787.     moy=   3367.     rcm=   3720.    |R8| SVGFS0DEG         
+l=      30, min=  0.1445E+05 max=  0.5407E+05 moy=  0.2783E+05 rcm=  0.2908E+05|R8| SVGFSVISI         
+l=      30, min=   257.4     max=   1000.     moy=   772.1     rcm=   805.6    |R8| SVGFSPCIN         
+l=      30, min=   26.12     max=   42.95     moy=   37.71     rcm=   37.92    |R8| SVGFSPCI1         
+l=      30, min=  -26.90     max=   31.67     moy=   10.97     rcm=   17.20    |R8| SVGFSPCI2         
+l=      30, min=   0.000     max=  0.1926     moy=  0.6437E-01 rcm=  0.8658E-01|R8| SVGFSFGCV         
+l=      30, min=   4335.     max=  0.1937E+05 moy=  0.1347E+05 rcm=  0.1419E+05|R8| SVGFSCEIL         
+l=      30, min=   6385.     max=  0.1311E+05 moy=   9578.     rcm=   9802.    |R8| SVGFSCTOP         
+l=      30, min=   0.000     max=   4196.     moy=   2662.     rcm=   2974.    |R8| SVGFSTWB0         
+l=      30, min=   0.000     max=   3983.     moy=   2493.     rcm=   2806.    |R8| SVGFSTWB1         
+l=     270, min=   0.000     max=  0.6373E+08 moy=  0.6612E+07 rcm=  0.1542E+08|R8| SFGTLSWDO         
+l=     270, min= -0.1307E+08 max=   0.000     moy= -0.7537E+06 rcm=  0.1746E+07|R8| SFGTLSWUP         
+l=     270, min=   0.000     max=  0.1130E+09 moy=  0.1350E+08 rcm=  0.3091E+08|R8| SFGTLLWDO         
+l=     270, min= -0.1268E+09 max=   0.000     moy= -0.1570E+08 rcm=  0.3565E+08|R8| SFGTLLWUP         
+l=     270, min= -0.8525E+07 max=  0.7651E+07 moy= -0.7516E+06 rcm=  0.1939E+07|R8| SFGTLSH           
+l=     270, min= -0.5275E+08 max=  0.4966E+05 moy= -0.3555E+07 rcm=  0.1066E+08|R8| SFGTLLH           
+l=     270, min= -0.3224E+07 max=  0.7502E+07 moy=  0.4134E+05 rcm=  0.5761E+06|R8| SFGTLG            
+l=     270, min=  -21.09     max=  0.1752E-01 moy=  -1.421     rcm=   4.264    |R8| SFGTLE            
+l=     270, min=  0.2421E+07 max=  0.3456E+16 moy=  0.7680E+15 rcm=  0.1629E+16|R8| SFGTLC            
+l=      30, min=  0.3769E-07 max=  0.1288E+08 moy=  0.6861E+06 rcm=  0.2485E+07|R8| SFLTSSWDO         
+l=      30, min= -0.1077E+08 max= -0.3203E-07 moy= -0.5533E+06 rcm=  0.2068E+07|R8| SFLTSSWUP         
+l=      30, min=  0.8968E-01 max=  0.3142E+08 moy=  0.1844E+07 rcm=  0.6126E+07|R8| SFLTSLWDO         
+l=      30, min= -0.4019E+08 max= -0.1053     moy= -0.2282E+07 rcm=  0.7759E+07|R8| SFLTSLWUP         
+l=      30, min=  -4693.     max=  0.7651E+07 moy=  0.3012E+06 rcm=  0.1410E+07|R8| SFLTSSH           
+l=      30, min= -0.1313E+06 max=  0.4966E+05 moy= -0.1003E+05 rcm=  0.3058E+05|R8| SFLTSLH           
+l=      30, min= -0.7999E+06 max=  0.2733E+06 moy= -0.2309E+05 rcm=  0.1561E+06|R8| SFLTSG            
+l=      30, min= -0.2838E+06 max=   0.000     moy= -0.3134E+05 rcm=  0.7315E+05|R8| SFLTSMLT          
+l=      30, min= -0.1105E+06 max=  0.3033E+05 moy=  -4644.     rcm=  0.2198E+05|R8| SFLTSESC          
+l=     120, min=   0.000     max=  0.4998E+08 moy=  0.4833E+07 rcm=  0.1243E+08|R8| SFLTTSWDO         
+l=     120, min= -0.1039E+08 max=   0.000     moy= -0.8965E+06 rcm=  0.2420E+07|R8| SFLTTSWUP         
+l=     120, min=   0.000     max=  0.7277E+08 moy=  0.7781E+07 rcm=  0.1879E+08|R8| SFLTTLWDO         
+l=     120, min= -0.8748E+08 max=   0.000     moy= -0.9424E+07 rcm=  0.2283E+08|R8| SFLTTLWUP         
+l=     120, min= -0.9759E+07 max=  0.5815E+05 moy= -0.9657E+06 rcm=  0.2536E+07|R8| SFLTTSH           
+l=     120, min= -0.1610E+08 max=   0.000     moy= -0.1285E+07 rcm=  0.3451E+07|R8| SFLTTLH           
+l=     120, min= -0.7912E+06 max=  0.3925E+07 moy=  0.2754E+06 rcm=  0.8257E+06|R8| SFLTTG            
+l=     120, min= -0.1061E+07 max=  0.2153E+05 moy= -0.4116E+05 rcm=  0.1656E+06|R8| SFLTTMLT          
+l=     120, min= -0.7999E+06 max=  0.2733E+06 moy=  -5772.     rcm=  0.7804E+05|R8| SFLTTGSN          
+l=     120, min= -0.4088E+07 max=  0.8258E+06 moy= -0.1096E+06 rcm=  0.5724E+06|R8| SFLTTGT           
+l=     120, min= -0.4806E+06 max=  0.9042E+06 moy=  0.6843E+05 rcm=  0.2468E+06|R8| SFLTTGESC         
+l=     120, min=   0.000     max=  0.1972E+08 moy=  0.1821E+06 rcm=  0.1805E+07|R8| SFITISWDO         
+l=     120, min= -0.1112E+08 max=   0.000     moy= -0.1030E+06 rcm=  0.1018E+07|R8| SFITISWUP         
+l=     120, min=   0.000     max=  0.3464E+08 moy=  0.7074E+06 rcm=  0.4521E+07|R8| SFITILWDO         
+l=     120, min= -0.3719E+08 max=   0.000     moy= -0.7909E+06 rcm=  0.5026E+07|R8| SFITILWUP         
+l=     120, min=   0.000     max=  0.1975E+07 moy=  0.2718E+05 rcm=  0.1998E+06|R8| SFITISH           
+l=     120, min= -0.7887E+06 max=   24.62     moy=  -8867.     rcm=  0.7420E+05|R8| SFITILH           
+l=     120, min= -0.3151E+07 max=  0.5551E+06 moy= -0.1340E+06 rcm=  0.5891E+06|R8| SFITIG            
+l=     120, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| SFITIMLT          
+l=     120, min=   0.000     max=   0.000     moy=   0.000     rcm=   0.000    |R8| SFITIGSN          
+l=      30, min=  0.9182E-07 max=   1.740     moy=  0.1162     rcm=  0.3428    |R8| SFLSSLSSF         
+l=      30, min=  0.3001E-20 max=  0.1187     moy=  0.1122E-01 rcm=  0.2480E-01|R8| SFLSSCVSF         
+l=      30, min= -0.4627E-01 max=  0.1752E-01 moy= -0.3368E-02 rcm=  0.1073E-01|R8| SFLSSE            
+l=      30, min= -0.8506     max=   0.000     moy= -0.9392E-01 rcm=  0.2192    |R8| SFLSSMLT          
+l=      30, min=   0.000     max=  0.5947     moy=  0.1800     rcm=  0.2388    |R8| SFLIILSINT        
+l=      30, min=   0.000     max=  0.7540     moy=  0.2441     rcm=  0.3511    |R8| SFLIICVINT        
+l=      30, min=  -1.319     max= -0.2194E-04 moy= -0.4227     rcm=  0.5827    |R8| SFLIIE            
+l=     120, min= -0.4825E-25 max=   3.207     moy=  0.2327     rcm=  0.6557    |R8| SFLWLLSTHR        
+l=     120, min=   0.000     max=   4.668     moy=  0.3708     rcm=   1.053    |R8| SFLWLCVTHR        
+l=     120, min=   0.000     max=  0.8506     moy=  0.2348E-01 rcm=  0.1096    |R8| SFLWLMLTHR        
+l=     120, min=  -2.427     max=  0.1030E-22 moy= -0.2742     rcm=  0.5951    |R8| SFLWLRO           
+l=     120, min=  -1.494     max=   0.000     moy= -0.3058     rcm=  0.4592    |R8| SFLWLE            
+l=     120, min= -0.2581E-01 max=   4.564     moy=  0.9582     rcm=   1.472    |R8| SFLWLG            
+l=     120, min=  -2.089     max=  0.5229E-04 moy= -0.1023     rcm=  0.3026    |R8| SFLWLBGE          
+l=     120, min=   0.000     max=  0.1059E-02 moy=  0.1738E-04 rcm=  0.1095E-03|R8| SFLWLCOND         
+l=      30, min=   0.000     max=  0.9561E+08 moy=  0.6015E+08 rcm=  0.6735E+08|R8| SFGFSSWDO         
+l=      30, min=  0.5007E+08 max=  0.1444E+09 moy=  0.1215E+09 rcm=  0.1233E+09|R8| SFGFSLWDO         
+l=      30, min=   0.000     max=  0.1728E+06 moy=  0.1205E+06 rcm=  0.1294E+06|R8| SFGFSSUND         
+l=      30, min= -0.4627E-01 max=  0.1752E-01 moy= -0.3368E-02 rcm=  0.1073E-01|R8| SFGFSES           
+l=      30, min=   0.000     max=  0.8506     moy=  0.9392E-01 rcm=  0.2192    |R8| SFGFSSMLT         
+l=      30, min=  0.3774E-02 max=   10.57     moy=   5.095     rcm=   5.686    |R8| SFGFSLSR          
+l=      30, min=  0.6665E-04 max=   22.18     moy=   6.889     rcm=   8.841    |R8| SFGFSCR           
+l=      30, min=  0.1095E-06 max=   7.437     moy=  0.7200     rcm=   1.907    |R8| SFGFSLSF          
+l=      30, min=  0.4036E-20 max=   1.979     moy=  0.1532     rcm=  0.4542    |R8| SFGFSCF           
+l=      30, min= -0.9801E+07 max=  0.7408E+07 moy= -0.6765E+07 rcm=  0.7489E+07|R8| SFGFSSSHF         
+l=      30, min= -0.5632E+08 max= -0.4881E+06 moy= -0.3199E+08 rcm=  0.3554E+08|R8| SFGFSSLHF         
+l=      30, min=  0.7674E-08 max=  0.8386E+08 moy=  0.5314E+08 rcm=  0.5949E+08|R8| SFGFSSW           
+l=      30, min= -0.2547E+08 max= -0.8599E+07 moy= -0.1933E+08 rcm=  0.1979E+08|R8| SFGFSLW           
+l=      30, min=  -22.52     max= -0.1960     moy=  -12.79     rcm=   14.21    |R8| SFGFSE            
+l=      30, min=  0.6895E-05 max=   3.564     moy=   1.098     rcm=   1.577    |R8| SFGFSRO           
+l=      30, min=   0.000     max=  0.1028E+09 moy=  0.6921E+08 rcm=  0.7664E+08|R8| SFGFSSWC          
+l=      30, min= -0.3354E+08 max= -0.2000E+08 moy= -0.2745E+08 rcm=  0.2780E+08|R8| SFGFSLWC          
+l=      30, min=  0.5032E+05 max=  0.2388E+06 moy=  0.1092E+06 rcm=  0.1196E+06|R8| SFGFSLSPF         
+l=      30, min=   0.000     max=  0.1109E+08 moy=  0.7061E+07 rcm=  0.7920E+07|R8| SFGFSPAR          
+l=      30, min=   0.000     max=  0.4206E+08 moy=  0.2677E+08 rcm=  0.2999E+08|R8| SFGFSUV           
+l=      30, min=   0.000     max=  0.5070E+08 moy=  0.3407E+08 rcm=  0.3789E+08|R8| SFGFSPARC         
+l=      30, min=   0.000     max=  0.1717E+09 moy=  0.1137E+09 rcm=  0.1260E+09|R8| SFGFSTISR         
+l=      30, min=  -16.57     max=   16.50     moy= -0.2049     rcm=   7.973    |R8| SFGFSVIMD         
+l=      30, min=   0.000     max=  0.1407E+09 moy=  0.9614E+08 rcm=  0.1065E+09|R8| SFGFSTSRC         
+l=      30, min= -0.1012E+09 max= -0.5279E+08 moy= -0.9208E+08 rcm=  0.9266E+08|R8| SFGFSTTRC         
+l=      30, min=   0.000     max=  0.6352E+08 moy=  0.3749E+08 rcm=  0.4259E+08|R8| SFGFSFDIR         
+l=      30, min=   0.000     max=  0.9251E+08 moy=  0.6259E+08 rcm=  0.6953E+08|R8| SFGFSCDIR         
+l=      30, min=   0.000     max=  0.1201E+09 moy=  0.7827E+08 rcm=  0.8698E+08|R8| SFGFSSWDC         
+l=      30, min=  0.4070E+08 max=  0.1401E+09 moy=  0.1133E+09 rcm=  0.1159E+09|R8| SFGFSLWDC         
+l=      30, min=   0.000     max=  0.1233E+09 moy=  0.8091E+08 rcm=  0.9020E+08|R8| SFGFSTSR          
+l=      30, min= -0.9808E+08 max= -0.4978E+08 moy= -0.8433E+08 rcm=  0.8504E+08|R8| SFGFSTTR          
+l=      30, min=   0.000     max=  0.3277E+06 moy=  0.1145E+06 rcm=  0.1439E+06|R8| SFGFLAIL          
+l=      30, min=   0.000     max=  0.5978E+06 moy=  0.1845E+06 rcm=  0.2449E+06|R8| SFGFLAIH          
+l=      30, min=   3342.     max=  0.5361E+06 moy=  0.2383E+06 rcm=  0.2754E+06|R8| SFGFSOTY          
+l=      30, min=   0.000     max=  0.8727E+08 moy=  0.5955E+08 rcm=  0.6478E+08|R8| SFGFSDSRP         
+l=      30, min=  0.9440E+08 max=  0.1040E+09 moy=  0.1006E+09 rcm=  0.1006E+09|R8| SFGFLMLT          
+l=      30, min=  0.6339E+07 max=  0.1719E+08 moy=  0.1318E+08 rcm=  0.1349E+08|R8| SFGFLMLD          
+l=      30, min=  0.9452E+08 max=  0.1039E+09 moy=  0.1002E+09 rcm=  0.1003E+09|R8| SFGFLBLT          
+l=      30, min=  0.9448E+08 max=  0.1039E+09 moy=  0.1004E+09 rcm=  0.1004E+09|R8| SFGFLTLT          
+l=      30, min=  0.2194E+06 max=  0.2421E+06 moy=  0.2297E+06 rcm=  0.2298E+06|R8| SFGFLSHF          
+l=      30, min=  0.8132E+08 max=  0.9423E+08 moy=  0.9344E+08 rcm=  0.9347E+08|R8| SFGFLICT          
+l=      30, min=   0.000     max=  0.7638E+06 moy=  0.3394E+05 rcm=  0.1421E+06|R8| SFGFLICD          
+l=      30, min=   0.000     max=  0.1219E+05 moy=   2250.     rcm=   3756.    |R8| SFGFCLK           
+l=      30, min=  0.8532E+08 max=  0.1393E+10 moy=  0.9054E+09 rcm=  0.9634E+09|R8| SFGFDL            

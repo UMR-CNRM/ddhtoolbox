@@ -1,0 +1,32 @@
+BUDGET LIST Water vapour budget
+MAIN QV
+QV
+#-------------------------------------
+BEGIN BLOCK Turbulence
+FQVTUR
+#-------------------------------------
+BEGIN BLOCK Resol cloud: cond-ev liq
+FQVCSQL
+#-------------------------------------
+BEGIN BLOCK Resol cloud: cond-ev ice
+FQVCSQN
+#-------------------------------------
+BEGIN BLOCK Resol prec: ev + icingmelt + coll
+FQVESL
+FQVESN
+#-------------------------------------
+BEGIN BLOCK Conv cloud: cond liq
+FQVCCQL
+#-------------------------------------
+BEGIN BLOCK Conv cloud: cond ice
+FQVCCQN
+#-------------------------------------
+BEGIN BLOCK Conv prec: ev + icingmelt + coll
+FQVECL
+FQVECN
+#-------------------------------------
+BEGIN BLOCK Conv: transport
+FQVTURCONV
+#-------------------------------------
+BEGIN BLOCK Corr neg
+FQVCQNG

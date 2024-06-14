@@ -1,0 +1,18 @@
+BUDGET LIST Convective snow budget
+MAIN CS
+CS
+#-------------------------------------
+BEGIN BLOCK Autoconv + coll
+FCSAUTOCONV
+#-------------------------------------
+BEGIN BLOCK Ev + icingmelt
+FCSEVAPO
+#-------------------------------------
+BEGIN BLOCK Sedim
+FCSSEDIM
+#-------------------------------------
+BEGIN BLOCK Entrain-det
+FCSED
+#-------------------------------------
+BEGIN BLOCK Corr neg
+FCSCQNG

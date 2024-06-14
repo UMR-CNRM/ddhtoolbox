@@ -1,0 +1,18 @@
+BUDGET LIST Resolved rain budget
+MAIN QR
+QR
+#-------------------------------------
+BEGIN BLOCK Autoconv + coll
+FQRASL
+#-------------------------------------
+BEGIN BLOCK Ev + icingmelt
+FQRESL
+#-------------------------------------
+BEGIN BLOCK Sedim
+FQRPL
+#-------------------------------------
+BEGIN BLOCK Entrain-det
+FQREDCONV
+#-------------------------------------
+BEGIN BLOCK Corr neg
+FQRCQRNG

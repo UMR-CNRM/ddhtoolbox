@@ -1,0 +1,22 @@
+BUDGET LIST Convective ice budget
+MAIN CI
+CI
+#-------------------------------------
+BEGIN BLOCK Condens
+FCICOND
+#-------------------------------------
+BEGIN BLOCK Transport
+FCIDIFC
+#-------------------------------------
+BEGIN BLOCK Entrain-det
+FCIED
+#-------------------------------------
+BEGIN BLOCK Icingmelt
+FCIIM
+#-------------------------------------
+BEGIN BLOCK Autoconv
+FCIAUTOCONV
+#-------------------------------------
+BEGIN BLOCK Corr neg
+FCICQNG
+

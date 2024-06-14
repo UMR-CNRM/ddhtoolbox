@@ -1,0 +1,50 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Subject:
+# Method:
+# Author:   2009-02, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+proc=$(basename $0) # present procedure name.
+dirloc=`pwd` # local directory name.
+pref=$dirloc/.$proc.tmp.$RANDOM # prefix for tmp files.
+dirtmp=$pref.dir # tmp dir name.
+#
+#-----------------------------------------------
+# Execution.
+#-----------------------------------------------
+#
+fe=DHFZOARPE+0012.74LV.c773.lfa
+#
+#-----------------------------------------------
+# Extract domain.
+#-----------------------------------------------
+#
+dom=4
+fs=$fe.tmp.domain$dom
+ddht -cEXTRAIT_DOMAIN -1$fe -E$dom -s$fs
+#
+#-----------------------------------------------
+# Prognostic budget.
+#-----------------------------------------------
+#
+fe=$fs
+budget_package=`basename $dirloc`
+#for variable in QV2 CT QL QI QR QS 
+for variable in QV2 
+do
+	ddhb -v $budget_package/$variable -i $fe
+done
+#
+#-----------------------------------------------
+# Epilog.
+#-----------------------------------------------
+#
+echo " " ; echo "$proc: end."
+#
+#-----------------------------------------------
+# Cleanings.
+#-----------------------------------------------
+#
+rm -rf $dirtmp
+rm -f $pref*

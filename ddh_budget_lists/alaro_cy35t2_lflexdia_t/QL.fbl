@@ -1,0 +1,33 @@
+BUDGET LIST Liquid Water
+MAIN QL
+QL
+# ---------------------
+BEGIN BLOCK sumtend
+FQLDIFT  +         # turbulence diffusion
+FQLDIFC  +         # convective diffusion
+FQLNG    +         # correction of negative values
+FQLPFPC  +         # autocon./collect. of cloud water to rain, convect
+FQLPFPS  +         # autocon./collect. of cloud water to rain, resolved
+FQLCS    -         # condensation in resolved processes
+FQLCC    -         # condensation in convection
+# ---------------------
+BEGIN BLOCK tur
+FQLDIFT  +         # turbulence diffusion
+# ---------------------
+BEGIN BLOCK turconv
+FQLDIFC  +         # convective diffusion
+# ---------------------
+BEGIN BLOCK autoc
+FQLPFPC  +         # autocon./collect. of cloud water to rain, convect
+# ---------------------
+BEGIN BLOCK autos
+FQLPFPS  +         # autoconv./collect. of cloud water to rain, resolved
+# ---------------------
+BEGIN BLOCK condc
+FQLCC  -           # condensation in convection
+# ---------------------
+BEGIN BLOCK conds
+FQLCS  -           # condensation in resolved processes
+# ---------------------
+BEGIN BLOCK neg
+FQLNG    +         # correction of negative values

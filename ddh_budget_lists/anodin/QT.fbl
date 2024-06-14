@@ -1,0 +1,33 @@
+BUDGET LIST QT
+MAIN QT
+QT
+#-------------------------------------
+BEGIN BLOCK FQTPRECISTL
+FQTPRECISTL
+#-------------------------------------
+BEGIN BLOCK FQTPRECISTN
+FQTPRECISTN
+#-------------------------------------
+BEGIN BLOCK FQTPRECICOL
+FQTPRECICOL
+#-------------------------------------
+BEGIN BLOCK FQTPRECICON
+FQTPRECICON
+#-------------------------------------
+BEGIN BLOCK FQTCONDECOL
+FQTCONDECOL
+#-------------------------------------
+BEGIN BLOCK FQTCONDECON
+FQTCONDECON
+#-------------------------------------
+BEGIN BLOCK FQTCONDESTL
+FQTCONDESTL
+#-------------------------------------
+BEGIN BLOCK FQTCONDESTN
+FQTCONDESTN
+#-------------------------------------
+BEGIN BLOCK FQTCONDESTR
+FQTCONDESTR
+#-------------------------------------
+BEGIN BLOCK FQTCONDESTS
+FQTCONDESTS

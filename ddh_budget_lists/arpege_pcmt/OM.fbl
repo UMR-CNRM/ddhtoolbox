@@ -1,0 +1,12 @@
+BUDGET LIST OM
+MAIN OM
+OM
+#-------------------------------------
+BEGIN BLOCK Buoyancy
+BILOM+TBUOY
+#-------------------------------------
+BEGIN BLOCK Friction
+BILOM+TFRIC
+#-------------------------------------
+BEGIN BLOCK Transport
+BILOM+TTRANSP

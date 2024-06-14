@@ -1,0 +1,29 @@
+BUDGET LIST Water Vapour
+MAIN QV
+QV
+# ---------------------
+BEGIN BLOCK dyn
+TQVDIVFLUHOR            # HORIZONTAL DIVERGENCE OF FLUX
+FQVFLUVERTDYN           # FLUX VERTICAL DYNAMIQUE
+TQVDELTAP
+# ---------------------
+BEGIN BLOCK condevapc
+FQLCC +                 # CONDENSATION TO LIQUIDE WATER, CONVECTIVE
+FQNCC +                 # CONDENSATION TO ICE WATER, CONVECTIVE
+FQRPEVC -               # EVAPORATION OF RAIN, CONVECTIVE
+FQSPEVC -               # EVAPORATION OF SNOW, CONVECTIVE
+# ---------------------
+BEGIN BLOCK condevaps
+FQLCS +                 # CONDENSATION TO LIQUIDE WATER, RESOLVED
+FQNCS +                 # CONDENSATION TO ICE WATER, RESOLVED
+FQRPEVS -               # EVAPORATION OF RAIN, RESOLVED
+FQSPEVS -               # EVAPORATION OF SNOW, RESOLVED
+# ---------------------
+BEGIN BLOCK tur
+FQVDIFT +               # VERTICAL DIFFUSION  
+# ---------------------
+BEGIN BLOCK turconv
+FQVDIFC +               # PROCESSUS CONVECTIFS TURBULENTS
+# ---------------------
+BEGIN BLOCK neg
+FQVNG +                 # NEGATIVE CORRECTION OF HUMIDITY

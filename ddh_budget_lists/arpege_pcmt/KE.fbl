@@ -1,0 +1,15 @@
+BUDGET LIST Kinetic Energy Budget
+MAIN KE
+KE
+#-------------------------------------
+BEGIN BLOCK Thermal production
+TKEPRTH
+#-------------------------------------
+BEGIN BLOCK Dynamical production
+TKEPRDY
+#-------------------------------------
+BEGIN BLOCK Dissipation
+TKEDISS
+#-------------------------------------
+BEGIN BLOCK Diffusive Transport
+TKEDIFF

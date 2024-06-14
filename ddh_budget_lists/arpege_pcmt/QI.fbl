@@ -1,0 +1,22 @@
+BUDGET LIST Resolved ice budget
+MAIN QI
+QI
+#-------------------------------------
+BEGIN BLOCK Condens
+FQICSQN
+#-------------------------------------
+BEGIN BLOCK Turb transp
+FQIDIFT
+#-------------------------------------
+BEGIN BLOCK Entrain-det
+FQIEDCONV
+#-------------------------------------
+BEGIN BLOCK Conv transp
+FQIDIFC
+#-------------------------------------
+BEGIN BLOCK Autoconv
+FQIASN
+#-------------------------------------
+BEGIN BLOCK Corr neg
+FQICQING
+

@@ -1,0 +1,33 @@
+BUDGET LIST Ice Water
+MAIN QI
+QI
+# ---------------------
+BEGIN BLOCK sumtend
+FQIDIFT +          # turbulence diffusion
+FQIDIFC +          # convective diffusion
+FQING   +          # correction of negative values
+FQNPFPC +          # autoconversion/collection of cloud water to rain, convect
+FQNPFPS +          # autoconversion/collection of cloud water to rain, resolved
+FQNCS   -          # condensation in resolved processes
+FQNCC   -          # condensation in convection
+# ---------------------
+BEGIN BLOCK tur
+FQIDIFT  +         # turbulence diffusion
+# ---------------------
+BEGIN BLOCK turconv
+FQIDIFC  +         # convective diffusion
+# ---------------------
+BEGIN BLOCK autoc
+FQNPFPC  +         # autocon./collect. of cloud water to rain, convect
+# ---------------------
+BEGIN BLOCK autos
+FQNPFPS  +         # autoconv./collect. of cloud water to rain, resolved
+# ---------------------
+BEGIN BLOCK condc
+FQNCC  -           # condensation in convection
+# ---------------------
+BEGIN BLOCK conds
+FQNCS  -           # condensation in resolved processes
+# ---------------------
+BEGIN BLOCK neg
+FQING    +         # correction of negative values

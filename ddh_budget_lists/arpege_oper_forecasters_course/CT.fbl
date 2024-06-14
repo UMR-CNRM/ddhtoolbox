@@ -1,0 +1,23 @@
+BUDGET LIST TEMPERATURE BUDGET
+MAIN CT
+CT
+# --------------------------
+BEGIN BLOCK Radiation: Solar
+FCTRAYSOL1 
+# --------------------------
+BEGIN BLOCK Radiation: IR
+FCTRAYTER1 
+# --------------------------
+BEGIN BLOCK Convective+Stratiform
+FCTPRECISTL  
+FCTPRECISTN 
+FCTPRECCSSTL  
+FCTPRECCSSTN 
+FCTPRECICOL 
+FCTPRECICON 
+FCTPRECCSCOL  
+FCTPRECCSCON
+FCTTURCONV 
+# --------------------------
+BEGIN BLOCK Trans: Subgrid : Tur
+FCTTUR  

@@ -1,0 +1,18 @@
+BUDGET LIST Convective rain budget
+MAIN CR
+CR
+#-------------------------------------
+BEGIN BLOCK Autoconv + coll
+FCRAUTOCONV
+#-------------------------------------
+BEGIN BLOCK Ev + icingmelt
+FCREVAPO
+#-------------------------------------
+BEGIN BLOCK Sedim
+FCRSEDIM
+#-------------------------------------
+BEGIN BLOCK Entrain-det
+FCRED
+#-------------------------------------
+BEGIN BLOCK Corr neg
+FCRCQNG

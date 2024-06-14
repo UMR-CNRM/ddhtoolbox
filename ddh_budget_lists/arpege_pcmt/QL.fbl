@@ -1,0 +1,21 @@
+BUDGET LIST Resolved liquid budget
+MAIN QL
+QL
+#-------------------------------------
+BEGIN BLOCK Condens
+FQLCSQL
+#-------------------------------------
+BEGIN BLOCK Turb transp
+FQLDIFT
+#-------------------------------------
+BEGIN BLOCK Entrain-det
+FQLEDCONV
+#-------------------------------------
+BEGIN BLOCK Conv transp
+FQLDIFC
+#-------------------------------------
+BEGIN BLOCK Autoconv
+FQLASL
+#-------------------------------------
+BEGIN BLOCK Corr neg
+FQLCQLNG

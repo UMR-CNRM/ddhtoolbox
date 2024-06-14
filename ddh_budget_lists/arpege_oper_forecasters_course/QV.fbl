@@ -1,0 +1,20 @@
+BUDGET LIST WATER VAPOUR BUDGET
+MAIN QV
+QV
+# ---------------------
+BEGIN BLOCK Tur_+_Shallow_CV
+FQVTUR 
+# ---------------------
+BEGIN BLOCK Resolved
+FQTCONDESTL 
+FQTCONDESTN 
+FQVEVPL -
+FQVEVPN -
+# ---------------------
+BEGIN BLOCK SGS_CV
+FQTCONDECOL 
+FQTCONDECON 
+FQVTURCONV 
+# ---------------------
+BEGIN BLOCK Corr_neg
+FQVTURQNEGAT

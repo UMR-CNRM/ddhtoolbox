@@ -1,0 +1,33 @@
+BUDGET LIST Rain Water
+MAIN QR
+QR
+# ---------------------
+BEGIN BLOCK sumtend
+FQRPEVC  +         # evaporation, convective
+FQRPEVS  +         # evaporation, resolved
+FQRNG    +         # correction of negative values 
+FQRPLC   +         # precipitation, convective 
+FQRPLS   +         # precipitation, resolved
+FQLPFPS  -         # autoconversion/collection of cloud water to rain, resolved
+FQLPFPC  -         # autoconversion/collection of cloud water to rain, convect
+# ---------------------
+BEGIN BLOCK evapc
+FQRPEVC  +
+# ---------------------
+BEGIN BLOCK evaps
+FQRPEVS  +
+# ---------------------
+BEGIN BLOCK autoc
+FQLPFPC -          # autocon, convect
+# ---------------------
+BEGIN BLOCK autos
+FQLPFPS -          # autocon, resolved
+# ---------------------
+BEGIN BLOCK precc
+FQRPLC  +          # precipitation, convect
+# ---------------------
+BEGIN BLOCK precs
+FQRPLS  +          # precipitation, resolved
+# ---------------------
+BEGIN BLOCK neg
+FQRNG  +           # correction of negative values

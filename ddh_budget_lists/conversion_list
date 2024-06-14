@@ -1,0 +1,730 @@
+#
+#-----------------------------------------------
+# ARPEGE-ALADIN physics & dynamics.
+#-----------------------------------------------
+#
+    SVGFS
+    SFGFS
+VII0V010         V010                      V. PASS. 01 : INITIAL VALUE                                 SI                       1.000000  0
+VII0V011         V011                      V. PASS. 01 : FINAL VALUE                                   SI                       1.000000  0
+VII0V020         V010                      V. PASS. 02 : INITIAL VALUE                                 SI                       1.000000  0
+VII0V021         V011                      V. PASS. 02 : FINAL VALUE                                   SI                       1.000000  0
+VII0V030         V010                      V. PASS. 03 : INITIAL VALUE                                 SI                       1.000000  0
+VII0V031         V011                      V. PASS. 03 : FINAL VALUE                                   SI                       1.000000  0
+VII0V040         V010                      V. PASS. 04 : INITIAL VALUE                                 SI                       1.000000  0
+VII0V041         V011                      V. PASS. 04 : FINAL VALUE                                   SI                       1.000000  0
+VII0V050         V010                      V. PASS. 05 : INITIAL VALUE                                 SI                       1.000000  0
+VII0V051         V011                      V. PASS. 05 : FINAL VALUE                                   SI                       1.000000  0
+VII0V060         V010                      V. PASS. 06 : INITIAL VALUE                                 SI                       1.000000  0
+VII0V061         V011                      V. PASS. 06 : FINAL VALUE                                   SI                       1.000000  0
+VII0V070         V010                      V. PASS. 07 : INITIAL VALUE                                 SI                       1.000000  0
+VII0V071         V011                      V. PASS. 07 : FINAL VALUE                                   SI                       1.000000  0
+VII0V080         V010                      V. PASS. 08 : INITIAL VALUE                                 SI                       1.000000  0
+VII0V081         V011                      V. PASS. 08 : FINAL VALUE                                   SI                       1.000000  0
+VII0VA10         VA10                      MOM ANG A1  : INITIAL VALUE                                 m**2/s                   1.000000 -6
+VII1VA11         VA11                      MOM ANG A1  : FINAL VALUE                                   m**2/s                   1.000000 -6
+DIIPTA1ADJUST    TA1ADJUST                 MOM ANG A1  : ADJUSTMENT FORCE                              m**2/s/day           86400.000000 -6
+BIIPTA1COMPLEMENTTA1COMPLEMENT             MOM ANG A1  : COMPLEMENT TERM                               m**2/s/day           86400.000000 -6
+BNIIVA1D         VA11         VA10         MOM ANG A1  : FINAL - INITIAL                               m**2/s                   1.000000 -6
+DGIXTA1DELTAP    VPP1         VPP0         MOM ANG A1  : PRESSURE TENDENCY                             m**2/s/day           86400.000000 -6
+DIIPTA1DIVFLUHOR TA1DIVFLUHOR              MOM ANG A1  : DIVERGENCE OF HORIZONTAL FLUXES               m**2/s/day           86400.000000 -6
+BGIMVA1F         VA11         VA10         MOM ANG A1  : MEAN TENDENCY                                 m**2/s/day           86400.000000 -6
+PITPFA1FLUDUAPLUIFA1FLUDUAPLUI             MOM ANG A1  : PRECIPITATION                                 m**2/s/day           86400.000000 -6
+DITPFA1FLUVERTDYNFA1FLUVERTDYN             MOM ANG A1  : VERTICAL DYNAMICAL FLUX                       m**2/s/day           86400.000000 -6
+PITPFA1GRAV      FA1GRAV                   MOM ANG A1  : OROGRAPHY FORCE                               m**2/s/day           86400.000000 -6
+BUIIVA1M         VA11         VA10         MOM ANG A1  : MEAN TENDENCY                                 m**2/s/day           86400.000000 -6
+VIIVFA1M         FA1M                      MOM ANG A1-FLUX : DIAG FINAL - INITIAL                      SI                   86400.000000 -6
+DIIPTA1NONAX     TA1NONAX                  MOM ANG A1  : NON AXIAL MOMENTS                             m**2/s/day           86400.000000 -6
+PITPFA1ONDEGREL  FA1ONDEGREL               MOM ANG A1  : OROGRAPHY WAVES                               m**2/s/day           86400.000000 -6
+BIIPTA1PRINCIPAL TA1PRINCIPAL              MOM ANG A1  : PRINCIPAL TERM                                m**2/s/day           86400.000000 -6
+PITPFA1TUR       FA1TUR                    MOM ANG A1  : VERTICAL DIFFUSION                            m**2/s/day           86400.000000 -6
+PITPFA1TURCONV   FA1TURCONV                MOM ANG A1  : CONVECTIVE TRANSPORT                          m**2/s/day           86400.000000 -6
+VII0VA20         VA20                      MOM ANG A2  : INITIAL VALUE                                 m**2/s                   1.000000 -6
+VII1VA21         VA21                      MOM ANG A2  : FINAL VALUE                                   m**2/s                   1.000000 -6
+DIIPTA2ADJUST    TA2ADJUST                 MOM ANG A2  : ADJUSTMENT FORCE                              m**2/s/day           86400.000000 -6
+BIIPTA2COMPLEMENTTA2COMPLEMENT             MOM ANG A2  : COMPLEMENT TERM                               m**2/s/day           86400.000000 -6
+BNIIVA2D         VA21         VA20         MOM ANG A2  : FINAL - INITIAL                               m**2/s                   1.000000 -6
+DGIXTA2DELTAP    VPP1         VPP0         MOM ANG A2  : PRESSURE TENDENCY                             m**2/s/day           86400.000000 -6
+DIIPTA2DIVFLUHOR TA2DIVFLUHOR              MOM ANG A2  : DIVERGENCY OF HORIZONTAL FLUXES               m**2/s/day           86400.000000 -6
+BGIMVA2F         VA21         VA20         MOM ANG A2  : MEAN TENDENCY                                 m**2/s/day           86400.000000 -6
+PITPFA2FLUDUAPLUIFA2FLUDUAPLUI             MOM ANG A2  : PRECIPITATION                                 m**2/s/day           86400.000000 -6
+DITPFA2FLUVERTDYNFA2FLUVERTDYN             MOM ANG A2  : VERTICAL DYNAMICAL FLUX                       m**2/s/day           86400.000000 -6
+PITPFA2GRAV      FA2GRAV                   MOM ANG A2  : OROGRAPHY FORCE                               m**2/s/day           86400.000000 -6
+BUIIVA2M         VA21         VA20         MOM ANG A2  : MEAN TENDENCY                                 m**2/s/day           86400.000000 -6
+VIIVFA2M         FA2M                      MOM ANG A2-FLUX : DIAG FINAL - INITIAL                      SI                   86400.000000 -6
+DIIPTA2NONAX     TA2NONAX                  MOM ANG A2  : NON AXIAL MOMENTS                             m**2/s/day           86400.000000 -6
+PITPFA2ONDEGREL  FA2ONDEGREL               MOM ANG A2  : OROGRAPHY FORCE                               m**2/s/day           86400.000000 -6
+BIIPTA2PRINCIPAL TA2PRINCIPAL              MOM ANG A2  : PRINCIPAL TEM                                 m**2/s/day           86400.000000 -6
+PITPFA2TUR       FA2TUR                    MOM ANG A2  : VERTICAL DIFFUSION                            m**2/s/day           86400.000000 -6
+PITPFA2TURCONV   FA2TURCONV                MOM ANG A2  : CONVECTIVE TRANSPORT                          m**2/s/day           86400.000000 -6
+VII0VA30         VA30                      MOM ANG A3  : INITIAL VALUE                                 m**2/s                   1.000000 -6
+VII1VA31         VA31                      MOM ANG A3  : FINAL VALUE                                   m**2/s                   1.000000 -6
+DIIPTA3ADJUST    TA3ADJUST                 MOM ANG A3  : ADJUSTMENT FORCE                              m**2/s/day           86400.000000 -6
+BIIPTA3COMPLEMENTTA3COMPLEMENT             MOM ANG A3  : COMPLEMENT TERM                               m**2/s/day           86400.000000 -6
+BNIIVA3D         VA31         VA30         MOM ANG A3  : FINAL - INITIAL                               m**2/s                   1.000000 -6
+DGIXTA3DELTAP    VPP1         VPP0         MOM ANG A3  : PRESSURE TENDENCY                             m**2/s/day           86400.000000 -6
+DIIPTA3DIVFLUHOR TA3DIVFLUHOR              MOM ANG A3  : DIVERGENCY OF HORIZONTAL FLUXES               m**2/s/day           86400.000000 -6
+BGIMVA3F         VA31         VA30         MOM ANG A3  : MEAN TENDENCY                                 m**2/s/day           86400.000000 -6
+PITPFA3FLUDUAPLUIFA3FLUDUAPLUI             MOM ANG A3  : PRECIPITATION                                 m**2/s/day           86400.000000 -6
+DITPFA3FLUVERTDYNFA3FLUVERTDYN             MOM ANG A3  : VERTICAL DYNAMICAL FLUX                       m**2/s/day           86400.000000 -6
+PITPFA3GRAV      FA3GRAV                   MOM ANG A3  : GRAVITY                                       m**2/s/day           86400.000000 -6
+BUIIVA3M         VA31         VA30         MOM ANG A3  : MEAN TENDENCY                                 m**2/s/day           86400.000000 -6
+VIIVFA3M         FA3M                      MOM ANG A3-FLUX : DIAG FINAL - INITIAL                      SI                   86400.000000 -6
+PITPFA3ONDEGREL  FA3ONDEGREL               MOM ANG A3  : OROGRAPHY FORCE                               m**2/s/day           86400.000000 -6
+BIIPTA3PRINCIPAL TA3PRINCIPAL              MOM ANG A3  : PRINCIPAL TERM                                m**2/s/day           86400.000000 -6
+PITPFA3TUR       FA3TUR                    MOM ANG A3  : VERTICAL DIFFUSION                            m**2/s/day           86400.000000 -6
+PITPFA3TURCONV   FA3TURCONV                MOM ANG A3  : CONVECTIVE TRANSPORT                          m**2/s/day           86400.000000 -6
+VII0VCT0         VCT0                      TEMPERATURE : INITIAL VALUE                                 K              0.0009953132115872  0
+VII1VCT1         VCT1                      TEMPERATURE : FINAL VALUE                                   K              0.0009953132115872  0
+BIIPTCTCOMPLEMENTTCTCOMPLEMENT             TEMPERATURE : COMPLEMENT TERM                               K/day          85.99506148113663   0
+DIIPTCTCONVERSI2 TCTCONVERSI2              TEMPERATURE : ADIABATIC CONVERSION POTENTIAL>INTERNAL       K/day          85.99506148113663   0
+PIIPTCTCONVERSI3 TCTCONVERSI3              TEMPERATURE : ADIABATIC CONVERSION POTENTIAL>INTERNAL       K/day          85.99506148113663   0
+BNIIVCTD         VCT1         VCT0         TEMPERATURE : FINAL - INITIAL                               K              0.0009953132115872  0
+DGIXTCTDELTAP    VPP1         VPP0         TEMPERATURE : PRESSURE TENDENCY                             K/day          85.99506148113663   0
+DIIPTCTDIVFLUHOR TCTDIVFLUHOR              TEMPERATURE : HORIZONTAL FLUX DIVERGENCY                    K/day          85.99506148113663   0
+BSIPTCTEVAPPCO   TCTEVAPPCOL  TCTEVAPPCON  TEMPERATURE : CONVECTIVE EVAPORATION                        K/day          85.99506148113663   0
+AIIPTCTEVAPPCOL  TCTEVAPPCOL               TEMPERATURE : CONVECTIVE LIQUID EVAPORATION                 K/day          85.99506148113663   0
+AIIPTCTEVAPPCON  TCTEVAPPCON               TEMPERATURE : CONVECTIVE SNOW EVAPORATION                   K/day          85.99506148113663   0
+BSIPTCTEVAPPST   TCTEVAPPSTL  TCTEVAPPSTN  TEMPERATURE : STRATIFORM PREC EVAPORATION                   K/day          85.99506148113663   0
+AIIPTCTEVAPPSTL  TCTEVAPPSTL               TEMPERATURE : STRATIFORM RAIN EVAPORATION                   K/day          85.99506148113663   0
+AIIPTCTEVAPPSTN  TCTEVAPPSTN               TEMPERATURE : STRATIFORM SNOW EVAPORATION                   K/day          85.99506148113663   0
+BGIMVCTF         VCT1         VCT0         TEMPERATURE : MEAN TENDENCY                                 K/day          85.99506148113663   0
+DITPFCTFLUVERTDYNFCTFLUVERTDYN             TEMPERATURE : VERTICAL DYNAMICAL FLUX                       K/day          85.99506148113663   0
+BSIPTCTFONTP     TCTFONTPCO   TCTFONTPST   TEMPERATURE : PREC MELTING                                  K/day          85.99506148113663   0
+AIIPTCTFONTPCO   TCTFONTPCO                TEMPERATURE : CONV PREC MELTING                             K/day          85.99506148113663   0
+AIIPTCTFONTPST   TCTFONTPST                TEMPERATURE : STRA PREC MELTING                             K/day          85.99506148113663   0
+BSIPTCTFORMPCO   TCTFORMPCOL  TCTFORMPCON  TEMPERATURE : CONV PREC FORMATION                           K/day          85.99506148113663   0
+AIIPTCTFORMPCOL  TCTFORMPCOL               TEMPERATURE : CONV RAIN FORMATION                           K/day          85.99506148113663   0
+AIIPTCTFORMPCON  TCTFORMPCON               TEMPERATURE : CONV SNOW FORMATION                           K/day          85.99506148113663   0
+BSIPTCTFORMPST   TCTFORMPSTL  TCTFORMPSTN  TEMPERATURE : STRA PREC FORMATION                           K/day          85.99506148113663   0
+AIIPTCTFORMPSTL  TCTFORMPSTL               TEMPERATURE : STRA RAIN FORMATION                           K/day          85.99506148113663   0
+AIIPTCTFORMPSTN  TCTFORMPSTN               TEMPERATURE : STRA SNOW FORMATION                           K/day          85.99506148113663   0
+BUIIVCTM         VCT1         VCT0         TEMPERATURE : MEAN TENDENCY                                 K/day          85.99506148113663   0
+VIIVFCTM         FCTM                      TEMPERATURE-FLUX : DIAG FINAL - INITIAL                     W/m2           1.0000000000000000  0
+PITPFCTPRECCSCOL FCTPRECCSCOL              TEMPERATURE : SENSIBLE HEAT CONV RAIN                       K/day          85.99506148113663   0
+PITPFCTPRECCSCON FCTPRECCSCON              TEMPERATURE : SENSIBLE HEAT CONV SNOW                       K/day          85.99506148113663   0
+PITPFCTPRECCSSTL FCTPRECCSSTL              TEMPERATURE : SENSIBLE HEAT STRA RAIN                       K/day          85.99506148113663   0
+PITPFCTPRECCSSTN FCTPRECCSSTN              TEMPERATURE : SENSIBLE HEAT STRA SNOW                       K/day          85.99506148113663   0
+BSTPFCTPRECICO   FCTPRECICOL  FCTPRECICON  TEMPERATURE : CONVECTIVE PRECIPITATION                      K/day          85.99506148113663   0
+PITPFCTPRECICOL  FCTPRECICOL               TEMPERATURE : CONVECTIVE RAIN                               K/day          85.99506148113663   0
+PITPFCTPRECICON  FCTPRECICON               TEMPERATURE : CONVECTIVE SNOW                               K/day          85.99506148113663   0
+PITPFCTPRECISTL  FCTPRECISTL               TEMPERATURE : STRATIFORM RAIN                               K/day          85.99506148113663   0
+PITPFCTPRECISTN  FCTPRECISTN               TEMPERATURE : STRATIFORM SNOW                               K/day          85.99506148113663   0
+BIIPTCTPRINCIPAL TCTPRINCIPAL              TEMPERATURE : PRINCIPAL TERM                                K/day          85.99506148113663   0
+PITPFCTRAYSOL1   FCTRAYSOL1                TEMPERATURE : SOLAR RADIATION                               K/day          85.99506148113663   0
+PITPFCTRAYSO     FCTRAYSO                  TEMPERATURE : SOLAR RADIATION                               K/day          85.99506148113663   0
+PITPFCTRAYTH     FCTRAYTH                  TEMPERATURE : THERMAL RADIATION                             K/day          85.99506148113663   0
+PITPFCTRAYTER1   FCTRAYTER1                TEMPERATURE : THERMAL RADIATION                             K/day          85.99506148113663   0
+PITPFCTRSO       FCTRSO                    TEMPERATURE : SOLAR RADIATION                               K/day          85.99506148113663   0
+PITPFCTRTH       FCTRTH                    TEMPERATURE : THERMAL RADIATION                             K/day          85.99506148113663   0
+PITPFCTMESO      FCTMESO                   TEMPERATURE : MESOSPHERIC DRAG                              K/day          85.99506148113663   0
+PITPFCTDIFT      FCTDIFT                   TEMPERATURE : VERTICAL DIFFUSION                            K/day          85.99506148113663   0
+PITPFCTTUR       FCTTUR                    TEMPERATURE : VERTICAL DIFFUSION                            K/day          85.99506148113663   0
+PITPFCTTURBU     FCTTURBU                  TEMPERATURE : TURBULENCE                                    K/day          85.99506148113663   0
+PITPFCTKFBCVPP   FCTKFBCVPP                TEMPERATURE : KFB                                           K/day          85.99506148113663   0
+PITPFCTTURCONV   FCTTURCONV                TEMPERATURE : CONVECTIVE TRANSPORT                          K/day          85.99506148113663   0
+VII0VEP0         VEP0                      Z           : INITIAL VALUE                                 m                         .101972  0
+VII1VEP1         VEP1                      Z           : FINAL VALUE                                   m                         .101972  0
+BIIPTEPCOMPLEMENTTEPCOMPLEMENT             Z           : COMPLEMENT TERM                               m/day                 8810.348000  0
+BNIIVEPD         VEP1         VEP0         Z           : FINAL - INITIAL                               m                        0.101972  0
+DGIXTEPDELTAP    VPP1         VPP0         Z           : PRESSURE TENDENCY                             m/day                 8810.348000  0
+DIIPTEPDIVFLUHOR TEPDIVFLUHOR              Z           : DIVERGENCE OF HORIZONTAL FLUXES               m/day                 8810.348000  0
+BGIMVEPF         VEP1         VEP0         Z           : MEAN TENDENCY                                 m/day                 8810.348080  0
+BUIIVEPM         VEP1         VEP0         Z           : MEAN TENDENCY                                 m/day                 8810.348080  0
+BIIPTEPPRINCIPAL TEPPRINCIPAL              Z           : PRINCIPAL TERM                                m/day                 8810.348000  0
+VII0VHR0         VHR0                      HUM RELATIVE: INITIAL VALUE                                 none                     1.000000  0
+VII1VHR1         VHR1                      HUM RELATIVE: FINAL VALUE                                   none                     1.000000  0
+BNIIVHRD         VHR1         VHR0         HUM RELATIVE: FINAL - INITIAL                               none                     1.000000  0
+BGIMVHRF         VHR1         VHR0         HUM RELATIVE: MEAN TENDENCY                                 /day                 86400.000000  0
+BUIIVHRM         VHR1         VHR0         HUM RELATIVE: MEAN TENDENCY                                 /day                 86400.000000  0
+VII0VKK0         VKK0                      KINETIC ENERGY : INITIAL VALUE                              J/kg                     1.000000  0
+VII1VKK1         VKK1                      KINETIC ENERGY : FINAL VALUE                                J/kg                     1.000000  0
+BIIPTKKCOMPLEMENTTKKCOMPLEMENT             KINETIC ENERGY : COMPLEMENT TERM                            J/kg/day             86400.000000  0
+DIIPTKKCONVERSI1 TKKCONVERSI1              KINETIC ENERGY : CONVERSION POTENTIAL+PRESSURE > KIN. EN.   J/kg/day             86400.000000  0
+BNIIVKKD         VKK1         VKK0         KINETIC ENERGY : FINAL - INITIAL                            J/kg                     1.000000  0
+DGIXTKKDELTAP    VPP1         VPP0         KINETIC ENERGY : PRESSURE TENDENCY                          J/kg/day             86400.000000  0
+PIIPTKKDISSIPCONVTKKDISSIPCONV             KINETIC ENERGY : CONVECTIVE DISSIPATION                     J/kg/day             86400.000000  0
+PIIPTKKDISSIPGRELTKKDISSIPGREL             KINETIC ENERGY : OROGRAPHIC DISSIPATION                     J/kg/day             86400.000000  0
+PIIPTKKDISSIPTUR TKKDISSIPTUR              KINETIC ENERGY : TURBULENT DISSIPATION                      J/kg/day             86400.000000  0
+PIIPTKKDISSIPMESOTKKDISSIPMESO             KINETIC ENERGY : MESOSPHERIC DISSIPATION                    J/kg/day             86400.000000  0
+PIIPTKKDISSCONV  TKKDISSCONV               KINETIC ENERGY : CONVECTIVE DISSIPATION                     J/kg/day             86400.000000  0
+PIIPTKKDISSGREL  TKKDISSGREL               KINETIC ENERGY : OROGRAPHIC DISSIPATION                     J/kg/day             86400.000000  0
+PIIPTKKDISSTUR   TKKDISSTUR                KINETIC ENERGY : TURBULENT DISSIPATION                      J/kg/day             86400.000000  0
+PIIPTKKDISSIPMESOTKKDISSIPMESO             KINETIC ENERGY : MESOSPHERIC DISSIPATION                    J/kg/day             86400.000000  0
+DIIPTKKDIVFLUHOR TKKDIVFLUHOR              KINETIC ENERGY : HORIZONTAL FLUX DIVERGENCY                 J/kg/day             86400.000000  0
+BGIMVKKF         VKK1         VKK0         KINETIC ENERGY : MEAN TENDENCY                              J/kg/day             86400.000000  0
+PITPFKKFLUDUAPLUIFKKFLUDUAPLUI             KINETIC ENERGY : MASS VARIATION DUE TO PRECIPITATION        J/kg/day             86400.000000  0
+DITPFKKFLUVERTDYNFKKFLUVERTDYN             KINETIC ENERGY : VERTICAL DYNAMICAL FLUX                    J/kg/day             86400.000000  0
+BUIIVKKM         VKK1         VKK0         KINETIC ENERGY : MEAN TENDENCY                              J/kg/day             86400.000000  0
+VIIVFKKM         FKKM                      KINETIC ENERGY-FLUX : DIAG FINAL - INITIAL                  SI                   86400.000000  0
+BIIPTKKPRINCIPAL TKKPRINCIPAL              KINETIC ENERGY : PRINCIPAL TERM                             J/kg/day             86400.000000  0
+VII0VNT0         VNT0                      CLOUDINESS  : INITIAL VALUE                                 none                     1.000000  0
+VII1VNT1         VNT1                      CLOUDINESS  : FINAL VALUE                                   none                     1.000000  0
+BNIIVNTD         VNT1         VNT0         CLOUDINESS  : FINAL - INITIAL                               none                     1.000000  0
+BUIIVNTM         VNT1         VNT0         CLOUDINESS  : MEAN TENDENCY                                 /day                 86400.000000  0
+VII0VOM0         VOM0                      OMEGA       : INITIAL VALUE                                 Pa/s                     1.000000  0
+VII0VOM1         VOM1                      OMEGA       : FINAL VALUE                                   Pa/s                     1.000000  0
+BNIIVOMD         VOM1         VOM0         OMEGA       : FINAL - INITIAL                               Pa/s                     1.000000  0
+BGIMVOMF         VOM1         VOM0         OMEGA       : MEAN TENDENCY                                 Pa/s/day             86400.000000  0
+BUIIVOMM         VOM1         VOM0         OMEGA       : MEAN TENDENCY                                 Pa/s/day             86400.000000  0
+VICDPPP          PPP                       PRESSURE    : CUMUL TEMPOREL                                Pa                       9.806650  0
+VICIVPP0         VPP0                      PRESSURE    : INITIAL VALUE                                 Pa                       9.806650  0
+VICIVPP1         VPP1                      PRESSURE    : FINAL VALUE                                   Pa                       9.806650  0
+BIIITPPCOMPLEMENTTPPCOMPLEMENT             PRESSURE    : COMPLEMENT TERM                               Pa/day              847294.560000  0
+BDCIVPPD         VPP1         VPP0         PRESSURE    : FINAL - INITIAL                               Pa                       9.806650  0
+DIIITPPDIVFLUHOR TPPDIVFLUHOR              PRESSURE    : DIVERGENCE OF HORIZONTAL FLUXES               Pa/day              847294.560000  0
+BDCDVPPF         VPP1         VPP0         PRESSURE    : MEAN TENDENCY                                 Pa/day              847294.560000  0
+DITDFPPFLUVERTDYNFPPFLUVERTDYN             PRESSURE    : VERTICAL DYNAMICAL FLUX                       Pa/day              847294.560000  0
+BDCVVPPM         VPP1         VPP0         PRESSURE    : MEAN TENDENCY                                 Pa/day              847294.560000  0
+BIIITPPPRINCIPAL TPPPRINCIPAL              PRESSURE    : PRINCIPAL TERM                                Pa/day              847294.560000  0
+PITDFPPSUMFPL    FPPSUMFPL                 PRESSURE    : MASS VARIATION DUE TO PRECIPITATION           Pa/day              847294.560000  0
+VII0VQC0         VQC0                      EAU CONDENS : INITIAL VALUE                                 g/kg                     1000.000  0
+VII1VQC1         VQC1                      EAU CONDENS : FINAL VALUE                                   g/kg                     1000.000  0
+BIIPTQCCOMPLEMENTTQCCOMPLEMENT             EAU CONDENS : COMPLEMENT TERM                               g/kg/day             86400000.000  0
+BGIMVQCF         VQC1         VQC0         EAU CONDENS : MEAN TENDENCY                                 g/kg/day             86400000.000  0
+BUIIVQCM         VQC1         VQC0         EAU CONDENS : MEAN TENDENCY                                 g/kg/day             86400000.000  0
+VIIVFQCM         FQCM                      EAU CONDENS-FLUX : DIAG FINAL - INITIAL                     kg/m2/s              86400000.000  0
+BIIPTQCPRINCIPAL TQCPRINCIPAL              EAU CONDENS : PRINCIPAL TERM                                g/kg/day             86400000.000  0
+BIIPTQLCOMPLEMENTTQLCOMPLEMENT             EAU CONDENS : COMPLEMENTARY TERM                            g/kg/day             86400000.000  0
+BIIPTQLPRINCIPAL TQLPRINCIPAL              EAU CONDENS : PRINCIPAL TERM                                g/kg/day             86400000.000  0
+DIIPTQLDIVFLUHOR TQLDIVFLUHOR              EAU LIQUIDE : DIVERGENCY OF HORIZONTAL FLUXES               g/kg/day             86400000.000  0
+DITPFQLFLUVERTDYNFQLFLUVERTDYN             EAU LIQUIDE : VERTICAL DYNAMICAL FLUX                       g/kg/day             86400000.000  0
+PITPFQLTUR       FQLTUR                    EAU LIQUIDE : VERTICAL DIFFUSION                            g/kg/day             86400000.000  0
+PITPFQLTURCONV   FQLTURCONV                EAU LIQUIDE : CONVECTIVE TRANSPORT                          g/kg/day             86400000.000  0
+AITPFQLTURQNEGAT FQLTURQNEGAT              EAU LIQUIDE : NEGATIVE HUMIDITY CORRECTION                  g/kg/day             86400000.000  0
+VII0VQN0         VQN0                      ICE WATER   : INITIAL VALUE                                 g/kg                     1000.000  0
+VICIVQN0CV       VQN0                      ICE WATER   : INITIAL VALUE, VERTICAL INTEGRAL              g/m2                     1000.000  0
+VII1VQN1         VQN1                      ICE WATER   : FINAL VALUE                                   g/kg                     1000.000  0
+VICIVQN1CV       VQN1                      ICE WATER   : FINAL VALUE, VERTICAL INTEGRAL                g/m2                     1000.000  0
+DIIPTQNDIVFLUHOR TQNDIVFLUHOR              ICE WATER   : DIVERGENCY OF HORIZONTAL FLUXES               g/kg/day             86400000.000  0
+DITPFQNFLUVERTDYNFQNFLUVERTDYN             ICE WATER   : VERTICAL DYNAMICAL FLUX                       g/kg/day             86400000.000  0
+PITPFQNTUR       FQNTUR                    ICE WATER   : VERTICAL DIFFUSION                            g/kg/day             86400000.000  0
+PITPFQNTURCONV   FQNTURCONV                ICE WATER   : CONVECTIVE TRANSPORT                          g/kg/day             86400000.000  0
+AITPFQNTURQNEGAT FQNTURQNEGAT              ICE WATER   : NEGATIVE HUMIDITY CORRECTION                  g/kg/day             86400000.000  0
+VII0VQT0         VQT0                      EAU TOTALE  : INITIAL VALUE                                 g/kg                     1000.000  0
+VII1VQT1         VQT1                      EAU TOTALE  : FINAL VALUE                                   g/kg                     1000.000  0
+BIIPTQTCOMPLEMENTTQTCOMPLEMENT             EAU TOTALE  : COMPLEMENT TERM                               g/kg/day             86400000.000  0
+PITPFQTCONDECOL  FQTCONDECOL               EAU         : CONVECTIVE LIQUID CONDENSATION                g/kg/day             86400000.000  0
+PITPFQTCONDECON  FQTCONDECON               EAU         : CONVECTIVE SOLID CONDENSATION                 g/kg/day             86400000.000  0
+PITPFQTCONDESTL  FQTCONDESTL               EAU         : STRATIFORM LIQUID CONDENSATION                g/kg/day             86400000.000  0
+PITPFQTCONDESTN  FQTCONDESTN               EAU         : STRATIFORM SOLID CONDENSATION                 g/kg/day             86400000.000  0
+BGIMVQTF         VQT1         VQT0         EAU TOTALE  : MEAN TENDENCY                                 g/kg/day             86400000.000  0
+BUIIVQTM         VQT1         VQT0         EAU TOTALE  : MEAN TENDENCY                                 g/kg/day             86400000.000  0
+BITPFQTPRECI     FQTPRECI                  EAU         : TOTAL PRECIPITATION                           g/kg/day             86400000.000  0
+PITPFQTPRECICOL  FQTPRECICOL               EAU         : CONVECTIVE RAIN                               g/kg/day             86400000.000  0
+PITPFQLPFPS      FQLPFPS                   EAU         : FQLPFPS                                       g/kg/day             86400000.000  0
+PITPFQNPFPS      FQNPFPS                   EAU         : FQNPFPS                                       g/kg/day             86400000.000  0
+PITPFQLPFPC      FQLPFPC                   EAU         : FQLPFPC                                       g/kg/day             86400000.000  0
+PITPFQNPFPC      FQNPFPC                   EAU         : FQNPFPC                                       g/kg/day             86400000.000  0
+BIIDFQTPRECICOLF FQTPRECICOL               EAU         : CONVECTIVE RAIN                               mm/day               86400.000000  0
+PITPFQTPRECICON  FQTPRECICON               EAU         : CONVECTIVE SNOW                               g/kg/day             86400000.000  0
+BIIDFQTPRECICONF FQTPRECICON               EAU         : CONVECTIVE SNOW                               mm/day               86400.000000  0
+PITPFQTPRECISTL  FQTPRECISTL               EAU         : STRATIFORM RAIN                               g/kg/day             86400000.000  0
+BIIDFQTPRECISTLF FQTPRECISTL               EAU         : STRATIFORM RAIN                               mm/day               86400.000000  0
+PITPFQTPRECISTN  FQTPRECISTN               EAU         : STRATIFORM SNOW                               g/kg/day             86400000.000  0
+BIIDFQTPRECISTNF FQTPRECISTN               EAU         : STRATIFORM SNOW                               mm/day               86400.000000  0
+BIIPTQTPRINCIPAL TQTPRINCIPAL              EAU TOTALE  : PRINCIPAL TERM                                g/kg/day             86400000.000  0
+VII0VTH0         VTH0                      THETA       : INITIAL VALUE                                 K                           1.000  0
+VII1VTH1         VTH1                      THETA       : FINAL VALUE                                   K                           1.000  0
+BUIIVTHM         VTH1         VTH0         THETA       : MEAN TENDENCY                                 K/day                   86400.000  0
+VII0VQV0         VQV0                      WATER VAPOR : INITIAL VALUE                                 g/kg                     1000.000  0
+VICIVQV0CV       VQV0                      WATER VAPOR INITIAL : VERTICAL INTEGRAL                     g/m2                     1000.000  0
+VII1VQV1         VQV1                      WATER VAPOR : FINAL VALUE                                   g/kg                     1000.000  0
+VICIVQV1CV       VQV1                      WATER VAPOR FINAL : VERTICAL INTEGRAL                       g/m2                     1000.000  0
+BIIPTQVCOMPLEMENTTQVCOMPLEMENT             WATER VAPOR : COMPLEMENTARY TERM                            g/kg/day             86400000.000  0
+BNIIVQVD         VQV1         VQV0         WATER VAPOR : FINAL - INITIAL                               g/kg                     1000.000  0
+DGIXTQVDELTAP    VPP1         VPP0         WATER VAPOR : PRESSURE TENDENCY                             g/kg/day             86400000.000  0
+DIIPTQVDIVFLUHOR TQVDIVFLUHOR              WATER VAPOR : DIVERGENCY OF HORIZONTAL FLUXES               g/kg/day             86400000.000  0
+BSIPTQVEVAPPCO   TQVEVAPPCOL  TQVEVAPPCON  WATER VAPOR : CONVECTIVE EVAPORATION                        g/kg/day             86400000.000  0
+AIIPTQVEVAPPCOL  TQVEVAPPCOL               WATER VAPOR : CONVECTIVE RAIN EVAPORATION                   g/kg/day             86400000.000  0
+AIIPTQVEVAPPCON  TQVEVAPPCON               WATER VAPOR : CONVECTIVE SNOW EVAPORATION                   g/kg/day             86400000.000  0
+BSIPTQVEVAPPST   TQVEVAPPSTL  TQVEVAPPSTN  WATER VAPOR : STATIFORM EVAPORATION                         g/kg/day             86400000.000  0
+AIIPTQVEVAPPSTL  TQVEVAPPSTL               WATER VAPOR : STRATIFORM RAIN EVAPORATION                   g/kg/day             86400000.000  0
+AIIPTQVEVAPPSTN  TQVEVAPPSTN               WATER VAPOR : STRATIFORM SNOW EVAPORATION                   g/kg/day             86400000.000  0
+BGIMVQVF         VQV1         VQV0         WATER VAPOR : MEAN TENDENCY                                 g/kg/day             86400000.000  0
+DITPFQVFLUVERTDYNFQVFLUVERTDYN             WATER VAPOR : VERTICAL DYNAMICAL FLUX                       g/kg/day             86400000.000  0
+BSIPTQVFONTP     TQVFONTPCO   TQVFONTPST   WATER VAPOR : PRECIPITATION MELTING                         g/kg/day             86400000.000  0
+AIIPTQVFONTPCO   TQVFONTPCO                WATER VAPOR : CONVECTIVE PREC MELTING                       g/kg/day             86400000.000  0
+AIIPTQVFONTPST   TQVFONTPST                WATER VAPOR : STRATIFORME PREC MELTING                      g/kg/day             86400000.000  0
+BSIPTQVFORMPCO   TQVFORMPCOL  TQVFORMPCON  WATER VAPOR : CONV PREC FORMATION                           g/kg/day             86400000.000  0
+AIIPTQVFORMPCOL  TQVFORMPCOL               WATER VAPOR : CONV RAIN FORMATION                           g/kg/day             86400000.000  0
+AIIPTQVFORMPCON  TQVFORMPCON               WATER VAPOR : CONV SNOW FORMATION                           g/kg/day             86400000.000  0
+BSIPTQVFORMPST   TQVFORMPSTL  TQVFORMPSTN  WATER VAPOR : STRA PREC FORMATION                           g/kg/day             86400000.000  0
+AIIPTQVFORMPSTL  TQVFORMPSTL               WATER VAPOR : STRA RAIN FORMATION                           g/kg/day             86400000.000  0
+AIIPTQVFORMPSTN  TQVFORMPSTN               WATER VAPOR : STRA SNOW FORMATION                           g/kg/day             86400000.000  0
+BUIIVQVM         VQV1         VQV0         WATER VAPOR : MEAN TENDENCY                                 g/kg/day             86400000.000  0
+VIIVFQVM         FQVM                      WATER VAPOR-FLUX : DIAG FINAL - INITIAL                     kg/m2/s              86400000.000  0
+BIIPTQVPRINCIPAL TQVPRINCIPAL              WATER VAPOR : PRINCIPAL TERM                                g/kg/day             86400000.000  0
+PITPFQVTUR       FQVTUR                    WATER VAPOR : VERTICAL DIFFUSION                            g/kg/day             86400000.000  0
+PITPFQVTURCONV   FQVTURCONV                WATER VAPOR : CONVECTIVE TRANSPORT                          g/kg/day             86400000.000  0
+PITPFQVDIFC      FQVDIFC                   WATER VAPOR : CONVECTIVE TRANSPORT                          g/kg/day             86400000.000  0
+AITPFQVTURQNEGAT FQVTURQNEGAT              WATER VAPOR : NEGATIVE HUMIDITY CORRECTION                  g/kg/day             86400000.000  0
+AITPFQVCQNG      FQVCQNG                   WATER VAPOR : NEGATIVE HUMIDITY CORRECTION                  g/kg/day             86400000.000  0
+VII0VSS0         VSS0                      ENTROPY     : INITIAL VALUE                                 J/kg/K                   1.000000  0
+VII1VSS1         VSS1                      ENTROPY     : FINAL VALUE                                   J/kg/K                   1.000000  0
+BIIPTSSCOMPLEMENTTSSCOMPLEMENT             ENTROPY     : COMPLEMENT TERM                               J/kg/K/day           86400.000000  0
+BNIIVSSD         VSS1         VSS0         ENTROPY     : FINAL - INITIAL                               J/kg/K                   1.000000  0
+DGIXTSSDELTAP    VPP1         VPP0         ENTROPY     : PRESSURE TENDENCY                             J/kg/K/day           86400.000000  0
+PIIPTSSDISSIPCONVTSSDISSIPCONV             ENTROPY     : CONVECTIVE TURBULENT DISSIPATION              J/kg/K/day           86400.000000  0
+PIIPTSSDISSIPGRELTSSDISSIPGREL             ENTROPY     : OROGRAPHIC TURBULENT DISSIPATION              J/kg/K/day           86400.000000  0
+PIIPTSSDISSIPTUR TSSDISSIPTUR              ENTROPY     : TURBULENT DISSIPATION                         J/kg/K/day           86400.000000  0
+DIIPTSSDIVFLUHOR TSSDIVFLUHOR              ENTROPY     : DIVERGENCY OF HORIZONTAL FLUXES               J/kg/K/day           86400.000000  0
+BGIMVSSF         VSS1         VSS0         ENTROPY     : MEAN TENDENCY                                 J/kg/K/day           86400.000000  0
+DITPFSSFLUVERTDYNFSSFLUVERTDYN             ENTROPY     : VERTICAL DYNAMICAL FLUX                       J/kg/K/day           86400.000000  0
+BUIIVSSM         VSS1         VSS0         ENTROPY     : MEAN TENDENCY                                 J/kg/K/day           86400.000000  0
+VIIVFSSM         FSSM                      ENTROPY-FLUX : DIAG FINAL - INITIAL                         SI                   86400.000000  0
+PIIPTSSPRECICT   TSSPRECICT                ENTROPY     : PRECIPITATION EFFECT ON ENTHALPY              J/kg/K/day           86400.000000  0
+PITPFSSPRECISS   FSSPRECISS                ENTROPY     : PRECIPITATION EFFECT ON ENTROPY               J/kg/K/day           86400.000000  0
+BIIPTSSPRINCIPAL TSSPRINCIPAL              ENTROPY     : PRINCIPAL TERM                                J/kg/K/day           86400.000000  0
+PIIPTSSRAY1      TSSRAY1                   ENTROPY     : RADIATION                                     J/kg/K/day           86400.000000  0
+PIIPTSSTURCTTOT  TSSTURCTTOT               ENTROPY     : TOTAL ENTHALPY TURBULENCE                     J/kg/K/day           86400.000000  0
+PIIPTSSTURQVTOT  TSSTURQVTOT               ENTROPY     : TOTAL HUMIDITY TURBULENCE                     J/kg/K/day           86400.000000  0
+VII0VUU0         VUU0                      ZONAL WIND  : INITIAL VALUE                                 m/s                      1.000000  0
+VII1VUU1         VUU1                      ZONAL WIND  : FINAL VALUE                                   m/s                      1.000000  0
+BIIPTUUCOMPLEMENTTUUCOMPLEMENT             ZONAL WIND  : COMPLEMENT TERM                               m/s/day              86400.000000  0
+BNIIVUUD         VUU1         VUU0         ZONAL WIND  : FINAL - INITIAL                               m/s                      1.000000  0
+DGIXTUUDELTAP    VPP1         VPP0         ZONAL WIND  : PRESSURE TENDENCY                             m/s/day              86400.000000  0
+DIIPTUUDIVFLUHOR TUUDIVFLUHOR              ZONAL WIND  : DIVERGENCE OF HORIZONTAL FLUXES               m/s/day              86400.000000  0
+BGIMVUUF         VUU1         VUU0         ZONAL WIND  : MEAN TENDENCY                                 m/s/day              86400.000000  0
+DIIPTUUFFVGADPSG TUUFFVGADPSG              ZONAL WIND  : CORIOLIS + GRAVITY + PRESSURE GRAD            m/s/day              86400.000000  0
+PITPFUUFLUDUAPLUIFUUFLUDUAPLUI             ZONAL WIND  : MASS VARIATION DUE TO PRECIPITATION           m/s/day              86400.000000  0
+DITPFUUFLUVERTDYNFUUFLUVERTDYN             ZONAL WIND  : VERTICAL DYNAMICAL FLUX                       m/s/day              86400.000000  0
+BUIIVUUM         VUU1         VUU0         ZONAL WIND  : MEAN TENDENCY                                 m/s/day              86400.000000  0
+VIIMFUUM         FUUM                      ZONAL WIND-FLUX : DIAG FINAL - INITIAL                      SI                   86400.000000  0
+PITPFUUONDEGREL  FUUONDEGREL               ZONAL WIND  : OROGRAPHIC WAVES                              m/s/day              86400.000000  0
+PITPFUUMESO      FUUMESO                   ZONAL WIND  : MESOSPHERIC DRAG                              m/s/day              86400.000000  0
+BIIPTUUPRINCIPAL TUUPRINCIPAL              ZONAL WIND  : PRINCIPAL TERM                                m/s/day              86400.000000  0
+PITPFUUTUR       FUUTUR                    ZONAL WIND  : VERTICAL DIFFUSION                            m/s/day              86400.000000  0
+PITPFUUTURCONV   FUUTURCONV                ZONAL WIND  : CONVECTIVE TRANSPORT                          m/s/day              86400.000000  0
+VII0VVV0         VVV0                      MERID WIND  : INITIAL VALUE                                 m/s                      1.000000  0
+VII1VVV1         VVV1                      MERID WIND  : FINAL VALUE                                   m/s                      1.000000  0
+BIIPTVVCOMPLEMENTTVVCOMPLEMENT             MERID WIND  : COMPLEMENT TERM                               m/s/day              86400.000000  0
+BNIIVVVD         VVV1         VVV0         MERID WIND  : FINAL - INITIAL                               m/s                      1.000000  0
+DGIXTVVDELTAP    VPP1         VPP0         MERID WIND  : PRESSURE TENDENCY                             m/s/day              86400.000000  0
+DIIPTVVDIVFLUHOR TVVDIVFLUHOR              MERID WIND  : DIVERGENCE OF HORIZONTAL FLUXES               m/s/day              86400.000000  0
+BGIMVVVF         VVV1         VVV0         MERID WIND  : MEAN TENDENCY                                 m/s/day              86400.000000  0
+DIIPTVVFFUGADPSG TVVFFUGADPSG              MERID WIND  : CORIOLIS + GRAVITY + PRESSURE GRAD            m/s/day              86400.000000  0
+PITPFVVFLUDUAPLUIFVVFLUDUAPLUI             MERID WIND  : MASS VARIATION DUE TO PRECIPITATION           m/s/day              86400.000000  0
+DITPFVVFLUVERTDYNFVVFLUVERTDYN             MERID WIND  : VERTICAL DYNAMICAL FLUX                       m/s/day              86400.000000  0
+BUIIVVVM         VVV1         VVV0         MERID WIND  : MEAN TENDENCY                                 m/s/day              86400.000000  0
+VIIMFVVM         FVVM                      MERID WIND-FLUX : DIAG FINAL - INITIAL                      SI                   86400.000000  0
+PITPFVVONDEGREL  FVVONDEGREL               MERID WIND  : OROGRAPHIC WAVES                              m/s/day              86400.000000  0
+PITPFVVMESO      FVVMESO                   MERID WIND  : MESOSPHERIC DRAG                              m/s/day              86400.000000  0
+BIIPTVVPRINCIPAL TVVPRINCIPAL              MERID WIND  : PRINCIPAL TERM                                m/s/day              86400.000000  0
+PITPFVVTUR       FVVTUR                    MERID WIND  : VERTICAL DIFFUSION                            m/s/day              86400.000000  0
+PITPFVVTURCONV   FVVTURCONV                MERID WIND  : CONVECTIVE TRANSPORT                          m/s/day              86400.000000  0
+#
+#-------------------------------------------------
+# Vent géostrophique.
+#-------------------------------------------------
+#
+VII0VUG0         VUG0                      ZONAL GEOS. WIND : INITIAL VALUE                            m/s                      1.000000  0
+VII1VUG1         VUG1                      ZONAL GEOS. WIND : FINAL VALUE                              m/s                      1.000000  0
+VII0VVG0         VVG0                      MERID GEOS. WIND : INITIAL VALUE                            m/s                      1.000000  0
+VII1VVG1         VVG1                      MERID GEOS. WIND : FINAL VALUE                              m/s                      1.000000  0
+#
+#-----------------------------------------------
+# ALARO-physics; liquid water.
+#-----------------------------------------------
+#
+PITPFQLPFPC      FQLPFPC                   LIQUID WATER: AUTOC./COLL., CONVECTIVE                      g/kg/day             86400000.000  0
+PITPFQLPFPS      FQLPFPS                   LIQUID WATER: AUTOC./COLL., RESOLVED                        g/kg/day             86400000.000  0
+#
+#-----------------------------------------------
+# ALARO-physics; rain.
+#-----------------------------------------------
+#
+PITPFQRPLC       FQRPLC                    RAIN        : PRECIPITATION, CONVECTIVE                     g/kg/day             86400000.000  0
+PITPFQRPLS       FQRPLS                    RAIN        : PRECIPITATION, RESOLVED                       g/kg/day             86400000.000  0
+PITPFQRPEVC      FQRPEVC                   RAIN        : EVAPORATION, CONVECTIVE                       g/kg/day             86400000.000  0
+PITPFQRPEVS      FQRPEVS                   RAIN        : EVAPORATION, RESOLVED                         g/kg/day             86400000.000  0
+PITPFQRNG        FQRNG                     RAIN        : CORR. NEG. VALUES                             g/kg/day             86400000.000  0
+#
+#-----------------------------------------------
+# ALARO-physics; snow.
+#-----------------------------------------------
+#
+PITPFQSPLC       FQSPLC                    SNOW        : PRECIPITATION, CONVECTIVE                     g/kg/day             86400000.000  0
+PITPFQSPLS       FQSPLS                    SNOW        : PRECIPITATION, RESOLVED                       g/kg/day             86400000.000  0
+#
+#-----------------------------------------------
+# AROME-physics; flexible data flow; temperature.
+#-----------------------------------------------
+#
+PIIPTCTRIM_      TCTRIM_                   TEMPERATURE : RIM_                                          K/day          85.99506148113663   0
+#
+#-----------------------------------------------
+# AROME-physics; temperature.
+#-----------------------------------------------
+#
+PITPFCTVTURB     FCTVTURB                  TEMPERATURE : TURBULENCE (VTURB)                            K/day          85.99506148113663   0
+PITPFCTNEGC      FCTNEGC                   TEMPERATURE : NEGC                                          K/day          85.99506148113663   0
+PITPFCTNEGC1     FCTNEGC1                  TEMPERATURE : NEGC1                                         K/day          85.99506148113663   0
+PITPFCTDEPI      FCTDEPI                   TEMPERATURE : VW ADJUSTMENT (DEPI)                          K/day          85.99506148113663   0
+PITPFCTDISSTUR   FCTDISSTUR                TEMPERATURE : TURBULENCE (DISSTUR)                          K/day          85.99506148113663   0
+PITPFCTHENUI     FCTHENUI                  TEMPERATURE : HETEROG. NUCLEATION (HENUI)                   K/day          85.99506148113663   0
+PITPFCTHON       FCTHON                    TEMPERATURE : HOMOG. NUCLEATION (HON)                       K/day          85.99506148113663   0
+PITPFCTSFR       FCTSFR                    TEMPERATURE : SPONTANEOUS FREEZING (SFR)                    K/day          85.99506148113663   0
+PITPFCTDEPS      FCTDEPS                   TEMPERATURE : DEPOSITION ON SNOW (DEPS)                     K/day          85.99506148113663   0
+PITPFCTDEPG      FCTDEPG                   TEMPERATURE : DEPOSITION ON GRAUPEL (DEPG)                  K/day          85.99506148113663   0
+PITPFCTREVA      FCTREVA                   TEMPERATURE : RAIN EVAPORATION (REVA)                       K/day          85.99506148113663   0
+PITPFCTRIM       FCTRIM                    TEMPERATURE : RIMING BY CLOUD DROPLETS (RIM)                K/day          85.99506148113663   0
+PITPFCTAGGS      FCTAGGS                   TEMPERATURE : COLLECTION OF RAIN DROPS (AGGS)               K/day          85.99506148113663   0
+PITPFCTCFRZ      FCTCFRZ                   TEMPERATURE : CONTACT FREEZING (CFRZ)                       K/day          85.99506148113663   0
+PITPFCTWETG      FCTWETG                   TEMPERATURE : WET GROWTH (WETG)                             K/day          85.99506148113663   0
+PITPFCTDRYG      FCTDRYG                   TEMPERATURE : DRY GROWTH (DRYG)                             K/day          85.99506148113663   0
+PITPFCTMLT       FCTMLT                    TEMPERATURE : MELTING OF GRAUPEL (MLT)                      K/day          85.99506148113663   0
+PITPFCTMLTI      FCTMLTI                   TEMPERATURE : MELTING OF CLOUD ICE (MLTI)                   K/day          85.99506148113663   0
+PITPFCTBERFI     FCTBERFI                  TEMPERATURE : BERGERON-FINDEISEN EFFECT (BERFI)             K/day          85.99506148113663   0
+#
+#-----------------------------------------------
+# Updraft alpha.
+#-----------------------------------------------
+#
+VII0VUA0         VUA0                      UA  : INITIAL VALUE                                         adim                     1.00000   0
+VII0VUA1         VUA1                      UA  : FINAL VALUE                                           adim                     1.00000   0
+BUIIVUAM         VUA1         VUA0         UA  : MEAN TENDENCY                                         /mn                      0060.000  0
+PIIPTUAORG       TUAORG                    UA  : ORGANIZED E-D                                         /mn                      0060.000  0
+PIIPTUADIV       TUADIV                    UA  : MASS-FLUX DIVERGENCY                                  /mn                      0060.000  0
+#
+#-----------------------------------------------
+# Updraft vertical velocity.
+#-----------------------------------------------
+#
+VII0VWU0         VWU0                      WU  : INITIAL VALUE                                         m/s                      1.00000   0
+VII0VWU1         VWU1                      WU  : FINAL VALUE                                           m/s                      1.00000   0
+BUIIVWUM         VWU1         VWU0         WU  : MEAN TENDENCY                                         m/s/mn                   0060.000  0
+VIIMFWUM         FWUM                      WU-FLUX : DIAG FINAL - INITIAL                              SI                       0060.000  0
+PIIPTWUADV       TWUADV                    WU  : ADVECTION                                             m/s/mn                   0060.000  0
+PIIPTWUFRI       TWUFRI                    WU  : FRICTION                                              m/s/mn                   0060.000  0
+PIIPTWUBUO       TWUBUO                    WU  : BUOYANCY                                              m/s/mn                   0060.000  0
+PIIPTWUDYP       TWUDYP                    WU  : DYN PROD                                              m/s/mn                   0060.000  0
+PIIPTWUNHD       TWUNHD                    WU  : DENS. CURRENT NHD                                     m/s/mn                   0060.000  0
+#
+#-----------------------------------------------
+# Downdraft vertical velocity.
+#-----------------------------------------------
+#
+VII0VWD0         VWD0                      WD  : INITIAL VALUE                                         m/s                      1.00000   0
+VII0VWD1         VWD1                      WD  : FINAL VALUE                                           m/s                      1.00000   0
+BUIIVWDM         VWD1         VWD0         WD  : MEAN TENDENCY                                         m/s/mn                   0060.000  0
+VIIMFWDM         FWDM                      WD-FLUX : DIAG FINAL - INITIAL                              SI                       0060.000  0
+PIIPTWDADV       TWDADV                    WD  : ADVECTION                                             m/s/mn                   0060.000  0
+PIIPTWDFRI       TWDFRI                    WD  : FRICTION                                              m/s/mn                   0060.000  0
+PIIPTWDBUO       TWDBUO                    WD  : BUOYANCY                                              m/s/mn                   0060.000  0
+PIIPTWDDYP       TWDDYP                    WD  : DYN PROD                                              m/s/mn                   0060.000  0
+PIIPTWDNHD       TWDNHD                    WD  : DENS. CURRENT NHD                                     m/s/mn                   0060.000  0
+#
+#-----------------------------------------------
+# AROME-physics; TKE.
+#-----------------------------------------------
+#
+VII0VTE0         VTE0                      TKE : INITIAL VALUE                                         J/kg                     1.00000   0
+VII0VTE1         VTE1                      TKE : FINAL VALUE                                           J/kg                     1.00000   0
+BUIIVTEM         VTE1         VTE0         TKE : MEAN TENDENCY                                         J/kg/day             86400000.000  0
+VIIMFTEM         FTEM                      TKE-FLUX : DIAG FINAL - INITIAL                             SI                   86400000.000  0
+PITPFTEDYPRO     FTEDYPRO                  TKE : DYNAMICAL PRODUCTION (DYPRO)                          J/kg/day             86400000.000  0
+PITPFTETERMPRO   FTETERMPRO                TKE : THERMAL PRODUCTION (TERMPRO)                          J/kg/day             86400000.000  0
+PITPFTEDISS      FTEDISS                   TKE : DISSIPATION (DISS)                                    J/kg/day             86400000.000  0
+PITPFTETURB      FTETURB                   TKE : TURBULENCE (TURB)                                     J/kg/day             86400000.000  0
+#
+#-----------------------------------------------
+# AROME-physics; water vapour.
+#-----------------------------------------------
+#
+PITPFQVNEGC1     FQVNEGC1                  WATER VAPOR : NEGC1                                         g/kg/day             86400000.000  0
+PITPFQVNEGC      FQVNEGC                   WATER VAPOR : NEGC                                          g/kg/day             86400000.000  0
+PITPFQVCDEPI     FQVCDEPI                  WATER VAPOR : CDEPI                                         g/kg/day             86400000.000  0
+PITPFQVVTURB     FQVVTURB                  WATER VAPOR : VTURB                                         g/kg/day             86400000.000  0
+PITPFQVCONV      FQVCONV                   WATER VAPOR : CONV                                          g/kg/day             86400000.000  0
+PITPFQVHENUI     FQVHENUI                  WATER VAPOR : HENUI                                         g/kg/day             86400000.000  0
+PITPFQVDEPS      FQVDEPS                   WATER VAPOR : DEPS                                          g/kg/day             86400000.000  0
+PITPFQVDEPS      FQVDEPS                   WATER VAPOR : DEPS                                          g/kg/day             86400000.000  0
+PITPFQVDEPG      FQVDEPG                   WATER VAPOR : DEPG                                          g/kg/day             86400000.000  0
+PITPFQVREVA      FQVREVA                   WATER VAPOR : REVA                                          g/kg/day             86400000.000  0
+PITPFQVVCONV     FQVVCONV                  WATER VAPOR : VCONV                                         g/kg/day             86400000.000  0
+PITPFQVPL1       FQVPL1                    WATER VAPOR : PL1                                           g/kg/day             86400000.000  0
+PITPFQVPI1       FQVPI1                    WATER VAPOR : PI1                                           g/kg/day             86400000.000  0
+#
+#-----------------------------------------------
+# AROME-physics; cloud liquid water.
+#-----------------------------------------------
+#
+VII0VQL0         VQL0                      LIQUID WATER: INITIAL VALUE                                 g/kg                     1000.000  0
+VII1VQL1         VQL1                      LIQUID WATER: FINAL VALUE                                   g/kg                     1000.000  0
+VICIVQL0CV       VQL0                      LIQUID WATER: INITIAL VERTICAL INTEGRAL                     g/m2                     1000.000  0
+VICIVQL1CV       VQL1                      LIQUID WATER: FINAL VERTICAL INTEGRAL                       g/m2                     1000.000  0
+BUIIVQLM         VQL1         VQL0         LIQUID WATER: MEAN TENDENCY                                 g/kg/day             86400000.000  0
+VIIMFQLM         FQLM                      LIQUID WATER-FLUX : DIAG FINAL - INITIAL                    kg/m2/s              86400000.000  0
+PITPFQLNEGC1     FQLNEGC1                  LIQUID WATER : NEGC1                                        g/kg/day             86400000.000  0
+PITPFQLVTURB     FQLVTURB                  LIQUID WATER : VTURB                                        g/kg/day             86400000.000  0
+PITPFQLDEPI      FQLDEPI                   LIQUID WATER : DEPI                                         g/kg/day             86400000.000  0
+#
+#-----------------------------------------------
+# AROME-physics; cloud ice water.
+#-----------------------------------------------
+#
+PITPFQINEGC1     FQINEGC1                  ICE WATER : NEGC1                                           g/kg/day             86400000.000  0
+PITPFQINEGC      FQINEGC                   ICE WATER : NEGC                                            g/kg/day             86400000.000  0
+PITPFQIDEPI      FQIDEPI                   ICE WATER : DEPI                                            g/kg/day             86400000.000  0
+PITPFQICONV      FQICONV                   ICE WATER : CONV                                            g/kg/day             86400000.000  0
+PITPFQITURB      FQITURB                   ICE WATER : TURB                                            g/kg/day             86400000.000  0
+PITPFQISEDI      FQISEDI                   ICE WATER : SEDI                                            g/kg/day             86400000.000  0
+PITPFQIHENU      FQIHENU                   ICE WATER : HENU                                            g/kg/day             86400000.000  0
+PITPFQIHON       FQIHON                    ICE WATER : HON                                             g/kg/day             86400000.000  0
+PITPFQIAGGS      FQIAGGS                   ICE WATER : AGGS                                            g/kg/day             86400000.000  0
+PITPFQIAUTS      FQIAUTS                   ICE WATER : AUTS                                            g/kg/day             86400000.000  0
+PITPFQICFRZ      FQICFRZ                   ICE WATER : CFRZ                                            g/kg/day             86400000.000  0
+PITPFQIWETG      FQIWETG                   ICE WATER : WETG                                            g/kg/day             86400000.000  0
+PITPFQIDRYG      FQIDRYG                   ICE WATER : DRYG                                            g/kg/day             86400000.000  0
+PITPFQIMLT       FQIMLT                    ICE WATER : MLT                                             g/kg/day             86400000.000  0
+PITPFQIBERFI     FQIBERFI                  ICE WATER : BERFI                                           g/kg/day             86400000.000  0
+VII0VQI0         VQI0                      ICE WATER : INITIAL VALUE                                   g/kg                     1000.000  0
+VII1VQI1         VQI1                      ICE WATER : FINAL VALUE                                     g/kg                     1000.000  0
+BUIIVQIM         VQI1         VQI0         ICE WATER : MEAN TENDENCY                                   g/kg/day             86400000.000  0
+VIIMFQIM         FQIM                      ICE WATER-FLUX : DIAG FINAL - INITIAL                       kg/m2/s              86400000.000  0
+#
+#-----------------------------------------------
+# AROME-physics; rain.
+#-----------------------------------------------
+#
+PITPFQRNEGC      FQRNEGC                   RAIN : NEGC                                                 g/kg/day             86400000.000  0
+PITPFQRSEDI      FQRSEDI                   RAIN : SEDI                                                 g/kg/day             86400000.000  0
+PITPFQRSFR       FQRSFR                    RAIN : SFR                                                  g/kg/day             86400000.000  0
+PITPFQRAUTO      FQRAUTO                   RAIN : AUTO                                                 g/kg/day             86400000.000  0
+PITPFQRACCL      FQRACCL                   RAIN : ACCL                                                 g/kg/day             86400000.000  0
+PITPFQRREVA      FQRREVA                   RAIN : REVA                                                 g/kg/day             86400000.000  0
+PITPFQRACCS      FQRACCS                   RAIN : ACCS                                                 g/kg/day             86400000.000  0
+PITPFQRCFRZ      FQRCFRZ                   RAIN : CFRZ                                                 g/kg/day             86400000.000  0
+PITPFQRWETG      FQRWETG                   RAIN : WETG                                                 g/kg/day             86400000.000  0
+PITPFQRDRYG      FQRDRYG                   RAIN : DRYG                                                 g/kg/day             86400000.000  0
+PITPFQRMLTG      FQRMLTG                   RAIN : MLTG                                                 g/kg/day             86400000.000  0
+VII0VQR0         VQR0                      RAIN : INITIAL VALUE                                        g/kg                     1000.000  0
+VII1VQR1         VQR1                      RAIN : FINAL VALUE                                          g/kg                     1000.000  0
+BUIIVQRM         VQR1         VQR0         RAIN : MEAN TENDENCY                                        g/kg/day             86400000.000  0
+VIIMFQRM         FQRM                      RAIN-FLUX : DIAG FINAL - INITIAL                            kg/m2/s              86400000.000  0
+#
+#-----------------------------------------------
+# AROME-physics; snow.
+#-----------------------------------------------
+#
+PITPFQSNEGC      FQSNEGC                   SNOW : NEGC                                                 g/kg/day             86400000.000  0
+PITPFQSSEDI      FQSSEDI                   SNOW : SEDI                                                 g/kg/day             86400000.000  0
+PITPFQSDEPS      FQSDEPS                   SNOW : DEPS                                                 g/kg/day             86400000.000  0
+PITPFQSAGGS      FQSAGGS                   SNOW : AGGS                                                 g/kg/day             86400000.000  0
+PITPFQSAUTS      FQSAUTS                   SNOW : AUTS                                                 g/kg/day             86400000.000  0
+PITPFQSRIM       FQSRIM                    SNOW : RIM                                                  g/kg/day             86400000.000  0
+PITPFQSACC       FQSACC                    SNOW : ACC                                                  g/kg/day             86400000.000  0
+PITPFQSMEL       FQSMEL                    SNOW : MEL                                                  g/kg/day             86400000.000  0
+PITPFQSWETG      FQSWETG                   SNOW : WETG                                                 g/kg/day             86400000.000  0
+PITPFQSDRYG      FQSDRYG                   SNOW : DRYG                                                 g/kg/day             86400000.000  0
+VII0VQS0         VQS0                      SNOW : INITIAL VALUE                                        g/kg                     1000.000  0
+VII1VQS1         VQS1                      SNOW : FINAL VALUE                                          g/kg                     1000.000  0
+BUIIVQSM         VQS1         VQS0         SNOW : MEAN TENDENCY                                        g/kg/day             86400000.000  0
+VIIMFQSM         FQSM                      SNOW-FLUX : DIAG FINAL - INITIAL                            kg/m2/s              86400000.000  0
+#
+#-----------------------------------------------
+# AROME-physics; graupel.
+#-----------------------------------------------
+#
+PITPFQGNEGC      FQGNEGC                   GRAUPEL : NEGC                                              g/kg/day             86400000.000  0
+PITPFQGSEDI      FQGSEDI                   GRAUPEL : SEDI                                              g/kg/day             86400000.000  0
+PITPFQGSFR       FQGSFR                    GRAUPEL : SFR                                               g/kg/day             86400000.000  0
+PITPFQGDEPG      FQGDEPG                   GRAUPEL : DEPG                                              g/kg/day             86400000.000  0
+PITPFQGRIM       FQGRIM                    GRAUPEL : RIM                                               g/kg/day             86400000.000  0
+PITPFQGACC       FQGACC                    GRAUPEL : ACC                                               g/kg/day             86400000.000  0
+PITPFQGMEL       FQGMEL                    GRAUPEL : MEL                                               g/kg/day             86400000.000  0
+PITPFQGCFRZ      FQGCFRZ                   GRAUPEL : CFRZ                                              g/kg/day             86400000.000  0
+PITPFQGWETG      FQGWETG                   GRAUPEL : WETG                                              g/kg/day             86400000.000  0
+PITPFQGDRYG      FQGDRYG                   GRAUPEL : DRYG                                              g/kg/day             86400000.000  0
+PITPFQGMLT       FQGMLT                    GRAUPEL : MLT                                               g/kg/day             86400000.000  0
+VII0VQG0         VQG0                      GRAUPEL : INITIAL VALUE                                     g/kg                     1000.000  0
+VII1VQG1         VQG1                      GRAUPEL : FINAL VALUE                                       g/kg                     1000.000  0
+BUIIVQGM         VQG1         VQG0         GRAUPEL : MEAN TENDENCY                                     g/kg/day             86400000.000  0
+VIIMFQGM         FQGM                      GRAUPEL-FLUX : DIAG FINAL - INITIAL                         kg/m2/s              86400000.000  0
+#
+#-----------------------------------------------
+# Clouds used for radiative calculations.
+#-----------------------------------------------
+#
+VII0VLR0         VLR0                      LIQUID WATER FOR RAD.: INITIAL VALUE                        g/kg                     1000.000  0
+VII1VLR1         VLR1                      LIQUID WATER FOR RAD.: FINAL VALUE                          g/kg                     1000.000  0
+VII0VIR0         VIR0                      ICE WATER FOR RAD.: INITIAL VALUE                           g/kg                     1000.000  0
+VII1VIR1         VIR1                      ICE WATER FOR RAD.: FINAL VALUE                             g/kg                     1000.000  0
+#
+#-----------------------------------------------
+# PCMT convective scheme: AU (Alpha Updraft) budget.
+#-----------------------------------------------
+#
+VII0VSU0         VSU0                      SIGMA UPDRAFT: INITIAL VALUE                                none                     1.000000  0
+VII1VSU1         VSU1                      SIGMA UPDRAFT: FINAL VALUE                                  none                     1.000000  0
+#
+#-----------------------------------------------
+# PCMT convective scheme: OU (Omega Updraft) budget.
+#-----------------------------------------------
+#
+VII0VOU0         VOU0                      OMEGA UPDRAFT: INITIAL VALUE                                Pa/s                     1.000000  0
+VII1VOU1         VOU1                      OMEGA UPDRAFT: FINAL VALUE                                  Pa/s                     1.000000  0
+#
+#-----------------------------------------------
+# PCMT convective scheme: CL (Convective Liquid water) budget.
+#-----------------------------------------------
+#
+VII0VCL0         VCL0                      LIQUID WATER (CONV. PART): INITIAL VALUE                    g/kg                     1000.000  0
+VII1VCL1         VCL1                      LIQUID WATER (CONV. PART): FINAL VALUE                      g/kg                     1000.000  0
+BUIIVCLM         VCL1         VCL0         LIQUID WATER (CONV. PART): MEAN TENDENCY                    g/kg/day             86400000.000  0
+VIIMFCLM         FCLM                      LIQUID WATER (CONV. PART)-FLUX : DIAG FINAL - INITIAL       kg/m2/s              86400000.000  0
+DITPFCLCOND      FCLCOND                   LIQUID WATER (CONV. PART): CONDENS                          g/kg/day             86400000.000  0
+DITPFCLDIFC      FCLDIFC                   LIQUID WATER (CONV. PART): TRANSPORT                        g/kg/day             86400000.000  0
+DITPFCLED        FCLED                     LIQUID WATER (CONV. PART): ENTRAIN-DET                      g/kg/day             86400000.000  0
+DITPFCLIM        FCLIM                     LIQUID WATER (CONV. PART): ICINGMELT                        g/kg/day             86400000.000  0
+DITPFCLAUTOCONV  FCLAUTOCONV               LIQUID WATER (CONV. PART): AUTOCONV                         g/kg/day             86400000.000  0
+DITPFCLCQNG      FCLCQNG                   LIQUID WATER (CONV. PART): CORR. NEG.                       g/kg/day             86400000.000  0
+#
+#-----------------------------------------------
+# PCMT convective scheme: CI (Convective Ice water) budget.
+#-----------------------------------------------
+#
+VII0VCI0         VCI0                      ICE WATER (CONV. PART): INITIAL VALUE                       g/kg                     1000.000  0
+VII1VCI1         VCI1                      ICE WATER (CONV. PART): FINAL VALUE                         g/kg                     1000.000  0
+BUIIVCIM         VCI1         VCI0         ICE WATER (CONV. PART): MEAN TENDENCY                       g/kg/day             86400000.000  0
+VIIMFCIM         FCIM                      ICE WATER (CONV. PART)-FLUX: DIAG FINAL - INITIAL           kg/m2/s              86400000.000  0
+DITPFCICOND      FCICOND                   ICE WATER (CONV. PART): CONDENS                             g/kg/day             86400000.000  0
+DITPFCIDIFC      FCIDIFC                   ICE WATER (CONV. PART): TRANSPORT                           g/kg/day             86400000.000  0
+DITPFCIED        FCIED                     ICE WATER (CONV. PART): ENTRAIN-DET                         g/kg/day             86400000.000  0
+DITPFCIIM        FCIIM                     ICE WATER (CONV. PART): ICINGMELT                           g/kg/day             86400000.000  0
+DITPFCIAUTOCONV  FCIAUTOCONV               ICE WATER (CONV. PART): AUTOCONV                            g/kg/day             86400000.000  0
+DITPFCICQNG      FCICQNG                   ICE WATER (CONV. PART): CORR. NEG.                          g/kg/day             86400000.000  0
+#
+#-----------------------------------------------
+# PCMT convective scheme: CR (Convective Rain) budget.
+#-----------------------------------------------
+#
+VII0VCR0         VCR0                      RAIN (CONV. PART): INITIAL VALUE                            g/kg                     1000.000  0
+VII1VCR1         VCR1                      RAIN (CONV. PART): FINAL VALUE                              g/kg                     1000.000  0
+BUIIVCRM         VCR1         VCR0         RAIN (CONV. PART): MEAN TENDENCY                            g/kg/day             86400000.000  0
+VIIMFCRM         FCRM                      RAIN (CONV. PART)-FLUX: DIAG FINAL - INITIAL                kg/m2/s              86400000.000  0
+DITPFCRAUTOCONV  FCRAUTOCONV               RAIN (CONV. PART): AUTOCONV                                 g/kg/day             86400000.000  0
+DITPFCREVAPO     FCREVAPO                  RAIN (CONV. PART): EV + ICINGMELT                           g/kg/day             86400000.000  0
+DITPFCRSEDIM     FCRSEDIM                  RAIN (CONV. PART): SEDIM                                    g/kg/day             86400000.000  0
+DITPFCRED        FCRED                     RAIN (CONV. PART): ENTRAIN-DET                              g/kg/day             86400000.000  0
+DITPFCRCQNG      FCRCQNG                   RAIN (CONV. PART): CORR. NEG.                               g/kg/day             86400000.000  0
+VII1VNC0         VNC0                      CLOUDINESS  (CONV. PART): INITIAL VALUE                     none                     1.000000  0
+VII1VNC1         VNC1                      CLOUDINESS  (CONV. PART): FINAL VALUE                       none                     1.000000  0
+VII1VQX0         VQX0                      TOTAL CONV. CONDENSATE FOR XU-RANDALL: INITIAL VALUE        none                     1.000000  0
+VII1VQX1         VQX1                      TOTAL CONV. CONDENSATE FOR XU-RANDALL: FINAL VALUE          none                     1.000000  0
+#
+#-----------------------------------------------
+# PCMT convective scheme: CS (Convective Snow) budget.
+#-----------------------------------------------
+#
+VII0VCS0         VCS0                      SNOW (CONV. PART): INITIAL VALUE                            g/kg                     1000.000  0
+VII1VCS1         VCS1                      SNOW (CONV. PART): FINAL VALUE                              g/kg                     1000.000  0
+BUIIVCSM         VCS1         VCS0         SNOW (CONV. PART): MEAN TENDENCY                            g/kg/day             86400000.000  0
+VIIMFCSM         FCSM                      SNOW (CONV. PART)-FLUX: DIAG FINAL - INITIAL                kg/m2/s              86400000.000  0
+DITPFCSAUTOCONV  FCSAUTOCONV               SNOW (CONV. PART): AUTOCONV                                 g/kg/day             86400000.000  0
+DITPFCSEVAPO     FCSEVAPO                  SNOW (CONV. PART): EV + ICINGMELT                           g/kg/day             86400000.000  0
+DITPFCSSEDIM     FCSSEDIM                  SNOW (CONV. PART): SEDIM                                    g/kg/day             86400000.000  0
+DITPFCSED        FCSED                     SNOW (CONV. PART): ENTRAIN-DET                              g/kg/day             86400000.000  0
+DITPFCSCQNG      FCSCQNG                   SNOW (CONV. PART): CORR. NEG.                               g/kg/day             86400000.000  0
+#
+#-------------------------------------------------
+# PCMT convective scheme: QS (Resolved Snow) budget.
+#-------------------------------------------------
+#
+DITPFQSESN       FQSESN                    SNOW (Reso. PART): EV + ICINGMELT                           g/kg/day             86400000.000  0
+#
+#-----------------------------------------------
+# ARPEGE-physics; TKE.
+#-----------------------------------------------
+#
+VII0VKE0         VKE0                      TKE : INITIAL VALUE                                         m2/s2                    1.00000   0
+VII1VKE1         VKE1                      TKE : FINAL VALUE                                           m2/s2                    1.00000   0
+BUIIVKEM         VKE1         VKE0         TKE : MEAN TENDENCY                                         m2/s2/day               86400.00   0
+VIIMFKEM         FKEM                      TKE-FLUX : DIAG FINAL - INITIAL                             SI                      86400.00   0
+#
+#-----------------------------------------------
+# TCT pour bilan ddhb.
+#-----------------------------------------------
+#
+BIIPTCTCOMPL01   TCTCOMPL01                TEMPERATURE : PRINCIPAL TERM                                K/day          85.99506148113663   0
+#
+#-------------------------------------------------
+# Divers provisoires gol.
+#-------------------------------------------------
+#
+PITPFUUX1        FUUX1                     ZONAL WIND  : PROCESSUS CONV X1                             m/s/day              86400.00000   0
+PITPFUUX2        FUUX2                     ZONAL WIND  : PROCESSUS CONV X2                             m/s/day              86400.00000   0
+PITPFUUX3        FUUX3                     ZONAL WIND  : PROCESSUS CONV X3                             m/s/day              86400.00000   0
+PITPFUUTURCCP    FUUTURCCP                 TURCCP                                                      m/s/day              86400.00000   0
+PITPFNNDL        FNNDL                     FNNDL                                                       m/s/day              86400.00000   0
+PITPFNNDM        FNNDM                     FNNDM                                                       m/s/day              86400.00000   0
+#
+#-------------------------------------------------
+# gol.
+#-------------------------------------------------
+#
+VII0VHH0         VHH0                      THH : INITIAL VALUE                                         m2/s2                    1.00000   0
+VII1VHH1         VHH1                      THH : FINAL VALUE                                           m2/s2                    1.00000   0
+BUIIVHHM         VHH1         VHH0         THH : MEAN TENDENCY                                         m2/s2/day               86400.00   0
+#
+#-------------------------------------------------
+# gol debug de la correction d'eau.
+#-------------------------------------------------
+#
+AITPPFCQVNG_01   PFCQVNG_01                WATER VAPOR : CORR QV NEG_01                                g/kg/day             86400000.000  0
+AITPPFCQVNG_02   PFCQVNG_02                WATER VAPOR : CORR QV NEG_02                                g/kg/day             86400000.000  0
+AITPZFCQVNG_020  ZFCQVNG_020               WATER VAPOR : CORR QV ZFCQVNG_020                           g/kg/day             86400000.000  0
+AITPZFCQVNG_021  ZFCQVNG_021               WATER VAPOR : CORR QV ZFCQVNG_021                           g/kg/day             86400000.000  0
+AITPPFCNEGQIC20  PFCNEGQIC20               WATER VAPOR : CORR QV PFCNEGQIC20                           g/kg/day             86400000.000  0
+AITPPFCNEGQLC20  PFCNEGQLC20               WATER VAPOR : CORR QV PFCNEGQLC20                           g/kg/day             86400000.000  0
+AITPPFCNEGQRC20  PFCNEGQRC20               WATER VAPOR : CORR QV PFCNEGQRC20                           g/kg/day             86400000.000  0
+AITPPFCNEGQSC20  PFCNEGQSC20               WATER VAPOR : CORR QV PFCNEGQSC20                           g/kg/day             86400000.000  0
+AITPPFCQVNG_021  PFCQVNG_021               WATER VAPOR : CORR QV PFCQVNG_021                           g/kg/day             86400000.000  0
+AITPZFCQVNG_021  ZFCQVNG_021               WATER VAPOR : CORR QV ZFCQVNG_021                           g/kg/day             86400000.000  0
+AITPPFCNEGQIC21  PFCNEGQIC21               WATER VAPOR : CORR QV PFCNEGQIC21                           g/kg/day             86400000.000  0
+AITPPFCNEGQLC21  PFCNEGQLC21               WATER VAPOR : CORR QV PFCNEGQLC21                           g/kg/day             86400000.000  0
+AITPPFCNEGQLC    PFCNEGQLC                 WATER VAPOR : CORR QV PFCNEGQLC                             g/kg/day             86400000.000  0
+AITPPFCNEGQIC    PFCNEGQIC                 WATER VAPOR : CORR QV PFCNEGQIC                             g/kg/day             86400000.000  0
+AITPPFCNEGQRC21  PFCNEGQRC21               WATER VAPOR : CORR QV PFCNEGQRC21                           g/kg/day             86400000.000  0
+AITPPFCNEGQSC21  PFCNEGQSC21               WATER VAPOR : CORR QV PFCNEGQSC21                           g/kg/day             86400000.000  0
+AITPPFCQVNG_03   PFCQVNG_03                WATER VAPOR : CORR QV NEG_03                                g/kg/day             86400000.000  0
+AITPPFCQVNG_04   PFCQVNG_04                WATER VAPOR : CORR QV NEG_04                                g/kg/day             86400000.000  0
+AITPPFCQVNG_05   PFCQVNG_05                WATER VAPOR : CORR QV NEG_05                                g/kg/day             86400000.000  0
+AITPPFCQVNG_06   PFCQVNG_06                WATER VAPOR : CORR QV NEG_06                                g/kg/day             86400000.000  0
+AITPPFCQVNG_07   PFCQVNG_07                WATER VAPOR : CORR QV NEG_07                                g/kg/day             86400000.000  0
+AITPPFCQVNG_08   PFCQVNG_08                WATER VAPOR : CORR QV NEG_08                                g/kg/day             86400000.000  0
+AITPPFCQVNG_09   PFCQVNG_09                WATER VAPOR : CORR QV NEG_09                                g/kg/day             86400000.000  0
+AITPPFCQVNG_10   PFCQVNG_10                WATER VAPOR : CORR QV NEG_10                                g/kg/day             86400000.000  0
+AITPPFCQNG_M1    PFCQNG_M1                 WATER VAPOR : CORR QV M1                                    g/kg/day             86400000.000  0
+AITPPFCQNG_M2    PFCQNG_M2                 WATER VAPOR : CORR QV M2                                    g/kg/day             86400000.000  0
+AITPPFCQNG_M3    PFCQNG_M3                 WATER VAPOR : CORR QV M3                                    g/kg/day             86400000.000  0
+AITPPFCQSNG_M3   PFCQSNG_M3                WATER VAPOR : CORR QS M3                                    g/kg/day             86400000.000  0
+AITPPFCQSNG_M4   PFCQSNG_M4                WATER VAPOR : CORR QS M4                                    g/kg/day             86400000.000  0
+AITPPFRMH_M4     PFRMH_M4                  tempe: PFRMH          M4                                    g/kg/day             86400000.000  0
+AITPPFCQNG_M4    PFCQNG_M4                 WATER VAPOR : CORR QV M4                                    g/kg/day             86400000.000  0
+AITPPFCQNG_M5    PFCQNG_M5                 WATER VAPOR : CORR QV M5                                    g/kg/day             86400000.000  0
+AITPPFCQNG_M6    PFCQNG_M6                 WATER VAPOR : CORR QV M6                                    g/kg/day             86400000.000  0
+DIIPTZDQC        TZDQC                     TZDQC                                                       quid            1.00000000000000   0
+DIIPTZDQV        TZDQV                     TZDQV                                                       quid            1.00000000000000   0
+AITPFQVCQNG_C1   FQVCQNG_C1                FQVCQNG_C1                                                  g/kg/day             86400000.000  0
+AITPFQVCQNG_M3   FQVCQNG_M3                FQVCQNG_M3                                                  g/kg/day             86400000.000  0
+AITPFQVCQNG_AF   FQVCQNG_AF                FQVCQNG_AF                                                  g/kg/day             86400000.000  0
+AITPFQVCQNG_A2   FQVCQNG_A2                FQVCQNG_A2                                                  g/kg/day             86400000.000  0
+AITPFQVCQVNGA20  FQVCQVNGA20               FQVCQVNGA20                                                 g/kg/day             86400000.000  0
+AITPFQVCQNGZA21  FQVCQNGZA21               FQVCQNGZA21                                                 g/kg/day             86400000.000  0
+AITPFQVCQNGPA21  FQVCQNGPA21               FQVCQNGPA21                                                 g/kg/day             86400000.000  0
+AITPFCICNEG_A21  FCICNEG_A21               FCICNEG_A21                                                 g/kg/day             86400000.000  0
+AITPFCLCNEG_A21  FCLCNEG_A21               FCLCNEG_A21                                                 g/kg/day             86400000.000  0
+AITPFCLCQNG      FCLCQNG                   FCLCQNG                                                     g/kg/day             86400000.000  0
+AITPFCLCQNG_MA   FCLCQNG_MA                FCLCQNG_MA                                                  g/kg/day             86400000.000  0
+AITPFCLCQNG_MB   FCLCQNG_MB                FCLCQNG_MB                                                  g/kg/day             86400000.000  0
+AITPFCLCQNG_MC   FCLCQNG_MC                FCLCQNG_MC                                                  g/kg/day             86400000.000  0
+AITPFCLCQNG_MD   FCLCQNG_MD                FCLCQNG_MD                                                  g/kg/day             86400000.000  0
+AITPFCLCQNG_M2   FCLCQNG_M2                FCLCQNG_M2                                                  g/kg/day             86400000.000  0
+AITPFCLCQNG_ME   FCLCQNG_ME                FCLCQNG_ME                                                  g/kg/day             86400000.000  0
+AITPFCLCQNG_MF   FCLCQNG_MF                FCLCQNG_MF                                                  g/kg/day             86400000.000  0
+AITPFCLCQNG_M5   FCLCQNG_M5                FCLCQNG_M5                                                  g/kg/day             86400000.000  0
+AITPFCLCQNG_M6   FCLCQNG_M6                FCLCQNG_M6                                                  g/kg/day             86400000.000  0
+PITPFCTRMH       FCTRMH                    TEMPERATURE : FCTRMH                                        K/day          85.99506148113663   0
+PITPFCTRMH_M3    FCTRMH_M3                 TEMPERATURE : FCTRMH_M3                                     K/day          85.99506148113663   0

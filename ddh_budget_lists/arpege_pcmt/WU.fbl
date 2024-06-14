@@ -1,0 +1,15 @@
+BUDGET LIST Updraft WU budget
+MAIN WU
+WU
+#-------------------------------------
+BEGIN BLOCK Buoyancy
+TWUBUO
+#-------------------------------------
+BEGIN BLOCK Density currents NHD
+TWUNHD
+#-------------------------------------
+BEGIN BLOCK Friction
+TWUFRI
+#-------------------------------------
+BEGIN BLOCK Advection
+TWUADV

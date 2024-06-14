@@ -1,0 +1,21 @@
+cat <<EOF > lc
+VCT0
+VCT1
+VQV1
+VQL1
+VQI1
+VQR1
+VQS1
+VQG1
+VNT1
+VOM1
+VTE1
+EOF
+net
+rm *.doc
+ddhi DHFDLFCST+0024.domaine4
+for f in *V??1.doc
+do
+	v $f
+	sleep 3
+done

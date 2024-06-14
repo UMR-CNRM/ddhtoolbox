@@ -1,0 +1,15 @@
+BUDGET LIST Downdraft WD budget
+MAIN WD
+WD
+#-------------------------------------
+BEGIN BLOCK Buoyancy
+TWDBUO
+#-------------------------------------
+BEGIN BLOCK Density currents NHD
+TWDNHD
+#-------------------------------------
+BEGIN BLOCK Friction
+TWDFRI
+#-------------------------------------
+BEGIN BLOCK Advection
+TWDADV

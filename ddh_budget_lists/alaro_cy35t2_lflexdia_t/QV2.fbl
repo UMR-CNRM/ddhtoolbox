@@ -1,0 +1,24 @@
+BUDGET LIST Water Vapour 2
+MAIN QV
+QV
+# ---------------------
+BEGIN BLOCK cond
+FQTCONDECOL       
+FQTCONDECON       
+FQTCONDESTL       
+FQTCONDESTN       
+# ---------------------
+BEGIN BLOCK evap
+FQVEVPL -
+FQVEVPN -
+FQRPEVC -
+FQSPEVC -
+# ---------------------
+BEGIN BLOCK tur
+FQVTUR  # VERTICAL DIFFUSION  
+# ---------------------
+BEGIN BLOCK turconv
+FQVTURCONV   # PROCESSUS CONVECTIFS TURBULENTS
+# ---------------------
+BEGIN BLOCK neg
+FQVTURQNEGA   # NEGATIVE CORRECTION OF HUMIDITY

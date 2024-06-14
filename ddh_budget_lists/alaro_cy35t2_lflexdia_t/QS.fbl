@@ -1,0 +1,33 @@
+BUDGET LIST Solid Water
+MAIN QS
+QS
+# ---------------------
+BEGIN BLOCK sumtend
+FQSPEVC +          # evaporation, convective
+FQSPEVS +          # evaporation, resolved
+FQSNG   +          # correction of negative values
+FQSPLC  +          # precipitation, convective
+FQSPLS  +          # precipitation, resolved
+FQNPFPS -          # autoconversion/collection of cloud ice to snow, resolved
+FQNPFPC -          # autoconversion/collection of cloud ice to snow, convect
+# ---------------------
+BEGIN BLOCK evapc
+FQSPEVC  +         # evaporation, convect
+# ---------------------
+BEGIN BLOCK evaps
+FQSPEVS  +         # evaporation, resolved
+# ---------------------
+BEGIN BLOCK autoc
+FQNPFPC -          # autocon, convect
+# ---------------------
+BEGIN BLOCK autos
+FQNPFPS -          # autocon, resolved
+# ---------------------
+BEGIN BLOCK precc
+FQSPLC  +          # precipitation, convect
+# ---------------------
+BEGIN BLOCK precs
+FQSPLS  +          # precipitation, resolved
+# ---------------------
+BEGIN BLOCK neg
+FQSNG  +           # correction of negative values

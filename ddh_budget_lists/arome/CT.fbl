@@ -1,0 +1,25 @@
+BUDGET LIST CT
+MAIN CT
+CT
+#-------------------------------------
+BEGIN BLOCK Radiation: Solar
+FCTRAYSO
+#-------------------------------------
+BEGIN BLOCK Radiation: IR
+FCTRAYTH
+#-------------------------------------
+BEGIN BLOCK Resolved
+TCTADJU
+TCTREVA
+TCTRIM_
+TCTACC_
+TCTCFRZ
+TCTWETG
+TCTDRYG
+TCTGMLT
+TCTIMLT
+TCTBERF
+#-------------------------------------
+BEGIN BLOCK Trans: Subgrid: Tur
+TCTVTUR
+TCTHTUR

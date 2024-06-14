@@ -1,0 +1,43 @@
+BUDGET LIST Temperature budget
+MAIN CT
+CT
+#-------------------------------------
+BEGIN BLOCK Solar rad
+FCTRSO
+#-------------------------------------
+BEGIN BLOCK IR rad
+FCTRTH
+#-------------------------------------
+BEGIN BLOCK Turbulence
+FCTDIFT
+#-------------------------------------
+BEGIN BLOCK Resol cloud: cond + ev
+FCTCSQL
+FCTCSQN
+#-------------------------------------
+BEGIN BLOCK Resol prec: ev + icingmelt + coll
+FCTESL
+FCTESN
+#-------------------------------------
+BEGIN BLOCK Conv: cond
+FCTCCQL
+FCTCCQN
+#-------------------------------------
+BEGIN BLOCK Conv: ev + icingmelt + coll
+FCTECL
+FCTECN
+#-------------------------------------
+BEGIN BLOCK Conv: icingmelt
+FCTIMCC
+#-------------------------------------
+BEGIN BLOCK Conv: transport
+FCTDIFC
+#-------------------------------------
+BEGIN BLOCK Sens heat prec
+FCTSENSPREC
+#-------------------------------------
+BEGIN BLOCK Variable mass
+FCTDPSFI
+#-------------------------------------
+BEGIN BLOCK Mesospheric drag
+FCTRMH

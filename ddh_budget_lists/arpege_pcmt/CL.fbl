@@ -1,0 +1,22 @@
+BUDGET LIST Convective liquid budget
+MAIN CL
+CL
+#-------------------------------------
+BEGIN BLOCK Condens
+FCLCOND
+#-------------------------------------
+BEGIN BLOCK Transport
+FCLDIFC
+#-------------------------------------
+BEGIN BLOCK Entrain-det
+FCLED
+#-------------------------------------
+BEGIN BLOCK Icingmelt
+FCLIM
+#-------------------------------------
+BEGIN BLOCK Autoconv
+FCLAUTOCONV
+#-------------------------------------
+BEGIN BLOCK Corr neg
+FCLCQNG
+

@@ -1,0 +1,19 @@
+BUDGET LIST Resolved snow budget
+MAIN QS
+QS
+#-------------------------------------
+BEGIN BLOCK Autoconv + coll
+FQSASN
+#-------------------------------------
+BEGIN BLOCK Ev + icingmelt
+FQSESN
+#-------------------------------------
+BEGIN BLOCK Sedim
+FQSPN
+#-------------------------------------
+BEGIN BLOCK Entrain-det
+FQSEDCONV
+#-------------------------------------
+BEGIN BLOCK Corr neg
+FQSCQSNG
+

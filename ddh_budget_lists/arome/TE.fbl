@@ -1,0 +1,15 @@
+BUDGET LIST TKE BUDGET
+MAIN TE
+TE
+# --------------------------
+BEGIN BLOCK Dynamical production
+FTEDYPRO
+# --------------------------
+BEGIN BLOCK Thermal production
+FTETERMPRO
+# --------------------------
+BEGIN BLOCK Dissipation
+FTEDISS
+# --------------------------
+BEGIN BLOCK Auto-Transport 
+FTETURB
