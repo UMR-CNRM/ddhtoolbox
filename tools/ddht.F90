@@ -30,6 +30,7 @@ program ddht
 ! 2017-04-14, J.M. Piriou: correction de bogue: en mode calculatrice, ddht utilisait imaxv1 au lieu de jpprod pour monter la pile ou opérer des additions, multiplications, etc. C'est OK si le champ est une variable, mais si le champ est un flux on ne bouclait pas jusqu'au niveau de flux le plus bas. La conséquence en était que ddh_prec, qui utilise "ddht -cCALC", indiquait sur le dernier domaine les RR du niveau KLEV-1 au lieu de KLEV.
 ! 2019-10-23, J.M. Piriou: correction de bogue, lors de l'extraction de niveaux verticaux.
 ! 2019-11-26, J.M. Piriou: suite correction de bogue, lors de l'extraction de niveaux verticaux.
+! 2024-10-04, J.M. Piriou: allow interpolation of DDH file containing surface fields: simply ignore them, no abort.
 ! --------------------------------------------------------------------------
 !
 !-------------------------------------------------
@@ -1441,7 +1442,17 @@ do jlisct=1,ilisct
           if(lgrens) print*,'CHAMPS LIBRES'
           zech1_scal=zech1(1)
           zech2_scal=zech2(1)
-          call somd_libres(cladcou,iul1,iul2,iul3,idocfi1(16),idocfi1(17),zech1_scal,zech2_scal,idom1,idoma,jpdom,indoma)
+          call lfacas(iul2,cladcou,cltypeloc,ilongloc,ireploc)
+          if(irep == 0) then
+            !-------------------------------------------------
+            ! The article exists in file 2.
+            !-------------------------------------------------
+            call somd_libres(cladcou,iul1,iul2,iul3,idocfi1(16),idocfi1(17),zech1_scal,zech2_scal,idom1,idoma,jpdom,indoma)
+          else
+            !-------------------------------------------------
+            ! The article does not exist in file 2. Simply ignore current article.
+            !-------------------------------------------------
+          endif
         else
           !-------------------------------------------------
           ! Autres cas: VCT0, VUU1, FCTRAYSOL1, etc.
@@ -1512,15 +1523,28 @@ do jlisct=1,ilisct
         endif
         zech1_scal=zech1(1)
         zech2_scal=zech2(1)
-        call interpolddh(cladcou,zech1_scal,zech2_scal,zprod1,ilev1,ilev2cou,idom1,idom2,iprod1,jpprod &
-        &,zpre_ini_1,zpre_ini_2 &
-        &,zpre_fin_1,zpre_fin_2 &
-        &,zpre_cum_1,zpre_cum_2 &
-        &,zprod3)
-        !
-        ! Ecriture du tableau resultat.
-        !
-        call lfaecrr(iul3,cladcou,zprod3,iprod3)
+        if(cladcou(1:1) == 'S') then
+          
+          !-------------------------------------------------
+          ! Surface article. No need to interpolate it to another vertical grid.
+          ! Write this article with no interpolation.
+          !-------------------------------------------------
+          call lfaecrr(iul3,cladcou,zprod1,iprod1)
+        else
+          
+          !-------------------------------------------------
+          ! General cas: variable or flux article.
+          !-------------------------------------------------
+          call interpolddh(cladcou,zech1_scal,zech2_scal,zprod1,ilev1,ilev2cou,idom1,idom2,iprod1,jpprod &
+          &,zpre_ini_1,zpre_ini_2 &
+          &,zpre_fin_1,zpre_fin_2 &
+          &,zpre_cum_1,zpre_cum_2 &
+          &,zprod3)
+          !
+          ! Ecriture du tableau resultat.
+          !
+          call lfaecrr(iul3,cladcou,zprod3,iprod3)
+        endif
       elseif(cgconf(1:len_trim(cgconf)) == 'MOY_HORIZ') then
         !
         ! Profil vertical.
