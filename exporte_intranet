@@ -44,10 +44,15 @@ cd $dirloc/..
 tar cvfh ddhtoolbox.tar ddhtoolbox
 #
 #-------------------------------------------------
-# Copie de ce TAR sur Intranet et Lustre.
+# Copie de ce TAR sur Intranet http://intra.cnrm.meteo.fr/gmap-proc/perso/jean-marcel.piriou/NO_SAVE/ddhtoolbox/ddhtoolbox.tar .
 #-------------------------------------------------
 #
 cp ddhtoolbox.tar ~/html/NO_SAVE/ddhtoolbox
+#
+#-----------------------------------------------
+# Copie sur Lustre.
+#-----------------------------------------------
+#
 mv ddhtoolbox.tar /cnrm/proc/piriou
 #
 #-------------------------------------------------

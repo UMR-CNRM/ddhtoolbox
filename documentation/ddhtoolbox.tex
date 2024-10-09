@@ -49,7 +49,7 @@
 
 \p {\bf Graphics:} all ddhtoolbox tools (ddhi, ddhr, ddhb, etc) produce ready-to-plot ASCII files. The user may then use his own graphic tool to plot these ".doc" and ".dta" files: if the environment variable DDH\_PLOT is set, some ddhtoolbox tools call a script which makes the plot (creates a PNG file), starting from the information given by the autodocumentation file (suffix ".doc").
 
-\p Example: the graphics may be done by dd2gr (this tool is available in the present ddhtoolbox) and visualisation by eog (or firefox), setting the environment variables in ".profile" or ".bash\_profile" files: "export DDH\_PLOT=dd2gr ; export VISU\_G=eog". The graphics can also be done by dd2met (written by Yves Bouteloup, based on METVIEW) setting "export DDH\_PLOT=dd2met", or by any plot tool of your own.
+\p Example: the graphics may be done by dd2gr (this tool is available in the present ddhtoolbox) and visualisation by eog (or firefox), setting the environment variables in ".profile" or ".bash\_profile" files: "export DDH\_PLOT=dd2gr". The graphics can also be done by dd2met (written by Yves Bouteloup, based on METVIEW) setting "export DDH\_PLOT=dd2met", or by any plot tool of your own.
 
 \p To visualize the PNG graphics, the default tool is eog. This can be changed in editing the ddhtoolbox/tools/visu script : using the hostname function, one may choose different visualisation tools, depending on the machine (HPC, local PC, etc).
 
