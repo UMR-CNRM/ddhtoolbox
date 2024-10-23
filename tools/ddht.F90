@@ -1844,9 +1844,9 @@ do jmot=1,ilmot
     ! Affichage sur output standard de la distance au domaine le plus proche.
     !-------------------------------------------------
     !
-    write(*,fmt=*) 'ddht: domaine le plus proche: '
-    write(*,fmt=*) '  numéro = ',idom
-    write(*,fmt=*) '  dist(km) = ',zdist/1000.
+    write(*,fmt=*) 'ddht: closest domain: '
+    write(*,fmt=*) '  number = ',idom
+    write(*,fmt=*) '  distance (km) = ',zdist/1000.
   elseif (ipos_tra /= 0) then
     !
     !-------------------------------------------------
@@ -2053,7 +2053,6 @@ do jdom=1,idom
   !
   zproscal_loc=zproscal(zlon,zlat,zlonu,zlatu)
   zdist=6371229.*acos(zproscal_loc)
-  write(*,fmt=*) 'ddht/recherche intermédiaire : domaine n° ',jdom,' distance = ',zdist,' m'
   if(zproscal_loc > zproscalx) then
     !
     !-------------------------------------------------
@@ -2065,6 +2064,9 @@ do jdom=1,idom
     kdom=jdom
     pdist=zdist
     zproscalx=zproscal_loc
+    write(*,fmt=*) 'ddht/domain number ',jdom,' distance = + ',zdist,' m'
+  else
+    write(*,fmt=*) 'ddht/domain number ',jdom,' distance =   ',zdist,' m'
   endif
 enddo
 if(lgdebu) print*,'fin recddpp'
