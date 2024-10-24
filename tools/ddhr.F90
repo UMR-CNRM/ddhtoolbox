@@ -597,14 +597,19 @@ do jficddh=1,ificddh
       open(iuldta,file=clfdta,form='formatted')
       clsaut='999.999 999.999' ! saut de plume.
       ilsaut=len_trim(clsaut)
-      write(iuldoc,fmt='(9a)') '#FORMAT=LLT'
+      write(iuldoc,fmt='(9a)') '#FORMAT=LLV'
       write(iuldoc,'(a,i4.4,4(a,i2.2),3a)') '#DATE=',idatef(1),'-' &
 &       ,idatef(2),'-',idatef(3),' ',idatef(4),':',idatef(5) &
 &       ,' ECH ',clech(1:ilech),'.'
-      write(iuldoc,fmt='(9a)') '#TITRE=Domaines DDH de ',clnfe(1:index(clnfe,' ')-1)
-      write(iuldoc,fmt='(9a)') '#ORIGINE=',clnfe(1:index(clnfe,' ')-1)
+      write(iuldoc,fmt='(9a)') '#TITRE=DDH domains from ',trim(clnfe)
+      write(iuldoc,fmt='(9a)') '#ORIGINE=',trim(clnfe)
       write(iuldoc,fmt='(9a)') '#LEGENDE_X=longitude (deg)'
       write(iuldoc,fmt='(9a)') '#LEGENDE_Y=latitude (deg)'
+      write(iuldoc,fmt='(9a)') ' '
+      write(iuldoc,fmt='(9a)') '#POIN=1.'
+      write(iuldoc,fmt='(9a)') '#LABEL_FORMAT=f4.0'
+      write(iuldoc,fmt='(9a)') '#LABEL_TAILLE=0.3'
+      write(iuldoc,fmt='(9a)') '#LABEL_ANGLE=36.'
     endif
     do jdom=1,idom
       print*,'Domaine ',jdom,':'
@@ -625,9 +630,9 @@ do jficddh=1,ificddh
         zlon=zmodyx(zlon,zm180,z180)
         write(*,fmt='(a,f10.5,a,f10.5)') '  type point, longitude=',zlon,', latitude=',zlat
         if(llddd) then
-          write(iuldta,fmt='(a)') clsaut(1:ilsaut)
-          write(iuldta,*) zlon,zlat
-          write(iuldta,*) zlon,zlat
+          !write(iuldta,fmt='(a)') clsaut(1:ilsaut)
+          write(iuldta,*) zlon,zlat,jdom
+          write(iuldta,*) zlon,zlat,jdom
         endif
       elseif(nint(zdocd(11)) == 2) then
         !
@@ -654,12 +659,12 @@ do jficddh=1,ificddh
         write(*,fmt='(a,f10.5,a,f10.5)') '  coin3: longitude=',zlon3,', latitude=',zlat3
         write(*,fmt='(a,f10.5,a,f10.5)') '  coin4: longitude=',zlon4,', latitude=',zlat4
         if(llddd) then
-          write(iuldta,fmt='(a)') clsaut(1:ilsaut)
-          write(iuldta,*) zlon1,zlat1
-          write(iuldta,*) zlon2,zlat2
-          write(iuldta,*) zlon3,zlat3
-          write(iuldta,*) zlon4,zlat4
-          write(iuldta,*) zlon1,zlat1
+          !write(iuldta,fmt='(a)') clsaut(1:ilsaut)
+          write(iuldta,*) zlon1,zlat1,jdom
+          write(iuldta,*) zlon2,zlat2,jdom
+          write(iuldta,*) zlon3,zlat3,jdom
+          write(iuldta,*) zlon4,zlat4,jdom
+          write(iuldta,*) zlon1,zlat1,jdom
         endif
       elseif(nint(zdocd(11)) == 3) then
         !
@@ -678,12 +683,12 @@ do jficddh=1,ificddh
         write(*,fmt='(a,f10.5,a,f10.5)') '  coin1: longitude=',zlon1,', latitude=',zlat1
         write(*,fmt='(a,f10.5,a,f10.5)') '  coin2: longitude=',zlon2,', latitude=',zlat2
         if(llddd) then
-          write(iuldta,fmt='(a)') clsaut(1:ilsaut)
-          write(iuldta,*) zlon1,zlat1
-          write(iuldta,*) zlon2,zlat1
-          write(iuldta,*) zlon2,zlat2
-          write(iuldta,*) zlon1,zlat2
-          write(iuldta,*) zlon1,zlat1
+          !write(iuldta,fmt='(a)') clsaut(1:ilsaut)
+          write(iuldta,*) zlon1,zlat1,jdom
+          write(iuldta,*) zlon2,zlat1,jdom
+          write(iuldta,*) zlon2,zlat2,jdom
+          write(iuldta,*) zlon1,zlat2,jdom
+          write(iuldta,*) zlon1,zlat1,jdom
         endif
       elseif(nint(zdocd(11)) == 5) then
         !
@@ -699,12 +704,12 @@ do jficddh=1,ificddh
         zlat2=zconrd*asin(1.-(float(jdom))*2./float(idocfi(15)))
         print*,'  type bande zonale, de latitude nord ',zlat1,', moyenne ',zlat,', sud ',zlat2
         if(llddd) then
-          write(iuldta,fmt='(a)') clsaut(1:ilsaut)
-          write(iuldta,*) zm180,zlat1
-          write(iuldta,*)  z180,zlat1
-          write(iuldta,*)  z180,zlat2
-          write(iuldta,*) zm180,zlat2
-          write(iuldta,*) zm180,zlat1
+          !write(iuldta,fmt='(a)') clsaut(1:ilsaut)
+          write(iuldta,*) zm180,zlat1,jdom
+          write(iuldta,*)  z180,zlat1,jdom
+          write(iuldta,*)  z180,zlat2,jdom
+          write(iuldta,*) zm180,zlat2,jdom
+          write(iuldta,*) zm180,zlat1,jdom
         endif
       else
         print*,'ddhr ERREUR: le type de domaine ',nint(zdocd(11)),' n''est pas traité actuellement!...'
