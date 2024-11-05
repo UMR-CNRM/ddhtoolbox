@@ -2,6 +2,12 @@ BUDGET LIST QS
 MAIN QS
 QS
 #-------------------------------------
+#BEGIN BLOCK TQSMICRO
+#TQSMICRO
+#-------------------------------------
+BEGIN BLOCK TQSLARS
+TQSLARS
+#-------------------------------------
 BEGIN BLOCK TQSADJU
 TQSADJU
 #-------------------------------------

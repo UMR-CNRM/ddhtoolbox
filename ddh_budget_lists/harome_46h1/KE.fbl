@@ -11,5 +11,14 @@ TKEPRTH
 BEGIN BLOCK TKEPRTHMF
 TKEPRTHMF
 #-------------------------------------
-BEGIN BLOCK TKEDISS
-TKEDISS
+BEGIN BLOCK TKESHEAR
+TKESHEAR
+#-------------------------------------
+BEGIN BLOCK TKEBUOY
+TKEBUOY
+#-------------------------------------
+BEGIN BLOCK TKEDIFF
+TKEDIFF
+#-------------------------------------
+BEGIN BLOCK TKECASC
+TKECASC
