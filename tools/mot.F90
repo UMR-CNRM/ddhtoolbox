@@ -14,10 +14,10 @@ program mot
 ! En sortie:
 ! --------------------------------------------------------------
 implicit none
-CHARACTER*200 :: CLC
-CHARACTER*200 :: CLCRIM
-CHARACTER*200 :: CLNUM
-CHARACTER*200 :: CLRES
+CHARACTER*2000 :: CLC
+CHARACTER*2000 :: CLCRIM
+CHARACTER*2000 :: CLNUM
+CHARACTER*2000 :: CLRES
 INTEGER(KIND=4) :: IARG
 INTEGER(KIND=4) :: ICRIM
 INTEGER(KIND=4) :: ILMOT

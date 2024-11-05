@@ -16,9 +16,14 @@ pref=$dirloc/.$proc.tmp.$RANDOM # prefix for temporary files.
 # default values:
 bpsdir=${DDHB_BPS}
 
-xcoor=" " ; ycoor="-1VP" # most frequent case: use ddhb to plotting vertical profiles.
-#xcoor=" " ; ycoor="-1VZ" # most frequent case: use ddhb to plotting vertical profiles.
-#xcoor="-1HLAT" ; ycoor="-2VP" # use ddhb to plotting latitude - height cross-sections.
+xcoor=" " ; ycoor="-1VP" # most frequent case: use ddhb to plotting vertical profiles. P: pressure.
+#xcoor=" " ; ycoor="-1VZ" # most frequent case: use ddhb to plotting vertical profiles. Z: altitude.
+#xcoor=" " ; ycoor="-1VN" # most frequent case: use ddhb to plotting vertical profiles. N: model levels.
+
+#xcoor="-1HLAT" ; ycoor="-2VZ" # use ddhb to plotting latitude - altitude cross-sections.
+#xcoor="-1HLAT" ; ycoor="-2VP" # use ddhb to plotting latitude - pressure cross-sections.
+#xcoor="-1HLAT" ; ycoor="-2VN" # use ddhb to plotting latitude - level numbers cross-sections.
+
 #xcoor=" " ; ycoor=" " # use ddhb for global (horizontal and vertical) mean budgets.
 #xcoor="-1JD1" ; ycoor=" " # Julian date.
 
@@ -121,7 +126,6 @@ fi
 
 if [ ! -e ${inputfile} ] ; then
   echo "$proc: Input file " $inputfile "does not exist."
-  usage
   exit 1
 fi
 
@@ -129,7 +133,6 @@ budlist=${bpsdir}/${budvar}.fbl
 if [ ! -e $budlist ] ; then
   echo "$proc: Budget list " $budlist "does not exist."
   echo "$proc: Maybe check settings for $DDHB_BPS?"
-  usage
   exit 1
 fi
 
