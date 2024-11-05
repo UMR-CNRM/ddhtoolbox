@@ -1,42 +1,45 @@
-BUDGET LIST QG
-MAIN QG
-QG
+BUDGET LIST QR
+MAIN QR
+QR
 #-------------------------------------
-#BEGIN BLOCK TQGMICRO
-#TQGMICRO
+#BEGIN BLOCK TQRMICRO
+#TQRMICRO
 #-------------------------------------
-BEGIN BLOCK TQGADJU
-TQGADJU
+BEGIN BLOCK TQRADJU
+TQRADJU
 #-------------------------------------
-BEGIN BLOCK TQGNEGA
-TQGNEGA
+BEGIN BLOCK TQRNEGA
+TQRNEGA
 #-------------------------------------
-BEGIN BLOCK TQGSFR_
-TQGSFR_
+BEGIN BLOCK TQRSFR_
+TQRSFR_
 #-------------------------------------
-BEGIN BLOCK TQGDEPG
-TQGDEPG
+BEGIN BLOCK TQRAUTO
+TQRAUTO
 #-------------------------------------
-BEGIN BLOCK TQGRIM_
-TQGRIM_
+BEGIN BLOCK TQRACCR
+TQRACCR
 #-------------------------------------
-BEGIN BLOCK TQGACC_
-TQGACC_
+BEGIN BLOCK TQRREVA
+TQRREVA
 #-------------------------------------
-BEGIN BLOCK TQGCMEL
-TQGCMEL
+BEGIN BLOCK TQRACC_
+TQRACC_
 #-------------------------------------
-BEGIN BLOCK TQGCFRZ
-TQGCFRZ
+BEGIN BLOCK TQRCFRZ
+TQRCFRZ
 #-------------------------------------
-BEGIN BLOCK TQGWETG
-TQGWETG
+BEGIN BLOCK TQRWETG
+TQRWETG
 #-------------------------------------
-BEGIN BLOCK TQGDRYG
-TQGDRYG
+BEGIN BLOCK TQRDRYG
+TQRDRYG
 #-------------------------------------
-BEGIN BLOCK TQGGMLT
-TQGGMLT
+BEGIN BLOCK TQRGMLT
+TQRGMLT
 #-------------------------------------
-BEGIN BLOCK TQGSEDI
-TQGSEDI
+BEGIN BLOCK TQRSEDI
+TQRSEDI
+#-------------------------------------
+BEGIN BLOCK TQRIMFZ
+TQRIMFZ

@@ -2,14 +2,14 @@ BUDGET LIST QL
 MAIN QL
 QL
 #-------------------------------------
+#BEGIN BLOCK TQLMICRO
+#TQLMICRO
+#-------------------------------------
 BEGIN BLOCK TQLADJU
 TQLADJU
 #-------------------------------------
 BEGIN BLOCK TQLVTUR
 TQLVTUR
-#-------------------------------------
-BEGIN BLOCK TQLHTUR
-TQLHTUR
 #-------------------------------------
 BEGIN BLOCK TQLNEGA
 TQLNEGA
@@ -34,9 +34,6 @@ TQLDRYG
 #-------------------------------------
 BEGIN BLOCK TQLIMLT
 TQLIMLT
-#-------------------------------------
-BEGIN BLOCK TQLBERF
-TQLBERF
 #-------------------------------------
 BEGIN BLOCK TQLSEDI
 TQLSEDI
