@@ -1,0 +1,27 @@
+\frametitle{{\normalsize User Namelist : an example} }
+\vspace*{-0.4cm}
+\begin{exampleblock}{}
+\begin{footnotesize}
+\begin{verbatim}
+ &NAMDDH
+  BDEDDH(1,1)=4., ! domain : a single grid point.
+  BDEDDH(2,1)=1., ! virtual plane.
+  BDEDDH(3,1)=1.374, ! longitude.
+  BDEDDH(4,1)=43.575, ! latitude.
+
+  BDEDDH(1,2)=3., ! domain : rectangle in lat-lon.
+  BDEDDH(2,1)=1., ! virtual plane.
+  BDEDDH(3,2)=0.0, ! corner 1: longitude.
+  BDEDDH(4,2)=45.0, ! corner 1: latitude.
+  BDEDDH(5,2)=0.1, ! corner 2: longitude.
+  BDEDDH(6,2)=44.8, ! corner 2: latitude.
+
+  LHDDOP=.TRUE., ! activates limited aread domains computation.
+  LHDEFD=.TRUE., ! activates limited aread domains output on files.
+  LHDHKS=.TRUE., ! activates the standard DDH fields package.
+  LFLEXDIA=.TRUE., ! activates flexible DDH.
+  LDDH_OMP=.TRUE., ! activates thread-safe DDH.
+ /
+\end{verbatim}
+\end{footnotesize}
+\end{exampleblock}

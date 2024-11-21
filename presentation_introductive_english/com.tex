@@ -1,0 +1,391 @@
+%
+%-----------------------------------------------------------------------
+% Choix de la fonte "times", plus lisible lorsque convertie en PDF.
+%-----------------------------------------------------------------------
+%
+%\usepackage{times}
+%
+%-----------------------------------------------------------------------
+% Package pour disposer des DOI dans la bibliographie.
+%-----------------------------------------------------------------------
+%
+%\documentclass{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[backend=biber]{biblatex} 
+%\usepackage[colorlinks]{hyperref}
+%\ExecuteBibliographyOptions{doi=true}
+%
+%---------------------------------------------------------------------------
+%
+% Commandes communes aux deux langues et aux deux styles.
+%
+%---------------------------------------------------------------------------
+%
+% Caractères spéciaux.
+%
+% Début de paragraphe après ligne section ou chapitre.
+%\newcommand{\pa}{}
+\newcommand{\pa}{\noi}
+%
+% Début de paragraphe au sein d'une section ou chapitre.
+%\newcommand{\p}{\vspace{0.4cm}}
+\newcommand{\p}{\vspace{0.4cm}\noi}
+\newcommand{\xx}{\p [...]}
+\newcommand{\refp}[1]{(\ref{#1} p. \pageref{#1})}
+\newcommand{\euros}{\textgreek{\euro}}
+\newcommand{\lp}{\left(}
+\newcommand{\rp}{\right)}
+\newcommand{\lb}{\left\{}
+\newcommand{\rb}{\right\}}
+\newcommand{\lc}{\, \left[ \,}
+\newcommand{\rc}{\, \right] \,}
+\newcommand{\rd}{\, \right]}
+\newcommand{\mb}{\null}
+%\newcommand{\up}[1]{\raisebox{1ex}{\footnotesize#1}}
+\newcommand{\dpdp}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dd}[2]{\frac{d #1}{d #2}}
+\newcommand{\ta}{{\theta}}
+\newcommand{\tal}{{\theta_L}}
+\newcommand{\tav}{{\theta_V}}
+\newcommand{\tavl}{{\theta_{VL}}}
+\newcommand{\tapw}{{\theta'_{w}}}
+\newcommand{\tae}{{\theta_{E}}}
+\newcommand{\taes}{{\theta_{ES}}}
+\newcommand{\la}{\lambda}
+\newcommand{\vp}{\varphi}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\vt}{\vartheta}
+%
+\renewcommand{\ss}{\scriptstyle}
+\newcommand{\sss}{\scriptscriptstyle}
+\newcommand{\ds}{\displaystyle}
+%
+\newcommand{\noi}{\noindent}
+\newcommand{\hs}{\hspace{1.5em}}
+\newcommand{\ms}{\medskip}
+%
+\newcommand{\bey}{\begin{eqnarray}}
+\newcommand{\eey}{\end{eqnarray}}
+\newcommand{\bez}{\begin{eqnarray*}}
+\newcommand{\eez}{\end{eqnarray*}}
+\newcommand{\bay}{\begin{array}}
+\newcommand{\eay}{\end{array}}
+%
+\newcommand{\ovl}[1]{\mkern1mu\overline{\mkern-1mu#1\mkern-1mu}\mkern1mu}
+\newcommand{\ova}{\overrightarrow}
+%
+%-----------------------------------------------------------------------
+% Ecrire du texte au sein d'une formule.
+%-----------------------------------------------------------------------
+%
+\newcommand{\texte}[1]{\mathop{\rm #1}\nolimits}
+%
+% Trigonométrie et opérateurs.
+\newcommand{\rot}{\mathop{\rm \overrightarrow{\vphantom{i}\rm ro}\mkern-.5mu t}\nolimits}
+%\newcommand{\grad}{\mathop{\rm \overrightarrow{\vphantom{i}\rm gra}d}\nolimits}
+\newcommand{\grad}{\vec{\nabla}}
+\newcommand{\Grad}{\mathop{\rm \bf grad}\nolimits}
+\newcommand{\Div}{\mathop{\rm div}\nolimits}
+\renewcommand{\div}{\mathop{\rm div}\nolimits}
+\newcommand{\Arctan}{\mathop{\rm Arctan}\nolimits}
+\newcommand{\Arccos}{\mathop{\rm Arccos}\nolimits}
+\newcommand{\Arcsin}{\mathop{\rm Arcsin}\nolimits}
+\newcommand{\cotan}{\mathop{\rm cotan}\nolimits}
+\newcommand{\ch}{\mathop{\rm ch}\nolimits}
+\newcommand{\sh}{\mathop{\rm sh}\nolimits}
+%\newcommand{\th}{\mathop{\rm th}\nolimits}
+%
+% Intégrales.
+%\newcommand{\iint}{\int\!\!\!\int}
+%\newcommand{\iiint}{\int\!\!\!\int\!\!\!\int}
+%
+% Date.
+\newcommand{\jjmmaa}{\number\day.\number\month.\number\year}
+%
+% Fonctions texte.
+\newcommand{\ie}{{\em i.e.}}
+\newcommand{\cf}{{\em cf}}
+%
+% Fonctions mathématiques.
+\newcommand{\AdvU}{(\vec{u}\cdot\vec{\nabla})}
+\newcommand{\AdvV}{(\vec{v}\cdot\vec{\nabla})}
+\newcommand{\DerDN}[3]{\frac{\ds d^{#3} #1}{\ds d #2^{#3}}}
+\newcommand{\DerPN}[3]{\frac{\ds \partial^{#3} #1}{\ds \partial #2^{#3}}}
+\newcommand{\DerP}[2]{\frac{\ds \partial #1}{\ds \partial #2}}
+\newcommand{\DerSec}[2]{\frac{\ds {\partial}^{2} #1}{\ds \partial {#2}^{2}}}
+\newcommand{\derx}[1]{\frac{\ds \partial #1}{\partial x}}
+\newcommand{\dery}[1]{\frac{\ds \partial #1}{\partial y}}
+\newcommand{\derz}[1]{\frac{\ds \partial #1}{\partial z}}
+\newcommand{\dert}[1]{\frac{\ds \partial #1}{\partial t}}
+\newcommand{\DerD}[2]{\frac{\ds d #1}{\ds d #2}}
+\newcommand{\us}[1]{\frac{1}{#1}}
+\newcommand{\VarGen}{\mu}
+\newcommand{\ee}[1]{\cdot 10^{#1}}
+%
+% Unités.
+\newcommand{\wm}{W\,m^{-2}}
+%
+% Fonctions ARPEGE.
+\newcommand{\sbou}{{\sc Conv-Arpege-PNT}}
+\newcommand{\sjef}{{\sc Conv-Arpege-Climat}}
+\newcommand{\dpsg}{\frac{\ds dp}{\ds g}}
+\newcommand{\mf}{{\sc Meteo-France}}
+\newcommand{\ARP}{{\sc Arpege}}
+\newcommand{\arp}{{\sc Arpege}}
+\newcommand{\arpala}{{\sc Arpege-Aladin}}
+\newcommand{\arpalaaro}{{\sc Arpege-Aladin-Arome}}
+\newcommand{\alaro}{{\sc Alaro}}
+\newcommand{\aro}{{\sc Arome}}
+\newcommand{\ARO}{{\sc Arome}}
+\newcommand{\arome}{{\sc Arome}}
+\newcommand{\arptro}{{\sc Arpege-Tropiques}}
+\newcommand{\mnh}{{\sc M\'eso-NH}}
+\newcommand{\cnh}{{\sc COME-NH}}
+\newcommand{\eme}{{\sc Emeraude}}
+\newcommand{\ala}{{\sc Aladin}}
+\newcommand{\ALA}{{\sc Aladin}}
+\newcommand{\alanh}{{\sc Aladin-NH}}
+\newcommand{\alae}{{\sc Aladin-Europe Centrale}}
+\newcommand{\alaf}{{\sc Aladin-France}}
+\newcommand{\alam}{{\sc Aladin-Maroc}}
+\newcommand{\arppnt}{{\sc Arpege-PNT}}
+\newcommand{\arpc}{{\sc Arpege-Climat}}
+\newcommand{\ARPC}{{\sc Arpege-Climat}}
+\newcommand{\arpifs}{{\sc Arpege-Ifs}}
+\newcommand{\ifs}{{\sc Ifs}}
+\newcommand{\arpa}{{\sc Arpege-Aladin}}
+\newcommand{\mesonh}{{\sc Méso-NH}}
+\newcommand{\cep}{{\sc CEP}}
+\newcommand{\ecmwf}{{\sc Ecmwf}}
+\newcommand{\grib}{{\sc GRIB}}
+\newcommand{\GRIB}{{\sc GRIB}}
+\newcommand{\re}{r_{\eta}}
+\newcommand{\fp}[1]{F_{p#1}}
+\newcommand{\cp}[1]{{c_{p}}_{#1}}
+\newcommand{\Cp}[1]{{C_{p}}_{#1}}
+\newcommand{\divi}[1]{\div_{#1}}
+\newcommand{\interv}[2]{\lc #1,\,#2\rc}
+\newcommand{\paire}[2]{\lb #1,\,#2\rb}
+\newcommand{\ensemble}[2]{\lb #1,\,..., \, #2\rb}
+%
+\newcommand{\fpcl}[1]{F_{p#1}^{conv-l}}
+\newcommand{\fpcn}[1]{F_{p#1}^{conv-n}}
+\newcommand{\fpsl}[1]{F_{p#1}^{stra-l}}
+\newcommand{\fpsn}[1]{F_{p#1}^{stra-n}}
+\newcommand{\fpl}[1]{F_{p#1}^{l}}
+\newcommand{\fpn}[1]{F_{p#1}^{n}}
+\newcommand{\fccl}[1]{F_{c#1}^{conv-l}}
+\newcommand{\fccn}[1]{F_{c#1}^{conv-n}}
+\newcommand{\fcsl}[1]{F_{c#1}^{stra-l}}
+\newcommand{\fcsn}[1]{F_{c#1}^{stra-n}}
+\newcommand{\fcl}[1]{F_{c#1}^{l}}
+\newcommand{\fcn}[1]{F_{c#1}^{n}}
+\newcommand{\fc}[1]{F_{c#1}}
+%
+\newcommand{\fcptpcl}{F_{{c_p T}_{prec}}^{conv-l}}
+\newcommand{\fcptpcn}{F_{{c_p T}_{prec}}^{conv-n}}
+\newcommand{\fcptpsl}{F_{{c_p T}_{prec}}^{stra-l}}
+\newcommand{\fcptpsn}{F_{{c_p T}_{prec}}^{stra-n}}
+\newcommand{\fcptpl}{F_{{c_p T}_{prec}}^{l}}
+\newcommand{\fcptpn}{F_{{c_p T}_{prec}}^{n}}
+\newcommand{\fcptp}{F_{{c_p T}_{prec}}}
+%
+% Convection.
+\newcommand{\dlnpb}{(\Delta\ln p)^{b}}
+\newcommand{\dlnph}{(\Delta\ln p)^{h}}
+\newcommand{\rbtm}{\tilde R_{b}^{-}}
+\newcommand{\rbtp}{\tilde R_{b}^{+}}
+\newcommand{\rvtp}{\tilde R_{v}^{+}}
+\newcommand{\tdconv}[1]{\lp\DerP{#1}{t}\rp_{conv}}
+\newcommand{\tdconvp}[1]{\lp\DerP{#1}{t}\rp_{conv\_\,prec}}
+\newcommand{\fsd}{F_{s}^{dif\_\,tur}}
+\newcommand{\fqd}{F_{q}^{dif\_\,tur}}
+\newcommand{\fhd}{F_{h}^{dif\_\,tur}}
+\newcommand{\tsd}{T_{s}^{dif\_\,tur}}
+\newcommand{\tqd}{T_{q}^{dif\_\,tur}}
+\newcommand{\thd}{T_{h}^{dif\_\,tur}}
+\newcommand{\tvasc}{\vec{T}_{\vec{v}}^{conv}}
+\newcommand{\omee}{\omega^{*}}
+\newcommand{\omec}{\omega_c}
+%
+%-----------------------------------------------------------------------
+% Commande servant à saisir l'essence d'un paragraphe,
+% lorsqu'on en est, au cours de la rédaction, encore au stade
+% de créer le plan détaillé.
+%-----------------------------------------------------------------------
+%
+\newcommand{\ideepar}[1]{\p[{\bf Paragraphe: }#1]}
+%
+% Guillemets.
+\def\og{\leavevmode\raise.3ex\hbox{$\scriptscriptstyle\langle\!\langle$\kern.05em}}
+\def\fg{\leavevmode\unskip\kern.05em\raise.3ex\hbox{$\scriptscriptstyle\rangle\!\rangle$}}
+%
+% Commande "sujet" ouvrant un nouveau paragraphe séparé du précédent
+% par une ligne horizontale et comportant un titre en gras.
+\newcommand{\sujet}[1]{\noindent\rule{\textwidth}{0.1mm} {\bf \large #1 \newline }}
+%
+% Page de titre, 5 arguments:
+%   1. Titre.
+%   2. Sous-titre.
+%   3. Auteur.
+%   4. Version et/ou date.
+%   5. Nom du fichier graphique à insérer.
+%
+\newcommand{\entete}[6]{
+   {\pagestyle{empty}\null
+   \begin{center}
+   \begin{tabular}{c}
+      \\[1ex] \huge \centerline{#1} \\[1ex]
+      \huge #2 \\[2ex]
+      \Large #3 \\[2ex] \Large #4 \\[1ex]
+   \end{tabular}
+   \end{center}
+   \null\vspace{1cm}
+  \begin{figure}[htbp]
+    \centerline{
+    \includegraphics
+      [angle=0, 
+      keepaspectratio=true,
+      clip=true,#6]
+      {#5}
+    }
+  \end{figure}
+   \newpage\sommaire}}
+%
+%-----------------------------------------------------------------------
+% Graphique commun pour latex et latex2html,
+% d'après Ryad El Khatib le 26.5.2003.
+%-----------------------------------------------------------------------
+%
+\newcommand{\graphryad}[5]
+  {
+  \begin{latexonly}
+    \medskip\par
+  \end{latexonly}
+  \begin{figure}[!h]
+    \label{fig:#1}
+    \html{\htmlimage{align=center,transparent,antialias}}
+    \html{\htmlborder{5}}
+    \centering
+    \html{\includegraphics[angle=#3]{#1.eps}}
+    \latex{\framebox{\includegraphics[scale=#2,angle=#3]{#1.eps}}}
+    \begin{latexonly}
+      \caption[#4]{#5}
+    \end{latexonly}
+  \end{figure}
+  \html{\begin{center}{\bf Figure~\ref{fig:#1}: }\emph{#5}\end{center}}
+  }
+%
+%-----------------------------------------------------------------------
+% Image graphicx en mode figure (ancienne version).
+%-----------------------------------------------------------------------
+%
+\newcommand{\figp}[4]
+  {
+  \begin{figure}[htbp]
+    \centerline{
+      \includegraphics
+        [angle=#3, 
+        width=#2, 
+        keepaspectratio=true,
+        clip=true]
+        {#1}
+    }
+    \caption{#4}
+    \label{#1}
+  \end{figure}
+  }
+%
+%-----------------------------------------------------------------------
+% Image graphicx en mode figure (nouvelle version).
+% [h]: graphique ici.
+% [b]: graphique en bas  de page.
+% [t]: graphique en haut de page.
+% [p]: graphique sur une page à part.
+%-----------------------------------------------------------------------
+%
+\newcommand{\figpn}[6]
+  {
+  \begin{figure}[htbp]
+    \centerline{
+      \includegraphics
+        [angle=#3, 
+        width=#2, 
+        keepaspectratio=true,
+        clip=true]
+        {#1}
+    }
+    \caption{ {\bf #4} {\em #5} {#6} }
+    \label{#1}
+  \end{figure}
+  }
+%
+%-----------------------------------------------------------------------
+% Image graphicx double. I.e. lit 2 fichiers EPS en entrée,
+% et crée une seule figure, avec une seule légende.
+% Un graphique est en haut, l'autre en bas.
+% figdhb: FIGure Double, Haut-Bas.
+%-----------------------------------------------------------------------
+%
+\newcommand{\figdhb}[7]
+  {
+  \begin{figure}[htbp]
+    \centerline{
+      \includegraphics
+        [angle=#4, 
+        width=#3, 
+        keepaspectratio=true,
+        clip=true]
+        {#1}
+    }
+    \centerline{
+      \includegraphics
+        [angle=#4, 
+        width=#3, 
+        keepaspectratio=true,
+        clip=true]
+        {#2}
+    }
+    \caption{ {\bf #5} {\em #6} {#7} }
+    \label{#1}
+  \end{figure}
+  }
+%
+%-----------------------------------------------------------------------
+% Image graphicx double. I.e. lit 2 fichiers EPS en entrée,
+% et crée une seule figure, avec une seule légende.
+% Les 2 graphiques sont côte-à-côte.
+% figdcc: FIGure Double, Côte à Côte.
+%-----------------------------------------------------------------------
+%
+\newcommand{\figdcc}[7]
+  {
+  \begin{figure}[htbp]
+    \centerline{
+      \includegraphics
+        [angle=#4, 
+        width=#3, 
+        keepaspectratio=true,
+        clip=true]
+        {#1}
+      \includegraphics
+        [angle=#4, 
+        width=#3, 
+        keepaspectratio=true,
+        clip=true]
+        {#2}
+    }
+    \caption{ {\bf #5} {\em #6} {#7} }
+    \label{#1}
+  \end{figure}
+  }
+%
+%-----------------------------------------------------------------------
+% Commande vide "£": elle sert seulement à définir une fonction
+% qui ne fait rien sous latex, mais sera reconnue comme
+% une chaîne de caractères par le coloriseur du source TEX.
+% But: rendre des sources TEX plus lisibles, en pouvant coloriser
+% des zones de texte particulières.
+%-----------------------------------------------------------------------
+%
+%\newcommand{\£}{}
