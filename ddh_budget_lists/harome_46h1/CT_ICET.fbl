@@ -3,13 +3,10 @@ MAIN CT
 CT
 #-------------------------------------
 #BEGIN BLOCK TCTMICRO
-#TCTMICRO
+TCTMICRO
 #-------------------------------------
 BEGIN BLOCK TCTDPIC
 TCTDPIC
-#-------------------------------------
-BEGIN BLOCK TCTLARS                     #Together with DPIC replaces BERF
-TCTLARS
 #-------------------------------------
 BEGIN BLOCK TCTADJU
 TCTADJU
@@ -76,3 +73,6 @@ TCTSCDRY
 #-------------------------------------
 BEGIN BLOCK TCTSCMOIST
 TCTSCMOIST
+#-------------------------------------
+BEGIN BLOCK TCTIMFZ
+TCTIMFZ

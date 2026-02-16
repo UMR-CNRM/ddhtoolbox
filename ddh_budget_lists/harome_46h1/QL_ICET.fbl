@@ -1,42 +1,42 @@
-BUDGET LIST QG
-MAIN QG
-QG
+BUDGET LIST QL
+MAIN QL
+QL
 #-------------------------------------
-#BEGIN BLOCK TQGMICRO
-#TQGMICRO
+#BEGIN BLOCK TQLMICRO
+#TQLMICRO
 #-------------------------------------
-BEGIN BLOCK TQGADJU
-TQGADJU
+BEGIN BLOCK TQLADJU
+TQLADJU
 #-------------------------------------
-BEGIN BLOCK TQGNEGA
-TQGNEGA
+BEGIN BLOCK TQLVTUR
+TQLVTUR
 #-------------------------------------
-BEGIN BLOCK TQGSFR_
-TQGSFR_
+BEGIN BLOCK TQLNEGA
+TQLNEGA
 #-------------------------------------
-BEGIN BLOCK TQGDEPG
-TQGDEPG
+BEGIN BLOCK TQLHON_
+TQLHON_
 #-------------------------------------
-BEGIN BLOCK TQGRIM_
-TQGRIM_
+BEGIN BLOCK TQLAUTO
+TQLAUTO
 #-------------------------------------
-BEGIN BLOCK TQGACC_
-TQGACC_
+BEGIN BLOCK TQLACCR
+TQLACCR
 #-------------------------------------
-BEGIN BLOCK TQGCMEL
-TQGCMEL
+BEGIN BLOCK TQLRIM_
+TQLRIM_
 #-------------------------------------
-BEGIN BLOCK TQGCFRZ
-TQGCFRZ
+BEGIN BLOCK TQLWETG
+TQLWETG
 #-------------------------------------
-BEGIN BLOCK TQGWETG
-TQGWETG
+BEGIN BLOCK TQLDRYG
+TQLDRYG
 #-------------------------------------
-BEGIN BLOCK TQGDRYG
-TQGDRYG
+BEGIN BLOCK TQLIMLT
+TQLIMLT
 #-------------------------------------
-BEGIN BLOCK TQGGMLT
-TQGGMLT
+BEGIN BLOCK TQLSEDI
+TQLSEDI
 #-------------------------------------
-BEGIN BLOCK TQGSEDI
-TQGSEDI
+BEGIN BLOCK TQLIMFZ
+TQLIMFZ

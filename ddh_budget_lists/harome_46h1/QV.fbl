@@ -2,14 +2,23 @@ BUDGET LIST QV
 MAIN QV
 QV
 #-------------------------------------
+#BEGIN BLOCK TQVMICRO
+#TQVMICRO
+#-------------------------------------
+#BEGIN BLOCK TQVWETH
+#TQVWETH
+#-------------------------------------
+BEGIN BLOCK TQVDPIC
+TQVDPIC
+#-------------------------------------
+BEGIN BLOCK TQVLARS
+TQVLARS
+#-------------------------------------
 BEGIN BLOCK TQVADJU
 TQVADJU
 #-------------------------------------
 BEGIN BLOCK TQVVTUR
 TQVVTUR
-#-------------------------------------
-BEGIN BLOCK TQVHTUR
-TQVHTUR
 #-------------------------------------
 BEGIN BLOCK TQVNEGA
 TQVNEGA
@@ -25,3 +34,12 @@ TQVDEPG
 #-------------------------------------
 BEGIN BLOCK TQVREVA
 TQVREVA
+#-------------------------------------
+BEGIN BLOCK TQVUP
+TQVUP
+#-------------------------------------
+BEGIN BLOCK TQVSCDRY
+TQVSCDRY
+#-------------------------------------
+BEGIN BLOCK TQVSCMOIST
+TQVSCMOIST
