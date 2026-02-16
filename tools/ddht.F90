@@ -2705,7 +2705,9 @@ if(cgconf(1:5) == 'SOMME'.or.cgconf(1:5) == 'DIFFE') then
   &         .or.cgconf(1:14) == 'SOMME_PONDEREE') then
       call lfaecrr(kul3,cdadcou,zlibres3,kdom)
     elseif(cgconf(1:14) == 'DIFFE_EC2_EC1 ') then
-      if(cdadcou(1:5) == 'SVGFS' .or. (cdadcou(len_trim(cdadcou):len_trim(cdadcou)) /= '0' .and. cdadcou(len_trim(cdadcou):len_trim(cdadcou)) /= '1')) then
+      if(cdadcou(1:5) == 'SVGFS' .or. (cdadcou(len_trim(cdadcou):len_trim(cdadcou)) /= '0' &
+      & .and. cdadcou(len_trim(cdadcou):len_trim(cdadcou)) /= '1') &
+      & .or. trim(cdadcou) =='SVGZ0') then
         !-------------------------------------------------
         ! Cas de variables libres dont le fichier DDH ne contient que la valeur finale (initiale absente).
         ! Exemples: SVGFS01, SVGFS02 (ARPEGE), SVTCLS, SVOROG (AROME), etc.

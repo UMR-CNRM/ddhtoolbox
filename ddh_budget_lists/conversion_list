@@ -728,3 +728,16 @@ AITPFCLCQNG_M5   FCLCQNG_M5                FCLCQNG_M5                           
 AITPFCLCQNG_M6   FCLCQNG_M6                FCLCQNG_M6                                                  g/kg/day             86400000.000  0
 PITPFCTRMH       FCTRMH                    TEMPERATURE : FCTRMH                                        K/day          85.99506148113663   0
 PITPFCTRMH_M3    FCTRMH_M3                 TEMPERATURE : FCTRMH_M3                                     K/day          85.99506148113663   0
+#-----------------------------------------------
+# ARPEGE-physics; MO.
+#-----------------------------------------------
+#
+VII0VMO0         VMO0                      MO : INITIAL VALUE                                          none                    1.00000    0
+VII1VMO1         VMO1                      MO : FINAL VALUE                                            none                    1.00000    0
+BUIIVMOM         VMO1         VMO0         MO : MEAN TENDENCY                                          /day                    86400.00   0
+VIIMFMOM         FMOM                      MO-FLUX : DIAG FINAL - INITIAL                              /day                    86400.00   0
+DIIPTMOREVAP     TMOREVAP                  MO : RAIN EVAPORATION                                       /day                    86400.00   0
+DIIPTMORESWP     TMORESWP                  MO : RESOLVED VERTICAL VELOCITY - POSITIVE                  /day                    86400.00   0
+DIIPTMORESWN     TMORESWN                  MO : RESOLVED VERTICAL VELOCITY - NEGATIVE                  /day                    86400.00   0
+DIIPTMODISS      TMODISS                   MO : MO DISSIPATION                                         /day                    86400.00   0
+

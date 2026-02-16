@@ -7,6 +7,7 @@
 # Externes:
 # Auteur:   97-01, J.M. Piriou.
 # Modifications:
+#   2025-04-24 J.M. Piriou, colorize vertical velocity instead of zonal wind.
 # --------------------------------------------------------------
 # En entrée:
 # En sortie:
@@ -69,7 +70,7 @@ cat <<EOF > calf.nam
     clop3='c3: c23 '
     clop4='c4: c13 chs $rapa * '
     clop5=' '
-    clop6='c5: c33 c6: '
+    clop6='c5: c13 c6: '
     clop7='c7: '
     clop8='c8: '
     clop9='c9: '

@@ -1734,6 +1734,7 @@ subroutine lfaiminmr(kul,cdna,cdtype,klong)
 ! Externes:
 ! Auteur:   97-10, J.M. Piriou.
 ! Modifications:
+!   2026-02-12, J.M. Piriou: prise en compte de NaN éventuels lors de l'impression des min / max / moy d'un article.
 ! --------------------------------------------------------------
 ! En entree:
 ! kul unite logique du fichier LFA d'entree.
@@ -1746,6 +1747,7 @@ subroutine lfaiminmr(kul,cdna,cdtype,klong)
 implicit none
 #include"lfatail.h"
 #include"lfayom.h"
+logical, intrinsic :: isnan
 integer(kind=jpintusr) kul,klong,ilong,ierr,jlong,ilnom &
 &   ,ilmoy,ilrcm,ilmin,ilmax,iopt,inc
 real(kind=jpreeusr) zmin,zmax,zmoy,zrcm
@@ -1753,37 +1755,66 @@ character*2000 clmin,clmax,clmoy,clrcm
 character*2000 cdna
 character*(*) cdtype
 real(kind=jpreeusr) zdon(klong)
+logical :: llnan
 call lfalecr(kul,cdna,klong,zdon,ilong,ierr)
-zmin=zdon(1)
-zmax=zdon(1)
-zmoy=0.
-zrcm=0.
+!
+!-------------------------------------------------
+! On teste s'il y a des NaN dans ces données réelles.
+!-------------------------------------------------
+!
+llnan=.false.
 do jlong=1,ilong
-  if(zdon(jlong) < zmin) zmin=zdon(jlong)
-  if(zdon(jlong) > zmax) zmax=zdon(jlong)
-  zmoy=zmoy+zdon(jlong)
-  zrcm=zrcm+zdon(jlong)*zdon(jlong)
+  if(isnan(zdon(jlong))) llnan=.true.
 enddo
-zmoy=zmoy/real(ilong)
-zrcm=sqrt(zrcm/real(ilong))
-ilnom=len_trim(cdna)
-if(lglang) then
+if(llnan) then
+  !
+  !-------------------------------------------------
+  ! Présence de NaN dans les données. On ne peut calculer les min / max etc.
+  !-------------------------------------------------
+  !
   if(ilong >= 10000000) then
-    write(*,fmt=*) 'l=',ilong,', min= ',zmin,' max= ',zmax,' moy= ',zmoy,' rcm= ',zrcm &
-    & ,'|',cdtype,'| ',cdna(1:ilnom)
+    write(*,fmt=*) 'l=',ilong,'  NaN     , |',cdtype,'| ',cdna(1:ilnom)
   else
-    write(*,'(a,i8,4(a,g11.4),4a)') 'l=',ilong,', min= ',zmin,' max= ',zmax,' moy= ',zmoy,' rcm= ',zrcm &
-    & ,'|',cdtype,'| ',cdna(1:ilnom)
+    write(*,'(a,i8,a,62x,4a)') 'l=',ilong,', NaN','  |',cdtype,'| ',cdna(1:ilnom)
   endif
-else
-  if(ilong >= 10000000) then
-    write(*,fmt=*) 'l=',ilong,', min= ',zmin,' max= ',zmax,' mea= ',zmoy,' rms= ',zrcm &
-    & ,'|',cdtype,'| ',cdna(1:ilnom)
+else ! llnan
+  !
+  !-------------------------------------------------
+  ! Absence de NaN dans les données. 
+  ! Calcul de min / max / moy.
+  !-------------------------------------------------
+  !
+  zmin=zdon(1)
+  zmax=zdon(1)
+  zmoy=0.
+  zrcm=0.
+  do jlong=1,ilong
+    if(zdon(jlong) < zmin) zmin=zdon(jlong)
+    if(zdon(jlong) > zmax) zmax=zdon(jlong)
+    zmoy=zmoy+zdon(jlong)
+    zrcm=zrcm+zdon(jlong)*zdon(jlong)
+  enddo
+  zmoy=zmoy/real(ilong)
+  zrcm=sqrt(zrcm/real(ilong))
+  ilnom=len_trim(cdna)
+  if(lglang) then
+    if(ilong >= 10000000) then
+      write(*,fmt=*) 'l=',ilong,', min= ',zmin,' max= ',zmax,' moy= ',zmoy,' rcm= ',zrcm &
+      & ,'|',cdtype,'| ',cdna(1:ilnom)
+    else
+      write(*,'(a,i8,4(a,g11.4),4a)') 'l=',ilong,', min= ',zmin,' max= ',zmax,' moy= ',zmoy,' rcm= ',zrcm &
+      & ,'|',cdtype,'| ',cdna(1:ilnom)
+    endif
   else
-    write(*,'(a,i8,4(a,g11.4),4a)') 'l=',ilong,', min= ',zmin,' max= ',zmax,' mea= ',zmoy,' rms= ',zrcm &
-    & ,'|',cdtype,'| ',cdna(1:ilnom)
+    if(ilong >= 10000000) then
+      write(*,fmt=*) 'l=',ilong,', min= ',zmin,' max= ',zmax,' mea= ',zmoy,' rms= ',zrcm &
+      & ,'|',cdtype,'| ',cdna(1:ilnom)
+    else
+      write(*,'(a,i8,4(a,g11.4),4a)') 'l=',ilong,', min= ',zmin,' max= ',zmax,' mea= ',zmoy,' rms= ',zrcm &
+      & ,'|',cdtype,'| ',cdna(1:ilnom)
+    endif
   endif
-endif
+endif ! llnan
 end
 subroutine lfainoma(kascii,knoma,kna,cdna)
 ! --------------------------------------------------------------

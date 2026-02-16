@@ -111,6 +111,7 @@ on DDH files are described in the following sections.
 \p See section \refp{stebs} for examples of use.
 
 \subsection{ddhi: interpretation}
+\subsubsection{Standard use}
 
 \p ddhi makes an interpretation of the raw data from a DDH file, in order to get
 ready to plot data, with intensive units (K/day, g/kg, etc).
@@ -155,6 +156,7 @@ tells ddhi how to convert each DDH article.
 
 \p ddhi produces in output ASCII files:
 \begin{itemize}
+  [label=\textbullet]
   \item a ".doc" file per field, containing autodocumentation (title, unit, base, prediction range, etc)
   \item a ".dta" file per field, containing the data in columns.
 \end{itemize}
@@ -164,11 +166,75 @@ by ddhi, type "lfaminm FDDH", where FDDH is the name of the DDH file.
 This gives the list of all articles. The variables are article names beginning with "V",
 the tendencies are article names beginning with "T", the fluxes are article names beginning with "F".
 These article names can be put the "mylist" file as described above.
-If one of these articles is not present in the conversion list file DDHI\_LIST, ddhi will not know
-how to convert it. In this case, simply edit the DDHI\_LIST file, and add a line describing how
-this article has to be converted.
 
 \p See section \refp{stebs} for examples of use.
+
+\p If one of these articles is not present in the conversion list file DDHI\_LIST, 
+\begin{itemize}
+  [label=\textbullet]
+  \item ddhi will try to guess what to do, depending on the article name. For example, if the article name begins with 'FQ', ddhi guesses this is a water flux governing the tendency of an intensive "$q$" quantity (like $q_v$, $q_i$, $q_l$, etc) and sets the conversion method to: vertical flux divergency, multiplying by 1000 to convert $kg/kg$ into $g/kg$ units, etc. The user can see which conversion ddhi operates for each field, as reading ddhi standard output.
+  \item If the article is neither in the conversion list file DDHI\_LIST nor can be guessed from its name, ddhi will not know how to convert it. In this case, simply edit the DDHI\_LIST file, and add a line describing how this article has to be converted. The section just below explains the DDHI\_LIST file format.
+\end{itemize}
+
+\subsubsection{Advanced use: add new fields in the ddhi conversion list}
+
+\p The DDHI\_LIST file, containing the conversion list used by ddhi, has the following format: one line per field to convert, the format to read is format(4a1,3a13,a60,a15,f18.6,i3) : 
+\begin{itemize}
+  [label=\textbullet]
+  \item 1 character: First character on the line: not used by ddhi.
+  \item 1 character: Second character on the line: operations on 2 fields.
+    \begin{itemize}
+      \item I: none.
+      \item S: c1+C2.
+      \item D: c2-c1
+      \item F: (c2-c1)/time ; time is the DDH LFA "ECHEANCE" article.
+      \item G: (c2-c1)/time ; time is the DDH LFA "ECHEANCEDV" article.
+      \item N: c2/vpp1-c1/vpp0
+      \item T: (c2/vpp1-c1/vpp0)/time ; time is the DDH LFA "ECHEANCE" article.
+      \item U: (c2/vpp1-c1/vpp0)/time ; time is the DDH LFA "ECHEANCEDV" article.
+      \item R: c2/c1
+    \end{itemize}
+  \item 1 character: Third character on the line: vertical processing:
+    \begin{itemize}
+      [label=\textbullet]
+      \item I: none.
+      \item C: vertical integration.
+      \item T: vertical divergency: "level" minus "level-1"
+      \item F: "level" minus "level 0"
+    \end{itemize}
+  \item 1 character: Fourth character on the line: normalization by mass: 
+    \begin{itemize}
+      [label=\textbullet]
+      \item I: none.
+      \item 0: VPP0 (initial mass field)
+      \item 1: VPP1 (final mass field)
+      \item P: PPP (integrated in time mass field)
+      \item M: PPP/time ; time is the DDH LFA "ECHEANCE" article.
+      \item D: time (article ECHEANCE)
+      \item V: time (article ECHEANCEDV)
+      \item X: (PPP/time)/(-0.5*(Vxx0/VPP0+Vxx1/VPP1))
+    \end{itemize}
+  \item 13 characters: Characters 5 to 17 : article name in the "mylist" file as described above.
+  \item 13 characters: Characters 18 to 30 : article name in the DDH LFA file.
+  \item 13 characters: Characters 31 to 43 : second article name in the DDH LFA file, in the case of operating 2 fields by ddhi.
+  \item 60 characters: Characters 44 to 103 : clear name of the field, to be used as title in the plots.
+  \item 15 characters: Characters 104 to 118 : unit.
+  \item 18 characters: 119 to 136: conversion factor (real number).
+  \item 3 characters: 137 to 139. logarithmic scale (integer, power of ten to be applied).
+\end{itemize}
+
+\p Example: the following line
+{\tiny \begin{verbatim} 
+PITPFQVTUR       FQVTUR                    WATER VAPOR : VERTICAL DIFFUSION                            g/kg/day             86400000.000  0
+\end{verbatim}}
+\noi in the DDHI\_LIST file indicates that the DDH article FQVTUR in the LFA file
+\begin{itemize}
+  [label=\textbullet]
+  \item Characters 3 to 5 are ITP: I means no operation on 2 fields; T means vertical divergency (convert a flux into a tendency); P means normalize my mass integrated in time.
+  \item The field will be multiplied by 86400000.000 (86400 to convert a second to a day, and 1000 to convert $kg/kg$ to $g/kg$).
+  \item Its clear name -to title in the graphics- is "WATER VAPOR : VERTICAL DIFFUSION".
+  \item The output unit is $g/kg/day$.
+\end{itemize}
 
 \subsection{ddhb: budgets of prognostic variables}
 

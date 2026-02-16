@@ -217,7 +217,7 @@ character *15 clunite ! unité de la grandeur finale.
 character *13 cllislc(jpnomct) ! lignes de la liste des champs utilisateur.
 character *200 cllislcc(jpnomct) ! titre du champ fourni par l'utilisateur.
 character *139 cllisconv(jpnomct)
-character *100 cliscfile ! file with all field descriptions.
+character *200 cliscfile ! file with all field descriptions.
 character *200 clart(jpnomct)
 character*1 clbif
 character*1 clut ! unité de temps (J pour jours, A pour années).
