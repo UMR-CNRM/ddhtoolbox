@@ -1,0 +1,23 @@
+BUDGET LIST TEMPERATURE BUDGET
+MAIN CT
+CT
+# --------------------------
+BEGIN BLOCK Solar absorption
+FCTRAYSOL1 
+# --------------------------
+BEGIN BLOCK Infra-red radiation
+FCTRAYTER1 
+# --------------------------
+BEGIN BLOCK Turbulence
+FCTTUR  
+# --------------------------
+BEGIN BLOCK Other processes
+FCTPRECISTL  
+FCTPRECISTN 
+FCTPRECCSSTL  
+FCTPRECCSSTN 
+FCTPRECICOL 
+FCTPRECICON 
+FCTPRECCSCOL  
+FCTPRECCSCON
+FCTTURCONV 

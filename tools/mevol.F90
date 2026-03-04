@@ -107,8 +107,8 @@ lgdiff=.false.
 gprof=0.
 llcompo=.false. ! vrai si l'utilisateur veut créer une image composite.
 clfcompo='mevol.composite.gif'
-ixcompo=600
-iycompo=480
+ixcompo=1500
+iycompo=1200
 zprr=35. ! seuil de RR en mm/jour, conditionnant la densité de points tracés.
 !
 ! -------------------------------------------------

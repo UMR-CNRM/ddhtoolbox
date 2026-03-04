@@ -1,0 +1,156 @@
+BUDGET LIST QT
+MAIN QS
+QS
+QV
+QI
+QR
+QL
+#-------------------------------------
+BEGIN BLOCK FQVTUR FQVTUR
+#-------------------------------------
+BEGIN BLOCK FQVTURCONV FQVTURCONV
+#-------------------------------------
+BEGIN BLOCK FQVCQNG faible
+FQVCQNG
+#-------------------------------------
+BEGIN BLOCK FQVCCQL 
+FQVCCQL
+#-------------------------------------
+BEGIN BLOCK FQVCCQN 
+FQVCCQN
+#-------------------------------------
+BEGIN BLOCK FQVCSQL 
+FQVCSQL
+#-------------------------------------
+BEGIN BLOCK FQVCSQN 
+FQVCSQN
+#-------------------------------------
+BEGIN BLOCK FQVESL 
+FQVESL
+#-------------------------------------
+BEGIN BLOCK FQVESN 
+FQVESN
+#-------------------------------------
+#BEGIN BLOCK FQVESG  000
+#-------------------------------------
+#BEGIN BLOCK FQVECL  000
+#-------------------------------------
+#BEGIN BLOCK FQVECN  000
+#-------------------------------------
+BEGIN BLOCK TQVSL
+
+
+
+#-------------------------------------
+BEGIN BLOCK FQLDIFT FQLDIFT
+#-------------------------------------
+BEGIN BLOCK FQLDIFTC FQLDIFTC 000
+#-------------------------------------
+BEGIN BLOCK FQLCQLNG faible
+FQLCQLNG
+#-------------------------------------
+BEGIN BLOCK FQLACL 
+FQLACL
+#-------------------------------------
+BEGIN BLOCK FQLASL 
+FQLASL
+#-------------------------------------
+BEGIN BLOCK FQLCSQL 
+FQLCSQL
+#-------------------------------------
+BEGIN BLOCK FQLCCQL 
+FQLCCQL
+#-------------------------------------
+BEGIN BLOCK TQLSL 
+
+
+
+
+
+#-------------------------------------
+BEGIN BLOCK FQIDIFT FQIDIFT
+#-------------------------------------
+BEGIN BLOCK FQIDIFTC FQIDIFTC 000
+#-------------------------------------
+BEGIN BLOCK FQICQING faible
+FQICQING
+#-------------------------------------
+BEGIN BLOCK FQIACN 
+FQIACN
+#-------------------------------------
+BEGIN BLOCK FQIASN 
+FQIASN
+#-------------------------------------
+BEGIN BLOCK FQICSQN 
+FQICSQN
+#-------------------------------------
+BEGIN BLOCK FQICCQN 
+FQICCQN
+#-------------------------------------
+BEGIN BLOCK TQISL
+
+
+
+
+#-------------------------------------
+BEGIN BLOCK FQRCQRNG faible
+FQRCQRNG
+#-------------------------------------
+BEGIN BLOCK FQRESL 
+FQRESL
+#-------------------------------------
+BEGIN BLOCK FQRPL
+FQRPL
+
+#-------------------------------------
+BEGIN BLOCK FQRACL 
+FQRACL
+#-------------------------------------
+BEGIN BLOCK FQRASL 
+FQRASL
+#-------------------------------------
+#BEGIN BLOCK FQRECL  000
+#-------------------------------------
+BEGIN BLOCK TQRSL 
+
+
+
+
+#-------------------------------------
+BEGIN BLOCK FQSCQSNG faible
+FQSCQSNG
+#-------------------------------------
+BEGIN BLOCK FQSESN 
+FQSESN
+#-------------------------------------
+BEGIN BLOCK FQSPN
+FQSPN
+
+#-------------------------------------
+BEGIN BLOCK FQSACN 
+FQSACN
+#-------------------------------------
+BEGIN BLOCK FQSASN 
+FQSASN
+#-------------------------------------
+#BEGIN BLOCK FQSECN 000
+#-------------------------------------
+BEGIN BLOCK TQSSL 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

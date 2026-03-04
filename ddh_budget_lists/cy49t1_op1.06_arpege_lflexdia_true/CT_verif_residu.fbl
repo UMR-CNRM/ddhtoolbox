@@ -1,0 +1,44 @@
+BUDGET LIST CT
+MAIN CT
+CT
+#-------------------------------------
+BEGIN BLOCK Raynmt
+FCTRSO
+FCTRTH
+FCTRMH
+#-------------------------------------
+BEGIN BLOCK Mélange
+FCTDIFT
+FCTDIFC
+#-------------------------------------
+BEGIN BLOCK Precipitation
+FCTCCQL 
+FCTCCQN
+FCTESN
+FCTCSQN
+FCTESL
+FCTCSQL
+FCTSENSPREC
+
+
+
+#-------------------------------------
+BEGIN BLOCK TCTSL 
+TCTSL
+#-------------------------------------
+BEGIN BLOCK TCTSI
+TCTSI
+
+#-------------------------------------
+BEGIN BLOCK TCTCONVERSI 
+TCTCONVERSI 
+
+#-------------------------------------
+BEGIN BLOCK Nul
+FCTECL 
+FCTECN
+FCTESG
+FCTDPSFI
+FCTIMCC
+
+

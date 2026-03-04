@@ -1,0 +1,52 @@
+BUDGET LIST CT
+MAIN CT
+CT
+#-------------------------------------
+BEGIN BLOCK Solar radiation
+FCTRSO
+#-------------------------------------
+BEGIN BLOCK Thermal radiation
+FCTRTH
+#-------------------------------------
+BEGIN BLOCK Turbulence
+FCTDIFFTURB
+#-------------------------------------
+BEGIN BLOCK Deep CV diff
+FCTDIFFDC
+#-------------------------------------
+BEGIN BLOCK Deep CV condens
+FCTCCQL 
+FCTCCQN
+#-------------------------------------
+BEGIN BLOCK Deep CV sens. prec
+FCTCSPRECCL
+FCTCSPRECCN
+#-------------------------------------
+BEGIN BLOCK Deep CV evap
+FCTECL 
+FCTECN
+#-------------------------------------
+BEGIN BLOCK Resolved sens. prec
+FCTCSPRECSL
+FCTCSPRECSN
+#-------------------------------------
+BEGIN BLOCK Semi-lag adv
+TCTSL
+#-------------------------------------
+BEGIN BLOCK Semi-lag semi-impl
+TCTSI
+#-------------------------------------
+BEGIN BLOCK TCTCONVERSI
+TCTCONVERSI
+#-------------------------------------
+BEGIN BLOCK FCTESG
+FCTESG
+#-------------------------------------
+BEGIN BLOCK FCTDPSFI
+FCTDPSFI
+#-------------------------------------
+BEGIN BLOCK FCTIMCC
+FCTIMCC
+#-------------------------------------
+BEGIN BLOCK Mesospheric drag
+FCTRMH

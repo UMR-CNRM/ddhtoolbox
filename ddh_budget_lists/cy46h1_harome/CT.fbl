@@ -1,0 +1,78 @@
+BUDGET LIST CT
+MAIN CT
+CT
+#-------------------------------------
+#BEGIN BLOCK TCTMICRO
+#TCTMICRO
+#-------------------------------------
+BEGIN BLOCK TCTDPIC
+TCTDPIC
+#-------------------------------------
+BEGIN BLOCK TCTLARS                     #Together with DPIC replaces BERF
+TCTLARS
+#-------------------------------------
+BEGIN BLOCK TCTADJU
+TCTADJU
+#-------------------------------------
+BEGIN BLOCK FCTRAYSO
+FCTRAYSO
+#-------------------------------------
+BEGIN BLOCK FCTRAYTH
+FCTRAYTH
+#-------------------------------------
+BEGIN BLOCK TCTVTUR
+TCTVTUR
+#-------------------------------------
+BEGIN BLOCK TCTRAD
+TCTRAD
+#-------------------------------------
+BEGIN BLOCK TCTNEGA
+TCTNEGA
+#-------------------------------------
+BEGIN BLOCK TCTHENU
+TCTHENU
+#-------------------------------------
+BEGIN BLOCK TCTHON_
+TCTHON_
+#-------------------------------------
+BEGIN BLOCK TCTSFR_
+TCTSFR_
+#-------------------------------------
+BEGIN BLOCK TCTDEPS
+TCTDEPS
+#-------------------------------------
+BEGIN BLOCK TCTDEPG
+TCTDEPG
+#-------------------------------------
+BEGIN BLOCK TCTREVA
+TCTREVA
+#-------------------------------------
+BEGIN BLOCK TCTRIM_
+TCTRIM_
+#-------------------------------------
+BEGIN BLOCK TCTACC_
+TCTACC_
+#-------------------------------------
+BEGIN BLOCK TCTCFRZ
+TCTCFRZ
+#-------------------------------------
+BEGIN BLOCK TCTWETG
+TCTWETG
+#-------------------------------------
+BEGIN BLOCK TCTDRYG
+TCTDRYG
+#-------------------------------------
+BEGIN BLOCK TCTGMLT
+TCTGMLT
+#-------------------------------------
+BEGIN BLOCK TCTIMLT
+TCTIMLT
+#-------------------------------------
+BEGIN BLOCK TCTUP
+TCTUP
+#-------------------------------------
+BEGIN BLOCK TCTSCDRY
+TCTSCDRY
+#-------------------------------------
+BEGIN BLOCK TCTSCMOIST
+TCTSCMOIST

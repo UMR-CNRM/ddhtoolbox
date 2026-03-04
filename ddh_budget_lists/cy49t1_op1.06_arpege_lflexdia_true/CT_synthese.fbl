@@ -1,0 +1,53 @@
+BUDGET LIST CT
+MAIN CT
+CT
+#-------------------------------------
+BEGIN BLOCK Radiation: Solar
+FCTRSO
+#-------------------------------------
+BEGIN BLOCK Radiation: IR
+FCTRTH
+#-------------------------------------
+BEGIN BLOCK Trans: Subgrid Tur + Shallow CV
+FCTDIFFTURB
+FCTDIFFSC
+#-------------------------------------
+BEGIN BLOCK Trans: Subgrid CV
+FCTDIFFDC
+#-------------------------------------
+BEGIN BLOCK Condens: Resolved
+FCTCSQL
+FCTCSQN
+FCTESL
+FCTESN
+FCTCSPRECSL
+FCTCSPRECSN
+#-------------------------------------
+BEGIN BLOCK Condens: Subgrid CV
+FCTCCQL 
+FCTCCQN
+FCTCSPRECCL
+FCTCSPRECCN
+FCTECL 
+FCTECN
+#-------------------------------------
+BEGIN BLOCK Trans: Semi-lag adv
+TCTSL
+##-------------------------------------
+#BEGIN BLOCK Trans: Semi-lag semi-impl
+#TCTSI
+##-------------------------------------
+#BEGIN BLOCK TCTCONVERSI
+#TCTCONVERSI
+##-------------------------------------
+#BEGIN BLOCK FCTESG
+#FCTESG
+##-------------------------------------
+#BEGIN BLOCK FCTDPSFI
+#FCTDPSFI
+##-------------------------------------
+#BEGIN BLOCK FCTIMCC
+#FCTIMCC
+##-------------------------------------
+#BEGIN BLOCK Mesospheric drag
+#FCTRMH

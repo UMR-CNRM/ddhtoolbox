@@ -1,0 +1,15 @@
+BUDGET LIST MO
+MAIN MO
+MO
+#-------------------------------------
+BEGIN BLOCK Rain evaporation new
+TMOREVAP
+#-------------------------------------
+BEGIN BLOCK Resolved vertical wind - Positive
+TMORESWP
+#-------------------------------------
+BEGIN BLOCK Resolved vertical wind - Negative
+TMORESWN
+#-------------------------------------
+BEGIN BLOCK Dissipation
+TMODISS

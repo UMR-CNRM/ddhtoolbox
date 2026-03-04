@@ -1,0 +1,87 @@
+BUDGET LIST CT
+MAIN CT
+CT
+#-------------------------------------
+BEGIN BLOCK FCTRSO
+FCTRSO
+#-------------------------------------
+BEGIN BLOCK FCTRTH
+FCTRTH
+#-------------------------------------
+BEGIN BLOCK FCTRMH
+FCTRMH
+#-------------------------------------
+BEGIN BLOCK FCTDIFT
+FCTDIFT
+#-------------------------------------
+BEGIN BLOCK FCTDIFC
+FCTDIFC
+#-------------------------------------
+BEGIN BLOCK FCTCCQL 
+FCTCCQL 
+#-------------------------------------
+BEGIN BLOCK FCTCCQN
+FCTCCQN
+#-------------------------------------
+BEGIN BLOCK FCTESN FCTCSQN
+FCTESN
+FCTCSQN
+#-------------------------------------
+BEGIN BLOCK FCTESL FCTCSQL
+FCTESL
+FCTCSQL
+#-------------------------------------
+BEGIN BLOCK FCTSENSPREC
+FCTSENSPREC
+
+
+
+#-------------------------------------
+BEGIN BLOCK TCTSL 
+TCTSL
+#-------------------------------------
+BEGIN BLOCK TCTSI
+TCTSI
+
+#-------------------------------------
+BEGIN BLOCK FCTFLUVERTDYN nexiste pas
+
+#-------------------------------------
+BEGIN BLOCK TCTCONVERSI
+TCTCONVERSI
+#-------------------------------------
+BEGIN BLOCK TCTCONVERSI3 nexiste pas
+
+#-------------------------------------
+BEGIN BLOCK TCTDIVFLUHOR nexiste pas
+
+
+#-------------------------------------
+BEGIN BLOCK FCTPRECISTG nexiste pas
+
+#-------------------------------------
+BEGIN BLOCK FCTPRECICOG nexiste pas
+
+#-------------------------------------
+BEGIN BLOCK FCTPRECCSSTG nexiste pas
+
+
+
+
+
+#-------------------------------------
+BEGIN BLOCK FCTECL 0
+FCTECL 
+#-------------------------------------
+BEGIN BLOCK FCTECN 0
+FCTECN
+#-------------------------------------
+BEGIN BLOCK FCTESG 0
+FCTESG
+#-------------------------------------
+BEGIN BLOCK FCTDPSFI 0
+FCTDPSFI
+#-------------------------------------
+BEGIN BLOCK FCTIMCC 0
+FCTIMCC
+

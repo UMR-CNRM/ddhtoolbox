@@ -1,0 +1,38 @@
+BUDGET LIST QL
+MAIN QL
+QL
+#-------------------------------------
+BEGIN BLOCK FQLDIFT
+FQLDIFT
+#-------------------------------------
+BEGIN BLOCK FQLDIFC 000
+FQLDIFC
+#-------------------------------------
+BEGIN BLOCK FQLCQLNG 
+FQLCQLNG
+
+#-------------------------------------
+BEGIN BLOCK FQLACL 
+FQLACL 
+#-------------------------------------
+BEGIN BLOCK FQLASL 
+FQLASL
+#-------------------------------------
+BEGIN BLOCK FQLCSQL
+FQLCSQL 
+#-------------------------------------
+BEGIN BLOCK FQLCCQL 
+FQLCCQL 
+
+
+#-------------------------------------
+BEGIN BLOCK TQLSL
+TQLSL
+#-------------------------------------
+BEGIN BLOCK TQLDIVFLUHOR nexiste pas
+
+#-------------------------------------
+BEGIN BLOCK FQLFLUVERTDYN nexiste pas
+
+
+
