@@ -2,7 +2,7 @@ MODULE parametres
 #include"implicit_r8i4.h"
 SAVE
 integer(kind=4) :: ncourbes,nchamp,nxlegende,nylegende
-character(len=400) cgformat,cgdate,cginterpole,cgtitre,cgunite &
+character(len=400) cgformat,cgdate,cginterpole,cgtitre,cgunite,cguniv &
 &,cgorigine,cglegx,cglegy,cglegende,cglang
 character(len=400) :: cgcoult ! couleur du titre.
 integer(kind=4), parameter :: jpcourbes=100
@@ -87,6 +87,8 @@ real(kind=8) :: rymax
 !
 real(kind=8) :: rgpointage ! valeur utilisateur spécifiant qu'une donnée est là simplement pour mettre un disque noir en ce lieu.
 real(kind=8) :: rgfacp ! FACteur multiplicatif du rayon du point noir dans l'option rgpointage.
+real(kind=8) :: rgmult ! FACteur multiplicatif s'appliquant au champ, demandé par l'utilisateur.
+real(kind=8) :: rgadd ! FACteur additif s'appliquant au champ, demandé par l'utilisateur.
 logical :: lgpoil ! POIntage de Lieux.
 !
 !-------------------------------------------------

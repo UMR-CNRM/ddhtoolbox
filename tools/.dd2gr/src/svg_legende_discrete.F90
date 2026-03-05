@@ -1,4 +1,4 @@
-subroutine svg_legende_discrete(kn,krvb_palette,pseuil,cdunite)
+subroutine svg_legende_discrete(kn,krvb_palette,pseuil)
 ! --------------------------------------------------------------
 ! **** *svg_legende_discrete*
 ! --------------------------------------------------------------
@@ -19,7 +19,6 @@ subroutine svg_legende_discrete(kn,krvb_palette,pseuil,cdunite)
 !    kn: nombre de seuils fournis; c'est aussi le nombre de palettes colorées - 1.
 !    krvb_palette(kn+1,3): (R,V,B) de chaque palette colorée associée au texte.
 !    pseuil(kn): seuils déterminant la frontière entre chaque classe.
-!    cdunite: unité du champ dont on trace la légende (i.e. unité physique des seuils).
 ! En sortie:
 !    écriture d'un fichier SVG, d'unité logique nulsvg.
 ! --------------------------------------------------------------
@@ -35,7 +34,6 @@ use parametres
 !
 integer(kind=4), intent(in) :: krvb_palette(3,kn+1)
 real(kind=8), intent(in) :: pseuil(kn)
-character*(*), intent(in) :: cdunite
 integer(kind=4) :: iloc(3)
 if(lgpubli) then
   !

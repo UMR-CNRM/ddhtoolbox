@@ -84,6 +84,8 @@ write(*,fmt=*) 'dd2gr:'
 !
 nrvb_indef(1)=220 ; nrvb_indef(2)=191 ; nrvb_indef(3)=191 ! couleur de valeur manquante.
 rindef=999.999
+rgmult=rindef
+rgadd=0.
 nindef=-999
 cgindef=' '
 !
@@ -102,6 +104,7 @@ allocate (cglarg(jpcourbes)) ; cglarg(:)=cgindef
 ncourbes=0
 nchamp=0
 cgunite=cgindef
+cguniv=cgindef
 cgorigine=cgindef
 cglegx=cgindef
 cgextdyn=cgindef

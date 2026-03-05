@@ -280,6 +280,25 @@ enddo
 deallocate(zxloc)
 deallocate(zyloc)
 deallocate(zzloc)
+if(rgmult /= rindef) then
+  
+  !-------------------------------------------------
+  ! l'utilisateur a demandé un facteur multiplicatif.
+  !-------------------------------------------------
+  do jdta=1,indta
+    zz(jdta)=(zz(jdta)+rgadd)*rgmult
+  enddo
+  call reecar(rgadd,-1,3,cladd,iladd)
+  call reecar(rgmult,-1,3,clmult,ilmult)
+  write(*,fmt=*) 'On applique au champ la transformation C ==> (C + ',trim(cladd),') * ',trim(clmult)
+  if(cgtitre /= cgindef) then 
+    if(rgadd /= 0.) then
+      write(cgtitre,fmt=*) trim(cgtitre),' ( +',trim(cladd),', puis fois ',trim(clmult),' )'
+    else
+      write(cgtitre,fmt=*) trim(cgtitre),' ( fois ',trim(clmult),' )'
+    endif
+  endif
+endif
 !
 !-------------------------------------------------
 ! Interpolation sur une grille régulière.

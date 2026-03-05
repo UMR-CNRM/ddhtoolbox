@@ -365,6 +365,25 @@ do jfic_isol=1,nfic_isol
   !
   close(iule)
   write(*,fmt=*) indta,' points au sein du zoom X et Y demandé.'
+  if(rgmult /= rindef) then
+    
+    !-------------------------------------------------
+    ! l'utilisateur a demandé un facteur multiplicatif.
+    !-------------------------------------------------
+    do jdta=1,indta
+      zcloc(jdta)=(zcloc(jdta)+rgadd)*rgmult
+    enddo
+    call reecar(rgadd,-1,3,cladd,iladd)
+    call reecar(rgmult,-1,3,clmult,ilmult)
+    write(*,fmt=*) 'On applique au champ la transformation C ==> (C + ',trim(cladd),') * ',trim(clmult)
+    if(cgtitre /= cgindef) then 
+      if(rgadd /= 0.) then
+        write(cgtitre,fmt=*) trim(cgtitre),' ( +',trim(cladd),', puis fois ',trim(clmult),' )'
+      else
+        write(cgtitre,fmt=*) trim(cgtitre),' ( fois ',trim(clmult),' )'
+      endif
+    endif
+  endif
   if(indta == 0) then
     write(*,fmt=*)
     write(*,fmt=*) 'dd2gr/svg_isol/ERREUR: aucun point dans le zoom demandé !...'

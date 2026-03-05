@@ -123,6 +123,10 @@ do
     !-------------------------------------------------
     !
     cgextrmeth=clc(index(clc,'=')+1:)
+  elseif(clc(1:index(clc,'=')-1) == '#MULT') then
+    read(clc(index(clc,'=')+1:),fmt=*) rgmult
+  elseif(clc(1:index(clc,'=')-1) == '#ADD') then
+    read(clc(index(clc,'=')+1:),fmt=*) rgadd
   elseif(clc(1:index(clc,'=')-1) == '#TITRE') then
     cgtitre=clc(index(clc,'=')+1:)
     call ote_et_commercial(cgtitre,cgtitre)
@@ -396,6 +400,9 @@ do
   elseif(clc(1:index(clc,'=')-1) == '#UNITE') then
     cgunite=clc(index(clc,'=')+1:)
     call ote_et_commercial(cgunite,cgunite)
+  elseif(clc(1:index(clc,'=')-1) == '#UNITE_VECTEURS') then
+    cguniv=clc(index(clc,'=')+1:)
+    call ote_et_commercial(cguniv,cguniv)
   elseif(clc(1:index(clc,'=')-1) == '#TYPE_AXE_X') then
     cgtypax=clc(index(clc,'=')+1:)
   elseif(clc(1:index(clc,'=')-1) == '#TYPE_AXE_Y') then

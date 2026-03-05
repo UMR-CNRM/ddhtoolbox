@@ -84,16 +84,10 @@ if(trim(cdpal) == 'SPECIF') then
   enddo
   !
   !-------------------------------------------------
-  ! Unité.
-  !-------------------------------------------------
-  !
-  clunite=cgunite
-  !
-  !-------------------------------------------------
   ! Appel à la routine de tracé de la légende discrète.
   !-------------------------------------------------
   !
-  call svg_legende_discrete(iseuil,irvb_palette,zseuil,clunite)
+  call svg_legende_discrete(iseuil,irvb_palette,zseuil)
 else
   !
   !-------------------------------------------------

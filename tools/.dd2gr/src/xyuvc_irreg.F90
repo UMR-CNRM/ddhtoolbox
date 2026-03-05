@@ -201,6 +201,25 @@ if(indta == 0) then
   write(*,fmt=*)
   call exit(1)
 endif
+if(rgmult /= rindef) then
+  
+  !-------------------------------------------------
+  ! L'utilisateur a demandé un facteur multiplicatif.
+  !-------------------------------------------------
+  do jdta=1,indta
+    zcloc(jdta)=(zcloc(jdta)+rgadd)*rgmult
+  enddo
+  call reecar(rgadd,-1,3,cladd,iladd)
+  call reecar(rgmult,-1,3,clmult,ilmult)
+  write(*,fmt=*) 'On applique au champ la transformation C ==> (C + ',trim(cladd),') * ',trim(clmult)
+  if(cgtitre /= cgindef) then 
+    if(rgadd /= 0.) then
+      write(cgtitre,fmt=*) trim(cgtitre),' ( +',trim(cladd),', puis fois ',trim(clmult),' )'
+    else
+      write(cgtitre,fmt=*) trim(cgtitre),' ( fois ',trim(clmult),' )'
+    endif
+  endif
+endif
 !
 !-------------------------------------------------
 ! Transfert du tableau dimensionné au nombre de lignes
@@ -414,6 +433,10 @@ if(cgfpix(len_trim(cgfpix)-2:len_trim(cgfpix)) == 'svg') then
   zmodule_max=max(zmodule_max,abs(zvx))
   write(nulsvg,fmt='(9a)') ' '
   write(nulsvg,fmt='(9a)') '<!-- Flèches du champ (u,v). -->'
+  !
+  ! Calcul de la norme moyenne des vecteurs, en vue de la légende en fin de cette routine.
+  zmoyn=0. ! moyn : Moyenne de la Norme.
+  imoyn=0 ! nb de valeurs ayant servi au calcul de la norme moyenne.
   do jdta=1,indta,nsaut_vec
     !
     !-------------------------------------------------
@@ -448,6 +471,8 @@ if(cgfpix(len_trim(cgfpix)-2:len_trim(cgfpix)) == 'svg') then
       zxextf=zxtrac+rech_vec*real(isignx)*zu(jdta)
       zyextf=zytrac-rech_vec*real(isigny)*zv(jdta)
     endif
+    zmoyn=zmoyn+sqrt(zu(jdta)**2+zv(jdta)**2)
+    imoyn=imoyn+1
     !
     !-------------------------------------------------
     ! Bords de la pointe de la flèche.
@@ -477,7 +502,126 @@ if(cgfpix(len_trim(cgfpix)-2:len_trim(cgfpix)) == 'svg') then
     call svg_trait(nulsvg,zxtrac,zxextf,zytrac,zyextf,zwidth,clcoul,clpoin)
     call svg_trait(nulsvg,zxextf,zxempd,zyextf,zyempd,zwidth,clcoul,clpoin)
     call svg_trait(nulsvg,zxextf,zxempg,zyextf,zyempg,zwidth,clcoul,clpoin)
-  enddo
+  enddo ! jdta
+  if(imoyn /= 0) then
+    zmoyn=zmoyn/real(imoyn)
+  else
+    zmoyn=1.
+  endif
+  !
+  !-------------------------------------------------
+  ! Ecriture de la légende de la longueur de flèche.
+  !-------------------------------------------------
+  !
+  !-------------------------------------------------
+  ! Base de la flèche.
+  !-------------------------------------------------
+  !
+  zxtrac=rxt+rlxt+0.3*(rlxsvg-rxt-rlxt)
+  zytrac=rypal+rlypal+0.53*(rlysvg-rypal-rlypal)
+  !
+  !-------------------------------------------------
+  ! Extrémité de la flèche.
+  ! On cherche à dessiner une flèche dont on va donner la légende.
+  !-------------------------------------------------
+  !
+  if(rech_vec == rindef) then
+    !
+    !-------------------------------------------------
+    ! L'utilisateur n'impose pas l'échelle du module des flèches.
+    ! On arrondit à 2 chiffres significatifs la norme moyenne des vecteurs.
+    !-------------------------------------------------
+    !
+    call arrr(zmoyn,1,zmoyn_arrr)
+  else
+    !
+    !-------------------------------------------------
+    ! L'utilisateur impose l'échelle du module des flèches.
+    ! rech_vec est alors le facteur de conversion imposé, en pixels / UV, où UV est l'unité des champs u et v dans le fichier d'entrée.
+    ! On arrondit à 2 chiffres significatifs cette norme imposée.
+    !-------------------------------------------------
+    !
+    zpix=10. ! on va consacrer zpix pixels à la flèche de légende.
+    zmoyn=zpix/rech_vec
+    call arrr(zmoyn,1,zmoyn_arrr)
+  endif
+  !
+  !-------------------------------------------------
+  ! Si on veut forcer plusieurs tracés à avoir la même légende des vecteurs, 
+  ! décommenter la ligne suivante.
+  !-------------------------------------------------
+  !
+  !zmoyn_arrr=3. ! si zmoyn_arrr=3., la légende de vecteurs sera "3. m/s", ou "3. K", etc.
+  if(rech_vec == rindef) then
+    !
+    !-------------------------------------------------
+    ! L'utilisateur n'impose pas l'échelle du module des flèches.
+    !-------------------------------------------------
+    !
+    zconv=0.10*rlxt
+    zxextf=zxtrac+zconv*real(isignx)*zmoyn_arrr/zmodule_max
+    zyextf=zytrac
+  else
+    !
+    !-------------------------------------------------
+    ! L'utilisateur impose l'échelle du module des flèches.
+    ! rech_vec est alors le facteur de conversion imposé, en pixels / UV, où UV est l'unité des champs u et v dans le fichier d'entrée.
+    !-------------------------------------------------
+    !
+    zxextf=zxtrac+rech_vec*real(isignx)*zmoyn_arrr
+    zyextf=zytrac
+  endif
+  !
+  !-------------------------------------------------
+  ! Bords de la pointe de la flèche.
+  !-------------------------------------------------
+  !
+  call poif(zxtrac,zytrac,zxextf,zyextf,zxempd,zyempd,zxempg,zyempg)
+  !write(*,fmt=*) 'légende de flèche de ',zxtrac,zytrac,' à ',zxextf,zyextf
+  !write(*,fmt=*) '  puis pointe d ',zxempd,zyempd
+  !write(*,fmt=*) '  puis pointe g ',zxempg,zyempg
+  !
+  !-------------------------------------------------
+  ! Largeur de la flèche.
+  !-------------------------------------------------
+  !
+  zwidth=1.1e-3*rlxsvg
+  !
+  !-------------------------------------------------
+  ! Ecriture d'une ligne polygonale.
+  !-------------------------------------------------
+  !
+  if(cgcoul_vec == cgindef) then
+    clcoul='black'
+  else
+    clcoul=trim(cgcoul_vec)
+  endif
+  clpoin=cgindef
+  call svg_trait(nulsvg,zxtrac,zxextf,zytrac,zyextf,zwidth,clcoul,clpoin)
+  call svg_trait(nulsvg,zxextf,zxempd,zyextf,zyempd,zwidth,clcoul,clpoin)
+  call svg_trait(nulsvg,zxextf,zxempg,zyextf,zyempg,zwidth,clcoul,clpoin)
+  !
+  !-------------------------------------------------
+  ! Ecriture de la valeur de zmoyn_arrr sur la légende de la flèche.
+  !-------------------------------------------------
+  !
+  call reecar(zmoyn_arrr,-1,2,cltexte,iltexte)
+  cltexte=adjustl(cltexte)
+  !
+  ! A ce stade cltexte contient le réel-valeur de la norme moyenne, par ex: cltexte='1.20'.
+  ! A cltexte on ajoute l'unité, par exemple cltexte='1.20 m/s'.
+  ztaille_fonte=rlxsvg/80.
+  ixtxt=nint(zxtrac+0.15*(rlxsvg-rxt-rlxt))
+  iytxt=nint(zytrac+ztaille_fonte/2.)
+  if(cguniv /= cgindef) cltexte=trim(cltexte)//' '//trim(cguniv)
+  write(clsvg_txt,fmt='(a,i5,a,i5,3a,g16.7,3a)') '<text x="' &
+& ,ixtxt,'" y="' &
+& ,iytxt,'" ',trim(cgfonte_nombres),' font-size="',ztaille_fonte &
+& ,'" text-anchor="left" fill="black" >' &
+& ,trim(cltexte),'</text>'
+  clsvg_texte=cl_nettoie_blancs(clsvg_txt)
+  write(nulsvg,fmt='(9a)') '<!-- Ecriture de la légende et unité des vecteurs. -->'
+  write(nulsvg,fmt='(a)') trim(clsvg_texte)
   !
   !-------------------------------------------------
   ! Fermeture du fichier SVG.
