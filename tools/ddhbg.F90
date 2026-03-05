@@ -29,17 +29,17 @@ CHARACTER*200 :: CLARG
 CHARACTER*200 :: CLNAMX
 CHARACTER*200 :: CLTYPE
 CHARACTER*200 :: CLBP
-CHARACTER*200 :: clprec(jparg)
-CHARACTER*200 :: clprec_re(jparg)
-CHARACTER*200 :: clprec_sm(jparg)
-CHARACTER*200 :: clbilqvcond(jparg)
-CHARACTER*200 :: clfqvtur(jparg)
-CHARACTER*200 :: clfctrayso(jparg)
-CHARACTER*200 :: clfctrayth(jparg)
-CHARACTER*200 :: clfcttur(jparg)
-CHARACTER*200 :: clfctlat(jparg)
+CHARACTER*200 :: clprec(jparg) ! but : estimation des précipitations en surface.
+CHARACTER*200 :: clprec_re(jparg) ! but : estimation des précipitations résolues en surface.
+CHARACTER*200 :: clprec_sm(jparg) ! but : estimation des précipitations sous-maille en surface.
+CHARACTER*200 :: clbilqvcond(jparg) ! but : estimation de la condensation atmosphérique.
+CHARACTER*200 :: clfqvtur(jparg) ! but : estimation de l'évaporation en surface.
+CHARACTER*200 :: clfctrayso(jparg) ! rayonnement solaire net.
+CHARACTER*200 :: clfctrayth(jparg) ! rayonnement IR net.
+CHARACTER*200 :: clfcttur(jparg) ! but : estimation du flux de chaleur sensible en surface.
+CHARACTER*200 :: clfctlat(jparg) ! but : estimation du flux de chaleur latente atmosphérique, lié à l'ensemble des processus microphysiques.
 CHARACTER*200 :: clforu
-INTEGER(KIND=4) :: inarg,imot,jmot
+INTEGER(KIND=4) :: inarg,ipostes,jmot
 INTEGER(KIND=4) :: idepart
 INTEGER(KIND=4) :: IARG
 INTEGER(KIND=4) :: IARGCP
@@ -49,6 +49,7 @@ INTEGER(KIND=4) :: ILEV
 INTEGER(KIND=4) :: ILFIC
 INTEGER(KIND=4) :: ILNAMX
 INTEGER(KIND=4) :: ILONG
+INTEGER(KIND=4) :: ivert
 INTEGER(KIND=4) :: JARG
 REAL(KIND=8) :: ZCLIM
 REAL(KIND=8) :: ZCLIMGPCP
@@ -262,16 +263,31 @@ do jarg=1,inarg
     clfctrayth(jarg)="FCTRAYTER1"
     clfcttur(jarg)="FCTTUR"
     clfctlat(jarg)="FCTPRECICOL FCTPRECICON FCTPRECISTL FCTPRECISTN FCTPRECSCOL FCTPRECSCON FCTPRECSSTL FCTPRECSSTN"
+  elseif(trim(clbp) == "BP_aromephys2026") then
+    !
+    !-------------------------------------------------
+    ! Budget type physique AROME 2026 (sous DDH flexibles, comme tous les DDH AROME à ce jour).
+    !-------------------------------------------------
+    !
+    clprec(jarg)="TQRSEDI TQSSEDI TQGSEDI TQVDEEP"
+    clprec_re(jarg)="TQRSEDI TQSSEDI TQGSEDI"
+    clprec_sm(jarg)="TQVDEEP"
+    clbilqvcond(jarg)="TQVADJU TQVMICR TQVDEEP"
+    clfqvtur(jarg)="TQVVTUR"
+    clfctrayso(jarg)="FCTRAYSO"
+    clfctrayth(jarg)="FCTRAYTH"
+    clfcttur(jarg)="TCTVTUR"
+    clfctlat(jarg)="TCTADJU TCTHIN_ TCTHON_ TCTSFR_ TCTDEPS TCTDEPG TCTREVA TCTRIM_ TCTACC_ TCTCFRZ TCTWETG TCTDRYG TCTGMLT TCTIMLT TCTBERF TCTDEEP"
   elseif(trim(clbp) == "BP_oper2014_lflexdia") then
     !
     !-------------------------------------------------
     ! Budget type ARPEGE oper 2014, sous DDH flexibles.
     !-------------------------------------------------
     !
-    clprec(jarg)="FQRPL FQSPN FQVCCQL FQVCCQN"
-    clprec_re(jarg)="FQRPL FQSPN"
+    clprec(jarg)="FQRPL FQSPN FQVCCQL FQVCCQN "
+    clprec_re(jarg)="FQRPL FQSPN "
     clprec_sm(jarg)="FQVCCQL FQVCCQN"
-    clbilqvcond(jarg)="FQVCCQL FQVCCQN FQVECL- FQVESL- FQVECN- FQVESN- "
+    clbilqvcond(jarg)="FQVCSQL FQVCSQN FQVECL- FQVESL- FQVECN- FQVESN- FQVCCQL FQVCCQN"
     clfqvtur(jarg)="FQVTUR"
     clfctrayso(jarg)="FCTRSO"
     clfctrayth(jarg)="FCTRTH"
@@ -390,14 +406,23 @@ write(*,'(a7,$)') '   //  '
 ! Boucle sur les jarg fichiers de DDH.
 !
 do jarg=1,inarg
-  call casc(clprec_re(jarg),1,clmot,imot)
+  call casc(clprec_re(jarg),1,clmot,ipostes)
   !
-  ! Boucle sur les imot articles de précipitation.
+  ! Boucle sur les ipostes articles de précipitation.
   !
   zsor=0.
-  do jmot=1,imot
-    call lfalecr(iul(jarg),clmot(jmot),jpprod,zval,ilong,ierr)
-    zsor=zsor+zval(2)/zechflux(jarg)*86400.
+  do jmot=1,ipostes
+    call lfalecr(iul(jarg),clmot(jmot),jpprod,zval,ivert,ierr)
+    !write(*,fmt=*) 'Debug: fichier ',trim(clfic(jarg)),', article lu ',trim(clmot(jmot))
+    if(clmot(jmot)(1:1) == 'F') then
+      !
+      ! Flux.
+      zsor=zsor+zval(ivert)/zechflux(jarg)*86400.
+    else
+      !
+      ! Tendance fois delta/g. Pour avoir le flux à la base il suffit de changer de signe, car deltaF= - deltaP/g * tendance, et dans le fichier de DDH est écrite la tendance fois deltap/g.
+      zsor=zsor-zval(ivert)/zechflux(jarg)*86400.
+    endif
   enddo
   write(*,'(a,f6.2,$)') ' ',zsor
   clficsor='Precipitations_RE' ; if(llecr) call ecrit(zjul,zsor,clficsor)
@@ -414,14 +439,22 @@ write(*,'(a7,$)') '   //  '
 ! Boucle sur les jarg fichiers de DDH.
 !
 do jarg=1,inarg
-  call casc(clprec_sm(jarg),1,clmot,imot)
+  call casc(clprec_sm(jarg),1,clmot,ipostes)
   !
-  ! Boucle sur les imot articles de précipitation.
+  ! Boucle sur les ipostes articles de précipitation.
   !
   zsor=0.
-  do jmot=1,imot
-    call lfalecr(iul(jarg),clmot(jmot),jpprod,zval,ilong,ierr)
-    zsor=zsor+zval(2)/zechflux(jarg)*86400.
+  do jmot=1,ipostes
+    call lfalecr(iul(jarg),clmot(jmot),jpprod,zval,ivert,ierr)
+    if(clmot(jmot)(1:1) == 'F') then
+      !
+      ! Flux.
+      zsor=zsor+zval(ivert)/zechflux(jarg)*86400.
+    else
+      !
+      ! Tendance fois delta/g. Pour avoir le flux à la base il suffit de changer de signe, car deltaF= - deltaP/g * tendance, et dans le fichier de DDH est écrite la tendance fois deltap/g.
+      zsor=zsor-zval(ivert)/zechflux(jarg)*86400.
+    endif
   enddo
   write(*,'(a,f6.2,$)') ' ',zsor
   clficsor='Precipitations_SM' ; if(llecr) call ecrit(zjul,zsor,clficsor)
@@ -440,18 +473,26 @@ write(*,'(a,f6.2,$)') ' ',zclim
 ! Boucle sur les jarg fichiers de DDH.
 !
 do jarg=1,inarg
-  call casc(clprec(jarg),1,clmot,imot)
+  call casc(clprec(jarg),1,clmot,ipostes)
   !
-  ! Boucle sur les imot articles de précipitation.
+  ! Boucle sur les ipostes articles de précipitation.
   !
   zsor=0.
-  do jmot=1,imot
-    call lfalecr(iul(jarg),clmot(jmot),jpprod,zval,ilong,ierr)
-    zsor=zsor+zval(2)/zechflux(jarg)*86400.
+  do jmot=1,ipostes
+    call lfalecr(iul(jarg),clmot(jmot),jpprod,zval,ivert,ierr)
+    if(clmot(jmot)(1:1) == 'F') then
+      !
+      ! Flux.
+      zsor=zsor+zval(ivert)/zechflux(jarg)*86400.
+    else
+      !
+      ! Tendance fois delta/g. Pour avoir le flux à la base il suffit de changer de signe, car deltaF= - deltaP/g * tendance, et dans le fichier de DDH est écrite la tendance fois deltap/g.
+      zsor=zsor-zval(ivert)/zechflux(jarg)*86400.
+    endif
   enddo
   write(*,'(a,f6.2,$)') ' ',zsor
   clficsor='Precipitations_TO' ; if(llecr) call ecrit(zjul,zsor,clficsor)
-enddo
+enddo ! jarg
 write(*,'(2a)') ' '
 !
 !-------------------------------------------------
@@ -464,9 +505,9 @@ do jarg=1,inarg
   ! QV dynamique horizontale.
   !-------------------------------------------------
   !
-  call lfacas(iul(jarg),'TQVDIVFLUHOR',cltype,ilong,ierr)
+  call lfacas(iul(jarg),'TQVDIVFLUHOR',cltype,ivert,ierr)
   if(ierr == 0) then
-    call lfalecr(iul(jarg),'TQVDIVFLUHOR',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'TQVDIVFLUHOR',jpprod,zval,ivert,ierr)
     zbilqvdynh(jarg)=zval(1)/zechflux(jarg)*86400.
   else
     zbilqvdynh(jarg)=0.
@@ -476,9 +517,9 @@ do jarg=1,inarg
   ! QV dynamique verticale.
   !-------------------------------------------------
   !
-  call lfacas(iul(jarg),'FQVFLUVERTDYN',cltype,ilong,ierr)
+  call lfacas(iul(jarg),'FQVFLUVERTDYN',cltype,ivert,ierr)
   if(ierr == 0) then
-    call lfalecr(iul(jarg),'FQVFLUVERTDYN',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'FQVFLUVERTDYN',jpprod,zval,ivert,ierr)
     zbilqvdynv(jarg)=(zval(2)-zval(1))/zechflux(jarg)*86400.
   else
     zbilqvdynv(jarg)=0.
@@ -488,9 +529,9 @@ do jarg=1,inarg
   ! CT dynamique horizontale.
   !-------------------------------------------------
   !
-  call lfacas(iul(jarg),'TCTDIVFLUHOR',cltype,ilong,ierr)
+  call lfacas(iul(jarg),'TCTDIVFLUHOR',cltype,ivert,ierr)
   if(ierr == 0) then
-    call lfalecr(iul(jarg),'TCTDIVFLUHOR',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'TCTDIVFLUHOR',jpprod,zval,ivert,ierr)
     zbilctdynh(jarg)=zval(1)/zechflux(jarg)
   else
     zbilctdynh(jarg)=0.
@@ -500,9 +541,9 @@ do jarg=1,inarg
   ! CT dynamique verticale.
   !-------------------------------------------------
   !
-  call lfacas(iul(jarg),'FCTFLUVERTDYN',cltype,ilong,ierr)
+  call lfacas(iul(jarg),'FCTFLUVERTDYN',cltype,ivert,ierr)
   if(ierr == 0) then
-    call lfalecr(iul(jarg),'FCTFLUVERTDYN',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'FCTFLUVERTDYN',jpprod,zval,ivert,ierr)
     zbilctdynv(jarg)=(zval(2)-zval(1))/zechflux(jarg)
   else
     zbilctdynv(jarg)=0.
@@ -512,9 +553,9 @@ do jarg=1,inarg
   ! PP dynamique horizontale.
   !-------------------------------------------------
   !
-  call lfacas(iul(jarg),'TPPDIVFLUHOR',cltype,ilong,ierr)
+  call lfacas(iul(jarg),'TPPDIVFLUHOR',cltype,ivert,ierr)
   if(ierr == 0) then
-    call lfalecr(iul(jarg),'TPPDIVFLUHOR',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'TPPDIVFLUHOR',jpprod,zval,ivert,ierr)
     zbilppdynh(jarg)=zval(1)/zechflux(jarg)*86400.
   else
     zbilppdynh(jarg)=0.
@@ -524,9 +565,9 @@ do jarg=1,inarg
   ! PP dynamique verticale.
   !-------------------------------------------------
   !
-  call lfacas(iul(jarg),'FPPFLUVERTDYN',cltype,ilong,ierr)
+  call lfacas(iul(jarg),'FPPFLUVERTDYN',cltype,ivert,ierr)
   if(ierr == 0) then
-    call lfalecr(iul(jarg),'FPPFLUVERTDYN',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'FPPFLUVERTDYN',jpprod,zval,ivert,ierr)
     zbilppdynv(jarg)=(zval(2)-zval(1))/zechflux(jarg)*86400.
   else
     zbilppdynv(jarg)=0.
@@ -536,9 +577,9 @@ do jarg=1,inarg
   ! PP.
   !-------------------------------------------------
   !
-  call lfacas(iul(jarg),'FPPSUMFPL',cltype,ilong,ierr)
+  call lfacas(iul(jarg),'FPPSUMFPL',cltype,ivert,ierr)
   if(ierr == 0) then
-    call lfalecr(iul(jarg),'FPPSUMFPL    ',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'FPPSUMFPL    ',jpprod,zval,ivert,ierr)
     zbilppprec(jarg)=(zval(2)-zval(1))/zechflux(jarg)*86400.
   else
     zbilppprec(jarg)=0.
@@ -553,7 +594,7 @@ write(*,'(a,$)')  'Evaporation           mm/day'
 zclim=-zclimgpcp ! clim GPCP tirée de l'article du BAMS vol 78, 1997.
 write(*,'(a,f6.2,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),clfqvtur(jarg),jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),clfqvtur(jarg),jpprod,zval,ivert,ierr)
   zsor=zval(2)/zechflux(jarg)*86400.
   zbilqvevap(jarg)=-zsor
   write(*,'(a,f6.2,$)') ' ',zsor
@@ -570,7 +611,7 @@ write(*,'(a,$)')  'Net solar TOA           W*m-2'
 zclim=240.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),clfctrayso(jarg),jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),clfctrayso(jarg),jpprod,zval,ivert,ierr)
   znetsolar_toa(jarg)=zval(1)/zechflux(jarg)
   write(*,'(a,f6.1,$)') ' ',znetsolar_toa(jarg)
 enddo
@@ -584,7 +625,7 @@ write(*,'(a,$)')  'Net IR TOA              W*m-2'
 zclim=-239.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),clfctrayth(jarg),jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),clfctrayth(jarg),jpprod,zval,ivert,ierr)
   zsor=zval(1)/zechflux(jarg)
   zbilctrayther(jarg)=(zval(1)-zval(2))/zechflux(jarg)
   write(*,'(a,f6.1,$)') ' ',zsor
@@ -601,9 +642,9 @@ write(*,'(a,$)')  'Rad. budget TOA         W*m-2'
 zclim=1.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),clfctrayth(jarg),jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),clfctrayth(jarg),jpprod,zval,ivert,ierr)
   zsor=zval(1)/zechflux(jarg)
-  call lfalecr(iul(jarg),clfctrayso(jarg),jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),clfctrayso(jarg),jpprod,zval,ivert,ierr)
   zsor=zsor+zval(1)/zechflux(jarg)
   write(*,'(a,f6.1,$)') ' ',zsor
   clficsor='Rad._budget_TOA' ; if(llecr) call ecrit(zjul,zsor,clficsor)
@@ -618,9 +659,9 @@ write(*,'(a,$)')  'Rad. budget surface     W*m-2'
 zclim=106.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),clfctrayth(jarg),jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),clfctrayth(jarg),jpprod,zval,ivert,ierr)
   zsor=zval(2)/zechflux(jarg)
-  call lfalecr(iul(jarg),clfctrayso(jarg),jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),clfctrayso(jarg),jpprod,zval,ivert,ierr)
   zsor=zsor+zval(2)/zechflux(jarg)
   write(*,'(a,f6.1,$)') ' ',zsor
   clficsor='Rad._budget_surface' ; if(llecr) call ecrit(zjul,zsor,clficsor)
@@ -635,9 +676,9 @@ write(*,'(a,$)')  'Rad. budget atm.        W*m-2'
 zclim=-105.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),clfctrayth(jarg),jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),clfctrayth(jarg),jpprod,zval,ivert,ierr)
   zsor=(zval(1)-zval(2))/zechflux(jarg)
-  call lfalecr(iul(jarg),clfctrayso(jarg),jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),clfctrayso(jarg),jpprod,zval,ivert,ierr)
   zsor=zsor+(zval(1)-zval(2))/zechflux(jarg)
   write(*,'(a,f6.1,$)') ' ',zsor
   clficsor='Rad._budget_atm' ; if(llecr) call ecrit(zjul,zsor,clficsor)
@@ -695,7 +736,7 @@ write(*,'(a,$)')  'Sol. net surface        W*m-2'
 zclim=161.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),clfctrayso(jarg),jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),clfctrayso(jarg),jpprod,zval,ivert,ierr)
   zsol_net_surface(jarg)=zval(2)/zechflux(jarg)
   zbilctraysol(jarg)=(zval(1)-zval(2))/zechflux(jarg)
   zsolaire_net_sommet(jarg)=zval(1)/zechflux(jarg)
@@ -715,7 +756,7 @@ write(*,'(a,$)')  'IR.  net surface        W*m-2'
 zclim=-55.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),clfctrayth(jarg),jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),clfctrayth(jarg),jpprod,zval,ivert,ierr)
   zir_net_surface(jarg)=zval(2)/zechflux(jarg)
   write(*,'(a,f6.1,$)') ' ',zir_net_surface(jarg)
 enddo
@@ -729,8 +770,16 @@ write(*,'(a,$)')  'Sensible                W*m-2'
 zclim=-20.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),clfcttur(jarg),jpprod,zval,ilong,ierr)
-  zsor=(zval(2)-zval(1))/zechflux(jarg)
+  call lfalecr(iul(jarg),clfcttur(jarg),jpprod,zval,ivert,ierr)
+    if(clfcttur(jarg)(1:1) == 'F') then
+      !
+      ! Flux (ex: FCTTUR).
+      zsor=(zval(2)-zval(1))/zechflux(jarg)
+    else
+      !
+      ! Tendance fois delta/g (ex: TCTVTUR). Pour avoir le flux à la base il suffit de changer de signe, car deltaF= - deltaP/g * tendance, et dans le fichier de DDH est écrite la tendance fois deltap/g.
+      zsor=-zval(1)/zechflux(jarg)
+    endif
   zsens(jarg)=zsor
   zbilctsens(jarg)=-zsor
   write(*,'(a,f6.1,$)') ' ',zsor
@@ -746,14 +795,22 @@ write(*,'(a,$)')  'Latent                  W*m-2'
 zclim=-85.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call casc(clfctlat(jarg),1,clmot,imot)
+  call casc(clfctlat(jarg),1,clmot,ipostes)
   !
-  ! Boucle sur les imot articles de précipitation.
+  ! Boucle sur les ipostes articles de précipitation.
   !
   zsor=0.
-  do jmot=1,imot
-    call lfalecr(iul(jarg),clmot(jmot),jpprod,zval,ilong,ierr)
-    zsor=zsor+(zval(2)-zval(1))/zechflux(jarg)
+  do jmot=1,ipostes
+    call lfalecr(iul(jarg),clmot(jmot),jpprod,zval,ivert,ierr)
+    if(clmot(jmot)(1:1) == 'F') then
+      !
+      ! Flux.
+      zsor=zsor+(zval(2)-zval(1))/zechflux(jarg)
+    else
+      !
+      ! Tendance fois delta/g. Pour avoir le flux à la base il suffit de changer de signe, car deltaF= - deltaP/g * tendance, et dans le fichier de DDH est écrite la tendance fois deltap/g.
+      zsor=zsor-zval(1)/zechflux(jarg)
+    endif
   enddo
   zlat(jarg)=zsor
   zbilctlat(jarg)=-zsor
@@ -812,7 +869,7 @@ zcoef=1.e8
 zclim=0.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),'VCT0      ',jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),'VCT0      ',jpprod,zval,ivert,ierr)
   zsor=zval(1)/zcoef
   write(*,'(a,f6.3,$)') ' ',zsor
 enddo
@@ -827,7 +884,7 @@ zcoef=1.e8
 zclim=0.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),'VCT1      ',jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),'VCT1      ',jpprod,zval,ivert,ierr)
   zsor=zval(1)/zcoef
   write(*,'(a,f6.3,$)') ' ',zsor
 enddo
@@ -841,7 +898,7 @@ write(*,'(a,$)')  'Water vapour ini       kg*m-2'
 zclim=0.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),'VQV0      ',jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),'VQV0      ',jpprod,zval,ivert,ierr)
   zsor=zval(1)
   zbilqvtend(jarg)=zsor
   write(*,'(a,f6.1,$)') ' ',zsor
@@ -856,7 +913,7 @@ write(*,'(a,$)')  'Water vapour final     kg*m-2'
 zclim=0.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),'VQV1      ',jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),'VQV1      ',jpprod,zval,ivert,ierr)
   zsor=zval(1)
   zbilqvtend(jarg)=(zsor-zbilqvtend(jarg))/zechvar(jarg)*86400.
   write(*,'(a,f6.1,$)') ' ',zsor
@@ -871,13 +928,13 @@ write(*,'(a,$)')  'Wat liq+iceini kg*m-2 ech 100'
 zclim=0.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),'VQL0      ',jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),'VQL0      ',jpprod,zval,ivert,ierr)
   zsor=zval(1)
-  call lfacas(iul(jarg),'VQN0',cltype,ilong,ierr)
+  call lfacas(iul(jarg),'VQN0',cltype,ivert,ierr)
   if(ierr == 0) then
-    call lfalecr(iul(jarg),'VQN0      ',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'VQN0      ',jpprod,zval,ivert,ierr)
   else
-    call lfalecr(iul(jarg),'VQI0      ',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'VQI0      ',jpprod,zval,ivert,ierr)
   endif
   zsor=zsor+zval(1)
   write(*,'(a,f6.1,$)') ' ',100.*zsor
@@ -892,13 +949,13 @@ write(*,'(a,$)')  'Wat liq+icefin kg*m-2 ech 100'
 zclim=0.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),'VQL1      ',jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),'VQL1      ',jpprod,zval,ivert,ierr)
   zsor=zval(1)
-  call lfacas(iul(jarg),'VQN1',cltype,ilong,ierr)
+  call lfacas(iul(jarg),'VQN1',cltype,ivert,ierr)
   if(ierr == 0) then
-    call lfalecr(iul(jarg),'VQN1      ',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'VQN1      ',jpprod,zval,ivert,ierr)
   else
-    call lfalecr(iul(jarg),'VQI1      ',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'VQI1      ',jpprod,zval,ivert,ierr)
   endif
   zsor=zsor+zval(1)
   write(*,'(a,f6.1,$)') ' ',100.*zsor
@@ -913,13 +970,13 @@ write(*,'(a,$)')  'Cloudiness    ini           %'
 zclim=0.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),'VNT0      ',jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),'VNT0      ',jpprod,zval,ivert,ierr)
   znt=zval(1)
-  call lfacas(iul(jarg),'VCP0',cltype,ilong,ierr)
+  call lfacas(iul(jarg),'VCP0',cltype,ivert,ierr)
   if(ierr == 0) then
-    call lfalecr(iul(jarg),'VCP0      ',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'VCP0      ',jpprod,zval,ivert,ierr)
   else
-    call lfalecr(iul(jarg),'VPP0      ',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'VPP0      ',jpprod,zval,ivert,ierr)
   endif
   zpp0(jarg)=zval(1)
   zsor=100.*znt/zpp0(jarg)
@@ -935,13 +992,13 @@ write(*,'(a,$)')  'Cloudiness    fin           %'
 zclim=0.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),'VNT1      ',jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),'VNT1      ',jpprod,zval,ivert,ierr)
   znt=zval(1)
-  call lfacas(iul(jarg),'VCP1',cltype,ilong,ierr)
+  call lfacas(iul(jarg),'VCP1',cltype,ivert,ierr)
   if(ierr == 0) then
-    call lfalecr(iul(jarg),'VCP1      ',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'VCP1      ',jpprod,zval,ivert,ierr)
   else
-    call lfalecr(iul(jarg),'VPP1      ',jpprod,zval,ilong,ierr)
+    call lfalecr(iul(jarg),'VPP1      ',jpprod,zval,ivert,ierr)
   endif
   zpp1(jarg)=zval(1)
   zsor=100.*znt/zpp1(jarg)
@@ -957,7 +1014,7 @@ write(*,'(a,$)')  'Kinetic ener. ini        J/kg'
 zclim=0.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),'VKK0      ',jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),'VKK0      ',jpprod,zval,ivert,ierr)
   zkk=zval(1)
   zsor=zkk/zpp0(jarg)
   write(*,'(a,f6.1,$)') ' ',zsor
@@ -972,7 +1029,7 @@ write(*,'(a,$)')  'Kinetic ener. fin        J/kg'
 zclim=0.
 write(*,'(a,f6.1,$)') ' ',zclim
 do jarg=1,inarg
-  call lfalecr(iul(jarg),'VKK1      ',jpprod,zval,ilong,ierr)
+  call lfalecr(iul(jarg),'VKK1      ',jpprod,zval,ivert,ierr)
   zkk=zval(1)
   zsor=zkk/zpp1(jarg)
   write(*,'(a,f6.1,$)') ' ',zsor
@@ -1001,8 +1058,8 @@ do jarg=1,inarg
   !
   ! Calcul de la tendance.
   !
-  call lfalecr(iul(jarg),'VPP1      ',jpprod,zp_fin,ilong,ierr)
-  call lfalecr(iul(jarg),'VPP0      ',jpprod,zp_ini,ilong,ierr)
+  call lfalecr(iul(jarg),'VPP1      ',jpprod,zp_fin,ivert,ierr)
+  call lfalecr(iul(jarg),'VPP0      ',jpprod,zp_ini,ivert,ierr)
   zbilpptend(jarg)=(zp_fin(1)-zp_ini(1))/zechvar(jarg)*86400.
   !
   ! Estimation du résidu.
@@ -1033,12 +1090,12 @@ write(*,'(9a)')  '          tend   =     cond + ev.surf + dynh + dynv  + residu'
 write(*,fmt=1100) 'CLIM     ',' ',0.,' =  ',-zclimgpcp,zclimgpcp,0.,0.,0.
 1100  format(2a,f6.2,a,5(f7.2,1x))
 do jarg=1,inarg
-  call casc(clbilqvcond(jarg),1,clmot,imot)
+  call casc(clbilqvcond(jarg),1,clmot,ipostes)
   !
-  ! Boucle sur les imot articles du bilan de qv.
+  ! Boucle sur les ipostes articles du bilan de qv.
   !
   zsor=0.
-  do jmot=1,imot
+  do jmot=1,ipostes
     clloc=clmot(jmot)
     if(clloc(len_trim(clloc):len_trim(clloc)) == '-') then
       !
@@ -1052,8 +1109,16 @@ do jarg=1,inarg
     else
       zsigne=1.
     endif
-    call lfalecr(iul(jarg),clloc,jpprod,zval,ilong,ierr)
-    zcond=zsigne*zval(2)/zechflux(jarg)*86400.
+    call lfalecr(iul(jarg),clloc,jpprod,zval,ivert,ierr)
+    if(clloc(1:1) == 'F') then
+      !
+      ! Flux.
+      zcond=zsigne*zval(ivert)/zechflux(jarg)*86400.
+    else
+      !
+      ! Tendance fois delta/g. Pour avoir le flux à la base il suffit de changer de signe, car deltaF= - deltaP/g * tendance, et dans le fichier de DDH est écrite la tendance fois deltap/g.
+      zcond=-zsigne*zval(ivert)/zechflux(jarg)*86400.
+    endif
     zsor=zsor+zcond
     if(lldebu) then
       write(*,fmt=*) 'ddhbg: debug mot n° ',jmot,' ',trim(clloc),' zcond=',zcond,' zsor=',zsor
@@ -1091,8 +1156,8 @@ do jarg=1,inarg
   !
   ! Calcul de la tendance en W/m2.
   !
-  call lfalecr(iul(jarg),'VCT1',jpprod,zvct1,ilong,ierr)
-  call lfalecr(iul(jarg),'VCT0',jpprod,zvct0,ilong,ierr)
+  call lfalecr(iul(jarg),'VCT1',jpprod,zvct1,ivert,ierr)
+  call lfalecr(iul(jarg),'VCT0',jpprod,zvct0,ivert,ierr)
   zbilcttend(jarg)=(zvct1(1)-zvct0(1))/zechvar(jarg)
   !
   ! Estimation du résidu.
@@ -1400,14 +1465,6 @@ endif ! llok
 do jarg=1,inarg
   call lfafer(iul(jarg))
 enddo
-!
-!-------------------------------------------------
-! On crée une ligne de séparation
-! dont la longueur est proportionnelle au nombre de fichiers
-! de DDH.
-!-------------------------------------------------
-!
-call lignesep(inarg)
 end
 subroutine lignesep(karg)
 ! --------------------------------------------------------------------------

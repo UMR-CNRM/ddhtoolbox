@@ -11,9 +11,11 @@ FQTCONDESTN
 FQVEVPL -
 FQVEVPN -
 # ---------------------
-BEGIN BLOCK SGS_CV
+BEGIN BLOCK SGS Condens
 FQTCONDECOL 
 FQTCONDECON 
+# ---------------------
+BEGIN BLOCK SGS Transport
 FQVTURCONV 
 # ---------------------
 BEGIN BLOCK Corr_neg

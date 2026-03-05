@@ -1,0 +1,54 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# Subject:
+# Method:
+# Author:   2009-02, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+proc=$(basename $0) # present procedure name.
+dirloc=`pwd` # local directory name.
+pref=$dirloc/.$proc.tmp.$RANDOM # prefix for tmp files.
+dirtmp=$pref.dir # tmp dir name.
+#
+#-----------------------------------------------
+# Execution.
+#-----------------------------------------------
+#
+fe="H7K4.20250801T0000P.DHFZOFCST+0072.lfa"
+#
+#-----------------------------------------------
+# Global horizontal mean.
+#-----------------------------------------------
+#
+fs=$fe.mh
+ddhmh $fe $fs
+#
+#-----------------------------------------------
+# Prognostic budget.
+#-----------------------------------------------
+#
+fe=$fs
+budget_package=`basename $dirloc`
+for variable in CT QV QL
+do
+  if [ "$variable" = "QV" ] ; then
+    limites="-n -5. -x 5."
+  else
+    limites=" "
+  fi
+	ddhb -v $budget_package/$variable -i $fe -o $fe.$variable.tmp.svg $limites
+  v $fe.$variable.tmp.svg
+done
+#
+#-----------------------------------------------
+# Epilog.
+#-----------------------------------------------
+#
+echo " " ; echo "$proc: end."
+#
+#-----------------------------------------------
+# Cleanings.
+#-----------------------------------------------
+#
+rm -rf $dirtmp
+rm -f $pref*

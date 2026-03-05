@@ -14,11 +14,10 @@ dirtmp=$pref.dir # tmp dir name.
 # Execution.
 #-----------------------------------------------
 #
-fe="20180701.oper.DHFZOARPE+0096.lfa"
-fe="20240204.oper.DHFZOFCST+0072.lfa"
+fe="H8S5.20250624T0000P.DHFZOFCST+0072.lfa"
 #
 #-----------------------------------------------
-# Extract domain.
+# Global horizontal mean.
 #-----------------------------------------------
 #
 fs=$fe.mh
@@ -30,12 +29,9 @@ ddhmh $fe $fs
 #
 fe=$fs
 budget_package=`basename $dirloc`
-for var in QV CT QR
+for variable in MO CT
 do
-  prefix="tmp.$var"
-	ddhb -v $budget_package/$var -i $fe -o $prefix.svg
-  convert $prefix.svg $prefix.png
-  v $prefix.png
+	ddhb -v $budget_package/$variable -i $fe
 done
 #
 #-----------------------------------------------

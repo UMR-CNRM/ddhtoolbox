@@ -34,6 +34,7 @@ INTEGER(KIND=4) :: ierr_FQRPLS
 INTEGER(KIND=4) :: ierr_FCRSEDIM
 INTEGER(KIND=4) :: ierr_FQRPL
 INTEGER(KIND=4) :: ierr_FQVEVPL
+INTEGER(KIND=4) :: ierr_TQVVTUR
 REAL(KIND=8) :: ZCOEFDDHI
 CHARACTER(len=200) :: cltype
 !
@@ -47,6 +48,7 @@ call lfacas(kul,'FCRSEDIM',cltype,ilong,ierr_FCRSEDIM)
 call lfacas(kul,'FQVPRECICOL',cltype,ilong,ierr_FQVPRECICOL)
 call lfacas(kul,'FQRPL',cltype,ilong,ierr_FQRPL)
 call lfacas(kul,'FQVEVPL',cltype,ilong,ierr_FQVEVPL)
+call lfacas(kul,'TQVVTUR',cltype,ilong,ierr_TQVVTUR)
 if(ierr_FQTPRECICOL == 0 .and. ierr_FQVEVPL == 0) then
   !
   !-------------------------------------------------
@@ -70,6 +72,8 @@ elseif(ierr_FQVPRECICOL == 0) then
   cdbp='BP_oper2012_lflexdia'
 elseif(ierr_FQRPL == 0) then 
   cdbp='BP_oper2014_lflexdia'
+elseif(ierr_TQVVTUR == 0) then 
+  cdbp='BP_aromephys2026'
 else
   write(*,fmt=*) 
   write(*,fmt=*) 'DDH/get_budget_package/ERROR: budget package not recognized!...'

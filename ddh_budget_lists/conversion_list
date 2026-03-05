@@ -74,55 +74,7 @@ PITPFA3ONDEGREL  FA3ONDEGREL               MOM ANG A3  : OROGRAPHY FORCE        
 BIIPTA3PRINCIPAL TA3PRINCIPAL              MOM ANG A3  : PRINCIPAL TERM                                m**2/s/day           86400.000000 -6
 PITPFA3TUR       FA3TUR                    MOM ANG A3  : VERTICAL DIFFUSION                            m**2/s/day           86400.000000 -6
 PITPFA3TURCONV   FA3TURCONV                MOM ANG A3  : CONVECTIVE TRANSPORT                          m**2/s/day           86400.000000 -6
-VII0VCT0         VCT0                      TEMPERATURE : INITIAL VALUE                                 K              0.0009953132115872  0
-VII1VCT1         VCT1                      TEMPERATURE : FINAL VALUE                                   K              0.0009953132115872  0
-BIIPTCTCOMPLEMENTTCTCOMPLEMENT             TEMPERATURE : COMPLEMENT TERM                               K/day          85.99506148113663   0
-DIIPTCTCONVERSI2 TCTCONVERSI2              TEMPERATURE : ADIABATIC CONVERSION POTENTIAL>INTERNAL       K/day          85.99506148113663   0
-PIIPTCTCONVERSI3 TCTCONVERSI3              TEMPERATURE : ADIABATIC CONVERSION POTENTIAL>INTERNAL       K/day          85.99506148113663   0
-BNIIVCTD         VCT1         VCT0         TEMPERATURE : FINAL - INITIAL                               K              0.0009953132115872  0
-DGIXTCTDELTAP    VPP1         VPP0         TEMPERATURE : PRESSURE TENDENCY                             K/day          85.99506148113663   0
-DIIPTCTDIVFLUHOR TCTDIVFLUHOR              TEMPERATURE : HORIZONTAL FLUX DIVERGENCY                    K/day          85.99506148113663   0
-BSIPTCTEVAPPCO   TCTEVAPPCOL  TCTEVAPPCON  TEMPERATURE : CONVECTIVE EVAPORATION                        K/day          85.99506148113663   0
-AIIPTCTEVAPPCOL  TCTEVAPPCOL               TEMPERATURE : CONVECTIVE LIQUID EVAPORATION                 K/day          85.99506148113663   0
-AIIPTCTEVAPPCON  TCTEVAPPCON               TEMPERATURE : CONVECTIVE SNOW EVAPORATION                   K/day          85.99506148113663   0
-BSIPTCTEVAPPST   TCTEVAPPSTL  TCTEVAPPSTN  TEMPERATURE : STRATIFORM PREC EVAPORATION                   K/day          85.99506148113663   0
-AIIPTCTEVAPPSTL  TCTEVAPPSTL               TEMPERATURE : STRATIFORM RAIN EVAPORATION                   K/day          85.99506148113663   0
-AIIPTCTEVAPPSTN  TCTEVAPPSTN               TEMPERATURE : STRATIFORM SNOW EVAPORATION                   K/day          85.99506148113663   0
-BGIMVCTF         VCT1         VCT0         TEMPERATURE : MEAN TENDENCY                                 K/day          85.99506148113663   0
-DITPFCTFLUVERTDYNFCTFLUVERTDYN             TEMPERATURE : VERTICAL DYNAMICAL FLUX                       K/day          85.99506148113663   0
-BSIPTCTFONTP     TCTFONTPCO   TCTFONTPST   TEMPERATURE : PREC MELTING                                  K/day          85.99506148113663   0
-AIIPTCTFONTPCO   TCTFONTPCO                TEMPERATURE : CONV PREC MELTING                             K/day          85.99506148113663   0
-AIIPTCTFONTPST   TCTFONTPST                TEMPERATURE : STRA PREC MELTING                             K/day          85.99506148113663   0
-BSIPTCTFORMPCO   TCTFORMPCOL  TCTFORMPCON  TEMPERATURE : CONV PREC FORMATION                           K/day          85.99506148113663   0
-AIIPTCTFORMPCOL  TCTFORMPCOL               TEMPERATURE : CONV RAIN FORMATION                           K/day          85.99506148113663   0
-AIIPTCTFORMPCON  TCTFORMPCON               TEMPERATURE : CONV SNOW FORMATION                           K/day          85.99506148113663   0
-BSIPTCTFORMPST   TCTFORMPSTL  TCTFORMPSTN  TEMPERATURE : STRA PREC FORMATION                           K/day          85.99506148113663   0
-AIIPTCTFORMPSTL  TCTFORMPSTL               TEMPERATURE : STRA RAIN FORMATION                           K/day          85.99506148113663   0
-AIIPTCTFORMPSTN  TCTFORMPSTN               TEMPERATURE : STRA SNOW FORMATION                           K/day          85.99506148113663   0
-BUIIVCTM         VCT1         VCT0         TEMPERATURE : MEAN TENDENCY                                 K/day          85.99506148113663   0
-VIIVFCTM         FCTM                      TEMPERATURE-FLUX : DIAG FINAL - INITIAL                     W/m2           1.0000000000000000  0
-PITPFCTPRECCSCOL FCTPRECCSCOL              TEMPERATURE : SENSIBLE HEAT CONV RAIN                       K/day          85.99506148113663   0
-PITPFCTPRECCSCON FCTPRECCSCON              TEMPERATURE : SENSIBLE HEAT CONV SNOW                       K/day          85.99506148113663   0
-PITPFCTPRECCSSTL FCTPRECCSSTL              TEMPERATURE : SENSIBLE HEAT STRA RAIN                       K/day          85.99506148113663   0
-PITPFCTPRECCSSTN FCTPRECCSSTN              TEMPERATURE : SENSIBLE HEAT STRA SNOW                       K/day          85.99506148113663   0
-BSTPFCTPRECICO   FCTPRECICOL  FCTPRECICON  TEMPERATURE : CONVECTIVE PRECIPITATION                      K/day          85.99506148113663   0
-PITPFCTPRECICOL  FCTPRECICOL               TEMPERATURE : CONVECTIVE RAIN                               K/day          85.99506148113663   0
-PITPFCTPRECICON  FCTPRECICON               TEMPERATURE : CONVECTIVE SNOW                               K/day          85.99506148113663   0
-PITPFCTPRECISTL  FCTPRECISTL               TEMPERATURE : STRATIFORM RAIN                               K/day          85.99506148113663   0
-PITPFCTPRECISTN  FCTPRECISTN               TEMPERATURE : STRATIFORM SNOW                               K/day          85.99506148113663   0
-BIIPTCTPRINCIPAL TCTPRINCIPAL              TEMPERATURE : PRINCIPAL TERM                                K/day          85.99506148113663   0
-PITPFCTRAYSOL1   FCTRAYSOL1                TEMPERATURE : SOLAR RADIATION                               K/day          85.99506148113663   0
-PITPFCTRAYSO     FCTRAYSO                  TEMPERATURE : SOLAR RADIATION                               K/day          85.99506148113663   0
-PITPFCTRAYTH     FCTRAYTH                  TEMPERATURE : THERMAL RADIATION                             K/day          85.99506148113663   0
-PITPFCTRAYTER1   FCTRAYTER1                TEMPERATURE : THERMAL RADIATION                             K/day          85.99506148113663   0
-PITPFCTRSO       FCTRSO                    TEMPERATURE : SOLAR RADIATION                               K/day          85.99506148113663   0
-PITPFCTRTH       FCTRTH                    TEMPERATURE : THERMAL RADIATION                             K/day          85.99506148113663   0
-PITPFCTMESO      FCTMESO                   TEMPERATURE : MESOSPHERIC DRAG                              K/day          85.99506148113663   0
-PITPFCTDIFT      FCTDIFT                   TEMPERATURE : VERTICAL DIFFUSION                            K/day          85.99506148113663   0
-PITPFCTTUR       FCTTUR                    TEMPERATURE : VERTICAL DIFFUSION                            K/day          85.99506148113663   0
-PITPFCTTURBU     FCTTURBU                  TEMPERATURE : TURBULENCE                                    K/day          85.99506148113663   0
-PITPFCTKFBCVPP   FCTKFBCVPP                TEMPERATURE : KFB                                           K/day          85.99506148113663   0
-PITPFCTTURCONV   FCTTURCONV                TEMPERATURE : CONVECTIVE TRANSPORT                          K/day          85.99506148113663   0
+
 VII0VEP0         VEP0                      Z           : INITIAL VALUE                                 m                         .101972  0
 VII1VEP1         VEP1                      Z           : FINAL VALUE                                   m                         .101972  0
 BIIPTEPCOMPLEMENTTEPCOMPLEMENT             Z           : COMPLEMENT TERM                               m/day                 8810.348000  0
@@ -726,8 +678,8 @@ AITPFCLCQNG_ME   FCLCQNG_ME                FCLCQNG_ME                           
 AITPFCLCQNG_MF   FCLCQNG_MF                FCLCQNG_MF                                                  g/kg/day             86400000.000  0
 AITPFCLCQNG_M5   FCLCQNG_M5                FCLCQNG_M5                                                  g/kg/day             86400000.000  0
 AITPFCLCQNG_M6   FCLCQNG_M6                FCLCQNG_M6                                                  g/kg/day             86400000.000  0
-PITPFCTRMH       FCTRMH                    TEMPERATURE : FCTRMH                                        K/day          85.99506148113663   0
-PITPFCTRMH_M3    FCTRMH_M3                 TEMPERATURE : FCTRMH_M3                                     K/day          85.99506148113663   0
+
+
 #-----------------------------------------------
 # ARPEGE-physics; MO.
 #-----------------------------------------------
@@ -740,4 +692,103 @@ DIIPTMOREVAP     TMOREVAP                  MO : RAIN EVAPORATION                
 DIIPTMORESWP     TMORESWP                  MO : RESOLVED VERTICAL VELOCITY - POSITIVE                  /day                    86400.00   0
 DIIPTMORESWN     TMORESWN                  MO : RESOLVED VERTICAL VELOCITY - NEGATIVE                  /day                    86400.00   0
 DIIPTMODISS      TMODISS                   MO : MO DISSIPATION                                         /day                    86400.00   0
+PIIPTMOSL        TMOSL                     MO : SEMI-LAGRANGIAN TRANSPORT                              /day                    86400.00   0
+#-----------------------------------------------
+# ARPEGE-physics; CT.
+#-----------------------------------------------
+# CpT à t=0, t, tendence totale, ...
+VII0VCT0         VCT0                      TEMPERATURE : INITIAL VALUE                                 K              0.0009953132115872  0
+VII1VCT1         VCT1                      TEMPERATURE : FINAL VALUE                                   K              0.0009953132115872  0
+BNIIVCTD         VCT1         VCT0         TEMPERATURE : FINAL - INITIAL                               K              0.0009953132115872  0
+BUIIVCTM         VCT1         VCT0         TEMPERATURE : MEAN TENDENCY                                 K/day          85.99506148113663   0
+BGIMVCTF         VCT1         VCT0         TEMPERATURE : MEAN TENDENCY                                 K/day          85.99506148113663   0
+VIIVFCTM         FCTM                      TEMPERATURE-FLUX : DIAG FINAL - INITIAL                     W/m2           1.0000000000000000  0
+DGIXTCTDELTAP    VPP1         VPP0         TEMPERATURE : PRESSURE TENDENCY                             K/day          85.99506148113663   0
 
+# Radiation
+# DDH historiques
+PITPFCTRAYSOL1   FCTRAYSOL1                TEMPERATURE : SOLAR RADIATION                               K/day          85.99506148113663   0
+PITPFCTRAYTER1   FCTRAYTER1                TEMPERATURE : THERMAL RADIATION                             K/day          85.99506148113663   0
+# DDH flexibles
+PITPFCTRSO       FCTRSO                    TEMPERATURE : SOLAR RADIATION                               K/day          85.99506148113663   0
+PITPFCTRTH       FCTRTH                    TEMPERATURE : THERMAL RADIATION                             K/day          85.99506148113663   0
+PITPFCTRMH       FCTRMH                    TEMPERATURE : MESOSPHERIC RADIATION                         K/day          85.99506148113663   0
+# DDH inconnu
+PITPFCTRAYSO     FCTRAYSO                  TEMPERATURE : SOLAR RADIATION                               K/day          85.99506148113663   0
+PITPFCTRAYTH     FCTRAYTH                  TEMPERATURE : THERMAL RADIATION                             K/day          85.99506148113663   0
+PITPFCTMESO      FCTMESO                   TEMPERATURE : MESOSPHERIC DRAG                              K/day          85.99506148113663   0
+PITPFCTRMH_M3    FCTRMH_M3                 TEMPERATURE : FCTRMH_M3                                     K/day          85.99506148113663   0
+
+# Diffusion (Boundary-Layer, Shallow Convection, Deep Convection)
+# DDH historiques
+PITPFCTTUR       FCTTUR                    TEMPERATURE : VERTICAL DIFFUSION                            K/day          85.99506148113663   0
+PITPFCTTURCONV   FCTTURCONV                TEMPERATURE : CONVECTIVE TRANSPORT                          K/day          85.99506148113663   0
+# DDH flexibles
+PITPFCTDIFT      FCTDIFT                   TEMPERATURE : VERTICAL DIFFUSION                            K/day          85.99506148113663   0
+PITPFCTTURCONV   FCTTURCONV                TEMPERATURE : CONVECTIVE TRANSPORT                          K/day          85.99506148113663   0
+# New DDH flexibles
+PITPFCTDIFFTURB  FCTDIFFTURB               TEMPERATURE : VERTICAL DIFFUSION FROM BOUNDARY LAYER SCHEME K/day          85.99506148113663   0
+PITPFCTDIFFSC    FCTDIFFSC                 TEMPERATURE : VERTICAL DIFFUSION FROM SHALLOW CONVECTION    K/day          85.99506148113663   0
+PITPFCTDIFT      FCTDIFFDC                 TEMPERATURE : VERTICAL DIFFUSION FROM DEEP CONVECTION       K/day          85.99506148113663   0
+# DDH inconnu  
+PITPFCTTURBU     FCTTURBU                  TEMPERATURE : TURBULENCE                                    K/day          85.99506148113663   0
+PITPFCTKFBCVPP   FCTKFBCVPP                TEMPERATURE : KFB                                           K/day          85.99506148113663   0
+
+# Precipitation
+# DDH historiques
+PITPFCTPRECCSSTL FCTPRECCSSTL              TEMPERATURE : SENSIBLE HEAT STRA RAIN                       K/day          85.99506148113663   0
+PITPFCTPRECCSSTN FCTPRECCSSTN              TEMPERATURE : SENSIBLE HEAT STRA SNOW                       K/day          85.99506148113663   0
+PITPFCTPRECISTL  FCTPRECISTL               TEMPERATURE : STRATIFORM RAIN                               K/day          85.99506148113663   0
+PITPFCTPRECISTN  FCTPRECISTN               TEMPERATURE : STRATIFORM SNOW                               K/day          85.99506148113663   0
+PITPFCTPRECCSCOL FCTPRECCSCOL              TEMPERATURE : SENSIBLE HEAT CONV RAIN                       K/day          85.99506148113663   0
+PITPFCTPRECCSCON FCTPRECCSCON              TEMPERATURE : SENSIBLE HEAT CONV SNOW                       K/day          85.99506148113663   0
+PITPFCTPRECICOL  FCTPRECICOL               TEMPERATURE : CONVECTIVE RAIN                               K/day          85.99506148113663   0
+PITPFCTPRECICON  FCTPRECICON               TEMPERATURE : CONVECTIVE SNOW                               K/day          85.99506148113663   0
+BSTPFCTPRECICO   FCTPRECICOL  FCTPRECICON  TEMPERATURE : CONVECTIVE PRECIPITATION                      K/day          85.99506148113663   0
+# DDH flexibles
+PITPFCTCSPRECSL  FCTCSPRECSL               TEMPERATURE : SENSIBLE HEAT STRA RAIN                       K/day          85.99506148113663   0
+PITPFCTCSPRECSN  FCTCSPRECSN               TEMPERATURE : SENSIBLE HEAT STRA SNOW                       K/day          85.99506148113663   0
+PITPFCTCSQL      FCTCSQL                   TEMPERATURE : STRATIFORM RAIN CONDENSATION                  K/day          85.99506148113663   0 
+PITPFCTCSQN      FCTCSQN                   TEMPERATURE : STRATIFORM SNOW CONDENSATION                  K/day          85.99506148113663   0
+PITPFCTESL       FCTESL                    TEMPERATURE : STRATIFORM RAIN EVAPORATION                   K/day          85.99506148113663   0
+PITPFCTESN       FCTESN                    TEMPERATURE : STRATIFORM SNOW EVAPORATION                   K/day          85.99506148113663   0
+PITPFCTCSPRECCL  FCTCSPRECCL               TEMPERATURE : SENSIBLE HEAT CONV RAIN                       K/day          85.99506148113663   0
+PITPFCTCSPRECCN  FCTCSPRECCN               TEMPERATURE : SENSIBLE HEAT CONV SNOW                       K/day          85.99506148113663   0
+PITPFCTCCQL      FCTCCQL                   TEMPERATURE : CONVECTIVE RAIN CONDENSATION                  K/day          85.99506148113663   0 
+PITPFCTCCQN      FCTCCQN                   TEMPERATURE : CONVECTIVE SNOW CONDENSATION                  K/day          85.99506148113663   0 
+PITPFCTECL       FCTECL                    TEMPERATURE : CONVECTIVE RAIN EVAPORATION                   K/day          85.99506148113663   0
+PITPFCTECN       FCTECN                    TEMPERATURE : CONVECTIVE SNOW EVAPORATION                   K/day          85.99506148113663   0
+PITPFCTSENSPREC  FCTSENSPREC               TEMPERATURE : SENSIBLE HEAT STRA CONV RAIN SNOW             K/day          85.99506148113663   0
+PITPFCTCSPRECS   FCTCSPRECS                TEMPERATURE : SENSIBLE HEAT STRA                            K/day          85.99506148113663   0 
+PITPFCTCSPRECC   FCTCSPRECC                TEMPERATURE : SENSIBLE HEAT CONV                            K/day          85.99506148113663   0
+PITPFCTCSPRECL   FCTCSPRECL                TEMPERATURE : SENSIBLE HEAT RAIN                            K/day          85.99506148113663   0
+PITPFCCTSPRECN   FCCTSPRECN                TEMPERATURE : SENSIBLE HEAT SNOW                            K/day          85.99506148113663   0
+# DDH inconnu
+BIIPTCTPRINCIPAL TCTPRINCIPAL              TEMPERATURE : PRINCIPAL TERM                                K/day          85.99506148113663   0
+BIIPTCTCOMPLEMENTTCTCOMPLEMENT             TEMPERATURE : COMPLEMENT TERM                               K/day          85.99506148113663   0
+BSIPTCTEVAPPCO   TCTEVAPPCOL  TCTEVAPPCON  TEMPERATURE : CONVECTIVE EVAPORATION                        K/day          85.99506148113663   0
+AIIPTCTEVAPPCOL  TCTEVAPPCOL               TEMPERATURE : CONVECTIVE LIQUID EVAPORATION                 K/day          85.99506148113663   0
+AIIPTCTEVAPPCON  TCTEVAPPCON               TEMPERATURE : CONVECTIVE SNOW EVAPORATION                   K/day          85.99506148113663   0
+BSIPTCTEVAPPST   TCTEVAPPSTL  TCTEVAPPSTN  TEMPERATURE : STRATIFORM PREC EVAPORATION                   K/day          85.99506148113663   0
+AIIPTCTEVAPPSTL  TCTEVAPPSTL               TEMPERATURE : STRATIFORM RAIN EVAPORATION                   K/day          85.99506148113663   0
+AIIPTCTEVAPPSTN  TCTEVAPPSTN               TEMPERATURE : STRATIFORM SNOW EVAPORATION                   K/day          85.99506148113663   0
+BSIPTCTFONTP     TCTFONTPCO   TCTFONTPST   TEMPERATURE : PREC MELTING                                  K/day          85.99506148113663   0
+AIIPTCTFONTPCO   TCTFONTPCO                TEMPERATURE : CONV PREC MELTING                             K/day          85.99506148113663   0
+AIIPTCTFONTPST   TCTFONTPST                TEMPERATURE : STRA PREC MELTING                             K/day          85.99506148113663   0
+BSIPTCTFORMPCO   TCTFORMPCOL  TCTFORMPCON  TEMPERATURE : CONV PREC FORMATION                           K/day          85.99506148113663   0
+AIIPTCTFORMPCOL  TCTFORMPCOL               TEMPERATURE : CONV RAIN FORMATION                           K/day          85.99506148113663   0
+AIIPTCTFORMPCON  TCTFORMPCON               TEMPERATURE : CONV SNOW FORMATION                           K/day          85.99506148113663   0
+BSIPTCTFORMPST   TCTFORMPSTL  TCTFORMPSTN  TEMPERATURE : STRA PREC FORMATION                           K/day          85.99506148113663   0
+AIIPTCTFORMPSTL  TCTFORMPSTL               TEMPERATURE : STRA RAIN FORMATION                           K/day          85.99506148113663   0
+AIIPTCTFORMPSTN  TCTFORMPSTN               TEMPERATURE : STRA SNOW FORMATION                           K/day          85.99506148113663   0
+
+# Dynamics
+# DDH historiques
+DIIPTCTCONVERSI2 TCTCONVERSI2              TEMPERATURE : ADIABATIC CONVERSION POTENTIAL>INTERNAL       K/day          85.99506148113663   0
+PIIPTCTCONVERSI3 TCTCONVERSI3              TEMPERATURE : ADIABATIC CONVERSION POTENTIAL>INTERNAL       K/day          85.99506148113663   0
+DIIPTCTDIVFLUHOR TCTDIVFLUHOR              TEMPERATURE : HORIZONTAL FLUX DIVERGENCY                    K/day          85.99506148113663   0
+DITPFCTFLUVERTDYNFCTFLUVERTDYN             TEMPERATURE : VERTICAL DYNAMICAL FLUX                       K/day          85.99506148113663   0
+# DDH flex
+PIIPTCTSL        TCTSL                     TEMPERATURE : SEMI-LAGRANGIAN TRANSPORT                     K/day          85.99506148113663   0
+PIIPTCTSI        TCTSI                     TEMPERATURE : SEMI IMPLICITE - HORIZ. DIFFUSION             K/day          85.99506148113663   0
+DIIPTCTCONVERSI  TCTCONVERSI               TEMPERATURE : ADIABATIC CONVERSION POTENTIAL>INTERNAL       K/day          85.99506148113663   0

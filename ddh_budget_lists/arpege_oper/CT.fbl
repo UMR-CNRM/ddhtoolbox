@@ -8,18 +8,20 @@ FCTRAYSOL1
 BEGIN BLOCK Radiation: IR
 FCTRAYTER1 
 # --------------------------
-BEGIN BLOCK Resolved
+BEGIN BLOCK Trans: Subgrid Tur + Shallow CV
+FCTTUR  
+# --------------------------
+BEGIN BLOCK Trans: Subgrid CV
+FCTTURCONV 
+# --------------------------
+BEGIN BLOCK Condens: Resolved
 FCTPRECISTL  
 FCTPRECISTN 
 FCTPRECCSSTL  
 FCTPRECCSSTN 
 # --------------------------
-BEGIN BLOCK Trans: Subgrid : Tur
-FCTTUR  
-# --------------------------
-BEGIN BLOCK Subgrid : CV
+BEGIN BLOCK Condens: Subgrid CV
 FCTPRECICOL 
 FCTPRECICON 
 FCTPRECCSCOL  
 FCTPRECCSCON
-FCTTURCONV 

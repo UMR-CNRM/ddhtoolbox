@@ -2,51 +2,52 @@ BUDGET LIST CT
 MAIN CT
 CT
 #-------------------------------------
-BEGIN BLOCK Solar radiation
+BEGIN BLOCK Radiation: Solar
 FCTRSO
 #-------------------------------------
-BEGIN BLOCK Thermal radiation
+BEGIN BLOCK Radiation: IR
 FCTRTH
 #-------------------------------------
-BEGIN BLOCK Turbulence
+BEGIN BLOCK Trans: Subgrid Tur + Shallow CV
 FCTDIFFTURB
+FCTDIFFSC
 #-------------------------------------
-BEGIN BLOCK Deep CV diff
+BEGIN BLOCK Trans: Subgrid CV
 FCTDIFFDC
 #-------------------------------------
-BEGIN BLOCK Deep CV condens
-FCTCCQL 
-FCTCCQN
-#-------------------------------------
-BEGIN BLOCK Deep CV sens. prec
-FCTCSPRECCL
-FCTCSPRECCN
-#-------------------------------------
-BEGIN BLOCK Deep CV evap
-FCTECL 
-FCTECN
-#-------------------------------------
-BEGIN BLOCK Resolved sens. prec
+BEGIN BLOCK Condens: Resolved
+FCTCSQL
+FCTCSQN
+FCTESL
+FCTESN
 FCTCSPRECSL
 FCTCSPRECSN
 #-------------------------------------
-BEGIN BLOCK Semi-lag adv
+BEGIN BLOCK Condens: Subgrid CV
+FCTCCQL 
+FCTCCQN
+FCTCSPRECCL
+FCTCSPRECCN
+FCTECL 
+FCTECN
+#-------------------------------------
+BEGIN BLOCK Trans: Semi-lag adv
 TCTSL
-#-------------------------------------
-BEGIN BLOCK Semi-lag semi-impl
-TCTSI
-#-------------------------------------
-BEGIN BLOCK TCTCONVERSI
-TCTCONVERSI
-#-------------------------------------
-BEGIN BLOCK FCTESG
-FCTESG
-#-------------------------------------
-BEGIN BLOCK FCTDPSFI
-FCTDPSFI
-#-------------------------------------
-BEGIN BLOCK FCTIMCC
-FCTIMCC
-#-------------------------------------
-BEGIN BLOCK Mesospheric drag
-FCTRMH
+##-------------------------------------
+#BEGIN BLOCK Trans: Semi-lag semi-impl
+#TCTSI
+##-------------------------------------
+#BEGIN BLOCK TCTCONVERSI
+#TCTCONVERSI
+##-------------------------------------
+#BEGIN BLOCK FCTESG
+#FCTESG
+##-------------------------------------
+#BEGIN BLOCK FCTDPSFI
+#FCTDPSFI
+##-------------------------------------
+#BEGIN BLOCK FCTIMCC
+#FCTIMCC
+##-------------------------------------
+#BEGIN BLOCK Mesospheric drag
+#FCTRMH
