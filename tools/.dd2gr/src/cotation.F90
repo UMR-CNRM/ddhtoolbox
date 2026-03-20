@@ -1,4 +1,4 @@
-subroutine cotation(px1,px2,py1,py2,pec,pisol,cdcoul,ptail)
+subroutine cotation(px1,px2,py1,py2,pec,pisol,cdcoul,ptail,cdforc)
 ! --------------------------------------------------------------
 ! **** ** Cotation d'isolignes: on met un label réel.
 ! --------------------------------------------------------------
@@ -9,6 +9,7 @@ subroutine cotation(px1,px2,py1,py2,pec,pisol,cdcoul,ptail)
 ! Externes:
 ! Auteur:   2017-09, J.M. Piriou.
 ! Modifications:
+!           2026-03-20, J.M. Piriou : format de cotation des isolignes paramétrable par l'utilisateur (cdforc).
 ! --------------------------------------------------------------
 ! En entree:
 ! En sortie:
@@ -54,12 +55,28 @@ elseif(iordg <= 0) then
   if(ivirg == 0) llentier=.true.
 elseif(iordg < 8) then
   llentier=.true.
-  clformat='gol'
+  clformat='inutile'
 else
   llentier=.false.
   clformat='es10.3'
 endif
-clformat='('//trim(clformat)//')'
+!
+!-------------------------------------------------
+! Si l'utilisateur a précisé le format dans ses directives,
+! par exemple #ISOL FIC=... EPAIS=... FORMAT=f4.1, 
+! la variable cdforc contient autre chose que "indef" en entrée de cette routine,
+! par exemple "f4.1" ou "es16.7".
+! Sinon cdforc="indef" en entrée.
+!-------------------------------------------------
+!
+if(trim(cdforc) == 'indef') then
+  clformat='('//trim(clformat)//')'
+elseif(trim(cdforc) == 'I') then
+  llentier=.true.
+else
+  clformat='('//trim(cdforc)//')'
+  llentier=.false.
+endif
 
 if(llentier) then
   !

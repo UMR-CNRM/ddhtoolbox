@@ -9,6 +9,7 @@ subroutine svg_isol
 ! Externes:
 ! Auteur:   2017-09, J.M. Piriou.
 ! Modifications:
+!           2026-03-20, J.M. Piriou : format de cotation des isolignes paramétrable par l'utilisateur (clforc).
 ! --------------------------------------------------------------
 ! En entree:
 ! En sortie:
@@ -70,6 +71,7 @@ do jfic_isol=1,nfic_isol
   clcoul="black"
   ztail=1.
   zepais=1.
+  clforc='indef' ! format de cotation des réels.
   !
   !-------------------------------------------------
   ! Saisie des paramètres prescrits par l'utilisateur.
@@ -130,6 +132,13 @@ do jfic_isol=1,nfic_isol
       !
       clec2=clc(index(clc,'=')+1:)
       read(clec2,fmt=*) ziso2
+    elseif(clc(1:index(clc,'=')-1) == 'FORMAT') then
+      !
+      !-------------------------------------------------
+      ! Choix du format d'écriture des réels lors de leur cotation.
+      !-------------------------------------------------
+      !
+      clforc=clc(index(clc,'=')+1:)
     elseif(clc(1:index(clc,'=')-1) == 'COUL') then
       !
       !-------------------------------------------------
@@ -920,7 +929,7 @@ do jfic_isol=1,nfic_isol
             ! On va coter ce point (coter = écriture d'un label).
             !-------------------------------------------------
             !
-            call cotation(zx1,zx2,zy1,zy2,zec,zisol,clcouli,ztail)
+            call cotation(zx1,zx2,zy1,zy2,zec,zisol,clcouli,ztail,clforc)
           endif
           iprec=iprec+1
           !
