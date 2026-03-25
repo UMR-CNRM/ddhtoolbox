@@ -181,7 +181,7 @@ do jfic_isol=1,nfic_isol
       !-------------------------------------------------
       !
       write(*,fmt=*)
-      write(*,fmt=*) 'dd2gr/sv_isol/ERREUR: erreur de syntaxe dans la demande utilisateur ',trim(cgfic_isol(jfic_isol)),'!...'
+      write(*,fmt=*) 'dd2gr/svg_isol/ERREUR: erreur de syntaxe dans la demande utilisateur ',trim(cgfic_isol(jfic_isol)),'!...'
       write(*,fmt=*) 'La demande non reconnue est ',trim(clc)
       write(*,fmt=*)
       call exit(1)

@@ -22,10 +22,11 @@ program ddhi
 ! -------
 ! Modifications:    94-10, J.M. Piriou: lecture d'un lfa au lieu d'un LFP.
 !                 2007-11, A. Deckmyn : make lisc (list of fields) external.
-!                 2008-07, J.M. Piriou: translate comments to English.
+!                 2008-07, J.M. Piriou: translate ddhi standard outputs to English.
 !                 2010-01, J.M. Piriou: plot vertical profiles of theta, thetaW, etc.
 !                 2021-03, J.M. Piriou: set initial pressure and geopotential values to final ones, if the former are equal to 0..
 !                 2023-10-08, J.M. Piriou: introduce the "PTS" time coordinate.
+!                 2026-03-25, J.M. Piriou: take into account the qv dependency of cp as converting fluxes FCT* and tendencies TCT* into T tendency in K/day.
 ! --------------------------------------------------------------------------
 use const_ther, only : rcpd, rcpv, rcw, rcs
 !
@@ -1835,9 +1836,17 @@ do jlisconv=1,ilisconv
                        enddo 
                 else
             do jlev=1,ilevm
-              zmoyz3(jlev)=zmoyz3(jlev)*zcmu
-              if(lldebug) write(78,*) 'zone mult coef jlev=',jlev,' zmoyz3=',zmoyz3(jlev),&
-                                &' zcmu=',zcmu
+              if(clmnemo(2:3) == 'CT' .and. llcp) then
+                !
+                ! Dans le cas des articles FCT* ou TCT*, 
+                ! correction de la valeur de cp, qui dépend de qv.
+                !
+                !zmoyz3(jlev)=zmoyz3(jlev)*(rcpd/(0.5*(zrcp0(jlev)+zrcp1(jlev))))*zcmu
+                zmoyz3(jlev)=zmoyz3(jlev)*zcmu
+              else
+                zmoyz3(jlev)=zmoyz3(jlev)*zcmu
+              endif
+              if(lldebug) write(78,*) 'zone mult coef jlev=',jlev,' zmoyz3=',zmoyz3(jlev),' zcmu=',zcmu
             enddo
                 endif
     !
