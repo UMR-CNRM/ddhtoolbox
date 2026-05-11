@@ -1,0 +1,20 @@
+BUDGET LIST KINETIC ENERGY BUDGET
+UNIT J/kg/day
+MAIN KK
+KK
+# ----------------
+BEGIN BLOCK Pressure gradient
+TKKCONVERSI1 
+# ----------------
+BEGIN BLOCK Rain deltam
+FKKFLUDUAPLUI
+# ----------------
+BEGIN BLOCK Conv_dissipation
+TKKDISSIPCONV 
+# ----------------
+BEGIN BLOCK Turb_dissipation
+TKKDISSIPTUR 
+# ----------------
+BEGIN BLOCK Gravity Waves
+TKKDISSIPGREL 
+# ----------------

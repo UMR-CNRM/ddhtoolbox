@@ -202,38 +202,11 @@
 \newcommand{\bb}[1]{\begin{beamerboxesrounded}[shadow=true]{#1}}
 \newcommand{\eb}{\end{beamerboxesrounded}}
 
-% -----------------------
-% from Y. Bouteloup:
-% -----------------------
-%\setbeamertemplate{sections/subsections in toc}[circle]
-%
-% Pour pouvoir superposer des choses (en particulier des légendes ...
-%\usepackage[absolute,showboxes,overlay]{textpos}     % déclaration du package
-%\textblockorigin{0pt}{0pt}                           %origine des positions (coin gauche) attention, axe y vers le bas !!
-%\TPshowboxestrue                                  % affiche le contour des textblock
-%\TPshowboxesfalse                                % n'affiche pas le contour des textblock
-
-
 % ------------------------------------------------------------------------
 %  from mf2016: Enlever la barre de navigation
 % ------------------------------------------------------------------------
 \setbeamertemplate{navigation symbols}{} 
 
-% ------------------------------------------------------------------------
-%  from mf2016: Affichage du titre
-% ------------------------------------------------------------------------
-%\setbeamertemplate{frametitle}
-%  { %
-%  \vskip0.1cm
-%  \begin{beamercolorbox}[wd=\paperwidth,ht=1.1cm,leftskip=1.3cm]{frametitle}
-%    \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle
-%    %\vskip0.5em
-%    \flushright \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}{\itshape %\insertframesubtitle\hskip0.4cm}
-%  \end{beamercolorbox}
-%  \vskip0.1cm
-%}
-% \centering \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}{\itshape \insertframesubtitle\hskip0.4cm}
-% \flushright \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}{\itshape \insertframesubtitle\hskip0.4cm}
 
 % ------------------------------------------------------------------------
 % from mf2016:  Reglage des listes et enumerations
@@ -276,9 +249,9 @@
 {%
 \pgfuseshading{beamer@barshade}%
 \ifbeamer@sb@subsection%
-\vskip-9.75ex%
+\vskip-7.5ex%
 \else%
-\vskip-7ex%
+\vskip-5.0ex%
 \fi%
 \begin{beamercolorbox}[ignorebg,ht=2.25ex,dp=3.75ex]{section in head/foot}
 \insertnavigation{\paperwidth}
@@ -352,30 +325,13 @@
 %===== HERE ====== HERE ========
 %\subtitle{{\it Réunion PROC/Phys (5 décembre 2017)}}
 \author{
-Fabrice Voitus et Jean-Marcel Piriou \\
+Jean-Marcel Piriou, Fabrice Voitus, Marie Mazoyer, Meryl Wimmer \\
 \vspace{4mm}
-{\it Météo-France / CNRM / GMAP} \\
+{\it Météo-France / DESR / CNRM / GMAP} \\
 \vspace{8mm}
-{\it SISTEMD GMAP, Toulouse, 17 septembre 2019}
+{\it Réunion COPHY, Toulouse, 11 mai 2026}
 }
-%===== HERE ====== HERE ========
-%\institute{M\'et\'eo-France et CNRS-UMR3589 / Toulouse / France}
-%\date{14 octobre 2017}
-%\date{\today}
-%\date{Réunion PROC/Phys (11 décembre 2017)}
 \date{ }
-%===== HERE ====== HERE ========
-
-% \author[Hemaspaandra, Mukherji, Tantau]{%
-%   Lane~Hemaspaandra\inst{1} \and Proshanto~Mukherji\inst{1} \and  Till~Tantau\inst{2}}
-%  \institute[Universities of Rochester and Berlin]{
-%    \inst{1}%
-%    Department of Computer Science\\
-%   University of Rochester
-%    \and
-%    \inst{2}%
-%    Fakultät für Elektrotechnik und Informatik\\
-%   Technical University of Berlin}
 
 %============================================================================
 \begin{document}
@@ -425,9 +381,9 @@ Fabrice Voitus et Jean-Marcel Piriou \\
 %============================================================================
 \begin{frame}
 %\frametitle{\vspace{0.5cm} \hspace{3.5cm} {\LARGE Sommaire} }
-\frametitle{\vspace{0.5cm} \centerline{{\LARGE Sommaire}} }
+\frametitle{\vspace{0.0cm} \centerline{{\LARGE Sommaire}} }
 
-\begin{textblock*}{13.5cm}(1.5cm,2.0cm)
+\begin{textblock*}{13.5cm}(1.5cm,2.5cm)
 \begin{columns}
 \column{13.5cm}
 \begin{block}<-1>{}
@@ -436,7 +392,6 @@ Fabrice Voitus et Jean-Marcel Piriou \\
 % \normalsize \small \footnotesize \scriptsize \tiny
 \item Motivation: pourquoi se servir des DDH ? Exemples d'usage.
 \item Comment {\bf produire} des fichiers de DDH avec ARPEGE et AROME ? 
-\item Développement des DDH flexibles.
 \item Comment {\bf utiliser} les fichiers de DDH ? La ddhtoolbox.
 \item Où trouver la documentation ? Qui contacter ?
 \item Conclusions
@@ -458,7 +413,7 @@ Fabrice Voitus et Jean-Marcel Piriou \\
 %============================================================================
 \subsection{Pourquoi les DDH ?}
 \begin{frame}
-\frametitle{\vspace{0.2cm} \centerline{\LARGE Pourquoi les DDH ?} }
+\frametitle{\vspace{0.0cm} \centerline{\LARGE Pourquoi les DDH ?} }
 
 \vspace{-1.0cm}
 \begin{exampleblock}{\normalsize{Objectifs :}}
@@ -542,24 +497,59 @@ avec $r_{\eta}=-(1/g)\dr_{\eta}\pi$
 \subsection{Bilan ARPEGE}
 \begin{frame}
 %\frametitle{\vspace{0.2cm} \hspace{3.5cm} {\LARGE Equations de bilan} }
-\frametitle{\vspace{0.2cm} \centerline{\LARGE Equations de bilan} }
+\frametitle{\vspace{-0.2cm} \centerline{\large Bilan de température ARPEGE en moyenne horiz. globale} }
 
 \begin{textblock*}{11.cm}(0.5cm,1.9cm)
 \includegraphics<1->[width=11.cm]{zddhb_CT_ARPE_graph_doc_svg_HR.eps}
 \end{textblock*}
 
-\begin{textblock*}{12.5cm}(1mm,1.3cm)
+%\begin{textblock*}{12.5cm}(1mm,0.3cm)
+%\begin{columns}
+%\column{11.5cm}
+%\begin{block}<-1>{}
+%\begin{center}
+%Bilan de température ARPEGE en moyenne horiz. globale
+%\end{center}
+%\end{block}
+%\end{columns}
+%\end{textblock*}
+
+\logos
+
+\end{frame}
+
+%============================================================================
+\subsection{Bilan ARPEGE}
+\begin{frame}
+\frametitle{\vspace{-0.2cm} \centerline{\large Bilan de température ARPEGE en moyenne horiz. globale} }
+
+\begin{textblock*}{16cm}(0.3cm,1.8cm)
+\centering
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{bilan_qv/bilan_global_QVparParam.png.eps}
+    \\[0.3cm]
+    {\small Synthèse par processus}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{bilan_qv/bilan_global_QVparProcess.png.eps}
+    \\[0.3cm]
+    {\small Détail par paramétrisation}
+\end{minipage}
+\end{textblock*}
+
+\begin{textblock*}{12.5cm}(2cm,7.5cm)
 \begin{columns}
 \column{11.5cm}
 \begin{block}<-1>{}
 \begin{center}
-Bilan de température ARPEGE en moyenne horiz. globale
+Source Sylvie Malardel + Fabrice Voitus
 \end{center}
 \end{block}
 \end{columns}
 \end{textblock*}
-
-\logos
 
 \end{frame}
 
@@ -591,10 +581,10 @@ Bilan de température AROME sur la vallée de Chamonix. \\ Source Yann Seity.
 \subsection{Circulations méridiennes}
 \begin{frame}
 %\frametitle{\vspace{0.2cm} \hspace{3.5cm} {\LARGE Circulations méridiennes} }
-\frametitle{\vspace{0.2cm} \centerline{\LARGE Circulations méridiennes} }
+\frametitle{\vspace{-0.2cm} \centerline{\Large Circulations méridiennes / coupes verticales} }
 
-\begin{textblock*}{2.7182818449cm}(-0.8cm,1.8cm)
-\includegraphics<1->[width=18.cm]{DHFZOFCST+0072_xyuvc_1_doc_svg_HR.eps}
+\begin{textblock*}{2.7182818449cm}(+0.8cm,1.8cm)
+\includegraphics<1->[width=14.cm]{ddh_hadley/trace.doc.svg.eps}
 \end{textblock*}
 
 
@@ -608,7 +598,7 @@ Bilan de température AROME sur la vallée de Chamonix. \\ Source Yann Seity.
 \subsection{Planche d'annonce}
 \begin{frame}
 %\frametitle{\vspace{0.2cm} \hspace{3.5cm} {\LARGE Circulations méridiennes} }
-\frametitle{\vspace{0.2cm} \centerline{\LARGE Production des DDH} }
+\frametitle{\vspace{-0.2cm} \centerline{\LARGE Production des DDH} }
 
 \begin{textblock*}{2.7182818449cm}(0.8cm,1.8cm)
 \includegraphics<1->[width=9.cm]{production.eps}
@@ -631,213 +621,28 @@ Bilan de température AROME sur la vallée de Chamonix. \\ Source Yann Seity.
 
 
 %============================================================================
-\subsection{Histoire}
-\begin{frame}
-\frametitle{\normalsize Un peu d'Histoire }
-\vspace{-.3cm}
-\begin{block}{\normalsize{Développements des DDH dans nos modèles}}
-\begin{enumerate}
- \onslide<1-2>\item 1991 : DDH initiés par Alain Joly pour ARPEGE $\Rightarrow$ 
- Stockage des champs DDH dans un tableau dédié PDHCV, 
- passé en argument et de dimension fixée au préalable (en dur)  
- $\Rightarrow$ \textbf{\textit{\green{thread-safe}}} mais \textbf{\textit{\red{non-flexible}}}.\\
- %
- \onslide<2-2>\item 2009 : DDH flexibles introduits par Olivier Rivière pour AROME  
- $\Rightarrow$ flexibilité via allocations dynamiques manuelles  
- d'un tableau de stockage global RDDH\_FIELD, passé par module \textbf{ddh\_mix} 
- $\Rightarrow$ \textbf{\textit{\green{flexible}}} mais \textbf{\textit{\red{non thread-safe}}}.\\
-\end{enumerate}
-\end{block}
-\logos
-\end{frame}
-%============================================================================
-\subsection{Ancien flux de données}
-\begin{frame}
-\frametitle{\small{\textbf{Ancien flux de données des DDH flexibles}}}
-\vspace*{-0.5cm}
-%
-\begin{figure}[htbp]
-	\centering
-	\scriptsize
-	\begin{tikzpicture}[x=6.5mm,y=-3mm,>=latex]
-		\mynode{0}{0}{stepo}{stepo};
-		\mynode{1}{1}{scan2m}{scan2m};
-		\mynode{2}{2}{scan2h}{scan2h};
-		\mynode{3}{3}{gp_model}{gp\_model};
-		\mynode{4}{4}{cpg_drv}{cpg\_drv};
-		\mynode{5}{5}{cpg}{cpg};
-		\mynode{6}{6}{cpg_gp}{cpg\_gp};
-		\draw(7,7) node[right] (cp_forcing) {cp\_forcing};
-		\draw(10,7) node[right] (add_field_3d_1) {add\_field};
-		\mynode{6}{8}{mf_phys}{mf\_phys};
-		\draw(7,9) node[right] (aplpar) {aplpar};
-		\draw(10,9) node[right] (add_field_3d_2) {add\_field};
-		\draw(7,10) node[right] (cptend_new) {cptend\_new};
-		\draw(10,10) node[right] (add_field_3d_3) {add\_field};
-		\draw(7,11) node[right] (apl_arome)  {apl\_arome};
-		\draw(10,11) node[right] (add_field_3d_4) {add\_field};
-		\draw(7,12) node[right] (cputqy_arome) {cputqy\_arome};
-		\draw(10,12) node[right] (add_field_3d_5) {add\_field};
-		\mynode{6}{13}{cpg_dia}{cpg\_dia};
-		\draw(7,14) node[right] (cpdyddh) {cpdyddh};
-		\draw(10,14) node[right] (add_field_3d_6) {add\_field};	
-		\draw(7,15) node[right] (cpcuddh1) {cpcuddh};
-		\mynode{4}{16}{cpglag}{cpglag};
-		\mynode{5}{17}{cpdyddhlag}{cpdyddhlag};
-		\draw(6,18) node[right] (add_field_3d_7) {add\_field};
-		\draw(6,19) node[right] (cpcuddh2) {cpcuddh};
-		\mynode{1}{20}{posddh}{posddh};
-		\mynode{2}{21}{ppsydh}{ppsydh};
-		\mynode{2}{22}{ppfidh}{ppfidh};
-		%
-		\draw (stepo) |- (scan2m) |- (scan2h) |- (gp_model) |- (cpg_drv) |- (cpg);
-		\draw (cpg) |- (cpg_gp) |- (cp_forcing) -- (add_field_3d_1);
-		\draw (cpg) |- (mf_phys) |- (aplpar) -- (add_field_3d_2);
-		\draw (mf_phys) |- (cptend_new) -- (add_field_3d_3);
-		\draw (mf_phys) |- (apl_arome) -- (add_field_3d_4);
-		\draw (mf_phys) |- (cputqy_arome) -- (add_field_3d_5);
-		\draw (cpg) |- (cpg_dia) |- (cpdyddh) -- (add_field_3d_6);
-		\draw (cpg_dia) |- (cpcuddh1);
-		\draw (gp_model) |- (cpglag) |- (cpdyddhlag) |- (add_field_3d_7);
-		\draw (cpdyddhlag) |- (cpcuddh2);
-		\draw (stepo) |- (posddh) |- (ppfidh);
-		\draw (posddh) |- (ppsydh);
-		%		
-		\draw[brown,line width=1pt] (4.5,4.5) rectangle (13,15.5);
-		\draw[brown] (12,4.5) node[above left] {\bfseries OpenMP loop 1};
-		\draw[brown,line width=1pt] (4.5,16.5) rectangle (13,19.5);
-		\draw[brown] (12,19.5) node[below left] {\bfseries OpenMP loop 2};
-		%
-		\draw[blue] (15,10.5) node [right] (RDDH_FIELD1) {\bfseries RDDH\_FIELD};
-		\draw[blue,->] (add_field_3d_1) -- (RDDH_FIELD1);
-		\draw[blue,->] (add_field_3d_2) -- (RDDH_FIELD1);
-		\draw[blue,->] (add_field_3d_3) -- (RDDH_FIELD1);
-		\draw[blue,->] (add_field_3d_4) -- (RDDH_FIELD1);
-		\draw[blue,->] (add_field_3d_5) -- (RDDH_FIELD1);
-		\draw[blue,->] (add_field_3d_6) -- (RDDH_FIELD1);
-		\draw[blue,->] (RDDH_FIELD1) -- +(0,3.5) -- (cpcuddh1);
-		%
-		\draw[blue] (15,18) node [right] (RDDH_FIELD2) {\bfseries RDDH\_FIELD};
-		\draw[blue,->] (add_field_3d_7) -- (RDDH_FIELD2);
-		\draw[blue,->] (RDDH_FIELD2)-- (cpcuddh2);		
-		%
-		\draw[green] (15,15) node[right] (HDCVB1) {\bfseries HDCVB*(:,:,ITHREAD)};
-		\draw[green,->] (cpcuddh1) -- (HDCVB1);
-		\draw[green] (15,19) node[right] (HDCVB2) {\bfseries HDCVB*(:,:,ITHREAD)};
-		\draw[green,->] (cpcuddh2) -- (HDCVB2);
-		\draw[green,->] (HDCVB1) -- (HDCVB2);
-		\draw[green,->] (HDCVB2) -- +(0,2) -- (ppsydh);		
-		%
-		\draw[dashed] (14,0) -- (14,22);
-		\draw (15,0) node[above right] {\bfseries GLOBAL VARIABLES};
-	\end{tikzpicture}
-\end{figure}
-\end{frame}
-
-%============================================================================
 \subsection{Histoire suite}
 \begin{frame}
 \frametitle{\normalsize Un peu d'Histoire }
-\vspace{-.3cm}
+\vspace{-.9cm}
 \begin{block}{\normalsize{Développements des DDH dans nos modèles}}
 \begin{enumerate}
- \onslide<1-2>\item 1991 : DDH initiés par Alain Joly pour ARPEGE $\Rightarrow$ 
+ \item 1991 : DDH initiés par Alain Joly pour ARPEGE $\Rightarrow$ 
  Stockage des champs DDH dans un tableau dédié PDHCV, 
  passé en argument et de dimension fixée au préalable (en dur);  
  $\Rightarrow$ \textbf{\textit{\green{thread-safe}}} mais \textbf{\textit{\red{non-flexible}}}.\\
  %
- \onslide<1-2>\item 2009 : DDH flexibles introduits par Olivier Rivière pour AROME : 
+ \item 2009 : DDH flexibles introduits par Olivier Rivière pour AROME : 
  $\Rightarrow$ flexibilité via allocations dynamiques manuelles  
  d'un tableau de stockage global RDDH\_FIELD, passé par module \textbf{ddh\_mix} 
  $\Rightarrow$ \textbf{\textit{\green{flexible}}} mais \textbf{\textit{\red{non thread-safe}}}.\\
  % 
- \onslide<2-2>\item 2019 : DDH flexibles OpenMP à partir du cycle 46t1 $\Rightarrow$ allocations dynamiques automatiques 
+ \item 2019-2026 : DDH flexibles OpenMP à partir du cycle 46t1 par Fabrice Voitus $\Rightarrow$ allocations dynamiques automatiques 
  d'un pointeur de stockage, attribut d'une superstructure YDDH passée en argument dans chaque routine concernée $\Rightarrow$ \textbf{\textit{\green{flexible}}} et \textbf{\textit{\green{thread-safe}}}.
+ \item 1991-2026 : lecture et tracé des DDH sur PC et serveurs d'équipe : \textbf{ddhtoolbox} par Jean-Marcel Piriou.
 \end{enumerate}
 \end{block}
 \logos
-\end{frame}
-%============================================================================
-\subsection{Nouveau flux de données}
-\begin{frame}
-\frametitle{\small{\textbf{Nouveau flux de données des DDH flexibles}}}
-\vspace*{-0.7cm}
-\begin{figure}[htbp]
-	\centering
-	\scriptsize
-	\begin{tikzpicture}[x=7.mm,y=-2.6mm,>=latex]
-		\mynode{0}{0}{stepo}{stepo};
-		\mynode{1}{1}{scan2m}{scan2m};
-		\mynode{2}{2}{scan2h}{scan2h};
-		\mynode{3}{3}{gp_model}{gp\_model};
-		\mynode{4}{4}{cpg_drv}{cpg\_drv(\blue{yddh})};
-		\mynode{5}{5}{cpg}{cpg(\blue{yddh})};
-		\mynode{6}{6}{setddh1}{\red{setddh}};
-		\mynode{6}{7}{cpg_gp}{cpg\_gp(\blue{yddh})};
-		\draw(7,8) node[right] (cp_forcing) {cp\_forcing};
-		\draw(10,8) node[right] (add_field_1) {\red{new\_add\_field}};
-		\mynode{6}{9}{mf_phys}{mf\_phys(\blue{yddh})};
-		\draw(7,10) node[right] (aplpar) {aplpar};
-		\draw(10,10) node[right] (add_field_2) {\red{new\_add\_field}};
-		\draw(7,11) node[right] (cptend_new) {cptend\_new};
-		\draw(10,11) node[right] (add_field_3) {\red{new\_add\_field}};
-		\draw(7,12) node[right] (apl_arome)  {apl\_arome};
-		\draw(10,12) node[right] (add_field_4) {\red{new\_add\_field}};
-		\draw(7,13) node[right] (cputqy_arome) {cputqy\_arome};
-		\draw(10,13) node[right] (add_field_5) {\red{new\_add\_field}};
-		\mynode{6}{14}{cpg_dia}{cpg\_dia(\blue{yddh})};
-		\draw(7,15) node[right] (cpdyddh) {cpdyddh};
-		\draw(10,15) node[right] (add_field_6) {\red{new\_add\_field}};	
-		\draw(7,16) node[right] (cpcuddh1) {cpcuddh};
-		\mynode{6}{17}{cleanddh1}{\red{cleanddh}};
-		\mynode{4}{18}{storeddh1}{\red{storeddh}};
-		\mynode{4}{19}{cpglag}{cpglag(\blue{yddh})};
-		\mynode{5}{20}{cpdyddhlag}{cpdyddhlag(\blue{yddh})};
-		\draw(6,21) node[right] (setddh2) {\red{setddh}};
-		\draw(6,22) node[right] (add_field_7) {\red{new\_add\_field}};
-		\draw(6,23) node[right] (cpcuddh2) {cpcuddh};
-		\draw(6,24) node[right] (cleanddh2) {\red{cleanddh}};
-		\mynode{4}{25}{storeddh2}{\red{storeddh}};
-		\mynode{1}{26}{posddh}{posddh};
-		\mynode{2}{27}{ppsydh}{ppsydh};
-		\mynode{2}{28}{ppfidh}{ppfidh};
-		%
-		\draw (stepo) |- (scan2m) |- (scan2h) |- (gp_model) |- (cpg_drv) |- (cpg);
-		\draw (cpg) |- (setddh1);
-		\draw (cpg) |- (cpg_gp) |- (cp_forcing) -- (add_field_1);
-		\draw (cpg) |- (mf_phys) |- (aplpar) -- (add_field_2);
-		\draw (mf_phys) |- (cptend_new) -- (add_field_3);
-		\draw (mf_phys) |- (apl_arome) -- (add_field_4);
-		\draw (mf_phys) |- (cputqy_arome) -- (add_field_5);
-		\draw (cpg) |- (cpg_dia) |- (cpdyddh) -- (add_field_6);
-		\draw (cpg_dia) |- (cpcuddh1);
-		\draw (cpg) |- (cleanddh1);
-		\draw (gp_model) |- (storeddh1);
-		\draw (gp_model) |- (cpglag) |- (cpdyddhlag) |- (setddh2);
-		\draw (cpdyddhlag) |- (add_field_7);
-		\draw (cpdyddhlag) |- (cpcuddh2);
-		\draw (cpdyddhlag) |- (cleanddh2);
-		\draw (gp_model) |- (storeddh2);
-		\draw (stepo) |- (posddh) |- (ppfidh);
-		\draw (posddh) |- (ppsydh);
-		%		
-		\draw[brown,line width=1pt] (4.5,4.5) rectangle (13.5,17.5);
-		\draw[brown] (12,4.75) node[above left] {\bfseries OpenMP loop 1};
-		\draw[brown,line width=1pt] (4.5,19.5) rectangle (12,24.5);
-		\draw[brown] (12,24.6) node[below left] {\bfseries OpenMP loop 2};
-		%		
-		%
-		\draw[green] (15,15) node[right] (HDCVB1) {\bfseries HDCVB*(:,:,ITHREAD)};
-		\draw[green,->] (cpcuddh1) -- (HDCVB1);
-		\draw[green] (15,19) node[right] (HDCVB2) {\bfseries HDCVB*(:,:,ITHREAD)};
-		\draw[green,->] (cpcuddh2) -- (HDCVB2);
-		\draw[green,->] (HDCVB1) -- (HDCVB2);
-		\draw[green,->] (HDCVB2) -- +(0,2) -- (ppsydh);		
-		%
-		\draw[dashed] (14,0) -- (14,22);
-		\draw (15,0) node[above right] {\bfseries GLOBAL VARIABLES};
-	\end{tikzpicture}
-\end{figure}
 \end{frame}
 %
 %============================================================================
@@ -881,48 +686,6 @@ dans les fichiers DDH.
 
 \end{frame}
 %============================================================================
-
-
-%============================================================================
-\subsection{Capuccino}
-
-\begin{frame}[fragile]
-\frametitle{{\normalsize Un exemple :} }
-\vspace*{-0.25cm}
-\begin{exampleblock}{}
-\begin{tiny}
- \begin{verbatim} 
-  SUBROUTINE DIAG_CAPUCCINO(KIDIA,KFDIA,KLEV,PINGREDIENTS,PDOSAGE,YDLDDH,YDMDDH,YDDDH)
-  
-  USE DDH_MIX, ONLY  : TYP_DDH,NEW_ADD_FIELD_3D
-  USE YOMMDDH, ONLY  : TMDDH
-  USE YOMLDDH, ONLY  : TLDDH     
-  ....
-  TYPE(TLDDH)       ,INTENT(IN)    :: YDLDDH ! ddh useful logicals
-  TYPE(TMDDH)       ,INTENT(INOUT) :: YDMDDH ! ddh useful metadata 
-  TYPE(TYP_DDH)     ,INTENT(INOUT) :: YDDDH  ! ddh superstructure  
-  ....
-  DO JLEV=1,KLEV
-     DO JLON = KIDIA,KFDIA      
-        ZCOFFEE(JLON,JLEV)      = .... 
-        ZMILK(JLON,JLEV)        = ....
-        ZCHOCOLATE(JLON,JLEV)   = ....
-     ENDDO
-  ENDDO   
-  ....
-  IF (YDLDDH%LFLEXDIA).AND.(YDLDDH%LDDH_OMP) THEN
-     CALL NEW_ADD_FIELD_3D(YDMDDH,ZCOFFEE,'FCO_COFFEE',YDDDH)
-     CALL NEW_ADD_FIELD_3D(YDMDDH,ZMILK,'CO_MILK',YDDDH,CDTYPE='F')
-     CALL NEW_ADD_FIELD_3D(YDMDDH,ZCHOCOLATE,'FCO_CHOCO',YDDDH)
-  ENDIF
-  ....
-  END  SUBROUTINE DIAG_CAPUCCINO
-  \end{verbatim}  
-  \end{tiny}
-\end{exampleblock}
-\end{frame}
-
-%============================================================================
 \subsection{Namelist utilisateur}
 
 \begin{frame}[fragile]
@@ -961,7 +724,7 @@ dans les fichiers DDH.
 \subsection{Planche d'annonce}
 \begin{frame}
 %\frametitle{\vspace{0.2cm} \hspace{3.5cm} {\LARGE Circulations méridiennes} }
-\frametitle{\vspace{0.2cm} \centerline{\LARGE Utilisation des DDH} }
+\frametitle{\vspace{-0.4cm} \centerline{\LARGE Utilisation des DDH: la ddhtoolbox} }
 
 \begin{textblock*}{2.7182818449cm}(0.8cm,1.8cm)
 \includegraphics<1->[width=12.cm]{enfants.eps}
@@ -991,12 +754,25 @@ dans les fichiers DDH.
 %============================================================================
 \begin{frame}
 %\frametitle{\vspace{0.5cm} \hspace{3.5cm} {\LARGE Sommaire} }
-\frametitle{\vspace{0.3cm} \centerline{{\LARGE Tracés type émagramme}} }
+\frametitle{\vspace{-0.4cm} \centerline{{\LARGE Tracés type émagramme 761}} }
 
-\begin{textblock*}{2.7182818449cm}(0.3cm,2.5cm)
-\includegraphics<1->[width=8.cm]{theta_toulouse.eps}
-\includegraphics<1->[width=8.cm]{theta_tropiques.eps}
+\begin{textblock*}{16cm}(0.3cm,2.5cm)
+\centering
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics<1->[width=\linewidth]{theta_toulouse.eps}
+    \\[0.3cm]
+    {\small Toulouse}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics<1->[width=\linewidth]{theta_tropiques.eps}
+    \\[0.3cm]
+    {\small Tropiques}
+\end{minipage}
 \end{textblock*}
+
 
 
 \begin{textblock*}{13.5cm}(1.5cm,1.5cm)
@@ -1030,34 +806,24 @@ dans les fichiers DDH.
 %============================================================================
 \begin{frame}
 %\frametitle{\vspace{0.5cm} \hspace{3.5cm} {\LARGE Sommaire} }
-\frametitle{\vspace{0.3cm} \centerline{{\LARGE Bilan de température d'une après-midi à Toulouse}} }
+\frametitle{\vspace{-0.4cm} \centerline{{\LARGE Bilan de T d'une après-midi à Toulouse}} }
 
-\begin{textblock*}{2.7182818449cm}(1.3cm,1.7cm)
-\includegraphics<1->[width=11.cm]{bil_CT_Toulouse.eps}
+\begin{textblock*}{16cm}(0.3cm,2.5cm)
+\centering
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics<1->[width=\linewidth]{20260504T0000P.DHFDLFCST+0016.lfa.instantane.Toulouse.lfa.Dom001.Var_fin.scm.ms.theta.doc.svg.eps}
+    \\[0.3cm]
+    {\small Emagramme 761}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics<1->[width=\linewidth]{zddhb.CT.OPER.graph.doc.svg.eps}
+    \\[0.3cm]
+    {\small Bilan de température}
+\end{minipage}
 \end{textblock*}
-
-
-\begin{textblock*}{13.5cm}(1.5cm,1.5cm)
-\begin{columns}
-\column{13.5cm}
-\begin{block}<2->{}
-\begin{itemize}
-% \Huge \huge \ LARGE \Large \large
-% \normalsize \small \footnotesize \scriptsize \tiny
-\item get hendrix:/home/m/mxpt/mxpt001/vortex/arpege/4dvarfr/OPER/2019/09/17 \\
-/T0000P/forecast/ddh.arpege-dlimited.tl1798-c22.ddhpack.tgz
-\item tar tvf
-\item fddh="DHFDLFCST+0018.lfa"
-\item ddhr -ddd \$fddh \textbf{\green{renseignements en clair sur chaque domaine}}
-\item ddht -cEXTRAIT\_DOMAIN -E10 -1\$fddh -s\$fddh.10.lfa \textbf{\green{extraction du domaine Toulouse}}
-\item ddht -cDIFFE\_EC2\_EC1 -2DHFDLFCST+0018.lfa.10.lfa -1DHFDLFCST+0012.lfa.10.lfa -sDHFDLFCST+18-12.lfa.10.lfa \textbf{\green{différence entre 12h et 18h}}
-\item ddhb -v oper/CT -i DHFDLFCST+18-12.lfa.10.lfa \textbf{\green{bilan de température entre 12h et 18h}}
-%\item <3-> 
-\end{itemize}
-\end{block}
-\end{columns}
-\end{textblock*}
-
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1071,19 +837,17 @@ dans les fichiers DDH.
 \vspace{-1.0cm}
 \begin{exampleblock}{} 
 \begin{itemize}
-\item {\bf Documentation complète}: namelists, équations, production, ddhtoolbox; sur GmapDoc : http://www.umr-cnrm.fr/gmapdoc/IMG/pdf/ddh.pdf
+\item {\bf Documentation DDH complète}: namelists, équations, production, ddhtoolbox; sur GitHub : https://github.com/UMR-CNRM/ddhtoolbox/blob/master/documentation/ddh.pdf
 \item {\bf Présent exposé} : sur Intranet : http://intra.cnrm.meteo.fr/gmap-proc/perso/jean-marcel.piriou/cours\_memos\_docs/ddh\_presentation\_introductive.pdf
 \end{itemize}
 \end{exampleblock}
 
 \begin{block}<2->{\normalsize{Hotline de niveau exceptionnel :) }}
 \begin{itemize}
- \item {\bf Fabrice Voitus (5-85 77)} pour la production de fichiers de DDH dans AROME et ARPEGE.
- \item {\bf Jean-Marcel Piriou (5-84 62)} pour la ddhtoolbox et l'utilisation des DDH sur PC. 
+ \item {\bf Fabrice Voitus} pour la production de fichiers de DDH dans AROME et ARPEGE.
+ \item {\bf Jean-Marcel Piriou, Marie Mazoyer et Meryl Wimmer} pour la ddhtoolbox et l'utilisation des DDH sur PC.
 \end{itemize}
 \end{block}
-
-\logos 
 
 \end{frame}
 
@@ -1095,14 +859,12 @@ dans les fichiers DDH.
 %============================================================================
 \subsection{Conclusion}
 \begin{frame}
-\frametitle{\vspace{0.2cm} \centerline{\LARGE Conclusion} }
+\frametitle{\vspace{-0.4cm} \centerline{\LARGE Conclusion DDH et leur ddhtoolbox} }
 
 \vspace{-1.0cm}
 \begin{exampleblock}{\normalsize{Objectifs :}}
 \begin{itemize}
- \item Etablir les équations de bilan des variables pronostiques du modèle sur un domaine défini, 
- afin d'améliorer la compréhension des interactions dynamiques et physiques du modèle. 
- $\Rightarrow$ contribuer au raffinement des parametrisations physiques.
+ \item Etablir les équations de bilan des variables pronostiques ARPEGE et AROME sur un domaine défini, afin d'améliorer la compréhension des interactions dynamiques et physiques du modèle.  $\Rightarrow$ contribuer au raffinement des parametrisations physiques.
  \item Fournir la valeur de champs diagnostiques (nébulosité, pression, etc).
 \end{itemize}
 \end{exampleblock}
@@ -1111,7 +873,6 @@ dans les fichiers DDH.
 \begin{itemize}
  \item \textbf{Bilans} : masse (PP), vapeur d'eau (QV), énergie cinétique (KK), moment cinétique (A1,A2,A3), entropie (SS), énergie potentielle (EP), énergie thermique (CT), variables de surface, ... .
  \item \textbf{Domaines} : l'ensemble du domaine modèle, bandes zonales, domaines limités, et point de grille isolés. 
- \item \textbf{Codage à la volée} de diagnostics nouveaux via NEW\_ADD\_FIELD\_2D et NEW\_ADD\_FIELD\_3D.
 \end{itemize}
 \end{block}
 \end{frame}

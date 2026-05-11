@@ -1,0 +1,53 @@
+BUDGET LIST CT
+MAIN CT
+CT
+#-------------------------------------
+BEGIN BLOCK TCTADJU
+TCTADJU
+#-------------------------------------
+BEGIN BLOCK TCTRADNET
+FCTRAYSO
+FCTRAYTH
+#-------------------------------------
+BEGIN BLOCK TCTVTUR
+TCTVTUR
+#-------------------------------------
+BEGIN BLOCK TCTMAFL
+TCTMAFL
+#-------------------------------------
+BEGIN BLOCK TCTDISS
+TCTDISS
+#-------------------------------------
+BEGIN BLOCK TCTDEEP
+TCTDEEP
+#-------------------------------------
+BEGIN BLOCK TCTNEGA
+TCTNEGA
+#-------------------------------------
+BEGIN BLOCK TCTMICRO
+TCTHIN_
+TCTHON_
+TCTSFR_
+TCTDEPS
+TCTDEPG
+TCTREVA
+TCTRIM_
+TCTACC_
+TCTCFRZ
+TCTWETG
+TCTDRYG
+TCTGMLT
+TCTIMLT
+TCTBERF
+#-------------------------------------
+BEGIN BLOCK TCTCORR
+TCTCORR
+#-------------------------------------
+BEGIN BLOCK TCTSL
+TCTSL
+#-------------------------------------
+BEGIN BLOCK TCTSI
+TCTSI
+#-------------------------------------
+BEGIN BLOCK TCTDYNEXPL
+TCTDYN

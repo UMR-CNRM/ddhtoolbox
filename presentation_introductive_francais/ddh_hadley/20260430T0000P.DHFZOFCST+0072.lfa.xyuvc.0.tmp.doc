@@ -1,0 +1,15 @@
+#FORMAT=XYUVC
+#LEGENDE_X=latitude (deg)
+#LEGENDE_Y=pressure (hPa)
+#DATE=2026-04-30 00:00 + 3 days
+#ORIGINE=OPER : 20260430T0000P.DHFZOFCST+0072.lfa
+#TITRE=Vecteur vent (méridien et vertical) INITIAL
+#FICHIER=20260430T0000P.DHFZOFCST+0072.lfa.xyuvc.0.tmp.dta
+#UNITE=u (m/s)
+#LEGENDE_U=Vent merid.
+#LEGENDE_V=Vitesse verticale *100
+#LEGENDE_C=norme(U,V)
+#ECHELLE_VECTEURS=6.
+#VMIN=-10.
+#VMAX=60.
+#IMAGE=1800 900

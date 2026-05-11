@@ -1,0 +1,63 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2019-09-16, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+set -evx
+#
+#-------------------------------------------------
+# .
+#-------------------------------------------------
+#
+#ftgetp /home/m/mxpt/mxpt001/vortex/arpege/4dvarfr/OPER/2019/09/17/T0000P/forecast/ddh.arpege-dlimited.tl1798-c22.ddhpack.tgz dl.tgz
+rm -rf HIDDEN.*
+tar xvf dl.tgz
+rm -rf dl
+mv HIDDEN.* dl
+cd dl 
+chmod 644 * 
+ddhindexp OPER D*
+for f in D*
+do
+  mv $f $f.lfa
+done
+#
+#-------------------------------------------------
+# 18UTC
+#-------------------------------------------------
+#
+fddh="DHFDLFCST+0018.lfa"
+ddhr -ddd $fddh
+dom="10" # Toulouse.
+ddht -cEXTRAIT_DOMAIN -E10 -1$fddh -s$fddh.$dom.lfa
+ddh2scm $fddh.$dom.lfa
+ms $fddh.$dom.lfa.Dom001.Var_fin.scm
+dd2gr $fddh.$dom.lfa.Dom001.Var_fin.scm.ms.tmp.theta.doc $fddh.$dom.lfa.Dom001.Var_fin.scm.ms.tmp.theta.doc.svg
+inkscape $fddh.$dom.lfa.Dom001.Var_fin.scm.ms.tmp.theta.doc.svg --export-png=$fddh.$dom.lfa.Dom001.Var_fin.scm.ms.tmp.theta.doc.svg.HR.png -w3500
+#
+#-------------------------------------------------
+# 12UTC
+#-------------------------------------------------
+#
+fddh="DHFDLFCST+0012.lfa"
+ddhr -ddd $fddh
+dom="10" # Toulouse.
+ddht -cEXTRAIT_DOMAIN -E10 -1$fddh -s$fddh.$dom.lfa
+ddht -cDIFFE_EC2_EC1 -2DHFDLFCST+0018.lfa.10.lfa -1DHFDLFCST+0012.lfa.10.lfa -sDHFDLFCST+18-12.lfa.10.lfa
+ddhb -v oper/CT -i DHFDLFCST+18-12.lfa.10.lfa

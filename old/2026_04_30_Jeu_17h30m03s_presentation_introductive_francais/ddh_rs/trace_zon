@@ -1,0 +1,45 @@
+#!/bin/bash
+# --------------------------------------------------------------
+# 
+# --------------------------------------------------------------
+# Sujet:
+# Methode:
+# Externes:
+# Auteur:   2019-09-16, J.M. Piriou.
+# Modifications:
+# --------------------------------------------------------------
+# En entrée:
+# En sortie:
+# --------------------------------------------------------------
+proc=$(basename $0) # nom de la présente procédure.
+pref=`tempo`/$proc.$RANDOM # préfixe des fichiers temporaires.
+dirloc=`pwd` # chemin du répertoire local.
+#
+#-----------------------------------------------
+# Traitement de la ligne de commande.
+#-----------------------------------------------
+#
+set -evx
+#
+#-------------------------------------------------
+# .
+#-------------------------------------------------
+#
+#ftgetp /home/m/mxpt/mxpt001/vortex/arpege/4dvarfr/OPER/2019/09/17/T0000P/forecast/ddh.arpege-zonal.tl1798-c22.ddhpack.tgz zon.tgz
+rm -rf HIDDEN.*
+tar xvf zon.tgz
+rm -rf zon
+mv HIDDEN.* zon
+cd zon 
+chmod 644 * 
+ddhindexp OPER D*
+for f in D*
+do
+  mv $f $f.lfa
+done
+fddh="DHFZOFCST+0072.lfa"
+ddht -cEXTRAIT_DOMAIN -E13-18 -1DHFZOFCST+0018.lfa -sDHFZOFCST+0018.Tropiques.lfa
+ddhmh DHFZOFCST+0018.Tropiques.lfa
+ddh2scm DHFZOFCST+0018.Tropiques.lfa.mh
+ms DHFZOFCST+0018.Tropiques.lfa.mh.Dom001.Var_fin.scm
+v DHFZOFCST+0018.Tropiques.lfa.mh.Dom001.Var_fin.scm.ms.tmp.theta.doc 

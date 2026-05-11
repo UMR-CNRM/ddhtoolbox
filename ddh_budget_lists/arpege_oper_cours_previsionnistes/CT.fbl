@@ -1,0 +1,24 @@
+BUDGET LIST Bilan de temperature
+MAIN CT
+CT
+# --------------------------
+BEGIN BLOCK Rayonnement solaire
+FCTRAYSOL1 
+# --------------------------
+BEGIN BLOCK Rayonnement IR
+FCTRAYTER1 
+# --------------------------
+BEGIN BLOCK Turbulence
+FCTTUR  
+# --------------------------
+BEGIN BLOCK Stratiforme
+FCTPRECISTL  
+FCTPRECISTN 
+FCTPRECCSSTL  
+FCTPRECCSSTN 
+# --------------------------
+BEGIN BLOCK Convection profonde
+FCTPRECICOL 
+FCTPRECICON 
+FCTPRECCSCOL  
+FCTPRECCSCON
